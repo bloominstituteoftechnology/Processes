@@ -18,16 +18,16 @@ int main(int argc, char *argv[])
     fprintf(stderr, "fork failed\n");
     exit(1);
   } else if (rc == 0) {    // child process satisfies this branch
-    printf("hello, child here (pid: %d) \n", (int) getpid());
+    printf("\nhello, child here (pid: %d) \n", (int) getpid());
     printf("The value of x in the child process is: %d\n", x);
     x = 321;
     printf("The value of x in the child process has been changed: %d\n", x);
   } else {
-    printf("hello, parent here (pid: %d) of child %d\n", (int) getpid(), rc);
+    printf("\nhello, parent here (pid: %d) of child %d\n", (int) getpid(), rc);
     printf("The value of x in the parent process is: %d\n", x);
     x = 123;
     printf("The value of x in the parent process has been changed: %d\n", x);
   }
-  printf("now what is the value of x? %d\n", x);
+  printf("\nnow what is the value of x? %d\n", x);
   return 0;
 }
