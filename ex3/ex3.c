@@ -1,7 +1,6 @@
 // Write another program using `fork()`. The child process should print "hello";
 // the parent process should print "goodbye". You should ensure that the child
-// process always prints first; can you do that *without* calling `wait()` in
-// the parent?
+// process always prints first.
 
 #include <stdio.h>
 #include <stdlib.h>

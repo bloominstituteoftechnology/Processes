@@ -3,7 +3,9 @@
 // `execl()`, `execle()`, `execv()`, and others. Why do you think there 
 // are so many variants of the same basic call?
 
-#include <sys/wait.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
 
 int main(int argc, char* argv[])
 {

@@ -1,6 +1,6 @@
-// Write a program that opens a file (with the `open()` system call) and then calls `fork()` to
-// create a new process. Can both the child and parent access the file descriptor returned by `open()`?
-// What happens when they are write to the file concurrently?
+// Write a program that opens the text.txt  file (with the `open()` system call) located in this directory 
+// and then calls `fork()` to create a new process. Can both the child and parent access the file descriptor 
+// returned by `open()`? What happens when they are written to the file concurrently?
 
 #include <stdio.h>
 #include <unistd.h>
