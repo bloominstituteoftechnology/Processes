@@ -17,6 +17,6 @@ int main(int argc, char* argv[])
         ch = getc(fp);
     }
     fclose(fp);
-
+    
     return 0;
 }
