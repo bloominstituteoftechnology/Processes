@@ -143,7 +143,8 @@ why we still had to have the parent process `fork` a new child process.
 ## What You'll be Doing for this Lab
 This was your first introduction to making system calls to an operating system kernel. Obviously, there are many more 
 system calls that we'll talk about in a future lesson, but for now we'll just practice with these three. Once you've 
-cloned this repo, go into each directory, open up the exercise file, read the prompt, and write some C code!
+cloned this repo, go into each directory, open up the exercise file, read the prompt, and write some C code! Compile 
+your code with `gcc [NAME OF FILE].c -o [NAME OF EXECUTABLE]`.
 
 ## Further Reading
 If you would like to read more on this topic, this chapter from _Operating Systems: Three Easy Pieces_ heavily 
