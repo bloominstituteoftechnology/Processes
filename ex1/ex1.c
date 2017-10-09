@@ -9,6 +9,17 @@
 int main(int argc, char *argv[])
 {
     // Your code here
-
+    int x = 5000;
+    printf("hello lambda (pid: %d)\n", (int) getpid());
+    //child process steps
+    int rc = fork();
+    if (rc < 0) {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) { // child satisfies condition
+        printf("hello lambda, child satisfies condition (pid: %d)\n", (int) getpid());
+    } else {
+        printf("hello lambda (pid: %d) of child %d \n", (int) getpid(), rc);
+    }
     return 0;
 }
