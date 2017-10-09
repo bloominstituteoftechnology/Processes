@@ -20,14 +20,14 @@ int main(int argc, char *argv[])
   } else if (rc == 0) {    // child process satisfies this branch
     printf("\nhello, child here (pid: %d) \n", (int) getpid());
     printf("The value of x in the child process is: %d\n", x);
-    x = 321;
+    x = 12345;
     printf("The value of x in the child process has been changed: %d\n", x);
   } else {
     printf("\nhello, parent here (pid: %d) of child %d\n", (int) getpid(), rc);
     printf("The value of x in the parent process is: %d\n", x);
-    x = 123;
+    x = 54321;
     printf("The value of x in the parent process has been changed: %d\n", x);
   }
-  printf("\nnow what is the value of x? %d\n", x);
+  printf("Now what is the value of x? %d\n", x);
   return 0;
 }
