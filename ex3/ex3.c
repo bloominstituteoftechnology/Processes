@@ -12,13 +12,13 @@ int main(int argc, char *argv[]) {
   printf("What to say to the world? (pid: %d)\n", (int) getpid());
   // ------------------------------------------------ child process starts executing here
   int rc = fork();
-  if (rc < 0) {    // fork failed; exit
+  if (rc < 0) {    // fork failed; try spoon || knife
     fprintf(stderr, "fork failed\n");
     exit(1);
   } else if (rc == 0) {    // child process satisfies this branch
     printf("HELLO, child here (pid: %d)\n", (int) getpid());
   } else {
-    int wc = waitpid(rc, NULL, 0); // `waitpid` call added here
+    int wait = waitpid(rc, NULL, 0); // Kids FIRST!
     printf("GOODBYE, parent here (pid: %d) of child %d\n", (int) getpid(), rc);
   }
   puts("wOt?");
