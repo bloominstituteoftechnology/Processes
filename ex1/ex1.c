@@ -10,7 +10,6 @@ int main(int argc, char *argv[])
 {
     int x;
     printf("Hello from Main (pid: %d)\n", (int) getpid());
-    //val
     printf("Main says: x = %d \n", x);
 
     int rc = fork();

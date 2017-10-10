@@ -9,7 +9,7 @@
 
 int main(int argc, char *argv[])
 {
-    int x;
+    int x = 100;
     printf("Hello from Main (pid: %d)\n", (int) getpid());
     printf("Main says: x = %d \n", x);
 
@@ -22,8 +22,9 @@ int main(int argc, char *argv[])
         printf("Hello from Child (pid: %d)\n", (int) getpid());
         printf("Child says: x = %d \n", x);
     } else {
-        // waitpid(-1, &rc, 0); // same as below
+        // waitpid(-1, &rc, 0); //=> same as below
         wait(&rc);
+        
         x += 25;
         printf("Goodbye from Parent (pid: %d)\n", (int) getpid());
         printf("Parent Process says: x = %d \n", x);
