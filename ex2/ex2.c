@@ -7,12 +7,11 @@
 #include <stdlib.h>
 
 
-int main(int argc, char* argv[])
-{
+int main(int argc, char* argv[]) {
   FILE *file = fopen("./text.txt", "w");
   // ---------------------------------------------- KIDS SAY THE DARNDEST THINGS
   int rc = fork();
-  if (rc < 0) { // fork failed; try spoon
+  if (rc < 0) { // fork failed; try spoon || knife
     fprintf(stderr, "fork failed\n");
     exit(1);
   } else if (rc == 0) { // child process

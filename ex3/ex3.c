@@ -8,8 +8,7 @@
 #include <unistd.h>
 #include <sys/wait.h>    // `waitpid` needs to be included separately
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
   printf("What to say to the world? (pid: %d)\n", (int) getpid());
   // ------------------------------------------------ child process starts executing here
   int rc = fork();
