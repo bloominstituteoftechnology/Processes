@@ -9,7 +9,17 @@
 
 int main(int argc, char* argv[])
 {
-    // Your code here    
-
-    return 0;
+  // Your code here    
+  int rc = fork();
+  if (rc < 0) {   
+      fprintf(stderr, "fork failed\n");
+      exit(1);
+  } else if (rc == 0) {
+    printf("Hello");
+    exec1("/bin/ls");
+  } else {
+    wait(&rc);
+    printf("Goodbye");
+  }
+  return 0;
 }
