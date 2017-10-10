@@ -6,7 +6,6 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-
 int main(int argc, char* argv[]) {
   FILE *file = fopen("./text.txt", "w");
   // ---------------------------------------------- KIDS SAY THE DARNDEST THINGS
