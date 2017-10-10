@@ -8,7 +8,15 @@
 
 int main(int argc, char* argv[])
 {
-    // Your code here 
-
+    int ch;
+    FILE * fp;
+    fp = fopen("/Users/homebase/Desktop/Processes/ex2/text.txt", "r");
+    ch = getc(fp);
+    while (ch != EOF) {
+        putchar(ch);
+        ch = getc(fp);
+    }
+    fclose(fp);
+    
     return 0;
 }

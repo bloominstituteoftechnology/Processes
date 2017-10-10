@@ -8,7 +8,9 @@
 
 int main(int argc, char *argv[])
 {
-    // Your code here
-
+    int x = 100;
+    printf("your variable is %i\n", x + 2);
+    fork();
+    printf("your variable is %i\n", x + 4);
     return 0;
 }
