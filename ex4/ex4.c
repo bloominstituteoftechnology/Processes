@@ -16,7 +16,7 @@ int main(int argc, char* argv[])
       exit(1);
   } else if (rc == 0) {
     printf("Hello");
-    exec1("/bin/ls");
+    execl("/bin/ls");
   } else {
     wait(&rc);
     printf("Goodbye");
