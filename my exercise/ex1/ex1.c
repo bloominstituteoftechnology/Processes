@@ -8,23 +8,18 @@
 
 int main(int argc, char *argv[])
 {
-    int x = 100;
-    printf("hello world (pid: %d)\n", (int) getpid());
-
+    // Your code here
+    int x = 5000;
+    printf("hello lambda (pid: %d)\n", (int) getpid());
+    //child process steps
     int rc = fork();
-
     if (rc < 0) {
         fprintf(stderr, "fork failed\n");
         exit(1);
-    } else if (rc == 0) {
-        printf("hello, I am child (pid: %d) and x is: %d\n", (int) getpid(), x);
-        x++;
-        printf("child again, x is now: %d\n", x);
+    } else if (rc == 0) { // child satisfies condition
+        printf("hello lambda, child satisfies condition (pid: %d)\n", (int) getpid());
     } else {
-        printf("hello, I am parent of %d (pid: %d) and x is: %d\n", rc, (int) getpid(), x);
-        x--;
-        printf("parent again, x is now: %d\n", x);
+        printf("hello lambda (pid: %d) of child %d \n", (int) getpid(), rc);
     }
-
     return 0;
 }
