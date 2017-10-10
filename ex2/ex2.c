@@ -9,6 +9,8 @@
 int main(int argc, char* argv[])
 {
     // Your code here 
+    FILE * thingy;
+    thingy = fopen("/Users/Jesh/Documents/CS stuff/LS/Processes/ex2/text.txt", "r");
 
     return 0;
 }

@@ -9,6 +9,9 @@
 int main(int argc, char *argv[])
 {
     // Your code here
-
-    return 0;
+  int x = 100;
+  printf("x is %d\n", x + 1);
+  fork();
+  printf("x is %d\n", x * 2);
+  return 0;
 }
