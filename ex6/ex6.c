@@ -22,10 +22,9 @@ int main()
     float average;
     int i;
 
-    
     for(i = 0; i < number_iter; i++) {
         clock_gettime(CLOCK_MONOTONIC, &start);
-        write(1, "", 1);
+        write(1, NULL, 0);
         clock_gettime(CLOCK_MONOTONIC, &end);
         diff += BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
     }
@@ -33,7 +32,6 @@ int main()
     average = diff / number_iter;
 
     printf("Average time: %.2f nanoseconds\n", average);
-    
     
     return 0;
 }
