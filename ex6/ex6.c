@@ -7,6 +7,7 @@
 // visit this site: https://www.cs.rutgers.edu/~pxk/416/notes/c-tutorials/gettime.html
 
 #include <stdio.h>
+#include <stdint.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <time.h>
@@ -16,7 +17,23 @@
 
 int main()
 {
-    // Your code here
+    struct timespec start, end;
+    uint64_t diff;
+    float average;
+    int i;
+
+    
+    for(i = 0; i < number_iter; i++) {
+        clock_gettime(CLOCK_MONOTONIC, &start);
+        write(1, "", 1);
+        clock_gettime(CLOCK_MONOTONIC, &end);
+        diff += BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+    }
+
+    average = diff / number_iter;
+
+    printf("Average time: %.2f nanoseconds\n", average);
+    
     
     return 0;
 }
