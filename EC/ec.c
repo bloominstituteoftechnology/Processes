@@ -13,7 +13,6 @@
 
 int main(void) {
   char inbuf[LINE_MAX];
-  // char result[LINE_MAX];
   
   int sp[2];
   if (socketpair(AF_UNIX, SOCK_STREAM, 0, sp) < 0) {
@@ -35,7 +34,6 @@ int main(void) {
       printf("Enter a string: ");
       fgets(inbuf, LINE_MAX, stdin);
       write(sp[0], inbuf, LINE_MAX);
-      // int wc = waitpid(rc, NULL);
       read(sp[0], inbuf, LINE_MAX);
       
       printf("%s", inbuf);
