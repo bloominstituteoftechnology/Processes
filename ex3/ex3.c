@@ -5,10 +5,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <sys/wait.h>
 
 int main(int argc, char* argv[])
 {
     // Your code here
-
+    int cpid = fork();
+    if(cpid == 0){
+        puts("HELLO");
+    }else{
+        wait(0);
+        puts("GOODBYE");
+    }
     return 0;
 }

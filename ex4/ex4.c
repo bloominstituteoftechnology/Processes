@@ -6,10 +6,15 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <sys/wait.h>
 
 int main(int argc, char* argv[])
 {
-    // Your code here    
-
-    return 0;
+    if(fork() == 0){
+    execlp("/bin/ls", "-l", (char*) 0);
+    }else{
+        wait(0);
+        puts("Finished");
+        return 0;
+    }
 }
