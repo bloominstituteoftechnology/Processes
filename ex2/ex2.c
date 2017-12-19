@@ -5,10 +5,39 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <signal.h>
+#include <sys/wait.h>
+
+void wfile(FILE **file, char *name) 
+{
+    if(fork() > 0) fprintf(*file, "%s%s\n", "=>WRITTEN BY ", name);
+}
+void rfile(FILE **file)
+{
+    char lines[150];
+    wait(0);
+    while(!feof(*file)){
+        fgets(lines, 150, *file);
+        printf("Line: %s\n", lines);
+    }
+}
 
 int main(int argc, char* argv[])
 {
-    // Your code here 
+    int cpid = fork();
+    printf("pid: %d\n",cpid);
+    FILE *file = fopen("./text.txt", "a+");
     
+    if(cpid == 0) {
+        puts("CHILD PROCESS\n");
+        wfile(&file, "CHILD");
+    }else{
+         wait(0);
+        puts("PARENT PROCESS\n");
+        wfile(&file, "PARENT");
+        rfile(&file);
+    }
+
+    fclose(file);
     return 0;
 }

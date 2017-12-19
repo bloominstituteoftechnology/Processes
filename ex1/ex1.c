@@ -5,10 +5,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <sys/wait.h>
+#include <signal.h>
 
 int main(int argc, char *argv[])
 {
-    // Your code here
+    int x = 0;
+    if(fork() == 0)
+    {
+        int *y = &x;
+        int input;
+        printf("%s", "Change the value of x: ");
+        scanf("%d", &input);
+        *y = input;
+        printf("Child: %d\n", x); //changes x to [input] within its own memory space
+    }else{
+        wait(0);
+        printf("Parent: %d\n", x);
+    }
 
     return 0;
 }
