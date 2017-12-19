@@ -9,6 +9,33 @@
 int main(int argc, char* argv[])
 {
     // Your code here 
+    FILE *fp;
+    char str[60];
+    fp = fopen("text.txt", "r");
+    if(fp == NULL) {
+      perror("Error opening file");
+      return(-1);
+    }
+    int rc = fork();
+    if (rc < 0) {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {
+        if( fgets (str, 4, fp)!=NULL ) {
+            printf("child string %s", str);
+        }
+        if( fgets (str, 4, fp)!=NULL ) {
+            printf("child string %s", str);
+        }
+        printf("child string");
+    } else {
+        if( fgets (str, 4, fp)!=NULL ) {
+            printf("parent string %s", str);
+        }
+        if( fgets (str, 4, fp)!=NULL ) {
+            printf("parent string %s", str);
+        }
+    }
     
     return 0;
 }
