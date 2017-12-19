@@ -16,7 +16,16 @@
 
 int main()
 {
-    // Your code here
-    
+	struct timespec start, end;
+    int i;
+    long total;
+    for (i = 0; i < number_iter; i++) {
+        clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &start);
+        printf(".");
+        clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end);
+        total += (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec);
+    }
+    long avg = (total / number_iter);
+    printf("\nAverage time is :%li\nThe total time  :%li\n", avg, total);
     return 0;
 }

@@ -6,9 +6,18 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int main(int argc, char* argv[])
+int main(void)
 {
     // Your code here
-
+    int rc = fork();
+    if (rc < 0) {
+        printf("error man");
+        exit(1);
+    } else if (rc == 0) {
+        printf("hello\n");
+    } else {
+        waitpid(rc, NULL);
+        printf("goodbye\n");
+    }
     return 0;
 }
