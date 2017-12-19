@@ -6,9 +6,25 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-int main(int argc, char* argv[])
+int main(void)
 {
-    // Your code here 
-    
+    // Your code here
+    FILE * fp;
+    fp = fopen("./text.txt", "r");
+    char c[30];
+    int rc = fork();
+    if (rc < 0) {
+        printf("error");
+        exit(1);
+    } else if (rc == 0) {
+        printf("child\n");
+        fgets(c, 30, fp);
+        printf("%s\n", c);
+    } else {
+        printf("parent\n");
+        fgets(c, 30, fp);
+        printf("%s\n", c);
+    }
+
     return 0;
 }

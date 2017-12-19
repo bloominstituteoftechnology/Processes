@@ -6,10 +6,20 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <sys/wait.h>
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
     // Your code here    
-
+    int rc = fork();
+    if (rc < 0) {
+        printf("error man");
+        exit(1);
+    } else if (rc == 0) {
+        execv("/bin/ls", argv);
+        printf("hello\n");
+    } else {
+        printf("goodbye\n");
+    }
     return 0;
 }

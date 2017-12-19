@@ -9,6 +9,17 @@
 int main(int argc, char *argv[])
 {
     // Your code here
-
+    int x = 100;
+    int rc = fork();
+    if (rc < 0) {
+        printf("error man");
+        exit(1);
+    } else if (rc == 0) {
+        x += 40;
+        printf("%d\n", x);
+    } else {
+        x += 50;
+        printf("%d\n", x);
+    }
     return 0;
 }
