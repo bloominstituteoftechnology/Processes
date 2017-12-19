@@ -10,6 +10,21 @@
 int main(int argc, char* argv[])
 {
     // Your code here    
+    int x;
+    x = 100;
+    int rc = fork();
+    if (rc < 0) {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {
+        
+        execv("/bin/ls", argv);
+        x += 10;
+        printf("x is equal to: %d\n", x++);
+    } else {
+        x+=1000;
+        printf("this is the parent x which is %d\n", x++);
+    }
 
     return 0;
 }

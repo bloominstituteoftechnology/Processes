@@ -16,6 +16,38 @@ char* msg3 = "hello world #3";
 int main()
 {
     // Your code here
+    char inbuf[MSGSIZE];
+    int p[2];
+    
+    if (pipe(p) < 0) {
+        fprintf(stderr, "pipe failed\n");
+        exit(1);
+    }
+    
+    
+    int x;
+    x = 100;
+    int rc = fork();
+    if (rc < 0) {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {
+        x += 10;
+        printf("x is equal to: %d\n", x++);
+        write(p[1], msg1, MSGSIZE);
+        write(p[1], msg2, MSGSIZE);
+        write(p[1], msg3, MSGSIZE);
+            
+    } else {
+        x+=1000;
+        printf("this is the parent x which is %d\n", x++);
+        for (int i = 0; i < 3; i++) {
+            read(p[0], inbuf, MSGSIZE);
+            printf("%s\n", inbuf);
+        }
+    }
+    
+
     
     return 0;
 }
