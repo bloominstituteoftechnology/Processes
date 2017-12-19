@@ -9,6 +9,19 @@
 int main(int argc, char* argv[])
 {
     // Your code here 
-    
+        FILE* fp;
+        fp = fopen("text.txt", "w");
+
+        int rc = fork();
+         if (rc == 0) {
+            printf("Child\n");
+            char child_str[] = "This is child string!\n";
+            fwrite(child_str, 1, sizeof(child_str), fp);
+        } else {
+            printf("Parent\n");
+            char parent_str[] = "This is parent string!\n";
+            fwrite(parent_str, 1, sizeof(parent_str), fp);
+        }
+        fclose(fp);
     return 0;
 }
