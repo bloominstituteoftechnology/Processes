@@ -1,7 +1,6 @@
 // Write a program that calls `fork()`. Before calling `fork()`, have the main process access a variable
 // (e.g., x) and set its value to something (e.g., 100). What value is the variable in the child process?
 // What happens to the variable when both the child and parent change the value of x?
-// ANSWER -> when both child and parent change the value of x, child value will print under child and parent value under parent; the variable is forked
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -15,7 +14,7 @@ int main(int argc, char *argv[])
     int rc = fork();
     if (rc < 0) {
         // fork failed
-        return 1;
+        exit(1);
     } else if (rc == 0) {
         printf("child here\n");
         x = 250;

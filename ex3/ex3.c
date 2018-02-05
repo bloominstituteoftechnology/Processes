@@ -14,7 +14,7 @@ int main(int argc, char* argv[])
     int rc = fork();
     if (rc < 0) {
         // fork failed
-        return 1;
+        exit(1);
     } else if (rc == 0) {
         printf("hello\n");
     } else {

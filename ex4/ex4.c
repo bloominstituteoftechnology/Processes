@@ -10,20 +10,17 @@
 int main(int argc, char* argv[])
 {
     // Your code here
-    int x;
-    x = 100;
     int rc = fork();
     if (rc < 0) {
         // fork failed
-        return 1;
+        exit(1);
     } else if (rc == 0) {
-        printf("child here\n");
-        x = 250;
-        printf("x is %d\n", x);
+        printf("child here\n\n");
+        execl("/bin/ls", NULL);
     } else {
-        printf("parent here\n");
-        x = 1;
-        printf("x is %d\n", x);
+        int wc = waitpid(rc, NULL, 0);
+        printf("parent here\n\n");
+        
     }
 
     return 0;
