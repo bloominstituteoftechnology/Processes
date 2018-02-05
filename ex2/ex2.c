@@ -13,11 +13,19 @@ int main(int argc, char* argv[])
     
     fp = fopen("text.txt", "a+");
 
+
     int rc = fork();
-    if (rc == 0) {
+    if (rc < 0) {
+        // fork failed
+        return 1;
+    } else if (rc == 0) {
         printf("child here appending text.txt\n");
+        char str1[] = "child here appending text.txt\n";
+        fprintf(fp, "%s\n", str1);
     } else {
         printf("parent here appending text.txt\n");
+        char str2[] = "parent here appending text.txt\n";
+        fprintf(fp, "%s\n", str2);  
     }
     
     fclose(fp);

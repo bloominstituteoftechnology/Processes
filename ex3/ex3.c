@@ -12,7 +12,10 @@ int main(int argc, char* argv[])
     // Your code here
     printf("Make sure the child runs FIRST!\n");
     int rc = fork();
-    if (rc == 0) {
+    if (rc < 0) {
+        // fork failed
+        return 1;
+    } else if (rc == 0) {
         printf("hello\n");
     } else {
         int wc = waitpid(rc, NULL, 0);
