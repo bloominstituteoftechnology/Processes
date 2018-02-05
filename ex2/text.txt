@@ -1,4 +1,4 @@
 We are in 2018
-hello, parent here. I wish it was the year 2017 fork: 30678
+hello, parent here. I wish it was the year 2017
 We are in 2018
 hello, child here. I wish it was the year 2019 
