@@ -25,7 +25,7 @@ Let's look at a program that calls `fork()` to try to give an example of what th
 int main(int argc, char *argv[])
 {
     printf("hello world (pid: %d)\n", (int) getpid());
-    ------------------------------------------------ // child process starts executing here
+    // ------------------------------------------------ child process starts executing here
     int rc = fork();
     if (rc < 0) {    // fork failed; exit
         fprintf(stderr, "fork failed\n");
@@ -74,7 +74,7 @@ the child always runs before its parent:
 int main(int argc, char *argv[])
 {
     printf("hello world (pid: %d)\n", (int) getpid());
-    ------------------------------------------------ // child process starts executing here
+    // ------------------------------------------------ child process starts executing here
     int rc = fork();
     if (rc < 0) {    // fork failed; exit
         fprintf(stderr, "fork failed\n");
@@ -82,7 +82,7 @@ int main(int argc, char *argv[])
     } else if (rc == 0) {    // child process satisfies this branch
         printf("hello, child here (pid: %d) \n", (int) getpid());
     } else {
-        int wc = waitpid(rc, NULL);    // `waitpid` call added here
+        int wc = waitpid(rc, NULL, 0);    // `waitpid` call added here
         printf("hello, parent here (pid: %d) of child %d\n", (int) getpid(), rc);
     }
 
@@ -105,7 +105,7 @@ Let's say we wanted to spin up a child process to execute a word count program. 
 int main(int argc, char *argv[])
 {
     printf("hello world (pid: %d)\n", (int) getpid());
-    ------------------------------------------------ // child process starts executing here
+    // ------------------------------------------------ child process starts executing here
     int rc = fork();
     if (rc < 0) {    // fork failed; exit
         fprintf(stderr, "fork failed\n");
@@ -114,13 +114,13 @@ int main(int argc, char *argv[])
         printf("hello, child here (pid: %d) \n", (int) getpid());
         char *myargs[3];    // allocate an array of chars to hold 3 bytes
         // `strdup` duplicates the given input string 
-        myargs[0] = strdup("wc");    // pass the name of the program we want to run as the first array element 
+        myargs[0] = strdup("wc");      // pass the name of the program we want to run as the first array element 
         myargs[1] = strdup("p3.c");    // argument: the file to count
-        myargs[2] = NULL;    // marks the end of the array
-        execvp(myargs[0], myargs);    // runs the word count program, passing in the `myargs` array to the word count program as arguments
+        myargs[2] = NULL;              // marks the end of the array
+        execvp(myargs[0], myargs);     // runs the word count program, passing in the `myargs` array to the word count program as arguments
         printf("this should not be seen");
     } else {
-        int wc = waitpid(rc, NULL);    // `waitpid` call added here
+        int wc = waitpid(rc, NULL, 0);    // `waitpid` call added here
         printf("hello, parent here (pid: %d) of child %d\n", (int) getpid(), rc);
     }
 
