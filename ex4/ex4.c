@@ -7,9 +7,16 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-int main(int argc, char* argv[])
+int main(/*int argc, char* argv[]*/)
 {
-    // Your code here    
+    // Your code here
+    int rc = fork();
+    if (rc < 0) { // fork failed; exit
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {
+        execl("/bin/ls", NULL);
+    }
 
     return 0;
 }
