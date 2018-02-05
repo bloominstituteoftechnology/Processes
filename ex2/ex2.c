@@ -8,7 +8,24 @@
 
 int main(int argc, char* argv[])
 {
-    // Your code here 
+    FILE * fp;
+
+    fp = fopen("text.txt", "w+");
+    int year = 2018;
+    fprintf(fp, "%s %s %s %d\n", "We", "are", "in", year);
+
+    int rc = fork();
+    if (rc < 0) {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {    // child process satisfies this branch
+        year++;
+        fprintf(fp, "hello, child here. I wish it was the year %d \n", year);
+    }
+    else {
+        year--;
+        fprintf(fp, "hello, parent here. I wish it was the year %d\n", year);
+    }
     
     return 0;
 }
