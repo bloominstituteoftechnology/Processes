@@ -8,7 +8,19 @@
 
 int main(int argc, char* argv[])
 {
-    // Your code here 
+    // Your code here
+    FILE * fp;
     
+    fp = fopen("text.txt", "a+");
+
+    int rc = fork();
+    if (rc == 0) {
+        printf("child here appending text.txt\n");
+    } else {
+        printf("parent here appending text.txt\n");
+    }
+    
+    fclose(fp);
+
     return 0;
 }
