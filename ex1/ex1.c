@@ -6,6 +6,7 @@
 
 // What happens to the variable when both the child and parent change the value of x?
 // --- the value is changed within both the parent and the child, the final value of x is assigned in the child
+// --- and the value of x is manipulated by the parent when it travels to the child
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -21,12 +22,13 @@ int main(int argc, char *argv[])
         fprintf(stderr, "fork failed\n");
         exit(1);
     } else if (rc == 0) {    // child process satisfies this branch
-       x = 57;
+       x++;
         printf("hello, child here (pid: %d), my value of x is: %d\n", (int) getpid(), x);
     }
     else {
-        x = 67;
         printf("hello, parent here (pid: %d) of child %d and my value of x is: %d\n", (int) getpid(), rc, x);
+        x--;
+        printf("hello, parent again (pid: %d) and my value of x is: %d\n", rc, x);
     }
 
     printf("Value of x after the fork: %d\n", x);
