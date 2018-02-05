@@ -9,6 +9,18 @@
 int main(int argc, char *argv[])
 {
     // Your code here
+    int x = 100;
+    int rc = fork();
+    x = 99;
+    printf("x: %d\n", x);
+    if (rc == 0)
+    {
+        printf("child: (pid: %d) \n", (int)getpid());
+    }
+    else
+    {
+        printf("parent (pid: %d) of child %d \n", (int)getpid(), rc);
+    }
 
     return 0;
 }
