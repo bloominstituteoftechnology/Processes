@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
     else
     {
         printf("here 2 \n");
-        char str2[] = "this is string 1";
+        char str2[] = "this is string 2";
         fwrite(str2, 1, sizeof(str2), fp);
     }
     fclose(fp);
