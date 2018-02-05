@@ -9,6 +9,15 @@
 int main(int argc, char *argv[])
 {
     // Your code here
-
+    int rc = fork();
+    if (rc < 0) {
+        fprintf(stderr, "fork failure\n");
+        exit(1);
+    } else if (rc == 0) {
+        printf("child (pid: %d)\n", (int) getpid());
+    } else {
+        printf("parent (pid: %d) of childe (pid: %d)", (int) getpid(), rc);
+    }
+    
     return 0;
 }
