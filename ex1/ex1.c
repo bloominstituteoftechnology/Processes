@@ -13,18 +13,19 @@ int main(int argc, char *argv[])
     // parent process
     // int parentProcess = getpid();
     int x = 100;
-    printf("Parent variable value: %d\n", x);
+    printf("Parent pid: %d\n", (int) getpid());
 
     // child process
     int childProcess = fork();
     if (childProcess < 0) {
         fprintf(stderr, "fork failed!\n");
+        exit(1);
     } else if (childProcess == 0) {
-        printf("Child variable value: %d\n", x);
+        printf("Child pid:%d variable value: %d\n", (int) getpid(),x);
         x = 200;
         printf("Child new value %d\n", x);
     } else {
-        printf("Parent variable value: %d\n", x);
+        printf("Parent of child with pid %d variable value: %d\n", childProcess, x);
         x = 300;
         printf("Parent new value %d\n", x);
     }
