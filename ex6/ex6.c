@@ -20,6 +20,20 @@
 int main()
 {
     // Your code here
+    uint64_t diff;
+    int i;
+    struct timespec start, end;
+
+    clock_gettime(CLOCK_MONOTONIC, &start);
+
+    for (i = 0; i < number_iter; i++) {
+        printf("");
+    }
+
+    clock_gettime(CLOCK_MONOTONIC, &end);
+
+    diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+	printf("elapsed process CPU time = %llu nanoseconds\n", (long long unsigned int) diff);
     
     return 0;
 }

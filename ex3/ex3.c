@@ -6,9 +6,20 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int main(int argc, char* argv[])
+int main(/*int argc, char* argv[]*/)
 {
     // Your code here
+    char *val = "Hello";
+    int rc = fork();
+
+    if (rc < 0) { // fork failed
+        fprintf(stderr, "fork failed\n");
+        exit(1);      
+    } else if (rc > 0) {
+        waitpid(rc, NULL, 0);
+        val = "Goodbye";
+    }
+    printf("%s\n", val);
 
     return 0;
 }
