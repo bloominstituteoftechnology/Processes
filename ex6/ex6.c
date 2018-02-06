@@ -7,16 +7,32 @@
 // visit this site: https://www.cs.rutgers.edu/~pxk/416/notes/c-tutorials/gettime.html
 
 #include <stdio.h>
+#include <stdint.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <time.h>
 
+
 #define number_iter 1000000
 #define BILLION 1000000000L
+
 
 int main()
 {
     // Your code here
-    
+    struct timespec start, end;
+    uint64_t total;
+
+    for (int i = 0; i < number_iter; i++) {
+        clock_gettime(CLOCK_MONOTONIC, &start);
+        write(1, NULL, 0);
+        clock_gettime(CLOCK_MONOTONIC, &end);
+        total += (end.tv_nsec - start.tv_nsec) + (BILLION * (end.tv_nsec - start.tv_nsec));
+    }
+
+    float ave = total / number_iter;
+
+    printf("Average time of iterations in nanoseconds: %.2f\n", ave);
+
     return 0;
 }
