@@ -9,6 +9,20 @@
 int main(int argc, char *argv[])
 {
     // Your code here
-
+    int x = 100;
+    printf("The value of x (Initial): %d\n", x);
+    
+    int rc = fork();
+    if (rc < 0) {
+        fprintf(stderr, "fork failure\n");
+        exit(1);
+    } else if (rc == 0) {
+        x /= 10;
+        printf("child success (pid: %d) and altered value of x: %d\n", (int) getpid(), x);
+    } else {
+        x *= 10;
+        printf("parent (pid: %d) of child (pid: %d) and altered value of x: %d", (int) getpid(), rc, x);
+    }
+    
     return 0;
 }
