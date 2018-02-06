@@ -9,6 +9,18 @@
 int main(int argc, char* argv[])
 {
     // Your code here 
-    
+    FILE * fp;
+
+    fp = fopen("file.txt", w+);
+
+    int rc = fork();
+    if (rc < 0) {
+        fprintf(stderr, "Fork Failure\n");
+        exit(1);
+    } else if (rc == 0) {
+        fprintf()
+    }
+
+    fclose();
     return 0;
 }
