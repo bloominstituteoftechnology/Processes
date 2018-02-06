@@ -8,7 +8,24 @@
 
 int main(int argc, char *argv[])
 {
-    // Your code here
+    int x = 100;
+    printf("Hello World (pid: %d)\n", (int) getpid());
+    int rc = fork();
 
+    if(rc < 0) 
+    {
+        fprintf(stderr, "fork failed\n"); //check for fork failure
+        exit(1);
+    } else if (rc == 0) 
+    {
+        printf("child process ran, (pid: %d), and x is: %d\n", (int) getpid(), x);
+        x += 5; //changes the value of x if the child process runs.
+        printf("child: x is now: %d\n", x);
+    } else 
+    {
+        printf("parent of %d (pid: %d) ran, and x is %d\n", rc, (int) getpid(), x);
+        x-= 5; //changes the value of x if the parent runs. 
+        printf("parent: x is now: %d\n", x);
+    }
     return 0;
 }
