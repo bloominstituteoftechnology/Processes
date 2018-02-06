@@ -5,10 +5,33 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <sys/wait.h>
+#include <string.h>
+
 
 int main(int argc, char *argv[])
 {
     // Your code here
-
-    return 0;
+    int X = 100;
+    int *x = &X;
+    int rc = fork();
+    if (rc < 0)
+    { // fork failed; exit
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    }
+    else if (rc == 0)
+    { // child
+        *x /= 5;
+        printf("child x: %d address of X: %p\n", *x, x);
+    }
+    else
+    { // parent
+        int wc = 0;
+        if (argc > 1)
+            wc = waitpid(rc, NULL, 0);
+        *x += 5;
+        printf("parent x: %d address of X: %p\n", *x, x);
+    }
+    exit(0);
 }
