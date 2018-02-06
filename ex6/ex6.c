@@ -16,7 +16,14 @@
 
 int main()
 {
-    // Your code here
-    
+    uint64_t diff;
+	struct timespec start, end;
+	int i = 0;
+    clock_gettime(CLOCK_MONOTONIC, &start);
+    for (; i < number_iter; i++) write(1, "", 0); // ??what to use here - fileno(stdout) or printf
+    clock_gettime(CLOCK_MONOTONIC, &end);
+    diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+    long unsigned int average = diff / number_iter;
+	printf("average time = %lu nanoseconds\n", average);
     return 0;
 }
