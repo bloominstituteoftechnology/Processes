@@ -17,10 +17,10 @@ int main(int argc, char *argv[])
         fprintf(stderr, "fork failed\n");
         exit(1);
     } else if (rc == 0) {    // child process satisfies this branch
-        x = 50;
+        x += 50;
         printf("hello, child value here %d \n", x);
     } else {
-        x = 100;
+        x -= 100;
         printf("hello, parent value here %d \n", x);
     }
     return 0;
