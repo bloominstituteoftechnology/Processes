@@ -11,16 +11,18 @@ int main(int argc, char* argv[])
     // Your code here 
     FILE * fp;
 
-    fp = fopen("file.txt", w+);
+    fp = fopen("text.txt", a+);
 
     int rc = fork();
     if (rc < 0) {
         fprintf(stderr, "Fork Failure\n");
         exit(1);
     } else if (rc == 0) {
-        fprintf()
+        fwrite("child success (pid: %d)\n", (int) getpid());
+    } else {
+        fwrite("parent success (pid: %d)\n", (int) getpid());
     }
 
-    fclose();
+    fclose(fp);
     return 0;
 }
