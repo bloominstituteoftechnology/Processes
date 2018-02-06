@@ -8,7 +8,20 @@
 
 int main(int argc, char *argv[])
 {
-    // Your code here
-
+    int i;
+    i = 100;
+    printf("this is the value %d\n", i);
+    int rc = fork();
+    if (rc < 0) {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {
+        i += 25;
+        printf("child value is %d\n", i);
+    } else {
+        i += 50;
+        printf("parent value is %d\n", i);
+    }
+    
     return 0;
 }
