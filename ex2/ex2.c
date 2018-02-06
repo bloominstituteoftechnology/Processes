@@ -8,7 +8,20 @@
 
 int main(int argc, char* argv[])
 {
-    // Your code here 
-    
+    FILE* file_pointer;
+    file_pointer = fopen("text.txt", "w");
+
+    int rc = fork();
+    if (rc < 0) 
+    {
+        fprintf(stderr, "the fork failed\n");
+        exit(1);
+    } else if (rc == 0) 
+    {
+        printf("This is the child process\n");
+        char child_string[] = "This is the child string\n";
+        fwrite(child_string, 1, sizeof(child_string), file_pointer);
+    }
+    fclose(file_pointer);
     return 0;
 }
