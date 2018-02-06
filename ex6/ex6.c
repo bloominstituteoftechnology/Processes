@@ -16,7 +16,20 @@
 
 int main()
 {
-    // Your code here
+    int sum;
+    int avg;
+    u_int64_t diff;
+    struct timespec start, end;
+    int i;
     
+    for (i = 0; i <= 1000000; i++){
+        clock_gettime(CLOCK_MONOTONIC, &start);
+        fprintf(stdout, "");
+        clock_gettime(CLOCK_MONOTONIC, &end);
+        diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+        sum += diff;
+    }
+    avg = sum / 1000000;
+    printf("The average process time was: %d\n", avg);
     return 0;
 }
