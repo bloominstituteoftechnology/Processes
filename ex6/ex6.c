@@ -17,6 +17,25 @@
 int main()
 {
     // Your code here
+    struct timespec startTime, endTime;
+    long sum = 0;
+    double avg;
+    for (int i = 0; i < number_iter; i++) {
+        clock_gettime(CLOCK_MONOTONIC, &startTime);
+
+        write(fileno(stdout), NULL, 0);
+
+        clock_gettime(CLOCK_MONOTONIC, &endTime;);
+
+        long difference = BILLION * (endTime.tv_sec - startTime.tv_sec) + endTime.tv_nsec - startTime.tv_nsec;
+        sum += difference;
+    }
+
+    avg = sum / (float)number_iter;
+
+    printf("Average time it takes to make a system call");
+
+
     
     return 0;
 }
