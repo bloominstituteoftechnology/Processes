@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
         printf("hello, child here, my x is valued at: %d\n", X);
     }
 
-    //
+    // in all other cases, you are using the parent case.
     else {
         X += 10;
         printf("hello there, parent speaking, my x is valued at: %d\n", X);
@@ -37,3 +37,4 @@ int main(int argc, char *argv[])
 
     return 0;
 }
+// the x variable, while copied from parent to child, are not actually the same instance of x. the processes have been duplicated, as have the variables. And while they're operating in the "same space", they don't truly refer to the "same" location in memory (despite the fact that they look like they do).
