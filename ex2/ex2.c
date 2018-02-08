@@ -37,6 +37,8 @@ int main(int argc, char* argv[])
 
         char *parent_str = "Parent also writes to the file! \n";
         fwrite(parent_str, 1, strlen(parent_str), fp);
+
+        // resets the fp to the top of the file so everything can be read by the fgetc
         rewind(fp);
 
         printf("the contents of the file are:\n");
@@ -50,5 +52,5 @@ int main(int argc, char* argv[])
     return 0;
 }
 
-// both the child and the parent processes have access to the pointer, however, as would be expected of a text file, only one process could read from the file at a time. However, both were able to write to the file, and when that happened, the fp was at the end of the parent string, causing the output from the fgetc to be nothing. curious how this would work with a shared document, if any were even available to be read at this level...
+// both the child and the parent processes have access to the pointer, however, as would be expected of a text file, only one process could read from the file at a time. However, both were able to write to the file. curious how this would work with a shared document, if any were even available to be read at this level...
 // file close must be executed by the outer function, otherwise it causes read errors.
