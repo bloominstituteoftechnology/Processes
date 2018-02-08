@@ -20,6 +20,23 @@
 int main()
 {
     // Your code here
+    struct timespec start, end;
+    long long unsigned int diff;
+    FILE* pFileHandle;
+    long long unsigned int totalDiff;
     
+    for (int i = 0; i <= number_iter; i++) {
+    // todo: add all results together and divide by by number of iterations
+    clock_gettime(CLOCK_MONOTONIC, &start);	/* mark start time */
+	// pFileHandle = stdout;	/* do stuff */
+	fprintf(stdout, "");
+    clock_gettime(CLOCK_MONOTONIC, &end);	/* mark the end time */
+
+	diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+    totalDiff += diff;
+    }
+
+    totalDiff = totalDiff/number_iter;
+    printf("average elapsed time from %llu iterations: %llu nanoseconds\n", number_iter, totalDiff);
     return 0;
 }
