@@ -19,7 +19,18 @@
 
 int main()
 {
-    // Your code here
-    
+    uint64_t diff;
+	struct timespec start, end;
+	int i = 0;
+    long sum = 0;
+    for (; i < number_iter; i++) {
+        clock_gettime(CLOCK_MONOTONIC, &start);
+        write(1, "", 0);
+        clock_gettime(CLOCK_MONOTONIC, &end);
+        diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+        sum += diff;
+    } 
+    long unsigned int average = sum / number_iter;
+	printf("average time = %lu nanoseconds\n", average);
     return 0;
 }
