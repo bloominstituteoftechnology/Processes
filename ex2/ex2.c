@@ -20,13 +20,13 @@ int main(int argc, char* argv[])
     }
     else if (child == 0)
     {
-        fprintf(fp, "\n%s %s ", "Last", "child");
+        fprintf(fp, "\n%s %s ", "Second", "child");
         printf("Child fork created\n");
     }
     else
     {
         int wait = waitpid(child, NULL, 0);
-        fprintf(fp, "\n%s %s", "Last", "Parent");
+        fprintf(fp, "\n%s %s", "Second", "Parent");
         printf("I am a parent!\n");
     }
 
