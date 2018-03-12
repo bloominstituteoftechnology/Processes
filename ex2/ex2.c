@@ -8,7 +8,10 @@
 
 int main(int argc, char* argv[])
 {
-    // Your code here 
+    text = fopen("text.txt", "r+");
+    fork = fork();
+    fprintf(text, "texting 123");
+    fclose(text);
     
     return 0;
 }

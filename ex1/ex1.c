@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
         x=200;
         printf("in the child process, x is %d\n", x);
     } else {
-        x = 10;
+        x=10;
         printf("in the parent process, x is %d\n", x);
     }
 
