@@ -11,7 +11,7 @@ int main(int argc, char* argv[])
     int y = fork();
     if (y==0) {
         printf("hello");
-        exit();
+        exit(0);
     } else {
         wait();
         printf("goodbye");
