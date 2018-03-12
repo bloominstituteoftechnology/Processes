@@ -14,13 +14,13 @@ int main(int argc, char *argv[])
 
     if (y==0) {
         x=200;
-        printf("in the child process, x is %d/n", x);
+        printf("in the child process, x is %d\n", x);
     } else {
         x = 10;
-        printf("in the parent process, x is %d/n", x);
+        printf("in the parent process, x is %d\n", x);
     }
 
-    printf("X is set to %d/n", x);
+    printf("X is set to %d\n", x);
 
     return 0;
 }
