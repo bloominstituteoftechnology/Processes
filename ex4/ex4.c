@@ -9,7 +9,28 @@
 
 int main(int argc, char* argv[])
 {
-    // Your code here    
+    // Your code here 
+    int child = fork();
+
+    if (child < 0)
+    {
+        printf("Unable to fork\n");
+        exit(1);
+    }
+    else if (child == 0)
+    {
+        printf("Child fork\n");
+        char commands[2];
+        commands[0] = strdup("/bin/ls");
+        commands[1] = NULL;
+        execvp(commands[0], commands[1]);
+        printf("Child completed\n");
+    }
+    else
+    {
+        int wait = waitpid(child, NULL, 0);
+        printf("Parent\n");
+    }
 
     return 0;
 }
