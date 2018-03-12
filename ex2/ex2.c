@@ -10,8 +10,8 @@ int main(int argc, char* argv[])
 {
     FILE *text;
     text = fopen("text.txt", "r+");
-    int fork = fork();
-    fprintf(text, "texting 123");
+    fork();
+    fprintf(text, "testing 123");
     fclose(text);
     
     return 0;
