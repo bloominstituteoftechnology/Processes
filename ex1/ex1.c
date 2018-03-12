@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
     {
         sleep(1);
         printf("%d: I'm the parent\n", getpid());
-        
+        x = x + 100;
         printf("This is parent x: %d\n", x);
     }
 
