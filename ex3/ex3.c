@@ -8,7 +8,17 @@
 
 int main(int argc, char* argv[])
 {
-    // Your code here
-
-    return 0;
+	int status;
+	int rc = fork();
+	if(rc < 0) {
+		fprintf(stderr, "Fork failed\n");
+		exit(1);
+	} else if(rc == 0) {
+		printf("Hello im the child process\n");
+	} else {
+		while(waitpid(rc, &status, WNOHANG) == 0) {
+			sleep(1);
+		}
+		printf("goodbye im the parent process\n");
+	}
 }
