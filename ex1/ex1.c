@@ -8,7 +8,11 @@
 
 int main(int argc, char *argv[])
 {
-    // Your code here
+    int x=100;
+
+    int y = fork();
+
+    printf("X is set to %i", x);
 
     return 0;
 }
