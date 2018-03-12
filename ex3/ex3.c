@@ -10,11 +10,11 @@ int main(int argc, char* argv[])
 {
     int y = fork();
     if (y==0) {
-        printf("hello");
+        printf("hello\n");
         exit(0);
     } else {
         wait();
-        printf("goodbye");
+        printf("goodbye\n");
     }
     return 0;
 }
