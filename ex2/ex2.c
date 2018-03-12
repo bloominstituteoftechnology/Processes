@@ -9,6 +9,38 @@
 int main(int argc, char* argv[])
 {
     // Your code here 
-    
+    FILE *fp = fopen("text.txt", "r+");
+    int child = fork();
+    int c;
+
+    if (child < 0)
+    {
+        printf("Unable to fork a child\n");
+        exit(1);
+    }
+    else if (child == 0)
+    {
+        fprintf(fp, "\n%s %s ", "Forked", "text");
+        printf("Child fork created\n");
+    }
+    else
+    {
+        int wait = waitpid(child, NULL, 0);
+        fprintf(fp, "\n%s %s", "Parent", "section");
+        printf("I am a parent!\n");
+    }
+
+    //reading the .txt file
+    while(1)
+    {
+        c = fgetc(fp);
+        if(feof(fp))
+        {
+            printf("\n");
+            break;
+        }
+        printf("%c", c);
+    }
+    fclose(fp);
     return 0;
 }
