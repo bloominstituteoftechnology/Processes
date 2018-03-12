@@ -8,7 +8,13 @@
 
 int main(int argc, char* argv[])
 {
-    // Your code here
-
+    int y = fork();
+    if (y==0) {
+        printf("hello");
+        exit();
+    } else {
+        wait();
+        printf("goodbye");
+    }
     return 0;
 }
