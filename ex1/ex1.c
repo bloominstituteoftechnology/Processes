@@ -12,6 +12,14 @@ int main(int argc, char *argv[])
 
     int y = fork();
 
+    if (y==0) {
+        x=200;
+        printf("in the child process, x is %d", x);
+    } else {
+        x = 10;
+        printf("in the parent process, x is %d", x);
+    }
+
     printf("X is set to %i", x);
 
     return 0;
