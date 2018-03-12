@@ -9,6 +9,15 @@
 int main(int argc, char *argv[])
 {
     // Your code here
-
+    char str[100] = "What does fork() do\n";
+    int num = 100;
+    printf(str);
+    printf(num)
+    fork();
+    str = "Because it has been forked, this sentence should print twice.\n";
+     printf(str);
+    
+    num += 100;
+    printf("%d \n", num); // my guess:200 300
     return 0;
 }
