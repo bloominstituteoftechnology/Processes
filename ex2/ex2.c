@@ -9,6 +9,74 @@
 int main(int argc, char* argv[])
 {
     // Your code here 
+
+    // FILE * fp;
+    // int c;
+    // fp = fopen("text.txt", "r");
+    // while(1)
+    // {
+    //     c = fgetc(fp);
+    //     if(feof(fp))
+    //     {
+    //         break;
+    //     }
+    //     printf("%c", c);
+    // }
     
+
+    // fork();
+
+    // fp = fopen("text.txt", "r");
+    // while(1)
+    // {
+    //     c = fgetc(fp);
+    //     if(feof(fp))
+    //     {
+    //         break;
+    //     }
+    //     printf("%c", c);
+    // }
+    
+    
+
+    
+    FILE * fp;
+    int c;
+
+    int rc = fork();
+    
+    if (rc < 0)
+    {
+        fprintf(stderr, "fork failed\n");
+    }
+    else if (rc == 0)
+    {
+        fp = fopen("text.txt", "r");
+        while(1)
+        {
+            c = fgetc(fp);
+            if(feof(fp))
+            {
+                break;
+            }
+            printf("%c", c);
+        }
+        printf("child here (pid: %d)\n", (int) getpid());
+    }
+    else
+    {
+        fp = fopen("text.txt", "r");
+        while(1)
+        {
+            c = fgetc(fp);
+            if(feof(fp))
+            {
+                break;
+            }
+            printf("%c", c);
+        }
+        printf("parent here (pid: %d) of child %d\n", (int) getpid(), rc);
+    }
+
     return 0;
 }
