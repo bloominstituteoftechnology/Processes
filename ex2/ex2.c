@@ -8,7 +8,26 @@
 
 int main(int argc, char* argv[])
 {
-    // Your code here 
+    FILE *fp;
+    char buffer[255];
+
+    fp = fopen("text.txt", "r");
+
+    pid_t rc = fork();
+
+    if (rc == 0)
+    {
+        fgets(buffer, 255, fp); //read one line
+        printf("Child read: %s", buffer);
+    }
+    else
+    {
+        sleep(1);
+        printf("parent woke up\n");
+
+        fgets(buffer, 255, fp);
+        printf("parent read: %s", buffer);
+    }
     
     return 0;
 }

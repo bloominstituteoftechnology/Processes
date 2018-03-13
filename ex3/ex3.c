@@ -8,7 +8,14 @@
 
 int main(int argc, char* argv[])
 {
-    // Your code here
+    if (fork() == 0) {
+        // return child
+        printf("Hello\n");
+    } else {
+        // return parent
+        wait(NULL);
+        printf("Goodbye\n");
+    }
 
     return 0;
 }
