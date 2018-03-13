@@ -28,5 +28,8 @@ int main(int argc, char* argv[])
         fprintf(fp, "x = %d\n", x);
         waitpid(rc, NULL, 0);
     }
+    
+    fclose(fp);
+    
     return 0;
 }
