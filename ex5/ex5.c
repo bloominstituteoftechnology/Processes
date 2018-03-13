@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include <sys/wait.h>
 
-#define MSGSIZE 16
+#define MSGSIZE 14
 
 char* msg1 = "hello world #1";
 char* msg2 = "hello world #2";
@@ -17,40 +17,52 @@ char* msg3 = "hello world #3";
 int main()
 {
     // Your code here
-    char inbuf[MSGSIZE];
-    int p[2];
 
+    char inbuf[128];
+    int fds[2]; 
     int rc = fork();
-
-    if (rc < 0)
+    int nbytes;
+    pipe(fds);
+ 
+    if (pipe(fds) < 0)
     {
-        fprintf(stderr, "fork failed\n");
         exit(1);
     }
-    else if (rc == 0)
+    /* continued */
+    if (rc == 0) {
+        write(fds[1], msg1, MSGSIZE);
+        write(fds[1], msg2, MSGSIZE);
+        write(fds[1], msg3, MSGSIZE);
+    }
+    else 
     {
-        if (pipe(p) < 0)
+        wait(NULL);
+        while ((nbytes = read(fds[0], inbuf, 128)) > 0)
         {
-            fprintf(stderr, "pipe failed\n");
-            exit(1);
+            printf("Read from parent: %s\n", inbuf);
         }
-
-         write(p[1], msg1, MSGSIZE);
-         write(p[1], msg2, MSGSIZE);
-         write(p[1], msg3, MSGSIZE);
-    } 
-    else
-    {
-        printf("hello");
-        //wait(NULL);
-        for (int i = 0; i < 3; i++) 
+            
+        if (nbytes != 0)
         {
-        /* read pipe */
-        read(p[0], inbuf, MSGSIZE);
-        printf("%s\n", inbuf);
-        }
-        printf("bye");
+            exit(2);
+        }  
+        printf("Finished reading\n");
     }
     
     return 0;
 }
+
+/*
+        int fds[2];
+            char buffer[128];
+
+            pipe(fds);
+
+            write(fds[1], "Hello, world!", 14);
+            // write(fds[1], "Hello, world, again!", 21);
+
+            read(fds[0], buffer, 128);
+
+            printf("Read from pipe: %s\n", buffer);    
+*/
+

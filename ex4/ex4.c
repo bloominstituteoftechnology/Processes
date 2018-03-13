@@ -26,7 +26,7 @@ int main(int argc, char* argv[])
         myargs[0] = "/bin/ls";
         myargs[1] = NULL;
         execvp(myargs[0], myargs);
-        printf("goodbye, child here (pid: %d)\n", (int) getpid());
+        printf("goodbye, child here (pid: %d)\n", (int) getpid()); // won't show up
     } 
     else
     {
