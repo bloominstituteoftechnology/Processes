@@ -36,9 +36,10 @@ int main()
     else
     {
         //in parent, read
+        wait(NULL);
         read(fds[0], buffer, 128);
+        printf("Read from pipe: %s\n", buffer);
     }
-    printf("Read from pipe: %s\n", buffer);
     
     return 0;
 }
