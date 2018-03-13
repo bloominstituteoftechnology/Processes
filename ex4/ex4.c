@@ -9,7 +9,9 @@
 
 int main(int argc, char* argv[])
 {
-    // Your code here    
+    printf("I'm about to run ls\n");
+    execl("/bin/ls", "ls", NULL);
+    printf("I just ran ls\n");   
 
     return 0;
 }
