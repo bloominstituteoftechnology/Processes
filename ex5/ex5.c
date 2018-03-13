@@ -16,6 +16,26 @@ char* msg3 = "hello world #3";
 int main()
 {
     // Your code here
-    
+    int fds[2];
+    char buffer[128];
+    pipe(fds);
+
+    int rc = fork();
+
+    if (rc == 0)
+    {
+        //Child Here
+        printf("Writing from the Child SOMESTUFF 11 Bytes\n");
+        write(fds[1], "SOMESTUFF", 11);
+    }
+    else
+    {
+        wait(NULL);
+        //Parent Here
+        printf("Reading from the Parent\n");
+        read(fds[0], buffer, 128);
+        printf("Read from the Parent: %s\n", buffer);
+    }
+
     return 0;
 }

@@ -11,6 +11,7 @@ int main(int argc, char *argv[])
     // Your code here
     int n = 100;
     printf("Parent Here: (pid: %d)\nThe Value of n is: %d\n", (int)getpid(), n);
+    printf("Parent Modified n: (pid: %d)\nThe Value of n is: %d\n\n", (int)getpid(), n + 5);
     int rc = fork();
     if (rc < 0)
     {
@@ -19,6 +20,7 @@ int main(int argc, char *argv[])
     else if (rc == 0)
     {
         printf("Child Here: (pid: %d)\nThe Value of n is: %d\n", (int)getpid(), n);
+        printf("Child Modified n: (pid: %d)\nThe Value of n is: %d\n\n", (int)getpid(), n + 10);
     }
     return 0;
 }

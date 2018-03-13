@@ -10,18 +10,22 @@ int main(int argc, char *argv[])
 {
     // Your code here
     FILE *fp;
-    fp = fopen("text.txt", "a+");
-    // fprintf(fp, "%s", "PARENT");
+    //fp = fopen("text.txt", "a+");
+
     int rc = fork();
 
     if (rc == 0)
     {
+        fp = fopen("text.txt", "a+");
         fprintf(fp, "%s", "CHILD ");
+        fclose(fp);
     }
     else
     {
+        fp = fopen("text.txt", "a+");
         fprintf(fp, "%s", "PARENT ");
+        fclose(fp);
     }
-    fclose(fp);
+    //fclose(fp);
     return 0;
 }

@@ -9,18 +9,18 @@
 int main(int argc, char *argv[])
 {
     // Your code here
-    int a = 100;
     int rc = fork();
 
     if (rc == 0)
     {
-        a = a + 128;
-        printf("In CHILD a = %d\n", a);
+        printf("Hello\n");
+        exit(0);
     }
     else
     {
-        int wc = waitpid(rc, NULL, 0);
-        printf("In PARENT a = %d\n", a);
+        sleep(30);
+        wait(NULL);
+        printf("Goodbye\n");
     }
 
     return 0;
