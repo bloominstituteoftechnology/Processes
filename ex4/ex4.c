@@ -4,12 +4,26 @@
 // are so many variants of the same basic call?
 
 #include <stdio.h>
-#include <unistd.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
-    // Your code here    
+    pid_t FPID = fork();
+
+    if (FPID != 0)
+    {
+        wait(NULL);
+        printf("Parent complete.");
+    }
+    if (FPID == 0)
+    {
+        execl("/bin/ls", "ls", "-la", NULL);
+    }
 
     return 0;
 }
+
+// complete with a child call

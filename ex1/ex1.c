@@ -5,10 +5,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
 int main(int argc, char *argv[])
 {
-    // Your code here
+    pid_t FPID = fork();
+    pid_t PID = getpid();
+    printf("Starting... %d", PID);
+    pid_t PPID = getppid();
 
+    if (FPID != 0)
+    {
+        wait(NULL);
+        printf("\n<PARENT>  PID:%d  PPID:%d  FPID:%d  </PARENT>\n", PID, PPID, FPID);
+    }
+
+    if (FPID == 0)
+    {
+        printf("\n<CHILD>  PID:%d  PPID:%d  FPID:%d  </CHILD>\n", PID, PPID, FPID);
+    }
     return 0;
 }
