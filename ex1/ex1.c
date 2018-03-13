@@ -1,14 +1,37 @@
-// Write a program that calls `fork()`. Before calling `fork()`, have the main process access a variable
-// (e.g., x) and set its value to something (e.g., 100). What value is the variable in the child process?
-// What happens to the variable when both the child and parent change the value of x?
+// Write a program that opens the text.txt  file (with the `fopen()` system
+// call) located in this directory and then calls `fork()` to create a new
+// process. Can both the child and parent access the file descriptor returned by
+// `fopen()`? What happens when they are written to the file concurrently?
 
 #include <stdio.h>
-#include <stdlib.h>
 #include <unistd.h>
+#include <stdlib.h>
 
-int main(int argc, char *argv[])
+int main(void)
 {
-    // Your code here
+    FILE *fp = fopen("text.txt", "w");
 
+    if (fp == NULL) {
+        fprintf(stderr, "failed to open file");
+        exit(1);
+    }
+
+    if (fork() == 0) {
+        // We're the child
+        for (int i = 0; i < 20000; i++) {
+            fprintf(fp, "Child writing to file!\n");
+        }
+    } else {
+        // We're the parent
+        for (int i = 0; i < 20000; i++) {
+            fprintf(fp, "Parent writing to file!\n");
+        }
+
+        wait(NULL);
+
+    }
+
+
+    
     return 0;
 }
