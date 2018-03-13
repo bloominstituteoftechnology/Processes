@@ -16,7 +16,11 @@ int main(int argc, char *argv[])
     fork();
     str = "Because it has been forked, this sentence should print twice.\n";
      printf(str);
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 3e7e81f6fcbf8b24fd7a3f83434587959289d471
     num += 100;
     printf("%d \n", num); // my guess:200 300
     return 0;
