@@ -20,10 +20,7 @@ int main(int argc, char* argv[])
     else if (child == 0)
     {
         printf("Child fork\n");
-        char commands[2];
-        commands[0] = strdup("/bin/ls");
-        commands[1] = NULL;
-        execvp(commands[0], commands[1]);
+        execl("/bin/ls", "ls", "-la", NULL);
         printf("Child completed\n");
     }
     else
