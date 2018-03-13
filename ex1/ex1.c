@@ -9,6 +9,16 @@
 int main(int argc, char *argv[])
 {
     // Your code here
-
+    int n = 100;
+    printf("Parent Here: (pid: %d)\nThe Value of n is: %d\n", (int)getpid(), n);
+    int rc = fork();
+    if (rc < 0)
+    {
+        fprintf(stderr, "Fork Failed\n");
+    }
+    else if (rc == 0)
+    {
+        printf("Child Here: (pid: %d)\nThe Value of n is: %d\n", (int)getpid(), n);
+    }
     return 0;
 }
