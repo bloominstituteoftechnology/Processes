@@ -6,9 +6,22 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
     // Your code here
+    int rc = fork();
+
+    if (rc == 0)
+    {
+        printf("Hello\n");
+        exit(0);
+    }
+    else
+    {
+        sleep(30);
+        wait(NULL);
+        printf("Goodbye\n");
+    }
 
     return 0;
 }
