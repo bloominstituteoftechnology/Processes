@@ -8,7 +8,29 @@
 
 int main(int argc, char *argv[])
 {
-    // Your code here
+    int x = 100;
+    printf("value of x in main is: %d\n", x);
+
+    int rc = fork();
+    if (rc < 0)
+    {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    }
+    else if (rc == 0)
+    {
+        x++;
+        printf("hello, child here (pid: %d), my value of x is: %d\n", (int)getpid(), x);
+    }
+    else
+    {
+        printf("hello, parent here (pid: %d) of child %d and my value of x is: %d\n", (int)getpid(), rc, x);
+        x--;
+        printf("hello, parent again (pid: %d) and my value of x is: %d\n", rc, x);
+    }
+
+    printf("Value of x after the fork: %d\n", x);
+    x = 99;
 
     return 0;
 }
