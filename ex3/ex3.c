@@ -9,6 +9,15 @@
 int main(int argc, char* argv[])
 {
     // Your code here
-
+    int f = fork();
+    if (f < 0)
+        printf("something bad happened");
+    else if (f == 0)
+        printf("Hello\n");
+    else
+    {
+        sleep(1);
+        printf("Goodbye\n");
+    }
     return 0;
 }
