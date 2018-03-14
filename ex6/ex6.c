@@ -19,7 +19,19 @@
 
 int main()
 {
-    // Your code here
+    time_t startTime;
+    time_t endTime;
+    time_t timeElapsed;
+    startTime = clock();
     
+    for (int i = 0; i < number_iter; i++)
+    {
+        printf("");
+    }
+
+    endTime = clock();
+
+    timeElapsed = endTime - startTime;
+    printf("\n%li  %li  %li", startTime, endTime, timeElapsed);
     return 0;
 }
