@@ -9,7 +9,10 @@
 
 int main(int argc, char* argv[])
 {
-    // Your code here    
-
+    if(fork() == 0) {
+        execl("/bin/ls", "ls", "-la", NULL);
+    } else {
+        wait(NULL);
+    }
     return 0;
 }
