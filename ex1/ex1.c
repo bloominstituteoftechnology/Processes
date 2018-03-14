@@ -6,9 +6,19 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int main(int argc, char *argv[])
+int main(void) 
 {
-    // Your code here
+    int x = 100;
+    
+    pid_t rc = fork();
+    if (rc ==0)
+    {
+        x= 200;
+        printf("Child x is %d\n",x);
+    } else {
+        sleep(1);
+        printf("Parent x is %d\n",x);
+    }
 
     return 0;
 }

@@ -8,7 +8,16 @@
 
 int main(int argc, char* argv[])
 {
-    // Your code here 
+    FILE = fp = fopen("text.txt", "w");
+    if (fp ==NULL) {
+        fprintf(stderr, "failed to open file");
+        exit(1);
+    }
+    if(fork() ==0) {
+        fprint(fp,"Child writing to file!\n");
+    } else {
+        fprint(fp,"Parent writing to file!\n");
+    }
     
     return 0;
 }

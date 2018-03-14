@@ -19,7 +19,20 @@
 
 int main()
 {
-    // Your code here
+    struct timespec start,end;
+    long long unsigned acuulator =0;
+    for( int i= 0; 1<number_iter;i++ ) {
+        clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &start);
+        write(1,"",0);
+        clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end);
+
+        int diff_sec = end.tv_sec -start.tv_sec;
+        long long unsigned siff_nsec = end.tv_nsec -start.tv_nsec;
+         accumulatot +=BILLION* diff_sec +diff_nsec;
+
+    }
+     long long unsigned average = acuulator/ number_iter;
+     printf("average time: %llu ns\n", average);
     
     return 0;
 }
