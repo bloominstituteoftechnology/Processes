@@ -9,6 +9,8 @@
 int main(int argc, char* argv[])
 {
     // Your code here 
-    
+    FILE *fp = fopen("text.txt", "rb");
+    int child = fork();
+    printf("The pointer value is %p\n", fp);
     return 0;
 }

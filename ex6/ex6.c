@@ -16,10 +16,13 @@
 
 #define number_iter 1000000
 #define BILLION 1000000000L
-
+int *foo(void){
+    int a = 12;
+    return &a;
+}
 int main()
 {
     // Your code here
-    
+    int *q = foo();
     return 0;
 }

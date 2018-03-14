@@ -9,6 +9,15 @@
 int main(int argc, char *argv[])
 {
     // Your code here
+    int x = 100;
+    printf("The value of x is %d and process id is %d\n",x,getpid());
+    int child = fork();
+    if (child == 0){
+        x = 200;
+        printf("The value of x in child is %d and piiid is %d and parentid is %d\n", x, getpid(), getppid());
+    } else {
+        printf("The value of x is %d and piiid is %d and parentid is %d\n", x, getpid(), getppid());
+    }
 
     return 0;
 }
