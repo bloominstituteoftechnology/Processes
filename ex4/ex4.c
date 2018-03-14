@@ -22,22 +22,17 @@ int main(int argc, char* argv[])
 {
     // Your code here    
       printf("hello world (pid: %d)\n", (int) getpid());
+      
     // ------------------------------------------------ child process starts executing here
     int rc = fork();
     if (rc < 0) {    // fork failed; exit
         fprintf(stderr, "fork failed\n");
         exit(1);
     } else if (rc == 0) {    // child process satisfies this branch
-        printf("hello, child here (pid: %d) \n", (int) getpid());
-        char *myargs[2];    // allocate an array of chars to hold 3 bytes
-        // `strdup` duplicates the given input string 
-        myargs[0] = strdup("ls");      // pass the name of the program we want to run as the first array element 
-        myargs[1] = NULL;    // end of array
-
-        execvp(myargs[0], myargs);     // runs the word count program, passing in the `myargs` array to the word count program as arguments
+        execl("/bin/ls", "ls","-la", NULL);     // runs the ls program, passing in the `myargs` array as arguments
         printf("this should not be seen");
     } else {
-        int wc = waitpid(rc, NULL, 0);    // `waitpid` call added here
+        int wc = wait( NULL);    // wait for the child process exec to end first
         printf("hello, parent here (pid: %d) of child %d\n", (int) getpid(), rc);
     }
 

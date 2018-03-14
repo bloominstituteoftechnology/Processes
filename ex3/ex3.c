@@ -13,7 +13,7 @@ int main(int argc, char* argv[])
     if(forked == 0){  // child process
          printf("hello\n");
     } else{
-        waitpid(forked, NULL, 0); // wait until the child process finishes
+        waitpid(forked, NULL, 0); // wait until the child process finishes, can also use wait(NULL)
         printf("goodbye\n");
     }
 
