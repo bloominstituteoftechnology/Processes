@@ -6,9 +6,22 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int main(int argc, char* argv[])
+int main(void)
 {
     // Your code here
+    if (fork() == 0) {
+        // We're the child.
+        printf("Hello\n");
+        exit(2));
+
+    } else {
+        // We're the parent
+        int stat_loc;
+        wait(&stat_loc);
+        printf("Child status: %d\n", WEXITSTATUS(stat_loc));
+        printf("Goodbye\n");
+
+    }
 
     return 0;
 }
