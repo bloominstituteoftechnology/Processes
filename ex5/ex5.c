@@ -7,7 +7,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-#define MSGSIZE 16
+#define MSGSIZE 15
 
 char *msg1 = "hello world #1";
 char *msg2 = "hello world #2";
@@ -26,14 +26,19 @@ int main()
     if (fork() == 0)
     {
         // We're the child
-        write(pipe1[1], "Hello, world!", 14);
+        write(pipe1[1], msg1, MSGSIZE);
+        write(pipe1[1], msg2, MSGSIZE);
+        write(pipe1[1], msg3, MSGSIZE);
     }
     else
     {
         read(pipe1[0], buffer, 128);
-
         printf("Read from pipe1: %s\n", buffer);
-    }
+        read(pipe1[0], buffer, 128);
+        printf("Read from pipe1: %s\n", buffer);
+        read(pipe1[0], buffer, 128);
+        printf("Read from pipe1: %s\n", buffer);
+        }
 
     // write(pipe1[1], "Hello, World!", 14);
 
