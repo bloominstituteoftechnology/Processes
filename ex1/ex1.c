@@ -8,7 +8,18 @@
 
 int main(int argc, char *argv[])
 {
-    // Your code here
+  int process = getpid();
+  printf("Hello world - process id = %d\n", process);
+  int rc = fork();
+  if(rc < 0) {
+  	fprintf(stderr, "fork failed\n");
+  	exit(1);
+  } else if(rc == 0) {
+  	printf("hello, child process here - process id = %d\n", (int) getpid());
+  } else {
+  	printf("hello parent process  of child here - parent process id = %d\n, child process id = %d\n", (int) getpid(), rc);
+  }
 
-    return 0;
+
+  return 0;
 }
