@@ -7,9 +7,20 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-int main(int argc, char* argv[])
+int main(void)
 {
-    // Your code here    
-
+    char *args[] = {
+        "ls",
+        "-ls",
+        NULL
+    }
+    if (fork() -- 0) {
+        // We're the child!
+        execl("/bin/ls", "ls", args);
+    } else {
+        // We're the parent!
+        wait(NULL);
+    }
+    
     return 0;
 }

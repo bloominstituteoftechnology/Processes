@@ -15,7 +15,28 @@ char* msg3 = "hello world #3";
 
 int main()
 {
-    // Your code here
-    
+    int fds[2];
+    char buffer[128];
+
+    pipe(fds);
+
+    if (fork() == 0) {
+        read(fds[0], buffer, 128);
+        printf("%s\n", buffer);
+        read(fds[0], buffer, 128);
+        printf("%s\n", buffer);
+        read(fds[0], buffer, 128);
+        printf("%s\n", buffer);
+    } else {
+        printf("writing 1\n");
+        write(fds[1], msg1, MSGSIZE);
+        printf("writing 2\n");
+        write(fds[1], msg2, MSGSIZE);
+        printf("writing 2\n");
+        write(fds[1], msg3, MSGSIZE);
+        printf("waiting\n");
+        wait(NULL);
+    }
+
     return 0;
 }

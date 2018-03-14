@@ -9,6 +9,22 @@
 int main(int argc, char *argv[])
 {
     // Your code here
+    // Quick x variable to tinker with
+    int x = 100; 
 
+    printf("Parent: x = %d\t\tpid: %d\n\n", x, (int) getpid());
+
+    pid_t rc = fork();
+    if (rc == 0) {
+        // W're the child
+        x = 200;
+        printf("Child:  x = %d\t\tpid: %d\n\n", x, (int) getpid());
+    } else {
+        sleep(1);
+        printf("Child:  x = %d\t\tpid: %d\n\n", x, (int) getpid());
+    }
+
+    fclose(fp);
+    
     return 0;
 }
