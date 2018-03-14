@@ -10,6 +10,13 @@
 int main(int argc, char* argv[])
 {
     // Your code here    
-
+    //int f = fork();
+    // execl: takes args as parameters
+    //execl("/bin/ls", "ls", "-l", (char *) 0);
+    // execle: 
+    //execle("/bin/ls", "ls", "-l", (char *) 0);
+    // execv: takes args as an array
+    char *args[] = {"ls", "-1", (char *) 0};
+    execv("/bin/ls", args);
     return 0;
 }
