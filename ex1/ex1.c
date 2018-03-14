@@ -9,6 +9,22 @@
 int main(int argc, char *argv[])
 {
     // Your code here
+    int x = 100;
+    pid_t pid = fork();
+    if (pid == 0)
+
+    {
+        printf("%d: I'm the child!\n", getpid());
+        x = x + 100;
+        printf("this is child x: %d\n", x);
+    }
+    else
+    {
+        sleep(1);
+        printf("%d: I'm the parent\n", getpid());
+        x = x + 100;
+        printf("This is parent x: %d\n", x);
+    }
 
     return 0;
 }
