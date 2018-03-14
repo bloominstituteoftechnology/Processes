@@ -11,7 +11,7 @@ int main(int argc, char* argv[])
     // Your code here 
     FILE *fp = fopen("text.txt", "r+");
     int child = fork();
-    int c;
+    char c;
 
     if (child < 0)
     {
@@ -20,16 +20,16 @@ int main(int argc, char* argv[])
     }
     else if (child == 0)
     {
-        fprintf(fp, "\n%s %s ", "Second", "child");
+        c = fgetc(fp);
+        fprintf(fp, "%s", strcat(c, "NewChild"));
         printf("Child fork created\n");
     }
     else
     {
-        int wait = waitpid(child, NULL, 0);
-        fprintf(fp, "\n%s %s", "Second", "Parent");
+        //fprintf(fp, "%s newParent", *fp);
         printf("I am a parent!\n");
     }
-
+    wait(NULL);
     //reading the .txt file
     while(1)
     {
