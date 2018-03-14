@@ -23,16 +23,28 @@ int main()
     pipe(pipe1);
     pipe(pipe2);
 
-    write(pipe1[1], "Hello, World!", 14);
+    if (fork() == 0)
+    {
+        // We're the child
+        write(pipe1[1], "Hello, world!", 14);
+    }
+    else
+    {
+        read(pipe1[0], buffer, 128);
 
-    read(pipe1[0], buffer, 128);
+        printf("Read from pipe1: %s\n", buffer);
+    }
 
-    printf("Read from pipe1: %s\n", buffer);
+    // write(pipe1[1], "Hello, World!", 14);
 
-    write(pipe2[1], "Thanks so very much", 20);
-    read(pipe2[0], buffer, 128);
+    // read(pipe1[0], buffer, 128);
 
-    printf("Read from pipe2: %s\n", buffer);
+    // printf("Read from pipe1: %s\n", buffer);
+
+    // write(pipe2[1], "Thanks so very much", 20);
+    // read(pipe2[0], buffer, 128);
+
+    // printf("Read from pipe2: %s\n", buffer);
 
     return 0;
 }
