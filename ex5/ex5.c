@@ -6,6 +6,8 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
 #define MSGSIZE 16
 
@@ -15,7 +17,31 @@ char* msg3 = "hello world #3";
 
 int main()
 {
-    // Your code here
+    char* buf[MSGSIZE];
+    pid_t pid;
+    int pipefd[2];
+
+    int ret = pipe(pipefd);
     
+    if (ret == -1)
+    {
+        perror("Pipe error.");
+        exit(1);
+    }
+    
+    pid = fork();
+
+    if (pid == 0)
+    {
+        pid = getpid();
+        printf("Input(%i): %s\n", pid, buf);
+        write(pipefd[1], "Hello world.", 12);
+    } else {
+        pid = getpid();
+        wait(NULL);
+        read(pipefd[0], buf, 15);
+        printf("Output(%i): %s\n", pid, buf);
+    }
+
     return 0;
 }

@@ -5,10 +5,34 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
-    // Your code here
+    pid_t FPID = fork();
+    pid_t PID = getpid();
+    printf("Starting... %d", PID);
+    pid_t PPID = getppid();
+
+    FILE *fp;
+    char file[] = "text.txt";
+    fp = fopen(file, "a");
+
+    if (fp != NULL)
+    {
+        if (FPID != 0)
+        {
+            wait(NULL);
+            fprintf(fp, "Goodbye\n", PID, PPID, FPID);
+            fclose(fp);
+        }
+        if (FPID == 0)
+        {
+            fprintf(fp, "Hello\n", PID, PPID, FPID);
+            fclose(fp);
+        }
+    }
 
     return 0;
 }

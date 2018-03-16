@@ -5,10 +5,30 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
 int main(int argc, char *argv[])
 {
-    // Your code here
+    int val = 5;
+    pid_t FPID = fork();
+    pid_t PID = getpid();
+    printf("Starting... %d", PID);
+    pid_t PPID = getppid();
 
+    if (FPID != 0)
+    {
+        val = 10;
+        wait(NULL);
+        printf("\n<PARENT>  PID:%d  PPID:%d  FPID:%d  VAL:%i  </PARENT>\n", PID, PPID, FPID, val);
+    }
+
+    if (FPID == 0)
+    {
+        // val = 11;
+        printf("\n<CHILD>  PID:%d  PPID:%d  FPID:%d  VAL:%i  </CHILD>\n", PID, PPID, FPID, val);
+    }
     return 0;
 }
+
+// Because each initialized value prior to fork is copied by value, there are safe of conflict. See pipes to introduce side effects.

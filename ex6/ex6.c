@@ -14,12 +14,24 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define number_iter 1000000
+#define number_iter 2000000
 #define BILLION 1000000000L
 
 int main()
 {
-    // Your code here
+    float startTime;
+    float endTime;
+    float avglapsed;
     
+    for (int i = 0; i < number_iter; i++)
+    {
+    startTime = clock();
+        printf("");
+    endTime = clock();
+    avglapsed += (endTime - startTime);
+    }
+    avglapsed = (avglapsed / number_iter);
+    printf("\n%f  %f  %f", startTime, endTime, avglapsed);
+
     return 0;
 }
