@@ -10,6 +10,7 @@
 
 int main(int argc, char *argv[])
 {
+    int val = 5;
     pid_t FPID = fork();
     pid_t PID = getpid();
     printf("Starting... %d", PID);
@@ -17,13 +18,17 @@ int main(int argc, char *argv[])
 
     if (FPID != 0)
     {
+        val = 10;
         wait(NULL);
-        printf("\n<PARENT>  PID:%d  PPID:%d  FPID:%d  </PARENT>\n", PID, PPID, FPID);
+        printf("\n<PARENT>  PID:%d  PPID:%d  FPID:%d  VAL:%i  </PARENT>\n", PID, PPID, FPID, val);
     }
 
     if (FPID == 0)
     {
-        printf("\n<CHILD>  PID:%d  PPID:%d  FPID:%d  </CHILD>\n", PID, PPID, FPID);
+        // val = 11;
+        printf("\n<CHILD>  PID:%d  PPID:%d  FPID:%d  VAL:%i  </CHILD>\n", PID, PPID, FPID, val);
     }
     return 0;
 }
+
+// Because each initialized value prior to fork is copied by value, there are safe of conflict. See pipes to introduce side effects.
