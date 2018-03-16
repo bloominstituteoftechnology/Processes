@@ -15,6 +15,7 @@ int rc = fork();
 if (rc < 0) {
 fprintf(stderr, "fork failed\n");
 exit(1);
+    //
 } else if (rc == 0) {
 printf("This is a child (pid: %d) and x is: %d\n", (int) getpid(), x);
 x++;

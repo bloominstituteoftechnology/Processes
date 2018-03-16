@@ -19,7 +19,14 @@
 
 int main()
 {
-    // Your code here
-    
+    struct timespec start, end;
+    long long unsigned accumulator = 0;
+
+    for (int i = 0; i < number_iter; i++)
+    {
+        clock_getting(CLOCK_PROCESS_CPUTIME_ID, & start);
+        write(1, "", 0);
+
+    }
     return 0;
 }

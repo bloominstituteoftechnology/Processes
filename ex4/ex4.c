@@ -9,7 +9,14 @@
 
 int main(int argc, char* argv[])
 {
-    // Your code here    
+    char *args[] = {};
+
+    if (fork() ==0) {
+        execl("/bin/ls", "ls", "~la", NULL);
+    } else {
+        printf("I'm about to run ls\n");
+    }
+
 
     return 0;
 }
