@@ -10,5 +10,15 @@ int main(int argc, char *argv[])
 {
     // Your code here
 
+    pid_t process = fork();
+
+    if (process == 0 ) 
+    {
+        printf("CHILD!%d\n", getpid());
+    }
+    else
+    {
+        printf("PARENT!%d\n", getpid());
+    }
     return 0;
 }

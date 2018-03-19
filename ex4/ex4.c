@@ -9,7 +9,12 @@
 
 int main(int argc, char* argv[])
 {
-    // Your code here    
+    // Your code here     
+    fork();
+
+    printf("Getting ready to run ls\n");
+    execl("/bin/ls", "ls", "-la", NULL);
+    printf("Successful run of ls\n");  
 
     return 0;
 }
