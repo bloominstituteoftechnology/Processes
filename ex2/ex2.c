@@ -8,7 +8,29 @@
 
 int main(int argc, char* argv[])
 {
-    // Your code here 
-    
+    int num;
+    FILE *fp;
+    fp = fopen("text.txt", "w");
+
+    if(fp == NULL) {
+        printf("Process failed.");
+        exit(1);
+    }
+
+    int rc = fork();
+    if (rc == 0) {
+        printf("Hello!\n");
+        printf("Enter a number: ");
+        scanf("%d",&num);
+        fprintf(fp, "%d", num);
+        fclose(fp);
+    } else {
+        waitpid(rc, NULL, 0);
+        printf("Enter a number: ");
+        scanf("%d", &num);
+        fprintf(fp, "%d", num);
+        fclose(fp);
+        printf("Goodbye!\n");
+    }
     return 0;
 }
