@@ -7,9 +7,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-
-// added for wait
-#include <sys/types.h>
 #include <sys/wait.h>
 
 int main(int argc, char *argv[])
