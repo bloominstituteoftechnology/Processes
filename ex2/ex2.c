@@ -4,7 +4,7 @@
 
 // Answers:
 //   1 - yes, both have access to the file descriptor
-//   2 - As far as I can tell, both add to the file but only the child prints the output
+//   2 - Both write to the file
 
 #include <stdio.h>
 #include <unistd.h>
