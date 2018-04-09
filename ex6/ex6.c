@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include <unistd.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include <time.h>
 
@@ -19,7 +20,19 @@
 
 int main()
 {
-    // Your code here
-    
+    uint64_t diff, sum = 0;
+    struct timespec start, end;
+    double average;
+
+    for (int i = 0; i < number_iter; i++)
+    {
+        clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &start);
+        write(STDOUT_FILENO, NULL, 0);
+        clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end);
+        diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+        sum += diff;
+    }
+    average = sum / (float)number_iter;
+    printf("Average time the system call takes is %f ns\n", average);
     return 0;
 }
