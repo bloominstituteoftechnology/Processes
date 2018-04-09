@@ -20,6 +20,21 @@
 int main()
 {
     // Your code here
+    struct timespec start, end;
+    uint64_t diff;
+
+    int total = 0;
+
+    for (int i = 0; i < number_iter; i++) {
+        clock_gettime(CLOCK_MONOTONIC, &start);
+        write(0, NULL, 0);
+        clock_gettime(CLOCK_MONOTONIC, &end);
+
+        diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+        total += diff;
+    }
     
+    int average = total / number_iter;
+    printf("average time = %d nanoseconds\n", average);
     return 0;
 }
