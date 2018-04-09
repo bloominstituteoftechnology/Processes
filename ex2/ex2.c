@@ -9,6 +9,24 @@
 int main(int argc, char* argv[])
 {
     // Your code here 
-    
+    FILE *fp;
+    int c;
+
+    fp = fopen("text.txt", "r+");
+    int rc = fork();
+
+    if (rc < 0) {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {
+        char str[] = "Child string here. Trying to do great things.\n";
+        fwrite(str, 1, sizeof(str), fp);
+    } else {
+        char str2[] = "Parent string here. Trying to do great things.\n";
+        fwrite(str2, 1, sizeof(str2), fp);
+    }
+
+
+    fclose(fp);
     return 0;
 }
