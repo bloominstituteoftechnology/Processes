@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include <wait.h>
+#include <sys/wait.h>
 
 int main(int argc, char* argv[])
 {
@@ -14,7 +14,7 @@ int main(int argc, char* argv[])
     FILE *fptr;
     fptr = fopen("text.txt","a+");
     
-    if(fptr == NULL) {
+    if (fptr == NULL) {
         printf("Error");
         exit(1);
     }
