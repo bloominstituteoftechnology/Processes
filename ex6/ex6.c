@@ -5,6 +5,9 @@
 // iterations in nanoseconds.
 // For some helpful documentation and examples of using time-related system calls,
 // visit this site: https://www.cs.rutgers.edu/~pxk/416/notes/c-tutorials/gettime.html
+// While the linked site does say that `clock_gettime()` does not work on OSX, this 
+// turns out to only be the case for OSX versions < 10.12. Anything later than that 
+// and `clock_gettime()` should work just fine. 
 
 #include <stdio.h>
 #include <unistd.h>
