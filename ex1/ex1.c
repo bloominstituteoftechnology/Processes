@@ -9,6 +9,18 @@
 int main(int argc, char *argv[])
 {
     // Your code here
+    int x = 100;
+    int child = fork();
+     if ( child < 0) {
+       printf("Can't fork a child\n");
+       exit(1);
+     } else if (child == 0) {
+       x = 111;
+       printf("child print: %d\n", x);
+     } else {
+       int wait = waitpid(child, NULL, 0);
+       printf("Parent value: %d\n", x);
+     }
 
     return 0;
 }
