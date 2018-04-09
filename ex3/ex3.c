@@ -8,7 +8,15 @@
 
 int main(int argc, char* argv[])
 {
-    // Your code here
-
-    return 0;
+  int childprocess = fork();
+  if (childprocess < 0) {
+    fprintf(stderr, "Failed to create a child process\n");
+    exit(1);
+  } else if (childprocess == 0) {
+    printf("hello \n");
+  } else {
+    waitpid(childprocess, NULL, 0);
+    printf("goodbye \n");
+  }
+  return 0;
 }
