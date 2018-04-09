@@ -38,7 +38,7 @@ if (rc < 0) {
         write(p[1], msg3, MSGSIZE);
         printf("Child 2 pid: %d, end of write\n", (int) getpid());
     } else {
-        while (waitpid(fk, &status, WNOHANG) == 0)
+        while (waitpid(rc, &status, WNOHANG) == 0)
         {
             sleep(1);
         }
@@ -46,8 +46,8 @@ if (rc < 0) {
         printf("Parent 1 pid: %d, start to read\n", (int) getpid());
         
         for (int i = 0; i < 3; i++) {
-            read(p[0], inbuf, MSGSIZE);
-            printf("%s\n", inbuf);
+            read(p[0], buf, MSGSIZE);
+            printf("%s\n", buf);
         }
         
         printf("Parent 2 pid: %d, end of read\n", (int) getpid());
