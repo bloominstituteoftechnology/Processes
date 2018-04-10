@@ -1,9 +1,6 @@
-# Processes
+# Processes And System Calls
 
-Now that we've talked a bit about how processes work at a high level, it's time to do 
-some exercises regarding process creation. We'll be focusing on three of the most useful 
-and versatile system call functions when it comes to process creation in UNIX systems. 
-These are the `fork()`, `exec()`, and `wait()` system calls.
+Now that we've talked a bit about how processes and system calls work at a high level, it's time to apply these concepts by doing some exercises related to process creation and making system calls. We'll be utilizing the `fork()`, `exec()`, `wait()`, and `pipe()` system calls in order to create processes and even have them pass messages to each other.
 
 ## Objective
 To introduce and familiarize yourself with some basic system calls pertaining to process 
@@ -28,7 +25,7 @@ Let's look at a program that calls `fork()` to try to give an example of what th
 int main(int argc, char *argv[])
 {
     printf("hello world (pid: %d)\n", (int) getpid());
-    ------------------------------------------------ // child process starts executing here
+    // ------------------------------------------------ child process starts executing here
     int rc = fork();
     if (rc < 0) {    // fork failed; exit
         fprintf(stderr, "fork failed\n");
@@ -77,7 +74,7 @@ the child always runs before its parent:
 int main(int argc, char *argv[])
 {
     printf("hello world (pid: %d)\n", (int) getpid());
-    ------------------------------------------------ // child process starts executing here
+    // ------------------------------------------------ child process starts executing here
     int rc = fork();
     if (rc < 0) {    // fork failed; exit
         fprintf(stderr, "fork failed\n");
@@ -85,22 +82,18 @@ int main(int argc, char *argv[])
     } else if (rc == 0) {    // child process satisfies this branch
         printf("hello, child here (pid: %d) \n", (int) getpid());
     } else {
-        int wc = waitpid(rc, NULL);    // `waitpid` call added here
+        int wc = waitpid(rc, NULL, 0);    // `waitpid` call added here
         printf("hello, parent here (pid: %d) of child %d\n", (int) getpid(), rc);
     }
 
     return 0;
 }
 ```
-Here, the `waitpid()` function suspends the parent process until the child process pointed at by `rc` 
-terminates. Thus, we ensure that the parent process only runs after the child process has finished its 
-execution. 
+Here, the `waitpid()` function suspends the parent process until the child process pointed at by `rc` terminates. Thus, we ensure that the parent process only runs after the child process has finished its execution. 
 
 ## `exec()`
-The last piece of the puzzle is the `exec()` system call, which is used in order to run a program that 
-is different from the calling program (since `fork` only executes copies of the program that called it). 
-Let's say we wanted to spin up a child process to execute a word count program. Here's how what a program 
-that does that might look like:
+The `exec()` system call is used in order to run a program that is different from the calling program (since `fork` only executes copies of the program that called it). 
+Let's say we wanted to spin up a child process to execute a word count program. Here's how what a program that does that might look like:
 ```
 // p3.c
 #include <stdio.h>
@@ -112,7 +105,7 @@ that does that might look like:
 int main(int argc, char *argv[])
 {
     printf("hello world (pid: %d)\n", (int) getpid());
-    ------------------------------------------------ // child process starts executing here
+    // ------------------------------------------------ child process starts executing here
     int rc = fork();
     if (rc < 0) {    // fork failed; exit
         fprintf(stderr, "fork failed\n");
@@ -121,13 +114,13 @@ int main(int argc, char *argv[])
         printf("hello, child here (pid: %d) \n", (int) getpid());
         char *myargs[3];    // allocate an array of chars to hold 3 bytes
         // `strdup` duplicates the given input string 
-        myargs[0] = strdup("wc");    // pass the name of the program we want to run as the first array element 
+        myargs[0] = strdup("wc");      // pass the name of the program we want to run as the first array element 
         myargs[1] = strdup("p3.c");    // argument: the file to count
-        myargs[2] = NULL;    // marks the end of the array
-        execvp(myargs[0], myargs);    // runs the word count program, passing in the `myargs` array to the word count program as arguments
+        myargs[2] = NULL;              // marks the end of the array
+        execvp(myargs[0], myargs);     // runs the word count program, passing in the `myargs` array to the word count program as arguments
         printf("this should not be seen");
     } else {
-        int wc = waitpid(rc, NULL);    // `waitpid` call added here
+        int wc = waitpid(rc, NULL, 0);    // `waitpid` call added here
         printf("hello, parent here (pid: %d) of child %d\n", (int) getpid(), rc);
     }
 
@@ -140,17 +133,60 @@ does not spin up _another_ child process from the child process in which we call
 that called it into the new program that was passed to `exec`, in this case, `wc`, the word count process. That's 
 why we still had to have the parent process `fork` a new child process. 
 
+## `pipe()`
+Conceptually, a pipe is a uni-directional channel between two processes that would otherwise be isolated from each other. When a pipe is established between two processes, one process has access to the write end of the pipe, while the other has read access to the other end of the pipe. Thus, if you want two-way communication between two processes, two pipes will have to be created between both processes, one in each direction. 
+
+Some things to keep in mind when working with pipes is that when a process writes to a pipe, the other process receives the data in FIFO order (which makes sense when you think about the pipe analogy in real life). Additionally, if the process with read access tries to read from the pipe before anything has been written to it, the reading process is suspended until there is some data to read. 
+```
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+#define MSGSIZE 16    // define a constant message size for each message
+
+char* msg1 = "hello world #1";
+char* msg2 = "hello world #2";
+char* msg3 = "hello world #3";
+
+int main()
+{
+    char inbuf[MSGSIZE];    // a buffer that will hold the incoming data that is being written
+    int p[2];               // a two-element array to hold the read and write file descriptors that are used by the pipe   
+
+    // establish our pipe, passing it the p array so that it gets populated by the read and write file descriptors
+    if (pipe(p) < 0) {
+        fprintf(stderr, "pipe failed\n");
+        exit(1);
+    }
+
+    // write 16 bytes of data to the write file descriptor
+    write(p[1], msg1, MSGSIZE);
+    write(p[1], msg2, MSGSIZE);
+    write(p[1], msg3, MSGSIZE);
+
+    for (int i = 0; i < 3; i++) {
+        // read 16 bytes of data from the read file descriptor 
+        read(p[0], inbuf, MSGSIZE);
+        printf("% s\n", inbuf);
+    }
+
+    return 0;
+}
+```
+This program isn't actually sending data between two different processes. The process that is doing the writing is also doing the reading. This process is essentially just talking to itself. But at least it gives you an idea of how to create pipes and send data between both ends. 
+
 ## What You'll be Doing for this Lab
-This was your first introduction to making system calls to an operating system kernel. Obviously, there are many more 
-system calls that we'll talk about in a future lesson, but for now we'll just practice with these three. Once you've 
-cloned this repo, go into each directory, open up the exercise file, read the prompt, and write some C code! Compile 
-your code with `gcc [NAME OF FILE].c -o [NAME OF EXECUTABLE]`.
+This was your first introduction to making system calls to an operating system kernel. Obviously, there are many more system calls that we'll talk about in a future lesson, but for now we'll just practice with these. Once you've cloned this repo, go into each directory, open up the exercise file, read the prompt, and write some C code! Compile your code with `gcc [NAME OF FILE].c -o [NAME OF EXECUTABLE]`, then run the executable with `./[NAME OF EXECUTABLE]`.
 
 ## Further Reading
-If you would like to read more on this topic, this chapter from _Operating Systems: Three Easy Pieces_ heavily 
-informed this particular topic and material: [http://pages.cs.wisc.edu/~remzi/OSTEP/cpu-api.pdf](http://pages.cs.wisc.edu/~remzi/OSTEP/cpu-api.pdf)
+If you would like to read more on this topic, these chapters from _Operating Systems: Three Easy Pieces_ heavily informed this particular topic and material: [http://pages.cs.wisc.edu/~remzi/OSTEP/cpu-api.pdf](http://pages.cs.wisc.edu/~remzi/OSTEP/cpu-api.pdf)
+[http://pages.cs.wisc.edu/~remzi/OSTEP/cpu-mechanisms.pdf](http://pages.cs.wisc.edu/~remzi/OSTEP/cpu-mechanisms.pdf)
+
 Additionally, it's always a good idea to read the man pages for any system calls you're trying to use:
  - The man page for `fork`: [https://linux.die.net/man/2/fork](https://linux.die.net/man/2/fork)
  - The man page for `wait` and `waitpid`: [https://linux.die.net/man/3/waitpid](https://linux.die.net/man/3/waitpid)
  - The man page for the `exec` family: [https://linux.die.net/man/3/exec](https://linux.die.net/man/3/exec)
+ - The man page for the `pipe` system call: [https://linux.die.net/man/2/pipe](https://linux.die.net/man/2/pipe)
 
+## Stretch Goal
+Open up the `/stretch` directory. In there, you'll find an involved exercise pertaining to file locking and concurrency. Read the README included in that directory for instructions on what to do. 
