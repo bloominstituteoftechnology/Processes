@@ -188,5 +188,5 @@ Additionally, it's always a good idea to read the man pages for any system calls
  - The man page for the `exec` family: [https://linux.die.net/man/3/exec](https://linux.die.net/man/3/exec)
  - The man page for the `pipe` system call: [https://linux.die.net/man/2/pipe](https://linux.die.net/man/2/pipe)
 
-## Extra Credit
-Write an additional program that creates two processes P1 and P2. P1 should accept a string from standard input and passes it to P2. P2 should concatenate the received string with another string and sends it back to P1 for printing. 
+## Stretch Goal
+Open up the `/stretch` directory. In there, you'll find an involved exercise pertaining to file locking and concurrency. Read the README included in that directory for instructions on what to do. 
