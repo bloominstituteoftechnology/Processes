@@ -26,9 +26,11 @@ int main()
 
   for (int i = 0; i < number_iter; i++)
   {
+    // clock_gettime(CLOCK_MONOTONIC, &start);
     clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &start);
 
-    write(1, NULL, 0);
+    // write(1, NULL, 0);
+    write(fileno(stdout), NULL, 0);
 
     clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end);
 
@@ -37,7 +39,7 @@ int main()
   }
 
   avgnanos = total / (float)number_iter; // type casting
-  printf("Avg time taken to make a write() call = %llu nanoseconds\n", (long long unsigned int) avgnanos);
-
+  // printf("Avg time taken to make a write() call = %llu nanoseconds\n", (long long unsigned int) avgnanos);
+  printf("Avg time taken to make a write() call = %.2f nanoseconds\n", avgnanos);
   return 0;
 }
