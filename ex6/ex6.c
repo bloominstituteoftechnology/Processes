@@ -13,13 +13,24 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <time.h>
+#include <stdint.h>
 
 #define number_iter 1000000
 #define BILLION 1000000000L
 
 int main()
 {
-    // Your code here
+    struct timespec start, end;
+    uint64_t total_time = 0;
+
+    for (int i = 0; i < number_iter; i++) {
+        clock_gettime(CLOCK_MONOTONIC, &start);
+        write(1, NULL, 0);
+        clock_gettime(CLOCK_MONOTONIC, &end);
+        total_time += BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+    }
+
+    printf("Average time: %lu nanoseconds\n", total_time / number_iter);
     
     return 0;
 }
