@@ -13,26 +13,35 @@ What happens to the variable when both the child and parent change the value of 
 #include <stdlib.h>
 #include <unistd.h>
 
+// int main()
+// {
+//   int val;
+//   val = fork();
+
+//   printf("%d\n", (int) getpid());
+//   printf("%d\n", val);
+// }
+
 int main(int argc, char *argv[])
 {
   int x = 100;
   printf("main value of x is: %d\n", x);
 
-  int childprocess = fork();
+  int cp = fork();
 
-  if (childprocess < 0)
+  if (cp < 0)
   {
     fprintf(stderr, "Failed to create a child process\n");
     exit(1);
   }
-  else if (childprocess == 0)
+  else if (cp == 0)
   {
-    x++;
+    x++; // 101
     printf("Child (pid: %d) with an x value of: %d\n", (int) getpid(), x);
   }
   else
   {
-    x--;
+    x--; // 99
     printf("Parent (pid: %d)with an x value of: %d\n", (int) getpid(), x);
   }
 

@@ -13,21 +13,22 @@
 
 int main(int argc, char* argv[])
 {
-  int rc = fork();
-  if (rc < 0)
+  int cp = fork();
+  if (cp < 0)
   {
     fprintf(stderr, "fork failed\n");
     exit(1);
   }
-  else if (rc == 0)
+  else if (cp == 0)
   {
-    char *command[] = { "ls", "-l", (char *)0 }; // or just NULL
+    char *command[] = { "ls", "-l", NULL };
     execvp ("ls", command);
   }
-  else
+  else // this only runs b/c we used fork
   {
-    waitpid(rc, NULL, 0);
-    printf("Parent process (pid: %d) of child process. %d\n", (int) getpid(), rc);
+    // try diff versions of exec() in this block
+    waitpid(cp, NULL, 0);
+    printf("Parent process (pid: %d) of child process. %d\n", (int) getpid(), cp);
   }
   return 0;
 }

@@ -8,20 +8,20 @@
 
 int main(int argc, char* argv[])
 {
-  int childprocess = fork();
-  if (childprocess < 0)
+  int cp = fork();
+  if (cp < 0)
   {
     fprintf(stderr, "Failed to create a child process\n");
     exit(1);
   }
-  else if (childprocess == 0)
+  else if (cp == 0)
   {
-    printf("Hello (pid: %d) %d \n", (int)getpid(), childprocess);
+    printf("Hello (pid: %d) %d \n", (int)getpid(), cp);
   }
   else
   {
-    waitpid(childprocess, NULL, 0);
-    printf("Goodbye (pid: %d) %d \n", (int)getpid(), childprocess);
+    waitpid(cp, NULL, 0);
+    printf("Goodbye (pid: %d) %d \n", (int)getpid(), cp);
   }
   return 0;
 }
