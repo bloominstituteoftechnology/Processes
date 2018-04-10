@@ -36,7 +36,7 @@ int main()
     total += diff;
   }
 
-  avgnanos = total / (float)number_iter;
+  avgnanos = total / (float)number_iter; // type casting
   printf("Avg time taken to make a write() call = %llu nanoseconds\n", (long long unsigned int) avgnanos);
 
   return 0;

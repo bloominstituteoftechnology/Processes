@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
 {
   int x = 100;
   printf("main value of x is: %d\n", x);
-
+  printf("(pid: %d)\n", getpid());
   int cp = fork();
 
   if (cp < 0)
@@ -37,12 +37,12 @@ int main(int argc, char *argv[])
   else if (cp == 0)
   {
     x++; // 101
-    printf("Child (pid: %d) with an x value of: %d\n", (int) getpid(), x);
+    printf("Child (pid: %d) with an x value of: %d\n", getpid(), x);
   }
   else
   {
     x--; // 99
-    printf("Parent (pid: %d)with an x value of: %d\n", (int) getpid(), x);
+    printf("Parent (pid: %d)with an x value of: %d\n", getpid(), x);
   }
 
   return 0;

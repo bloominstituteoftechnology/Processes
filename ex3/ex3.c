@@ -9,6 +9,7 @@
 int main(int argc, char* argv[])
 {
   int cp = fork();
+
   if (cp < 0)
   {
     fprintf(stderr, "Failed to create a child process\n");
