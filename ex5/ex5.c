@@ -16,7 +16,7 @@ char* msg3 = "hello world #3";
 
 int main()
 {
-    char buf[MSGSIZE];
+    char buffer[MSGSIZE];
     int p[2];
 
     if (pipe(p) < 0) {
@@ -35,8 +35,8 @@ int main()
     } else {
         int wc = waitpid(rc, NULL, 0);
         close(p[1]);
-        while(read(p[0], buf, MSGSIZE) > 0) {
-            printf("%s\n", buf);
+        while(read(p[0], buffer, MSGSIZE) > 0) {
+            printf("%s\n", buffer);
         };
     };
 
