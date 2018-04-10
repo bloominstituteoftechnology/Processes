@@ -19,25 +19,21 @@
 
 int main()
 {
-  
-  struct timespec startTime, endTime;
-  long sum = 0;
-  double avg;
+    
+    struct timespec startTime, endTime;
+    long sum = 0;
+    double avg;
 
-  for(int i = 0; i<number_iter; i++) {
-  	clock_gettime(CLOCK_MONOTONIC, &startTime);
+    for (int i =0; i < number_iter; i++) {
+        clock_gettime(CLOCK_MONOTONIC, &startTime);
+        write(fileno(stdout), NULL, 0);
+        clock_gettime(CLOCK_MONOTONIC, &endTime);
+        long diff = BILLION * (endTime.tv_sec - startTime.tv_sec) + endTime.tv_nsec - startTime.tv_nsec;
+        sum += diff;
+    }
 
-  	write(fileno(stdout), NULL, 0);
-
-  	clock_gettime(CLOCK_MONOTONIC, &endTime);
-
-  	long diff = BILLION * (endTime.tv_sec - startTime.tv_sec) + endTime.tv_nsec - startTime.tv_nsec;
-  	sum += diff;
-
-  	avg = sum / (float) number_iter;
-
-  	printf("Average time it takes to make a system call is %f ns.\n", avg);
-  }
-
-  return 0;
+    avg = sum / (float) number_iter;
+    printf("Average time to make system calls, %f ns.\n", avg);
+    
+    return 0;
 }

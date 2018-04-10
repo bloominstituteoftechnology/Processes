@@ -13,6 +13,7 @@ int main(int argc, char* argv[])
     if(child < 0)
     {
         printf("Child cannot be forked\n");
+        exit(1);
     } else if(child == 0)
     {
         printf("hello\n");
