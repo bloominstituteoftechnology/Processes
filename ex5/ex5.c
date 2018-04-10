@@ -20,12 +20,14 @@ int main()
 
   if (pipe(rwpipe) < 0)
   {
-    fprintf(stderr, "pipe failed\n");
+    fprintf(stderr, "pipe failed");
     exit(1);
   }
   printf("Parent pid: %d\n", (int) getpid());
 
-  if ((cpid = fork()) > 0)
+  // add fork check
+
+  if ((cpid = fork()) == 0)
   {
     printf("Begin writing to pipe from child process: %d\n", (int) getpid());
 
@@ -36,10 +38,11 @@ int main()
   else
   {
     printf("Begin reading from pipe from parent process: %d\n", (int) getpid());
+    // not dynamic
     for (int i = 0; i < 3; i++)
     {
       read(rwpipe[0], buffer, MSGSIZE);
-      printf("(pid: %d): %s\n", (int) getpid(), buffer);
+      // printf("(pid: %d): %s\n", (int) getpid(), buffer);
       printf("%s\n", buffer);
     }
   }
