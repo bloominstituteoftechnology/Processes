@@ -22,6 +22,21 @@ and `clock_gettime()` should work just fine.
 int main()
 {
     // Your code here
+
+    // finds the average time it takes for my computer to make a system call an empty write to stdout
+    // program should use 'clock_gettime' procedure to time how long a single system call takes
+    	// this method will execute for 1 million iterations and then find the average of all the iterations in nanoseconds
+
+	struct timespec requestStart, requestEnd;
+	clock_gettime(CLOCK_REALTIME, &requestStart);
+	// function_call();
+	sleep(1);
+	clock_gettime(CLOCK_REALTIME, &requestEnd);
+
+	double accum = ( requestEnd.tv_sec - requestStart.tv_sec)
+		+ ( requestEnd.tv_nsec - requestStart.tv_nsec ) / BILLION;
+
+	printf("%lf\n", accum);
     
     return 0;
 }
