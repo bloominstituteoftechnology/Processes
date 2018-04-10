@@ -9,14 +9,19 @@
 int main(int argc, char* argv[])
 {
   int childprocess = fork();
-  if (childprocess < 0) {
+  if (childprocess < 0)
+  {
     fprintf(stderr, "Failed to create a child process\n");
     exit(1);
-  } else if (childprocess == 0) {
-    printf("hello \n");
-  } else {
+  }
+  else if (childprocess == 0)
+  {
+    printf("Hello (pid: %d) %d \n", (int)getpid(), childprocess);
+  }
+  else
+  {
     waitpid(childprocess, NULL, 0);
-    printf("goodbye \n");
+    printf("Goodbye (pid: %d) %d \n", (int)getpid(), childprocess);
   }
   return 0;
 }

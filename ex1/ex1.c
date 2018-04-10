@@ -4,10 +4,9 @@
 
 /*
 What value is the variable in the child process?
-  - The value is 101
+
 What happens to the variable when both the child and parent change the value of x?
-  - The variable is initially 100, and then the value is changed based on whatever
-    code is run inside the process.
+
 */
 
 #include <stdio.h>
@@ -17,16 +16,24 @@ What happens to the variable when both the child and parent change the value of 
 int main(int argc, char *argv[])
 {
   int x = 100;
+  printf("main value of x is: %d\n", x);
+
   int childprocess = fork();
-  if (childprocess < 0) {
+
+  if (childprocess < 0)
+  {
     fprintf(stderr, "Failed to create a child process\n");
     exit(1);
-  } else if (childprocess == 0) {
+  }
+  else if (childprocess == 0)
+  {
     x++;
-    printf("int x %d child (pid: %d) \n", x, (int) getpid());
-  } else {
+    printf("Child (pid: %d) with an x value of: %d\n", (int) getpid(), x);
+  }
+  else
+  {
     x--;
-    printf("int x %d parent (pid: %d)\n", x, (int) getpid());
+    printf("Parent (pid: %d)with an x value of: %d\n", (int) getpid(), x);
   }
 
   return 0;
