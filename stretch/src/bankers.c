@@ -146,7 +146,7 @@ int main(int argc, char **argv)
 
 			int balance;
 
-			// vvvvvvvvvvvvvvvvvvvvvvvv
+			// vvvvvvvvvvvvvvvvvvvvvvvvv
 			// !!!! IMPLEMENT ME
 
 			// Open the balance file (feel free to call the helper
@@ -162,7 +162,7 @@ int main(int argc, char **argv)
 			// "Only have $%d, can't withdraw $%d\n"
 
 			// Close the balance file
-			//^^^^^^^^^^^^^^^^^^^^^^^^^
+			//^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 			// Child process exits
 			exit(0);
