@@ -6,10 +6,26 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <string.h>
 
 int main(int argc, char* argv[])
 {
-    // Your code here    
+    int rc = fork();
+
+    if (rc < 0)
+    {
+        fprintf(stderr, "Fork has failed\n");
+        exit(1);
+    } else if (rc == 0) 
+    {
+        char *myArg = {"/bin/ls"};
+        printf("This is the child program\n");
+        execv("/bin/ls", &myArg);
+    } else 
+    {
+        int wc = waitpid(rc, NULL, 0);
+        printf("This is the parent program\n");
+    }
 
     return 0;
 }
