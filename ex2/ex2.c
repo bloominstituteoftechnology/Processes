@@ -8,7 +8,26 @@
 
 int main(int argc, char* argv[])
 {
-    // Your code here 
+    FILE *fp;
+    fp = fopen("text.txt", "w");
+
+    int child = fork();
+    if(child < 0)
+    {
+        fprintf(stderr, "Fork has failed\n");
+        exit(1);
+    } else if(child == 0)
+    {
+        printf("This is the child process\n");
+        char *child_str = "Child string\n";
+        fwrite(child_str, 1, strlen(child_str), fp);
+    } else 
+    {
+        printf("This is the parent process\n");
+        char *parent_str = "Parent string\n";
+        fwrite(parent_str, 1, strlen(parent_str), fp);
+    }
     
+    fclose(fp);
     return 0;
 }
