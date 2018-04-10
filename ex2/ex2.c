@@ -16,7 +16,7 @@ int main(int argc, char* argv[])
 {
   // FILE* fp;
   int cp = fork();
-  FILE * file; // file pointer
+  FILE *file; // file pointer
   file = fopen("text.tx", "w+"); // open file
 
   if (cp < 0)

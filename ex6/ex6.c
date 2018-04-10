@@ -29,10 +29,11 @@ int main()
     // clock_gettime(CLOCK_MONOTONIC, &start);
     clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &start);
 
-    // write(1, NULL, 0);
-    write(fileno(stdout), NULL, 0);
+    write(1, NULL, 0);
+    // write(fileno(stdout), NULL, 0);
 
     clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end);
+    // clock_gettime(CLOCK_MONOTONIC, &end);
 
     diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
     total += diff;
