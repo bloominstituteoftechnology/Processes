@@ -19,15 +19,14 @@ int main(int argc, char *argv[])
     }
     else if (rc == 0)
     {
-        printf("A child is born! pid= %d\n", x);
-        x = 1;
-        printf("They grow up so fast... pid = %d\n", x);
+        printf("A child is born! pid= %d\n from x (%d)\n", (int) getpid(), x);
+        x++;
     }
     else
     {
-        printf("Parent before = %d\n", x);
-        x = 10;
-        printf("Parent after = %d\n", x);
+        printf("Parent here; pid = %d\n of x (%d)\n" , (int) getpid(), x);
+        x--;
+        printf("Still the parent here. x is now %d\n", x);
     }
     return 0;
 }
