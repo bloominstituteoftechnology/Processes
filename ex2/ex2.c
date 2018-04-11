@@ -8,7 +8,27 @@
 
 int main(int argc, char* argv[])
 {
-    // Your code here 
+    FILE* fp;
+    fp = fopen("text.txt", "w");
+    int rc = fork();
+
+    if (rc < 0)
+    {
+        fprintf(stderr, "Nobody here but us chickens...\n ");
+        exit(1);
+    } 
+    else if (rc == 0)
+    {
+        printf("child process\n");
+        char *child_str = "Insert child string here...\n";
+        fwrite(child_str, sizeof(char), sizeof(child_str), fp);
+    }
+    else
+    {
+        printf("parent process\n");
+        char *parent_str = "Insert parent string here...\n";
+        fwrite(parent_str, sizeof(char), sizeof(parent_str), fp);
+    }
     
     return 0;
 }
