@@ -8,7 +8,26 @@
 
 int main(int argc, char *argv[])
 {
-    // Your code here
+    int x = 100;
+    printf("Initial value: x = %d, pid = %d\n", x, (int)getpid());
 
+    int rc = fork();
+    if (rc < 0)
+    {
+        fprintf(stderr, "Nobody here but us chickens...\n");
+        exit(1);
+    }
+    else if (rc == 0)
+    {
+        printf("A child is born! pid= %d\n", x);
+        x = 1;
+        printf("They grow up so fast... pid = %d\n", x);
+    }
+    else
+    {
+        printf("Parent before = %d\n", x);
+        x = 10;
+        printf("Parent after = %d\n", x);
+    }
     return 0;
 }
