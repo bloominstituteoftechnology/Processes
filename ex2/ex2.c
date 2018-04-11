@@ -8,29 +8,35 @@
 
 int main(int argc, char *argv[])
 {
-    char text[100];
+    // char text[100];
     FILE *fp;
 
-    fp = fopen("text.txt", "r");
+    // fp = fopen("text.txt", "r");
+    fp = fopen("text.txt", "w");
 
     int rc = fork();
 
     if (rc < 0)
     {
         fprintf(stderr, "fork() failed\n");
+        exit(1);
     }
     else if (rc == 0)
     {
+        char child_str[] = "Child string.\n";
+        fwrite(child_str, sizeof(char), sizeof(child_str), fp);
         // fp = fopen("text.txt", "r");
-        fread(text, 8, sizeof(text), fp);
-        printf("Child text read: %s", text);
+        // fread(text, 8, sizeof(text), fp);
+        // printf("Child text read: %s", text);
         // fclose(fp);
     }
     else
     {
+        char parent_str[] = "Parent string.\n";
+        fwrite(parent_str, sizeof(char), sizeof(parent_str), fp);
         // fp = fopen("text.txt", "r");
-        fread(text, 8, sizeof(text), fp);
-        printf("Parent text read: %s", text);
+        // fread(text, 8, sizeof(text), fp);
+        // printf("Parent text read: %s", text);
         // fclose(fp);
     }
 
