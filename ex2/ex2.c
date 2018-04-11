@@ -8,7 +8,22 @@
 
 int main(int argc, char* argv[])
 {
-    // Your code here 
-    
+    FILE *file;
+    file = fopen("text.txt", "w");
+
+    int childProcess = fork();
+    if (childProcess < 0) {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (childProcess == 0) {
+        printf("child process here\n");
+        char child_str[] = "Child string is \n";
+        fwrite(child_str, 1, sizeof(child_str), file);
+    } else {
+        printf("parent process here\n");
+        char parent_str[] = "Parent string is \n";
+        fwrite(parent_str, 1, sizeof(parent_str), file);
+    }
+    fclose(file);
     return 0;
 }

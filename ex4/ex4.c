@@ -6,10 +6,24 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <sys/wait.h>
 
 int main(int argc, char* argv[])
 {
-    // Your code here    
+    printf("Parent process here\n");
+    int childProcess = fork();
 
+    if (childProcess < 0) {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (childProcess == 0) {
+        char *myargs[3];
+        myargs[0] = strdup("ws");
+        myargs[1] = strdup("/bin/ls");
+        execv(myargs[0], myargs);
+    } else {
+        int wc = waitpid(childProcess, NULL);
+        printf("hello, parent here (pid: %d) of child %d\n", (int) getpid(), childProcess);
+    }
     return 0;
 }

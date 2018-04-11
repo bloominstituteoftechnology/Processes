@@ -8,7 +8,22 @@
 
 int main(int argc, char *argv[])
 {
-    // Your code here
+    int x = 100;
+    printf("Parent pid: %d\n", (int) getpid());
 
+    int childProcess = fork();
+
+    if (childProcess < 0) {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (childProcess == 0) {
+        printf("Child pid:%d and x is %d\n", (int) getpid(), x);
+        x++;
+        printf("Child new value is now: %d\n", x);
+    } else {
+        printf("Parent of child with (pid: %d) and x is: %d\n", childProcess, (int) getpid(), x);
+        x--;
+        printf("Parent new value is now %d\n", x);
+    }
     return 0;
 }
