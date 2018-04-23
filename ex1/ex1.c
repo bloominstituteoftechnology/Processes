@@ -2,9 +2,9 @@
 // (e.g., x) and set its value to something (e.g., 100). What value is the variable in the child process?
 // What happens to the variable when both the child and parent change the value of x?
 
-// Interesting the varaible retains the value the it was assigned within its scope. So since it was assigned 100 in the parent
+// Interesting the varaible retains the value that it was assigned within its scope. So since it was assigned 100 in the parent
 // it retained that value within parent scope even after the child reassigned it to 1.
-// This is a good visialization of the effects of cloning. 2 instances of the code with seperate memory.
+// This is a good visialization of the effects of cloning. 2 instances of the same code with seperate memory.
 
 #include <stdio.h>
 #include <stdlib.h>
