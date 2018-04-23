@@ -14,10 +14,9 @@ int main(int argc, char* argv[])
         fprintf(stderr, "You forked up!\n");
         exit(1);
     } else if (responseFromFork != 0) {
-        printf("I'm the parent fork");
+        printf("Other fork is executing ls\n");
     } else {
-        printf("I'm the child fork");
-        execl("/bin/ls", ".");
+        execvp("/bin/ls", argv);
     }
 
     return 0;
