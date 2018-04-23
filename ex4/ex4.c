@@ -5,11 +5,27 @@
 
 #include <stdio.h>
 #include <unistd.h>
+#include <string.h>
 #include <stdlib.h>
+
 
 int main(int argc, char* argv[])
 {
-    // Your code here    
+    // Your code here  
+    int rc = fork();
+
+    if(rc < 0) {
+        fprintf(stderr, "The fork was a failure, now exiting\n");
+        exit(1);
+    }  else if(rc == 0) {
+        char *args[2];
+        args[0] = strdup("/bin/ls");
+        args[1] = NULL;
+
+        execvp(args[0], args);
+    } else {
+        sleep(1);
+    }
 
     return 0;
 }
