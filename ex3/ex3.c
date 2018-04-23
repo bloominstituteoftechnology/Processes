@@ -14,7 +14,9 @@ int main(int argc, char* argv[])
         fprintf(stderr, "Fork was not successful, exiting program.\n");
     } else if(rc == 0) {
         printf("Hello!\n");
+
     } else {
+        sleep(1);
         printf("Goodbye!\n");
     }
     return 0;
