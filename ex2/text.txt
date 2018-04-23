@@ -1,0 +1,2 @@
+This was written by the parent process
+This was written by the child process
