@@ -22,3 +22,8 @@ int main(int argc, char *argv[])
     }
     return 0;
 }
+
+/*
+hello, parent here: 101
+hello, child here: 100 
+*/
