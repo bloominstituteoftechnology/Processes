@@ -15,25 +15,16 @@ int main(int argc, char *argv[])
     printf("--beginning of program\n");
 
     int x = 100;
-    pid_t process = fork();
+    int process = fork();
 
     if (process == 0)
     {
-        int i = 0;
-        for (; i < 5; ++i)
-        {
-            printf("Child process does this to x: %d \n", ++x);
-        }
+        
         printf("Child process PID - (pid: %d) \n", (int)getpid());
     }
 
     else if (process > 0)
     {
-        int j = 0;
-        for (; j < 5; ++j)
-        {
-            printf("Parent process does this to x: %d \n", ++x);
-        }
         printf("Parent process PID - (pid: %d) \n", (int)getpid());
     }
 
@@ -42,7 +33,11 @@ int main(int argc, char *argv[])
         fprintf(stderr, "fork failed \n");
         exit(1);
     }
-
+int i = 0;
+        for (; i < 5; ++i)
+        {
+            printf("Child process does this to x: %d \n", ++x);
+        }
     printf("--end of program--\n");
 
     return 0;
