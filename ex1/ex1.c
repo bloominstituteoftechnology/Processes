@@ -9,6 +9,16 @@
 int main(int argc, char *argv[])
 {
     // Your code here
-
+    int x = 100;
+    int rc = fork();
+    if (rc < 0) {    // fork failed; exit
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {    // child process satisfies this branch
+        printf("hello, child here: %d \n", x);
+    } else {
+        x++;
+        printf("hello, parent here: %d\n", x);
+    }
     return 0;
 }
