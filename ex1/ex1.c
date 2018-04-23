@@ -8,8 +8,26 @@
 
 int main(int argc, char *argv[])
 {
-    // Your code here
+    // testing value sharing (or lack thereof) between parent and child
     int x = 26;
     fork();
-    return x;
+    x++;
+    printf("%d\n", x);
+
+    // testing conditionals when fork is stored as an int
+    // int test = fork();
+    // if (test < 0){
+    //     printf("fork failed");
+    //     exit(1);
+    // }
+    // else if (test == 0){
+    //     x = 17;
+    //     printf("fork successful %d\n", x);
+    // }
+    // else {
+    //     x = 30;
+    //     printf("who knows what happened? %d\n", x);
+    // }
+
+    return 0;
 }
