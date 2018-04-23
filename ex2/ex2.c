@@ -8,7 +8,21 @@
 
 int main(int argc, char* argv[])
 {
-    // Your code here 
+    FILE *fp = fopen("text.txt", "w");
+    int rc = fork();
+
+    // child process starts here
+    if (rc < 0){
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0){
+        fprintf(fp, "%s A child wrote this\n");
+    }
+     else {
+        fprintf(fp, "%s A child else statement wrote this\n");
+    }
+
+    fprintf(fp, "%s A parent wrote this\n"); 
     
     return 0;
 }
