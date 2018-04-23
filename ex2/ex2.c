@@ -11,31 +11,35 @@
 int main(int argc, char *argv[])
 {
     // Your code here
+    printf("--beginning of program\n");
+
     FILE *fp;
 
-    fp = fopen("text.txt", "w+");
-
-    int process = fork();
+    pid_t process = fork();
 
     if (process == 0)
     {
-        printf("Child process PID - (pid: %d) \n", (int)getpid());
+        sleep(5);
+        fp = fopen("text.txt", "r");
+        fprintf(fp, "%s %s %s %s", "My", "name", "is", "Dixie");
+        //printf("Child process PID - (pid: %d) \n", (int)getpid());
     }
 
     else if (process > 0)
     {
-        printf("Parent process PID - (pid: %d) \n", (int)getpid());
+        fp = fopen("text.txt", "w+");
+        fprintf(fp, "%s %s %s %s", "My", "name", "is", "Dixie");
+        // printf("Parent process PID - (pid: %d) \n", (int)getpid());
     }
 
     else
     {
         fprintf(stderr, "fork failed \n");
+        fclose(fp);
         exit(1);
     }
 
-    fprintf(fp, "%s %s %s %s", "My", "name", "is", "Dixie");
+    printf("--end of program\n");
 
-    fclose(fp);
-    
     return 0;
 }
