@@ -16,14 +16,16 @@ char* msg3 = "hello world #3";
 
 int main()
 {
-    int rc = fork();
-    char buff[MSGSIZE];
     int p[2];
 
     if (pipe(p) < 0) {
         printf("Pipe failed.\n");
         exit(1);
     }
+
+    int rc = fork();
+    char buff[MSGSIZE];
+
 
     if (rc < 0) {
         printf("Fork failed.\n");
@@ -42,7 +44,6 @@ int main()
             read(p[0], buff, MSGSIZE);
             printf("%s\n", buff);
         }
-        exit(2);
     }
     
     return 0;
