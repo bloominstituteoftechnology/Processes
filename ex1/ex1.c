@@ -21,9 +21,13 @@ int main()
         exit(1);
     } else if (rc == 0) {
         printf("Child x value: %d\n", x);
+    } else {
+        x = 9000;
+        printf("New parent x value: %d\n", x);
     }
     return 0;
 }
 
 // Parent x value: 100
+// New parent x value: 9000
 // Child x value: 201
