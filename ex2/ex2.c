@@ -9,6 +9,24 @@
 int main(int argc, char* argv[])
 {
     // Your code here 
-    
+
+    FILE *fp; //Point file to fp, proper syntax
+
+
+    int call; //store
+
+    fp = fopen("text.txt","This is written in the text xD!!!"); //fopen()
+    int rc = fork(); 
+
+    if(rc < 0) {
+        fprintf(stderr, "The fork was a failure now exiting\n");
+    } else if(rc == 0) {
+        fprintf(fp, "\n%s", "This is the child's string\n");
+    } else {
+        fprintf(fp, "\n%s","This is the parent's string\n");
+    }
+
+    fclose(fp);
+
     return 0;
 }
