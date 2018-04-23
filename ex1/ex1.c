@@ -18,9 +18,9 @@ int main(int argc, char *argv[])
         exit(1);
     } else if (rc == 0) {
         //child process satisfies this branch
-        printf("HELLO!!, I'm the child (pid: %d \n", (int) getpid());
+        printf("HELLO!!, I'm the child (pid: %d) \n", (int) getpid());
     } else {
-        printf("HEY, I'm the parent!! (pid: %d of that child %d\n" , (int) getpid(), rc);
+        printf("HEY, I'm the parent!! (pid: %d) of that child %d\n" , (int) getpid(), rc);
     }
 
     return 0;
