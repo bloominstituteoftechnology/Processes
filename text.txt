@@ -1,3 +1,4 @@
 Child: Here's a thing.
-Parent: Here's one more thing.
+Child: Here's a thing.
+Child: Here's a thing.
 Child: Here's a thing.
