@@ -9,7 +9,16 @@
 
 int main(int argc, char* argv[])
 {
-    // Your code here    
+    // Your code here 
+    int rc = fork();
+
+    if(rc == 0){
+    	char *myargs[3];
+    	myargs[0] = strdup("ls");
+    	myargs[1] = strdup("ex4.c");
+    	myargs[2] = NULL;
+    	execvp(myargs[0], myargs);
+    }   
 
     return 0;
 }
