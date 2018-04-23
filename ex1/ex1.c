@@ -11,5 +11,8 @@ int main(int argc, char *argv[])
     // Your code here
     int x = 100;
 
+    printf("hello world (pid: %d)\n", (int) getpid());
+    int cp = fork();
+
     return 0;
 }
