@@ -22,11 +22,11 @@ int main(int argc, char *argv[])
     }
     else if (child == 0)
     {
-        fprintf(fp_write, "%s", "I am the child writing!\n");
+        fprint("%s", "I am the child writing!\n");
     }
     else
     {
-        fprintf(fp_write, "%s", "I am the parent writing!\n");
+        fprint("%s", "I am the parent writing!\n");
     }
 
     if (fp_read)
