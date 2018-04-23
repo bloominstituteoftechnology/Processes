@@ -9,6 +9,18 @@
 int main(int argc, char *argv[])
 {
     // Your code here
-
+    int val = 100;
+    int postF = fork();
+    if (postF < 0) {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (postF == 0) {
+        val += 5;
+        printf("child val is %i\n", val);
+    } else {
+        val += 10;
+        printf("parent val is %i\n", val);
+    }
+    
     return 0;
 }
