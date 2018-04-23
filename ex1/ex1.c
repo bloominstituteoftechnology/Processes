@@ -9,25 +9,27 @@
 int main(int argc, char *argv[])
 {
     // testing value sharing (or lack thereof) between parent and child
-    int x = 26;
-    fork();
-    x++;
-    printf("%d\n", x);
+    // int x = 26;
+    // fork();
+    // x++;
+    // printf("%d\n", x);
 
-    // testing conditionals when fork is stored as an int
+    // testing conditionals when fork() is stored as an int
     // int test = fork();
-    // if (test < 0){
+    // if (test < 0)
+    // {
     //     printf("fork failed");
     //     exit(1);
     // }
     // else if (test == 0){
-    //     x = 17;
-    //     printf("fork successful %d\n", x);
+    //     printf("fork successful %d\n", test);
     // }
     // else {
-    //     x = 30;
-    //     printf("who knows what happened? %d\n", x);
+    //     printf("no conditional met %d\n", test);
     // }
 
+    // testing the value produced by the fork() when stored in an int in both parent and child
+    int test = fork();
+    printf("%d\n", test);
     return 0;
 }
