@@ -11,15 +11,14 @@ int main(int argc, char* argv[])
     // Your code here 
 
     FILE *fp; //Point file to fp, proper syntax
+    int c; // ^^
 
-
-    int call; //store
-
-    fp = fopen("text.txt","This is written in the text xD!!!"); //fopen()
+    fp = fopen("text.txt","r+"); //fopen()
     int rc = fork(); 
 
     if(rc < 0) {
         fprintf(stderr, "The fork was a failure now exiting\n");
+        exit(1);
     } else if(rc == 0) {
         fprintf(fp, "\n%s", "This is the child's string\n");
     } else {
