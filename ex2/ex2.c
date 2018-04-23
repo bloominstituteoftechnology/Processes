@@ -8,7 +8,27 @@
 
 int main(int argc, char* argv[])
 {
-    // Your code here 
-    
+    // Your code here
+    FILE *f;
+    f = fopen("text.txt", "r");
+    if (f == NULL)
+    {
+        printf("Error opening file!\n");
+        exit(1);
+    }
+    int rc = fork();
+    if (rc < 0) {    // fork failed; ercit
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {    // child process satisfies this branch
+        char text[32] = "Child process.\n";
+        fwrite(text, 1, sizeof(text), f);
+        printf("Child process text: %s\n", text);
+    } else {
+        char text[32] = "Parent process.\n";
+        fwrite(text, 1, sizeof(text), f);
+        printf("Parent process text: %s\n", text);
+    }
+    // fclose(f);
     return 0;
 }
