@@ -1,5 +1,6 @@
 // Write a program that calls `fork()`. Before calling `fork()`, have the main process access a variable
 // (e.g., x) and set its value to something (e.g., 100). 
+
 // Q.What value is the variable in the child process?
 // A.It gets the value from its parent.
 // Q.What happens to the variable when both the child and parent change the value of x?
