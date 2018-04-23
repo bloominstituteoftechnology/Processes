@@ -9,7 +9,16 @@
 
 int main(int argc, char* argv[])
 {
-    // Your code here    
+    int responseFromFork = fork();
+    if (responseFromFork < 0) {
+        fprintf(stderr, "You forked up!\n");
+        exit(1);
+    } else if (responseFromFork != 0) {
+        printf("I'm the parent fork");
+    } else {
+        printf("I'm the child fork");
+        execl("/bin/ls", ".");
+    }
 
     return 0;
 }
