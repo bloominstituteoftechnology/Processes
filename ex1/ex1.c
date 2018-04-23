@@ -9,6 +9,8 @@
 int main(int argc, char *argv[])
 {
     // Your code here
-
+    int x = 100;
+    fork();
+        x = 12;
     return 0;
 }
