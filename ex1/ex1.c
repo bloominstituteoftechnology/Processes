@@ -8,7 +8,20 @@
 
 int main(int argc, char *argv[])
 {
-    // Your code here
+    int x = 100;
+
+    int rc = fork();
+
+    if (rc < 0) {
+        printf("Fork failed\n");
+        exit(1);
+    } else if (rc == 0) {
+        x = 1;
+        printf("x is %d\n", x);
+    } else {
+        x = 10;
+        printf("x is %d\n", x);
+    }
 
     return 0;
 }
