@@ -9,6 +9,17 @@
 int main(int argc, char* argv[])
 {
     // Your code here
+    int child = fork();
+
+    if (child < 0) {
+      fprintf(stderr, "fork failed...\n");
+      exit(1);
+    } else if (child == 0) {
+      printf("Hello!\n");
+    } else {
+      int wc = waitpid(child, NULL, 0);
+      printf("Goodbye!\n");
+    }
 
     return 0;
 }
