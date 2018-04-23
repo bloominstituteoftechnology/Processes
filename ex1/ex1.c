@@ -13,14 +13,17 @@ int main()
     int x = 100;
     
     printf("Parent x value: %d\n", x);
-    int fc = fork();
+    int rc = fork();
     x = 201;
     
-    if (fc < 0) {
+    if (rc < 0) {
         fprintf(stderr, "Fork failed, exiting.\n");
         exit(1);
-    } else if (fc == 0) {
+    } else if (rc == 0) {
         printf("Child x value: %d\n", x);
     }
     return 0;
 }
+
+// Parent x value: 100
+// Child x value: 201

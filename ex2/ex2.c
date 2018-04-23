@@ -9,6 +9,6 @@
 int main(int argc, char* argv[])
 {
     // Your code here 
-    
+    FILE* fp = fopen("text.txt", "w");
     return 0;
 }
