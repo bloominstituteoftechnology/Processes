@@ -8,11 +8,7 @@
 
 int main(int argc, char *argv[])
 {
-    int c;
-    FILE *fp_read;
-    FILE *fp_write;
-    fp_read = fopen("text.txt", "r");
-    fp_write = fopen("text.txt", "w");
+    FILE *fp = fopen("text.txt", "w");
     int child = fork();
 
     if (child < 0)
@@ -22,18 +18,14 @@ int main(int argc, char *argv[])
     }
     else if (child == 0)
     {
-        fprint("%s", "I am the child writing!\n");
+        fprintf(fp, "%s", "I am the child writing!\n");
     }
     else
     {
-        fprint("%s", "I am the parent writing!\n");
+        fprintf(fp, "%s", "I am the parent writing!\n");
     }
 
-    if (fp_read)
-    {
-        while ((c = getc(fp_read)) != EOF) putchar(c);
-        fclose(fp_read);
-    }
+    fclose(fp);
 
     return 0;
 }
