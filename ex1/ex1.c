@@ -10,6 +10,8 @@
 
 int main(int argc, char *argv[])
 {
+    int x = 100;
+    int process = fork();
     // Your code here
 
     return 0;
