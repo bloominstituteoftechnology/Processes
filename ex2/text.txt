@@ -1,0 +1,2 @@
+I'm the parent process, and I got edited earlier, deal with it.
+I'm the child process, and I wish I were an orphan.

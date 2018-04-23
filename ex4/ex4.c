@@ -9,7 +9,15 @@
 
 int main(int argc, char* argv[])
 {
-    // Your code here    
+    int responseFromFork = fork();
+    if (responseFromFork < 0) {
+        fprintf(stderr, "You forked up!\n");
+        exit(1);
+    } else if (responseFromFork != 0) {
+        printf("Other fork is executing ls\n");
+    } else {
+        execvp("/bin/ls", argv);
+    }
 
     return 0;
 }
