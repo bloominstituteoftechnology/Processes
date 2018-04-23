@@ -9,7 +9,7 @@
 int main(int argc, char *argv[])
 {
     // Your code here
-    
+    int x = 100;
 
     return 0;
 }
