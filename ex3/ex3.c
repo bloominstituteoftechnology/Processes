@@ -4,11 +4,21 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include<sys/wait.h>
 #include <unistd.h>
 
 int main(int argc, char* argv[])
 {
     // Your code here
-
+    int rc = fork();
+    if (rc < 0) {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {
+        printf("%s\n", "hello");
+    } else {
+        wait(NULL);
+        printf("%s\n", "goodbye");
+    }
     return 0;
 }
