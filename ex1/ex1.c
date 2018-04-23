@@ -8,7 +8,20 @@
 
 int main(int argc, char *argv[])
 {
-    // Your code here
+    printf("this is example 1 of a fork (pid: %d)\n", (int) getpid());
+    int rc = fork();
+
+    //child process starts executing
+    if (rc < 0) {
+        //fork failed
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {
+        //child process satisfies this branch
+        printf("HELLO!!, I'm the child (pid: %d \n", (int) getpid());
+    } else {
+        printf("HEY, I'm the parent!! (pid: %d of that child %d\n" , (int) getpid(), rc);
+    }
 
     return 0;
 }
