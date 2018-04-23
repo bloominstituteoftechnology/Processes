@@ -6,9 +6,21 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
     // Your code here 
+    FIlE *fp;
+    fp = fopen("text.txt", "w");
+    int rc = fork();
+
+    if (rc < 0) {
+        fprintf(stderr, "Fork Failed\n");
+        exit(1);
+    } else if (rc == 0) {
+        fwrite(fp, "Child Process");
+    } else {
+        fwrite(fp, "Parent Process");
+    }
     
     return 0;
 }
