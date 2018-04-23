@@ -5,10 +5,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <sys/wait.h>
 
 int main(int argc, char* argv[])
 {
     // Your code here
+    int child = fork();
 
+    if (child < 0) {
+        perror("fork failed\n");
+        exit(1);
+    }
+    else if (child == 0) {
+        printf("hello\n");
+    }
+    else {
+        int wc = waitpid(child, NULL, 0);
+        printf("goodbye\n");
+    }
     return 0;
 }
