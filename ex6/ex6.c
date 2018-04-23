@@ -27,14 +27,15 @@ int main()
 
     for (int i = 0; i < number_iter; i++) {
         clock_gettime(CLOCK_MONOTONIC, &start);
-        fprintf(stdout, "");
+        write(fileno(stdout), NULL, 0);
         clock_gettime(CLOCK_MONOTONIC, &end);
+        
         diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
         sum += diff;
     }
 
     avg = sum / (float) number_iter;
-    printf("The average time to make an empty print to stdout: %f\n", avg);
+    printf("The average time to make a system call is: %f ns. \n", avg);
     
     return 0;
 }
