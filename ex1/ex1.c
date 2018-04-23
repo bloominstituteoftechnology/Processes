@@ -6,9 +6,21 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int main(int argc, char *argv[])
+//int main(int argc, char *argv[])
+int main()
 {
     // Your code here
-
+    int x = 100;
+    
+    printf("Parent x value: %d\n", x);
+    int fc = fork();
+    x = 201;
+    
+    if (fc < 0) {
+        fprintf(stderr, "Fork failed, exiting.\n");
+        exit(1);
+    } else if (fc == 0) {
+        printf("Child x value: %d\n", x);
+    }
     return 0;
 }
