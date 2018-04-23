@@ -6,11 +6,30 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+//////////psuedo code///////////////////
+// int main(int argc, char *argv[]) 
+// {
+//     // Your code here
+//     int x = 100;
+//     fork();
+//         x = 12;
+//     return 0;
+// }
 int main(int argc, char *argv[])
 {
     // Your code here
     int x = 100;
-    fork();
-        x = 12;
+
+    pid_t process = fork();
+
+    if (process == 0 ) 
+    {
+        int x = 12;
+        printf("CHILD!%d\n", getpid());
+    }
+    else
+    {
+        printf("PARENT!%d\n", getpid());
+    }
     return 0;
 }
