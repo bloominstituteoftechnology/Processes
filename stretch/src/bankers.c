@@ -90,7 +90,9 @@ int get_random_amount(void)
 	// !!!! IMPLEMENT ME:
 
 	// Return a random number between 0 and 999 inclusive using rand()
-	return rand() % 1000;
+	int negative = (-1 * rand() % 2);
+
+	return negative == 0 ? rand() % 1000 : (rand() % 1000) * negative;
 
 	// ^^^^^^^^^^^^^^^^^^
 }
@@ -179,7 +181,14 @@ int main(int argc, char **argv)
 			if (balance >= amount)
 			{
 				write_balance(file, balance-amount);
-				printf("Had 0 problems withdrawing $%3d, new balance is $%d\n", amount, balance-amount);
+				if (amount >= 0)
+				{
+					printf("Had 0 problems withdrawing $%3d, new balance is $%d.\n", amount, balance-amount);
+				}
+				else
+				{
+					printf("Deposited $%d, new balance is $%d.\n", amount * -1, balance - amount);
+				}
 			}
 			else
 			{
