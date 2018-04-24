@@ -19,12 +19,12 @@ int main(int argc, char* argv[])
         fprintf(stderr, "fork failed\n");
         exit(1);
     } else if (rc == 0) {    // child process satisfies this branch
-       fwrite(str, 1, sizeof(str), fp);  
+       fwrite(str, sizeof(str),1, fp);  
        printf("hello, Child here \n");
     } else {
        // strcat(str, " I am at Parent!");
        char str[40] = "I am at Parent!";
-        fwrite(str, 1, sizeof(str), fp);
+        fwrite(str,sizeof(str), 1, fp);
         printf("hello, parent here\n");
     }
     fclose(fp);
