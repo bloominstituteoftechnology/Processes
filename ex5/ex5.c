@@ -33,6 +33,8 @@ int main()
     }
     else if (chfork == 0)
     {
+        printf("Writing to Pipe.\n");
+
         write(p[1], msg1, MSGSIZE);
         write(p[1], msg2, MSGSIZE);
         write(p[1], msg3, MSGSIZE);
@@ -45,6 +47,7 @@ int main()
             read(p[0], buff, MSGSIZE);
             printf("%s\n", buff);
         }
+        printf("Finished Reading\n");
     }
 
     return 0;

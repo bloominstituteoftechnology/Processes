@@ -9,12 +9,12 @@
 int main(int argc, char *argv[])
 {
     FILE *o;
-    o = fopen("text.txt", "f");
-    if (o == NULL);
+    o = fopen("text.txt", "w");
+   /*  if (o == NULL);
     {
         fprintf(stderr, "Error Opening file\n");
         exit(1);
-    }
+    } */
     int chfork = fork();
     if (chfork < 0)
     {
@@ -24,13 +24,13 @@ int main(int argc, char *argv[])
     else if (chfork == 0)
     {
         printf("Child process.\n");
-        char child[64] = "Child String.\n";
+        char child[] = "Child String.\n";
         fwrite(child, 1, sizeof(child), o);
     }
     else
     {
         printf("Parent process.\n");
-        char parent[64] = "Parent String.\n";
+        char parent[] = "Parent String.\n";
         fwrite(parent, 1, sizeof(parent), o);
     }
     fclose(o);
