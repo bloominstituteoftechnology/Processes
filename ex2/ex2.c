@@ -8,7 +8,29 @@
 
 int main(int argc, char* argv[])
 {
-    // Your code here 
-    
+    // Your code here
+    FILE *fp;
+    // char c;
+
+    fp = fopen("text.txt", "r+");
+    int rc = fork();
+    // while(1) {
+    //     c = fgetc(fp);
+    //     if (feof(fp)) {
+    //         break;
+    //     }
+    // }
+    if (rc < 0) {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {
+        // printf("contents of the file in child are: %c\n", c);
+        fprintf(fp, "content added to the file of child\n");
+    } else {
+        // printf("contents of the file in parent are: %c\n", c);
+        fprintf(fp, "content added to the file of parent\n");
+    }
+
+    fclose(fp);
     return 0;
 }

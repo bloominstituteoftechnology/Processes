@@ -1,0 +1,2 @@
+content added to the file of parent
+content added to the file of child
