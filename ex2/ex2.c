@@ -14,17 +14,17 @@ int main(int argc, char* argv[])
     FILE * fp;
     fp = fopen ("text.txt", "w+");
     printf("Exercise 2 (pid: %d)\n", (int) getpid());
-    int process = fork();
+    int rc = fork();
     // ------------------------------------------------ child process starts executing here
-    if (process < 0) {    // fork failed; exit
+    if (rc < 0) {    // fork failed; exit
         fprintf(stderr, "fork failed\n");
         exit(1);
-    } else if (process == 0) {    // child process satisfies this branch
+    } else if (rc == 0) {    // child process satisfies this branch
         printf("hello, child here (pid: %d) \n", (int) getpid());
         fprintf(fp, "%s %s %s", "We", "are", "in the child\n");
         fclose(fp);
     } else {
-        printf("hello, parent here (pid: %d) of child %d\n", (int) getpid(), process);
+        printf("hello, parent here (pid: %d) of child %d\n", (int) getpid(), rc);
         fprintf(fp, "%s %s %s", "We", "are", "in the parent");
         fclose(fp);
     }

@@ -15,14 +15,14 @@ int main(int argc, char *argv[])
     printf("--beginning of program\n");
 
     int x = 100;
-    int process = fork();
+    int rc = fork();
 
-    if (process < 0)
+    if (rc < 0)
     {
         fprintf(stderr, "fork failed \n");
         exit(1);
     }
-    else if (process == 0)
+    else if (rc == 0)
     {
 
         printf("Child process PID - (pid: %d) \n", (int)getpid());
