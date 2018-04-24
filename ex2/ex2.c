@@ -9,9 +9,10 @@
 int main(int argc, char* argv[])
 {
     FILE *fp;
+    fp = fopen("text.txt", "r+");
+    
     int rc = fork();
 
-     fp = fopen("text.txt", "r+");
 
     if (rc < 0) {
         fprintf(stderr, "Fork failed.\n");
