@@ -1,2 +1,6 @@
 content added to the file of parent
 content added to the file of child
+content added to the file of child
+content added to the file of parent
+content added to the file of parent
+content added to the file of child
