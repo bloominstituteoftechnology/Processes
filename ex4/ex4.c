@@ -9,7 +9,16 @@
 
 int main(int argc, char* argv[])
 {
-    // Your code here    
+    // Your code here
+    int frk = fork();
+    if (frk == 0){
+        printf("this is the child");
+        exec("./bin/ls", NULL);
+    }
+    else
+    {
+        printf("this is the parent");
+    }    
 
     return 0;
 }
