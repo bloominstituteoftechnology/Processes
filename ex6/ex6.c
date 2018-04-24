@@ -33,7 +33,7 @@ int main()
 
     for (int i = 0; i < number_iter; i++) {
         clock_gettime(CLOCK_MONOTONIC, &start); // Start time 
-        printf(' ');
+        printf("");
         clock_gettime(CLOCK_MONOTONIC, &end); // End time 
 
         diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
@@ -42,6 +42,7 @@ int main()
 
     int result = total / number_iter;
 
-    printf()
+    printf("Average speed for one million iterations in nanoseconds: %d \n", result);
+
     return 0;
 }
