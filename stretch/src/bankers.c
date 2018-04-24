@@ -167,6 +167,7 @@ int main(int argc, char **argv)
 			int file = open_balance_file(BALANCE_FILE);
 
 			// Read the current balance
+			flock(file, LOCK_EX);
 			read_balance(file, &balance);
 
 			// Try to withdraw money
@@ -178,13 +179,13 @@ int main(int argc, char **argv)
 			if (balance >= amount)
 			{
 				write_balance(file, balance-amount);
-				printf("Had 0 problems withdrawing $%d, new balance is $%d\n", amount, balance-amount);
+				printf("Had 0 problems withdrawing $%3d, new balance is $%d\n", amount, balance-amount);
 			}
 			else
 			{
-				printf("Only $%d is available, cannot withdraw $%d", balance, amount);
+				printf("Only $%d is available, cannot withdraw $%d\n", balance, amount);
 			}
-
+			flock(file, LOCK_UN);
 			// Close the balance file
 			//^^^^^^^^^^^^^^^^^^^^^^^^^^
 			close_balance_file(file);
