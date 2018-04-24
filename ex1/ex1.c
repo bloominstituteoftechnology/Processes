@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
     {
         printf("Parent of Child with PID: %d\n", getpid());
         x = 200;
-        printf("Parent is now: %d", x);
+        printf("Parent is now: %d\n", x);
     }
     return 0;
 }

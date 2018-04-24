@@ -1,1 +1,6 @@
 .DS_Store
+*.o
+*.out
+*exe
+*.hex
+ex1/ex1
