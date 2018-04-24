@@ -11,7 +11,13 @@ int main(int argc, char* argv[])
     // Your code here
     FILE *fp;
 
-    fp = fopen("./text.text", "r+");
+    fp = fopen("./text.txt", "w+");
+
+    int cp = fork();
     
+    fprintf(fp, "Testing fprintf function...\n");
+    fputs("Testing fputs function...\n", fp);
+    fclose(fp);
+
     return 0;
 }
