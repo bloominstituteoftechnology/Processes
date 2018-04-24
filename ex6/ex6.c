@@ -22,6 +22,31 @@ and `clock_gettime()` should work just fine.
 int main()
 {
     // Your code here
+	int diff;
+	int total = 0;
+    int nano;
+    // structuring timespec start and end object that will 
+    // have access to 'tv_sec' (whole second) and 'tv_nsec' (microsecond)
+ 
+    struct timespec start, end;
+
+    // iteration
+    for (int i = 0; i < number_iter; i++) {
+    	//get time before system call
+        clock_gettime(CLOCK_MONOTONIC, &start);
+        //system call an empty write to stdout
+        write(STDOUT_FILENO, NULL, sizeof(NULL));
+        // get time after system call
+        clock_gettime(CLOCK_MONOTONIC, &end);
+        // get the average in nano seconds by multiplying each system call time by a billion
+        // and dividing it by number of iteration
+        diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+        total += diff;
+    }
+    // get average system call time in nano second
+    nano = total / number_iter;
+
+    printf("Average system call time in nanoseconds is: %d\n", nano);
     
     return 0;
 }

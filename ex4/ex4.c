@@ -9,7 +9,21 @@
 
 int main(int argc, char* argv[])
 {
-    // Your code here    
+    // Your code here 
+    // clone parent process to a child
+    int rc = fork();
+
+    if(rc == 0){
+        // in child process
+        //initialize a pointer to array of 3
+    	char *myargs[3];
+        //assign values to array index
+    	myargs[0] = strdup("ls");
+    	myargs[1] = strdup("ex4.c");
+    	myargs[2] = NULL;
+        // execute the file (string)
+    	execvp(myargs[0], myargs);
+    }   
 
     return 0;
 }
