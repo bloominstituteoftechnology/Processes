@@ -81,6 +81,8 @@ simulated bank account, that is. Don't get your hopes up.)
 
    **Short answer**: What happens? Do things go as planned and look
    sensible? What do you speculate is happening?
+   - *Some of the balances look wrong. Likely because of the multiple processes trying to concurrently read/write the same file.*
+
 
 4. Add calls to [`flock()`](https://linux.die.net/man/2/flock) to
    capture and release an exclusive lock on the file before reading and
@@ -91,6 +93,7 @@ simulated bank account, that is. Don't get your hopes up.)
 5. **Short answer**: Why is it working? How has adding locks fixed the
    problems you noted in question 1? How is overall performance of the
    application affected?
+   - Setting an 'exclusive lock' makes it so only one process can modify the file at a time. This probably makes the performance slower since each process has to wait until a previous process is completed before it can excute.
 
 
 ## Stretch Goals
