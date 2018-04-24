@@ -38,7 +38,5 @@ int main()
             printf("%s\n", buffer);
         }
     }
-
-    
     return 0;
 }
