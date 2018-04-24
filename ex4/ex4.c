@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
         exit(1);
     } else if (child == 0) {    
         char *myargs[2];    
-        myargs[0] = strdup("dir");      
+        myargs[0] = "dir";     
         myargs[1] = NULL;       
         execvp(myargs[0], myargs);     
         printf("This should not be seen\n");

@@ -15,13 +15,23 @@ and `clock_gettime()` should work just fine.
 #include <unistd.h>
 #include <stdlib.h>
 #include <time.h>
+#include <stdint.h>
 
 #define number_iter 1000000
 #define BILLION 1000000000L
 
-int main()
+int main(int argc, char **argv)
 {
-    // Your code here
-    
+    uint64_t diff;
+    struct timespec start, end;
+    int i;
+
+    clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &start);
+    fprintf(stdout, "Yup\n");
+    clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end);
+
+    diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+    printf("elapsed process CPU time = %llu nanoseconds\n", (long long unsigned int)diff);
+
     return 0;
 }
