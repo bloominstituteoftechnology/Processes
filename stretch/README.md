@@ -75,6 +75,12 @@ simulated bank account, that is. Don't get your hopes up.)
 
    **Short answer**: what do each of the arguments to `open()` mean?
 
+   filename - name of the file
+
+   O_CREAT|O_RDWR - if the file does not exist, create it, then open the file so that it can be read from and written to.
+
+   0644 - type of permissions - the user can read and write, the group and others can read.
+
 3. Take the skeleton code in the `src/` directory and implement the
    pieces marked. Run it.
    
