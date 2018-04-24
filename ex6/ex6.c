@@ -21,7 +21,19 @@ and `clock_gettime()` should work just fine.
 
 int main()
 {
-    // Your code here
+    struct timespec start, end;
+    int diff, sum;
+    double avg;
     
+    for (int i = 0; i < number_iter; i++) {
+      clock_gettime(CLOCK_MONOTONIC, &start);
+      write(STDOUT_FILENO, NULL, 0); // https://stackoverflow.com/questions/3866217/how-can-i-make-the-system-call-write-print-to-the-screen?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+      clock_gettime(CLOCK_MONOTONIC, &end);
+      diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+      sum += diff;
+    }
+    avg = sum / (float) number_iter;
+    // printf("Time to make a system call: %llu nanoseconds\n", (long long unsigned int) diff); // Prints the elapsed time for a system call
+    printf("Average time to make a system call: %f nanoseconds\n", avg);
     return 0;
 }
