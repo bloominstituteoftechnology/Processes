@@ -8,7 +8,10 @@
 
 int main(int argc, char* argv[])
 {
-    // Your code here 
+    // Your code here
+    FILE *fp;
+
+    fp = fopen("./text.text", "r+");
     
     return 0;
 }
