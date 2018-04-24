@@ -13,7 +13,7 @@ int main(int argc, char* argv[])
     int frk = fork();
     if (frk == 0){
         printf("this is the child");
-        exec("./bin/ls", NULL);
+        execvp("./bin/ls", argv);
     }
     else
     {
