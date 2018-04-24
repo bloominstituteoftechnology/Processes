@@ -8,7 +8,7 @@
 
 int main(int argc, char* argv[])
 {
-    FILE *fp = fopen("text.txt", "r+");
+    FILE *fp = fopen("text.txt", "w");
 
     int rc = fork();
 
