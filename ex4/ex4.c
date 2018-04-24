@@ -6,10 +6,26 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <sys/wait.h>
+#include <string.h>
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
-    // Your code here    
+    int child = fork();
+    
+    if (child < 0) {    
+        perror("Fork Failed\n");
+        exit(1);
+    } else if (child == 0) {    
+        char *myargs[2];    
+        myargs[0] = "dir";     
+        myargs[1] = NULL;       
+        execvp(myargs[0], myargs);     
+        printf("This should not be seen\n");
+    } else {
+        int wc = waitpid(child, NULL, 0);  
+        printf("Parent: That should be the directory above\n");
+    }
 
     return 0;
 }
