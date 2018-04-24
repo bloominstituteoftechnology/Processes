@@ -156,6 +156,8 @@ int main(int argc, char **argv)
 			int balance;
 			int fd = open_balance_file(BALANCE_FILE);
 
+			flock(fd, LOCK_EX);
+
 			// Read the current balance
 			read_balance(fd, &balance);
 
@@ -185,6 +187,7 @@ int main(int argc, char **argv)
 				}
 			}
 
+			flock(fd, LOCK_UN);
 			// Close the balance file
 			close_balance_file(fd);
 
