@@ -165,6 +165,8 @@ int main(int argc, char **argv)
 			// functions, above).
 			open_balance_file(BALANCE_FILE);
 
+			flock(fd, LOCK_EX); // Windows 7 seems to do this on its own
+													// This line pairs with line 187
 			// Read the current balance
 			read_balance(fd, &balance);
 
@@ -183,7 +185,7 @@ int main(int argc, char **argv)
 			}
 
 			flock(fd, LOCK_UN); // Windows 7 seems to do this on its own
-
+													// This line pairs with line 169
 			// Close the balance file
 			close_balance_file(fd);
 			
