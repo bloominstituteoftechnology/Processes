@@ -21,12 +21,12 @@ int main(int argc, char* argv[])
         exit(1);
     } else if (cp == 0) { // child process successfully created
         printf("hello, child process (pid: %d)\n", (int) getpid());
-        char child_str[] = "hello child string!\n";
-        fwrite(child_str, 1, sizeof(child_str), fp);
+        char *child_str = "hello child string!\n";
+        fprintf(fp, child_str);
     } else {
         printf("hello, parent process (pid: %d)\n", (int) getpid());
-        char parent_str[] = "hello parent string!\n";
-        fwrite(parent_str, 1, sizeof(parent_str), fp);
+        char *parent_str = "hello parent string!\n";
+        fprintf(fp, parent_str);
     }
 
     fclose(fp);
