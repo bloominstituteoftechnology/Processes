@@ -90,7 +90,7 @@ int get_random_amount(void)
 	// !!!! IMPLEMENT ME:
 
 	// Return a random number between 0 and 999 inclusive using rand()
-
+	return rand() % 999;
 	// ^^^^^^^^^^^^^^^^^^
 }
 
@@ -100,7 +100,7 @@ int get_random_amount(void)
 int main(int argc, char **argv)
 {
 	// Parse the command line
-	
+
 	// vvvvvvvvvvvvvvvvvv
 	// !!!! IMPLEMENT ME:
 
@@ -116,18 +116,25 @@ int main(int argc, char **argv)
 	// message to stderr, and exit with status 1:
 	//
 	// "usage: bankers numprocesses\n"
-	
+	if (argc != 2) {
+		printf("Error: Must provide an argument.\n e.g $bankers numprocesses\n");
+		exit(1);
+	}
 	// Store the number of processes in this variable:
 	// How many processes to fork at once
-	int num_processes = IMPLEMENT ME
+	int num_processes = atoi(argv[1]);
 
 	// Make sure the number of processes the user specified is more than
 	// 0 and print an error to stderr if not, then exit with status 2:
 	//
 	// "bankers: num processes must be greater than 0\n"
-
+	if (num_processes < 1) {
+		printf("bankers: num processes must be greater than 0\n");
+		exit(2);
+	}
 	// ^^^^^^^^^^^^^^^^^^
-
+	printf("Argument: %c\n", *argv[1]);
+	printf("Number of processes: %d\n", num_processes);
 	// Start with $10K in the bank. Easy peasy.
 	int fd = open_balance_file(BALANCE_FILE);
 	write_balance(fd, 10000);
@@ -151,16 +158,22 @@ int main(int argc, char **argv)
 
 			// Open the balance file (feel free to call the helper
 			// functions, above).
-
+			int fd = open_balance_file(BALANCE_FILE);
 			// Read the current balance
-
+			read_balance(fd, &balance);
 			// Try to withdraw money
-			//
+			if (balance >= amount) {
+				write_balance(fd, balance - amount);
+				read_balance(fd, &balance);
+				printf("Withdrew $%d, new balance is $%d\n", amount, balance);
+			} else {
+				printf("Only have $%d, can't withdraw $%d\n", balance, amount);
+			}
 			// Sample messages to print:
-			//
+			
 			// "Withdrew $%d, new balance $%d\n"
 			// "Only have $%d, can't withdraw $%d\n"
-
+			close_balance_file(fd);
 			// Close the balance file
 			//^^^^^^^^^^^^^^^^^^^^^^^^^^
 
