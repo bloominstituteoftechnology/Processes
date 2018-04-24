@@ -90,7 +90,7 @@ int get_random_amount(void)
 	// !!!! IMPLEMENT ME:
 
 	// Return a random number between 0 and 999 inclusive using rand()
-
+	return rand() % 999;
 	// ^^^^^^^^^^^^^^^^^^
 }
 
@@ -100,7 +100,7 @@ int get_random_amount(void)
 int main(int argc, char **argv)
 {
 	// Parse the command line
-	
+
 	// vvvvvvvvvvvvvvvvvv
 	// !!!! IMPLEMENT ME:
 
@@ -116,10 +116,19 @@ int main(int argc, char **argv)
 	// message to stderr, and exit with status 1:
 	//
 	// "usage: bankers numprocesses\n"
-	
+	if(argc < 2 || argc > 2) {
+		perror("usage: bankers [number of processes]\n");
+		exit(1);
+	}
+
 	// Store the number of processes in this variable:
 	// How many processes to fork at once
-	int num_processes = IMPLEMENT ME
+	if(atoi(argv[1]) < 1) {
+		perror("bankers: num of processes must be greater than 0\n");
+		exit(2);
+	}
+	int num_processes = atoi(argv[1]);
+	// printf("testing num: %d", num_processes);
 
 	// Make sure the number of processes the user specified is more than
 	// 0 and print an error to stderr if not, then exit with status 2:
@@ -143,6 +152,7 @@ int main(int argc, char **argv)
 
 			// Get a random amount of cash to withdraw. YOLO.
 			int amount = get_random_amount();
+			int withdraw;
 
 			int balance;
 
@@ -151,8 +161,10 @@ int main(int argc, char **argv)
 
 			// Open the balance file (feel free to call the helper
 			// functions, above).
-
+			int bal_fd = open_balance_file(BALANCE_FILE);
+			flock(bal_fd, LOCK_EX);
 			// Read the current balance
+			read_balance(bal_fd, &balance);
 
 			// Try to withdraw money
 			//
@@ -160,9 +172,19 @@ int main(int argc, char **argv)
 			//
 			// "Withdrew $%d, new balance $%d\n"
 			// "Only have $%d, can't withdraw $%d\n"
+			if(amount > balance) {
+				printf("Only have $%d, can't withdraw $%d.\n", balance, balance);
+			}
+			if(balance > amount) {
+				withdraw = balance - amount;
+				write_balance(bal_fd, withdraw);
+				printf("Withdrew $%d, new balance $%d.\n", amount, withdraw);
+			}
 
 			// Close the balance file
 			//^^^^^^^^^^^^^^^^^^^^^^^^^^
+			flock(bal_fd, LOCK_UN);
+			close_balance_file(fd);
 
 			// Child process exits
 			exit(0);
