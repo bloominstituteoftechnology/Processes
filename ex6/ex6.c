@@ -15,6 +15,8 @@ and `clock_gettime()` should work just fine.
 #include <unistd.h>
 #include <stdlib.h>
 #include <time.h>
+#include <stdint.h>
+
 
 #define number_iter 1000000
 #define BILLION 1000000000L
@@ -22,6 +24,14 @@ and `clock_gettime()` should work just fine.
 int main()
 {
     // Your code here
-    
+    struct timespec start, end;
+
+    clock_gettime(CLOCK_REALTIME, &start);
+    sleep(1);
+    clock_gettime(CLOCK_REALTIME, &end);
+
+    double agg = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / BILLION;
+    printf("%lf\n",agg); 
+   
     return 0;
 }
