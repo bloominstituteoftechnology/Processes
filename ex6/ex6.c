@@ -22,6 +22,19 @@ and `clock_gettime()` should work just fine.
 int main()
 {
     // Your code here
+    uint64_t diff;
+    struct timespec start, finish;
+    int diffSum;
+    int averageTime;
+    for (int j = 0; j < number_iter; j++) {
+        clock_gettime(CLOCK_MONOTONIC, &start);
+        write(STDOUT_FILENO, NULL, sizeof(NULL));
+        clock_gettime(CLOCK_MONOTONIC, &finish);
+        diff = BILLION * (finish.tv_sec - start.tv_sec) + finish.tv_nsec - start.tv_nsec;
+        diffSum += diff;
+    }
+    averageTime = diffSum / number_iter;
+    printf("Average time it takes make a system call an empty write to stdout (in nanoseconds): %d\n", averageTime);
     
     return 0;
 }
