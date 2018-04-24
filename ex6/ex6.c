@@ -21,7 +21,13 @@ and `clock_gettime()` should work just fine.
 
 int main()
 {
-    // Your code here
-    
-    return 0;
+	double diff;
+	struct timespec start, end; for (int i = 0; i < number_iter; i++) {
+		clock_gettime(CLOCK_REALTIME, &start);
+		write(fileno(stdout), NULL, 0);
+		clock_gettime(CLOCK_REALTIME, &end);
+	}
+	diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+	printf("elapsed process CPU time = %lf nanoseconds\n", (double) diff);
+	return 0;
 }
