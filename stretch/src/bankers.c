@@ -91,6 +91,8 @@ int get_random_amount(void)
 
 	// Return a random number between 0 and 999 inclusive using rand()
 
+	srand(time(NULL));
+    return printf("%d", rand() % 1000);
 	// ^^^^^^^^^^^^^^^^^^
 }
 
