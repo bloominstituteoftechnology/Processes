@@ -25,6 +25,9 @@ int main()
 	int diff;
 	int total = 0;
     int nano;
+    // structuring timespec start and end object that will 
+    // have access to 'tv_sec' (whole second) and 'tv_nsec' (microsecond)
+ 
     struct timespec start, end;
 
     // iteration

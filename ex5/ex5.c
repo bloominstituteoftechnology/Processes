@@ -39,8 +39,9 @@ int main()
     	int wc = waitpid(rc, NULL, 0);
 
     	printf("from parent, reading msg from pipe\n");
-    	read(p[0], inbuf, MSGSIZE);
+    	
     	for (int i = 0; i < 3; i++) {
+            read(p[0], inbuf, MSGSIZE);
 	        printf("inbuf msg: %s\n", inbuf);
 	    };
     }
