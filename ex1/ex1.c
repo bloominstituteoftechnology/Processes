@@ -16,10 +16,10 @@ int main(int argc, char *argv[])
         printf("Fork failed\n");
         exit(1);
     } else if (rc == 0) {
-        x = 1;
+        x++;
         printf("x is %d\n", x);
     } else {
-        x = 10;
+        x--;
         printf("x is %d\n", x);
     }
 

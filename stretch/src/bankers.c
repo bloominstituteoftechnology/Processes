@@ -182,6 +182,8 @@ int main(int argc, char **argv)
 				printf("Only have $%d, can't withdraw $%d\n", balance, amount);
 			}
 
+			flock(fd, LOCK_UN); // Windows 7 seems to do this on its own
+
 			// Close the balance file
 			close_balance_file(fd);
 			
