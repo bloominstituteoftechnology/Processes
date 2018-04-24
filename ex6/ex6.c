@@ -21,7 +21,8 @@ and `clock_gettime()` should work just fine.
 
 int main()
 {
-    long sum, diff;
+    long sum = 0;
+    long diff;
     double avg;
     struct timespec start, end;
 
