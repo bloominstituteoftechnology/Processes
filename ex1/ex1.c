@@ -18,9 +18,13 @@ int main(int argc, char *argv[])
         fprintf(stderr, "fork faild\n");
         exit(1);
     } else if (cp == 0) { // child process successfully created
-      printf("hello, child process (pid: %d)\n", (int) getpid());
+      printf("hello, child process (pid: %d), and x's value is %d \n", (int) getpid(), x);
+      x++;
+      printf("hello again, child process, and x's value is now %d\n", x);
     } else {
-        printf("hello, parent process (pid: %d)\n", (int) getpid());
+        printf("hello, parent process (pid: %d), and x's value is %d\n", (int) getpid(), x);
+        x--;
+        printf("hello again, parent, and x's value is now %d\n", x);
     }
 
     return 0;
