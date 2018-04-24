@@ -66,26 +66,34 @@ simulated bank account, that is. Don't get your hopes up.)
 1. **Short answer**: How can things go wrong if two processes attempt the
    above plan at the same time? Is there more than one way things can go
    wrong?
+    - If two processes are trying to write at the same time the data may get corrupted.
+    - If two processes are in the middle of a transaction, the balance on file may not be fully up to date and the process(es) may print the incorrect balance, or erroneosly withdraw money because it may think the balance is greater than it actually is once the other process is taken into account.
 
 2. Study and understand the skeleton code in the `src/` directory.
 
    **Short answer**: what do each of the arguments to `open()` mean?
+    - First argument is a pointer to the pathname of the file to be opened.
+    - Second argument specify status flags and access modes for the file. In this case multiple options are bitwise OR'd to make up the entire argument.
+    - Third argument specifies the the permissions to be applied if a file does not exist and is created. This is only necessary if `O_CREAT` or `O_TMPFILE` is used in the second argument.
 
 3. Take the skeleton code in the `src/` directory and implement the
    pieces marked. Run it.
-   
+
    **Short answer**: What happens? Do things go as planned and look
    sensible? What do you speculate is happening?
+   - *Some of the balances look wrong. Likely because of the multiple processes trying to concurrently read/write the same file.*
+
 
 4. Add calls to [`flock()`](https://linux.die.net/man/2/flock) to
    capture and release an exclusive lock on the file before reading and
    changing the data.
 
    The results of the run should now make sense.
-   
+
 5. **Short answer**: Why is it working? How has adding locks fixed the
    problems you noted in question 1? How is overall performance of the
    application affected?
+   - Setting an 'exclusive lock' makes it so only one process can modify the file at a time. This probably makes the performance slower since each process has to wait until a previous process is completed before it can excute.
 
 
 ## Stretch Goals
