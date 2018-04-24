@@ -10,13 +10,14 @@ int main(int argc, char *argv[])
 {
     // Your code here
     int x = 100;
+    printf("Hello World (pid: %d)\n", (int) getpid());
     int rc = fork();
 
     if (rc < 0) {
         fprintf(stderr, "Fork Failed\n", x);
         exit(1);
     } else if (rc == 0) {
-        printf("Child value before process = %d\n", x);
+        printf("Child value before process = %d\n", (int) getpid(), x);
          
         x = 30;
         
