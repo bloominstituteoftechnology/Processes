@@ -90,6 +90,7 @@ int get_random_amount(void)
 	// !!!! IMPLEMENT ME:
 
 	// Return a random number between 0 and 999 inclusive using rand()
+	return rand() % 1000;
 
 	// ^^^^^^^^^^^^^^^^^^
 }
@@ -115,15 +116,27 @@ int main(int argc, char **argv)
 	// with argc. If they didn't specify anything, print an error
 	// message to stderr, and exit with status 1:
 	//
+	if (argc < 2)
+	{
+		fprintf(stderr, "Error message!\n");
+		exit(1);
+	}
+	// int test = strtol(argv[1], NULL, 10);
 	// "usage: bankers numprocesses\n"
 	
 	// Store the number of processes in this variable:
 	// How many processes to fork at once
-	int num_processes = IMPLEMENT ME
+	int num_processes = strtol(argv[1], NULL, 10);
+	// printf("argVs..... %d, %d, %d\n", argc, test, *argv[1]);
 
 	// Make sure the number of processes the user specified is more than
 	// 0 and print an error to stderr if not, then exit with status 2:
 	//
+	if (num_processes < 1)
+	{
+		fprintf(stderr, "bankers: num processes must be greater than 0\n");
+		exit(2);
+	}
 	// "bankers: num processes must be greater than 0\n"
 
 	// ^^^^^^^^^^^^^^^^^^
@@ -151,8 +164,10 @@ int main(int argc, char **argv)
 
 			// Open the balance file (feel free to call the helper
 			// functions, above).
+			int file = open_balance_file(BALANCE_FILE);
 
 			// Read the current balance
+			read_balance(file, &balance);
 
 			// Try to withdraw money
 			//
@@ -160,9 +175,19 @@ int main(int argc, char **argv)
 			//
 			// "Withdrew $%d, new balance $%d\n"
 			// "Only have $%d, can't withdraw $%d\n"
+			if (balance >= amount)
+			{
+				write_balance(file, balance-amount);
+				printf("Had 0 problems withdrawing $%d, new balance is $%d\n", amount, balance-amount);
+			}
+			else
+			{
+				printf("Only $%d is available, cannot withdraw $%d", balance, amount);
+			}
 
 			// Close the balance file
 			//^^^^^^^^^^^^^^^^^^^^^^^^^^
+			close_balance_file(file);
 
 			// Child process exits
 			exit(0);
