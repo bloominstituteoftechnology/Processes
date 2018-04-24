@@ -152,15 +152,14 @@ int main(int argc, char **argv)
 
 			// Get a random amount of cash to withdraw. YOLO.
 			int amount = get_random_amount();
-			int withdraw;
-
-			int balance;
+			int withdraw, deposit, balance;
 
 			// vvvvvvvvvvvvvvvvvvvvvvvvv
 			// !!!! IMPLEMENT ME
 
 			// Open the balance file (feel free to call the helper
 			// functions, above).
+			int role = rand() % 3;
 			int bal_fd = open_balance_file(BALANCE_FILE);
 			flock(bal_fd, LOCK_EX);
 			// Read the current balance
@@ -172,14 +171,29 @@ int main(int argc, char **argv)
 			//
 			// "Withdrew $%d, new balance $%d\n"
 			// "Only have $%d, can't withdraw $%d\n"
-			if(amount > balance) {
-				printf("Only have $%d, can't withdraw $%d.\n", balance, balance);
+			switch(role) {
+				case 0:
+					printf("Checking Balance, you have $%d.\n", balance);
+					break;
+				case 1:
+					deposit = balance + amount;
+					write_balance(bal_fd, deposit);
+					printf("Deposited $%d, new balance $%d.\n", amount, deposit);
+					break;
+				case 2:
+					if(amount > balance) {
+						printf("Only have $%d, can't withdraw $%d.\n", balance, balance);
+					}
+					if(balance > amount) {
+						withdraw = balance - amount;
+						write_balance(bal_fd, withdraw);
+						printf("Withdrew $%d, new balance $%d.\n", amount, withdraw);
+					}
+					break;
+				default:
+					printf("DEBUG: Role not found\n");
 			}
-			if(balance > amount) {
-				withdraw = balance - amount;
-				write_balance(bal_fd, withdraw);
-				printf("Withdrew $%d, new balance $%d.\n", amount, withdraw);
-			}
+
 
 			// Close the balance file
 			//^^^^^^^^^^^^^^^^^^^^^^^^^^
