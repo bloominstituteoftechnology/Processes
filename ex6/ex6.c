@@ -4,6 +4,8 @@ to make a system call an empty write to stdout. Your program should use the
 `clock_gettime` procedure to time how long a single system call takes. It'll 
 do this for one million iterations, and then find the average of all of those 
 iterations in nanoseconds.
+
+
 For some helpful documentation and examples of using time-related system calls,
 visit this site: https://www.cs.rutgers.edu/~pxk/416/notes/c-tutorials/gettime.html
 While the linked site does say that `clock_gettime()` does not work on OSX, this 
@@ -22,6 +24,24 @@ and `clock_gettime()` should work just fine.
 int main()
 {
     // Your code here
-    
+    u_int64_t diff;
+        struct timespec start, end;
+        int i;
+    u_int64_t total;
+
+    // measure monotonic time
+
+    for (int i = 0; i < number_iter; i++) {
+        clock_gettime(CLOCK_MONOTONIC, &start); // Start time 
+        printf(' ');
+        clock_gettime(CLOCK_MONOTONIC, &end); // End time 
+
+        diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+        total += diff;
+    }
+
+    int result = total / number_iter;
+
+    printf()
     return 0;
 }
