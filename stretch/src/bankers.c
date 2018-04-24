@@ -92,6 +92,10 @@ int get_random_amount(void)
 	return (rand() % 1000);
 }
 
+int roll_d20(void) {
+	return (rand() % 20 + 1);
+}
+
 /**
  * Main
  */
@@ -139,12 +143,20 @@ int main(int argc, char **argv)
 			read_balance(fd, &balance);
 
 			// Try to withdraw money
-			if (balance >= amount) {
-				balance -= amount;
-				write_balance(fd, balance);
-				printf("Withdrew $%d, new balance $%d\n", amount, balance);
+			if (roll_d20() <= 15) {
+				if (balance >= amount) {
+					balance -= amount;
+					write_balance(fd, balance);
+					printf("Withdrew $%d, new balance $%d\n", amount, balance);
+				} else {
+					printf("Only have $%d, can't withdraw $%d\n", balance, amount);
+				}
+			} else if (roll_d20() >= 18) {
+					balance += amount;
+					write_balance(fd, balance);
+					printf("Deposited $%d, new balance $%d\n", amount, balance);
 			} else {
-				printf("Only have $%d, can't withdraw $%d\n", balance, amount);
+				printf("The current balance is $%d\n", balance);
 			}
 
 			// Close the balance file

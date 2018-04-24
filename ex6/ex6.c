@@ -27,14 +27,11 @@ int main()
 
     for (int i = 0; i < number_iter; i++) {
         clock_gettime(CLOCK_MONOTONIC, &start_time);
-
         write(fileno(stdout), NULL, 0);
-
         clock_gettime(CLOCK_MONOTONIC, &end_time);
 
         result += BILLION * (end_time.tv_sec - start_time.tv_sec) + end_time.tv_nsec - start_time.tv_nsec;
     }
-
     printf("Average system call time: %f nanosecs.\n", (result / (float)number_iter));
     return 0;
 }
