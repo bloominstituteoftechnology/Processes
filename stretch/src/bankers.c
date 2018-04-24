@@ -159,6 +159,8 @@ int main(int argc, char **argv)
 			// functions, above).
 			int fd = open_balance_file(BALANCE_FILE);
 
+			flock(fd, LOCK_EX);
+
 			// Read the current balance
 			read_balance(fd, &balance);
 			// Try to withdraw money
@@ -173,6 +175,7 @@ int main(int argc, char **argv)
 				}
 			// "Withdrew $%d, new balance $%d\n"
 			// "Only have $%d, can't withdraw $%d\n"
+			flock(fd, LOCK_UN);
 
 			// Close the balance file
 			//^^^^^^^^^^^^^^^^^^^^^^^^^^
