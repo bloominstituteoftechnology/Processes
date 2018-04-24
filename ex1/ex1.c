@@ -17,27 +17,27 @@ int main(int argc, char *argv[])
     int x = 100;
     int process = fork();
 
-    if (process == 0)
-    {
-        
-        printf("Child process PID - (pid: %d) \n", (int)getpid());
-    }
-
-    else if (process > 0)
-    {
-        printf("Parent process PID - (pid: %d) \n", (int)getpid());
-    }
-
-    else
+    if (process < 0)
     {
         fprintf(stderr, "fork failed \n");
         exit(1);
     }
-int i = 0;
-        for (; i < 5; ++i)
-        {
-            printf("Child process does this to x: %d \n", ++x);
-        }
+    else if (process == 0)
+    {
+
+        printf("Child process PID - (pid: %d) \n", (int)getpid());
+    }
+
+    else
+    {
+        printf("Parent process PID - (pid: %d) \n", (int)getpid());
+    }
+
+    int i = 0;
+    for (; i < 5; ++i)
+    {
+        printf("Child process does this to x: %d \n", ++x);
+    }
     printf("--end of program--\n");
 
     return 0;
