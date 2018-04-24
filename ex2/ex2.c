@@ -20,11 +20,13 @@ int main(int argc, char* argv[])
     } else if (rc == 0) {
         char text[30] = "This is child process.\n";
         fwrite(text, 1, sizeof(text), fp);
-        printf("Text from child process: %s\n", text); //accesses text file, writes its own text with no affect from parent
+        // fprintf(fp, "Text from child process: %s\n", text); //accesses text file, writes its own text with no affect from parent
+        fclose(fp);
     } else {
         char text[30] = "This is parent process.\n";
         fwrite(text, 1, sizeof(text), fp);
-        printf("Text from parent process: %s\n", text); //accesses text file, writes its own text with no affect from child
+        // fprintf(fp, "Text from parent process: %s\n", text); //accesses text file, writes its own text with no affect from child
+        fclose(fp);
     }
     fclose(fp);
 
