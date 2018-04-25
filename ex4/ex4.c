@@ -11,5 +11,18 @@ int main(int argc, char* argv[])
 {
     // Your code here    
 
+    int rc = fork();
+    if (rc < 0) {    // fork failed; exit
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {    // child process satisfies this branch
+        printf("hello, child here: \n");
+        execl("/bin/ls", "ls", "-l", (char *) NULL);
+        // char *args[] = {"ls","-l", NULL};
+        // execvp(args[0],args);
+    } else {
+        wait(NULL);
+        printf("hello, parent here: \n");
+    }
     return 0;
 }
