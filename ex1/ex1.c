@@ -9,6 +9,26 @@
 int main(int argc, char *argv[])
 {
     // Your code here
+    int x = 100;
+    printf("Hello World (pid: %d)\n", (int) getpid());
+    int rc = fork();
+
+    if (rc < 0) {
+        fprintf(stderr, "Fork Failed\n", x);
+        exit(1);
+    } else if (rc == 0) {
+        printf("Child value before process = %d\n", (int) getpid(), x);
+         
+        x = 30;
+        
+        printf("value of Child after process = %d\n", x);
+    } else {
+        printf("Parent value before process = %d\n", x);
+
+        x = 50;
+
+        printf("Parent value after process = %d\n", x);
+    }
 
     return 0;
 }
