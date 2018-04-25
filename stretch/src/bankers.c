@@ -86,14 +86,11 @@ void read_balance(int fd, int *balance)
  */
 int get_random_amount(void)
 {
-	// vvvvvvvvvvvvvvvvvv
 	// !!!! IMPLEMENT ME:
-	srand(time(NULL));
+	// srand(time(NULL));
 
 	return (rand() % 999 + 1);
 	// Return a random number between 0 and 999 inclusive using rand()
-
-	// ^^^^^^^^^^^^^^^^^^
 }
 
 /**
@@ -102,7 +99,7 @@ int get_random_amount(void)
 int main(int argc, char **argv)
 {
 	// Parse the command line
-	
+
 	// vvvvvvvvvvvvvvvvvv
 	// !!!! IMPLEMENT ME:
 

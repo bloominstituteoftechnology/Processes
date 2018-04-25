@@ -30,7 +30,8 @@ int main() {
 
   for (i = 0; i <= number_iter; i++) {
     clock_gettime(CLOCK_MONOTONIC, &start);
-    write(STDOUT_FILENO, NULL, sizeof(NULL));
+    // write(STDOUT_FILENO, NULL, 0);
+    write(fileno(stdout), NULL, 0);
     clock_gettime(CLOCK_MONOTONIC, &end);
     diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
     total += diff;
