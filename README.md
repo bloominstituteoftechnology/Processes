@@ -24,7 +24,7 @@ Let's look at a program that calls `fork()` to try to give an example of what th
 
 int main(int argc, char *argv[])
 {
-    printf("hello world (pid: %d)\n", (int) getpid());
+    printf("hello world (pid: %d)\n", (int) getpid()); 
     int rc = fork();
     // ------------------------------------------------ child process starts executing here
     if (rc < 0) {    // fork failed; exit

@@ -8,7 +8,23 @@
 
 int main(int argc, char *argv[])
 {
-    // Your code here
+  // Your code here
+  printf("hello world (pid: %d)\n", (int)getpid());
+  int rc = fork();
 
-    return 0;
+  if (rc < 0)
+  { // fork failed; exit
+    fprintf(stderr, "fork failed\n");
+    exit(1);
+  }
+  else if (rc == 0)
+  { // child process satisfies this branch
+    printf("hello, child here (pid: %d) \n", (int)getpid());
+  }
+  else
+  {
+    printf("hello, parent here (pid: %d) of child %d\n", (int)getpid(), rc);
+  }
+
+  return 0;
 }
