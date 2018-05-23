@@ -9,6 +9,19 @@
 int main(int argc, char *argv[])
 {
     // Your code here
+    int x = 100;
 
+    int y = fork();
+
+    if (y < 0) {
+        fprintf("fork failed\n", x);
+        exit(1);
+    } else if (y == 0) {
+        printf("from child and x is: %d\n", ++x);
+    } else {
+        printf("from parent and x is: %d\n", --x);
+    }
+    printf("value of x is now: %d\n", x);
     return 0;
+
 }
