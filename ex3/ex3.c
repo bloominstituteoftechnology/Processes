@@ -6,9 +6,34 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+int forker()
+{
+    printf("hello world (pid:%d) \n", (int) getpid());
+    int rc = fork();
+    if (rc < 0) 
+    {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    }
+    else if (rc == 0 )
+    {
+        printf("Hello, I am child \n");
+
+    }
+    // else
+    // {
+    //     printf("Goodbye, I am parent of %d \n", rc);
+        
+    // }
+}
+
 int main(int argc, char* argv[])
 {
     // Your code here
+
+    forker();
+
+    printf("Goodbye, I am parent \n");
 
     return 0;
 }
