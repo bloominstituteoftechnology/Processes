@@ -10,6 +10,8 @@
 int main(int argc, char* argv[])
 {
     // Your code here    
+    int rc = fork();
+    execv("/bin/ls", 0);  
 
     return 0;
 }
