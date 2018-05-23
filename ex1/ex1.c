@@ -8,7 +8,18 @@
 
 int main(int argc, char *argv[])
 {
-    // Your code here
+    int x = 100;
+    int child = fork();
+    if (child < 0) {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (child == 0) {
+        x = 101;
+    } else {
+        x = 99;
+    }
+
+    printf("%d", x);
 
     return 0;
 }
