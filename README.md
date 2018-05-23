@@ -16,7 +16,7 @@ to delineate the fact that while the new child process has the same instruction 
 after `fork()` is called in the parent process. 
 
 Let's look at a program that calls `fork()` to try to give an example of what this means:
-```
+```c
 // p1.c
 #include <stdio.h>
 #include <stdlib.h>
@@ -64,7 +64,7 @@ the child may execute before the parent; we can't say for certain. The `wait()` 
 the more complete `waitpid()` system call) allows us to get around this non-determinism if that is something 
 that needs to be accounted for. Let's add a call to `waitpid()` in our previous example program to ensure that 
 the child always runs before its parent:
-```
+```c
 // p2.c
 #include <stdio.h>
 #include <stdlib.h>
@@ -94,7 +94,7 @@ Here, the `waitpid()` function suspends the parent process until the child proce
 ## `exec()`
 The `exec()` system call is used in order to run a program that is different from the calling program (since `fork` only executes copies of the program that called it). 
 Let's say we wanted to spin up a child process to execute a word count program. Here's how what a program that does that might look like:
-```
+```c
 // p3.c
 #include <stdio.h>
 #include <stdlib.h>
@@ -137,7 +137,7 @@ why we still had to have the parent process `fork` a new child process.
 Conceptually, a pipe is a uni-directional channel between two processes that would otherwise be isolated from each other. When a pipe is established between two processes, one process has access to the write end of the pipe, while the other has read access to the other end of the pipe. Thus, if you want two-way communication between two processes, two pipes will have to be created between both processes, one in each direction. 
 
 Some things to keep in mind when working with pipes is that when a process writes to a pipe, the other process receives the data in FIFO order (which makes sense when you think about the pipe analogy in real life). Additionally, if the process with read access tries to read from the pipe before anything has been written to it, the reading process is suspended until there is some data to read. 
-```
+```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
