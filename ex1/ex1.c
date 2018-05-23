@@ -10,5 +10,25 @@ int main(int argc, char *argv[])
 {
     // Your code here
 
+    int x = 5;
+
+    int rc = fork();
+
+    if (rc < 0)
+    {
+        printf("Fork failed");
+        exit(1);
+    }
+    else if (rc == 0)
+    {
+        x = 30;
+        printf("Child says x is %d\n", x);
+    }
+    else
+    {
+        x = 25;
+        printf("Parent says x is %d\n", x, rc);
+    }
+
     return 0;
 }
