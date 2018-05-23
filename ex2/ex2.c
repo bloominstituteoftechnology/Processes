@@ -9,6 +9,17 @@
 int main(int argc, char* argv[])
 {
     // Your code here 
-    
+    FILE *fp;
+    fp = fopen("text.txt", "r+");
+
+    int rc = fork();
+    if (rc < 0)
+        printf("Shit didn't work\n");
+    else if (rc == 0)
+        fprintf(fp, "%s\n", "Kiddo says hey");
+    else
+        fprintf(fp, "%s\n", "Parent Here.");
+
+    fclose(fp);
     return 0;
 }
