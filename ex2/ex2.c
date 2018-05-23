@@ -5,8 +5,8 @@
 // Answer: The child and parent can indeed print one after another.  If you try to run the entire program
 // again,
 
-// Compile in correct ex2 folder: `gcc -Wall -Wextra -o ex2 ex2.c`
-// Then run: `./ex2`
+// `gcc -Wall -Wextra -o ex2 ex2.c`
+//  `./ex2`
 
 #include <stdio.h>
 #include <unistd.h>
