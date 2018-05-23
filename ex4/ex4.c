@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
     else if (rc == 0)
     {
         printf("Hello from the child process! pid: %d\n", (int)getpid());
-        execl("/bin/ls", "ls", "-1", (char *)NULL);
+        execl("/bin/ls", "ls", "-l", (char *)NULL);
     }
     else
     {
