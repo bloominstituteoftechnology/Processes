@@ -8,7 +8,14 @@
 
 int main(int argc, char* argv[])
 {
-    // Your code here 
-    
+    // Your code here
+    FILE * file;
+
+    file = fopen("text.txt", "w+");
+    int f = fork();
+    fprintf(file, "hey this here is a good thing to write\n");
+
+    fclose(file);
+
     return 0;
 }
