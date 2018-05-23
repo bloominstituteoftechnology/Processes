@@ -9,6 +9,27 @@
 int main(int argc, char *argv[])
 {
     // Your code here
+    int x = 100;
+    printf("x PRE fork: %d\n", (int)x);
+    int rc = fork();
+
+    if (rc < 0)
+    { // fork failed; exit
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    }
+    else if (rc == 0)
+    { // child process satisfies this branch
+        x = 101;
+        printf("hello, child here (x: %d) my rc is %d. My pid is %d \n", (int)x, rc, getpid());
+    }
+    else
+    {
+        x = 102;
+        printf("hello, parent here (x: %d) my rc is %d. My pid is %d \n", (int)x, rc, getpid());
+    }
+
+    printf("final value of x: %d \n", (int)x);
 
     return 0;
 }
