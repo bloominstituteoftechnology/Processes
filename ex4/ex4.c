@@ -6,10 +6,26 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <sys/wait.h>
 
 int main(int argc, char* argv[])
 {
-    // Your code here    
+    // Your code here
+    printf("parent process\n");
+    int rc = fork();
+
+       if ( rc < 0) {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+       } else if (rc == 0) {
+           printf("child process\n");
+           char *args[] = {"ls", "-1", NULL};
+           execv("/bin/ls", args);
+
+        // execl("/bin/ls", "ls", "-l" (char *) NULL);
+       } else {
+           wait(NULL);
+       }
 
     return 0;
 }
