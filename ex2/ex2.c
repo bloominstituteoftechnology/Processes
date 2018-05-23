@@ -8,7 +8,19 @@
 
 int main(int argc, char* argv[])
 {
-    // Your code here 
+    int c;
+    FILE *fp;
+    int frk = fork();
+    fp = fopen("text.txt", "r+");
+
+    if (frk != 0){
+        fprintf(fp, "this is some stuff written by the child");
+    } else {
+        while ((c = getc(fp)) != EOF){
+            printf("%c", c);
+        }
+        fclose(fp);
+    }
     
     return 0;
 }
