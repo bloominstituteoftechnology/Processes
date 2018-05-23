@@ -9,6 +9,37 @@
 int main(int argc, char* argv[])
 {
     // Your code here 
-    
+    int c;
+    FILE * fp;
+    fp = fopen("text.txt", "r");
+    int rc = fork();
+    if (rc < 0) {    // fork failed; exit
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+        } 
+    else if (rc == 0) {  
+        printf("child\n");  // child process satisfies this branch
+        while(1) {
+            c = fgetc(fp);
+            if( feof(fp) ) { 
+            break ;
+        }
+        printf("%c", c);
+    }
+
+    } else {
+        printf("parent\n");
+        while(1) {
+        c = fgetc(fp);
+        if( feof(fp) ) { 
+            break ;
+        }
+        printf("%c", c);
+    }
+
+    }
+    fclose(fp);
     return 0;
 }
+
+// Only parent can access the file, but both get executed. Both can write.
