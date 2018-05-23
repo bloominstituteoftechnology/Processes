@@ -8,8 +8,10 @@
 
 int main(int argc, char *argv[])
 {
+    int x = 100;
     // Your code here
-    printf("Hello World! (pid: %d) \n", (int) getpid());
+    // printf("Hello World! (pid: %d) \n", (int) getpid());
+
 
     int rc = fork();
 
@@ -17,9 +19,31 @@ int main(int argc, char *argv[])
         fprintf(stderr, "fork failed\n");
     } else if (rc == 0) {
         printf("Hello!!! Child Here!! (pid: %d) \n", (int) getpid());
+        x++;
+        printf("Child Updated %d (pid: %d) \n", x, (int) getpid());
     } else {
         printf("Hi! parent here (pid: %d) and have a child of pid: %d \n", (int) getpid(), rc);
+        x--;
+        printf("Parent process %d, (pid: %d) \n", x, (int) getpid());
+
     }
 
     return 0;
+
+    // int x = 1;
+    // printf("hello world (pid: %d)\n", (int) getpid());
+    // int rc = fork();
+    // if (rc < 0) {    // fork failed; exit
+    //     fprintf(stderr, "fork failed\n");
+    //     exit(1);
+    // } else if (rc == 0) {    // child process satisfies this branch
+    //     printf("hello, child here (pid: %d) \n", (int) getpid());
+    //     x++;
+    //     printf("\nChild variable x = %d", x);
+    // } else {
+    //     printf("hello, parent here (pid: %d) of child %d\n", (int) getpid(), rc);
+    //     x--;
+    //     printf("\nParent variable x = %d", x);
+    // }
+    // return 0;
 }
