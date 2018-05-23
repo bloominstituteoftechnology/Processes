@@ -9,6 +9,25 @@
 int main(int argc, char* argv[])
 {
     // Your code here 
+
+    FILE *fptr;
+    fptr = fopen("text.txt", "w");
     
+    if(fptr == NULL)
+   {
+      printf("Error!");   
+      exit(1);             
+   }
+
+
+    int rc = fork();
+    if(rc < 0 ) {
+       fprintf(stderr, "fork failed\n");
+    }else if(rc == 0) {
+        fprintf(fptr,"(pid: %d) child\n",(int) getpid());
+    } else {
+        fprintf(fptr,"(pid: %d) parent \n",(int) getpid());
+    }
+
     return 0;
 }
