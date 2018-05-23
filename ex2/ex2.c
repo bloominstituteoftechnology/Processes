@@ -8,7 +8,16 @@
 
 int main(int argc, char* argv[])
 {
-    // Your code here 
-    
-    return 0;
+     FILE *text = fopen("./text.txt", "a");  
+	int child = fork();
+	if (child < 0) {
+		fprintf(stderr, "fork failed\n");
+	} else if (child == 0) {
+		char child_text[] = "\n\nHello, child here!\n\n";
+		fwrite(child_text, sizeof(child_text), 1, text);
+	} else {
+		char parent_text[] = "\n\nI'm apparently a parent.\n\n";
+		fwrite(parent_text, sizeof(parent_text), 1, text);
+	}
+	return 0;
 }

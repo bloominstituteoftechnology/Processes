@@ -5,10 +5,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <sys/wait.h>
 
 int main(int argc, char* argv[])
 {
-    // Your code here
-
-    return 0;
+char child_text[] = "Hello";
+	char parent_text[] = "Goodbye";
+	int child = fork();
+	if (child < 0) {
+		fprintf(stderr, "fork failed\n");
+	} else if (child == 0) {
+		printf("\n\n%s\n\n", child_text);
+	} else {
+		int wc = waitpid(child, NULL, 0);
+		printf("\n\n%s\n\n", parent_text);
+	}
+	return 0;
 }
+   
