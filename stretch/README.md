@@ -66,16 +66,64 @@ simulated bank account, that is. Don't get your hopes up.)
 1. **Short answer**: How can things go wrong if two processes attempt the
    above plan at the same time? Is there more than one way things can go
    wrong?
+  * For one, let's say there's $1000 available, and two processes attempt to withdraw $800. If they both do this at the same time, then $1000 is technically available to *each*, meaning that there will be a total withdrawl of $1600, which should cause both to fail with the message that there's only $1000 available, or both to succeed which would put the balance into the negative.
 
 2. Study and understand the skeleton code in the `src/` directory.
 
-   **Short answer**: what do each of the arguments to `open()` mean?
+  **Short answer**: what do each of the arguments to `open()` mean?
+  ```C
+  int open(const char *path, int oflags, mode_t mode);
+  ```
+  * The first argument is the relative or absolute path to the file being opened.
+  * The second argument is a bitwise 'or' separated list of values that determine the method in which the file is to be opened (whether it should be read only, read/write, whether it should be cleared when opened, etc).
+    * As an example, in `bankers.c` we're using `O_CREAT|O_RDWR`. `O_CREAT` will create a new file if one does not exist (and also requires the `mode` argument at the end), while `O_RDWR` opens the file for read/write.
+  * The third argument can be a bitwise 'or' separated list of values, or octal notation, that determine the permissions of the file if it is created.
+    * In `bankers.c` the argument `0644` is provided, an octal which represents `-rw-r--r--` in *nix, which can be translated to:
+    ```
+    * (owning) User: read & write
+    * Group: read
+    * Other: read
+    ```
 
 3. Take the skeleton code in the `src/` directory and implement the
    pieces marked. Run it.
    
-   **Short answer**: What happens? Do things go as planned and look
-   sensible? What do you speculate is happening?
+  **Short answer**: What happens? Do things go as planned and look
+  sensible? What do you speculate is happening?
+  * I implemented this using `flock()` prior to noticing these short answer questions, however even with this function commented out and the binary recompiled, I do not seem to be getting any unusual output. Here is an example of output **without** `flock()`:
+  ```
+  ./bankers 30
+  Withdrew $728, new balance $9272
+  Withdrew $549, new balance $8723
+  Withdrew $894, new balance $7829
+  Withdrew $416, new balance $7413
+  Withdrew $832, new balance $6581
+  Withdrew $478, new balance $6103
+  Withdrew $965, new balance $5138
+  Withdrew $405, new balance $4733
+  Withdrew $593, new balance $4140
+  Withdrew $137, new balance $4003
+  Withdrew $705, new balance $3298
+  Withdrew $810, new balance $2488
+  Withdrew $586, new balance $1902
+  Withdrew $432, new balance $1470
+  Withdrew $215, new balance $1255
+  Withdrew $533, new balance $722
+  Withdrew $266, new balance $456
+  Only have $456, can't withdraw $557
+  Only have $456, can't withdraw $562
+  Withdrew $76, new balance $380
+  Withdrew $95, new balance $285
+  Withdrew $90, new balance $195
+  Withdrew $111, new balance $84
+  Only have $84, can't withdraw $296
+  Only have $84, can't withdraw $356
+  Only have $84, can't withdraw $310
+  Only have $84, can't withdraw $99
+  Only have $84, can't withdraw $525
+  Only have $84, can't withdraw $96
+  Withdrew $73, new balance $11
+  ```
 
 4. Add calls to [`flock()`](https://linux.die.net/man/2/flock) to
    capture and release an exclusive lock on the file before reading and
@@ -84,8 +132,9 @@ simulated bank account, that is. Don't get your hopes up.)
    The results of the run should now make sense.
    
 5. **Short answer**: Why is it working? How has adding locks fixed the
-   problems you noted in question 1? How is overall performance of the
-   application affected?
+  problems you noted in question 1? How is overall performance of the
+  application affected?
+  * I don't have an answer to this, as I ran into no unusual behavior without `flock()`.
 
 
 ## Stretch Goals

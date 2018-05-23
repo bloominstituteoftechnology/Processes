@@ -53,6 +53,9 @@ void write_balance(int fd, int balance)
 	if (bytes_written < 0) {
 		// What does perror do? man 3 perror
 		perror("write");
+		// The perror() function produces a message on standard error describing
+    // the last error encountered during a call to a system or library
+    // function.
 	}
 }
 
@@ -86,12 +89,11 @@ void read_balance(int fd, int *balance)
  */
 int get_random_amount(void)
 {
-	// vvvvvvvvvvvvvvvvvv
-	// !!!! IMPLEMENT ME:
+	return (rand() % 1000);
+}
 
-	// Return a random number between 0 and 999 inclusive using rand()
-
-	// ^^^^^^^^^^^^^^^^^^
+int roll_d20(void) {
+	return (rand() % 20 + 1);
 }
 
 /**
@@ -100,33 +102,19 @@ int get_random_amount(void)
 int main(int argc, char **argv)
 {
 	// Parse the command line
-	
-	// vvvvvvvvvvvvvvvvvv
-	// !!!! IMPLEMENT ME:
-
-	// We expect the user to add the number of simulataneous processes
-	// after the command name on the command line.
-	//
-	// For example, to fork 12 processes:
-	//
-	//  ./bankers 12
-
-	// Check to make sure they've added one paramter to the command line
-	// with argc. If they didn't specify anything, print an error
-	// message to stderr, and exit with status 1:
-	//
-	// "usage: bankers numprocesses\n"
+	if (argc != 2) {
+		fprintf(stderr, "usage: bankers numprocesses\n");
+		exit(1);
+	}
 	
 	// Store the number of processes in this variable:
 	// How many processes to fork at once
-	int num_processes = IMPLEMENT ME
+	int num_processes = atoi(argv[1]);
 
-	// Make sure the number of processes the user specified is more than
-	// 0 and print an error to stderr if not, then exit with status 2:
-	//
-	// "bankers: num processes must be greater than 0\n"
-
-	// ^^^^^^^^^^^^^^^^^^
+	if (num_processes == 0) {
+		fprintf(stderr, "bankers: num processes must be greater than 0\n");
+		exit(2);
+	}
 
 	// Start with $10K in the bank. Easy peasy.
 	int fd = open_balance_file(BALANCE_FILE);
@@ -146,23 +134,34 @@ int main(int argc, char **argv)
 
 			int balance;
 
-			// vvvvvvvvvvvvvvvvvvvvvvvvv
-			// !!!! IMPLEMENT ME
-
 			// Open the balance file (feel free to call the helper
 			// functions, above).
+			int fd = open_balance_file(BALANCE_FILE);
+			flock(fd, LOCK_EX);
 
 			// Read the current balance
+			read_balance(fd, &balance);
 
 			// Try to withdraw money
-			//
-			// Sample messages to print:
-			//
-			// "Withdrew $%d, new balance $%d\n"
-			// "Only have $%d, can't withdraw $%d\n"
+			if (roll_d20() <= 15) {
+				if (balance >= amount) {
+					balance -= amount;
+					write_balance(fd, balance);
+					printf("Withdrew $%d, new balance $%d\n", amount, balance);
+				} else {
+					printf("Only have $%d, can't withdraw $%d\n", balance, amount);
+				}
+			} else if (roll_d20() >= 18) {
+					balance += amount;
+					write_balance(fd, balance);
+					printf("Deposited $%d, new balance $%d\n", amount, balance);
+			} else {
+				printf("The current balance is $%d\n", balance);
+			}
 
 			// Close the balance file
-			//^^^^^^^^^^^^^^^^^^^^^^^^^^
+			flock(fd, LOCK_UN);
+			close_balance_file(fd);
 
 			// Child process exits
 			exit(0);
