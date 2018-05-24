@@ -27,16 +27,23 @@ int main(int argc, char* argv[])
         printf("Hello, child here (pid: %d) \n", (int) getpid());
 
         // allocate an array of chars to hold 3 bytes
-        char *myargs[3];
+       // char *myargs[3];
 
         // `strdup` duplicates the given input string
-        myargs[0] = strdup("wc"); // pass the name of the program we want to run as the first array element
-        myargs[1] = strdup("ex4/f4.txt"); // argument: the file to count
-        myargs[2] = NULL; // marks the end of the array
+        // myargs[0] = strdup("wc"); // pass the name of the program we want to run as the first array element
+        // myargs[1] = strdup("ex4/f4.txt"); // argument: the file to count
+        // myargs[2] = NULL; // marks the end of the array
+
+        // // runs the word count program,passing in the `myargs` array to the word count program as arguments
+        // execvp(myargs[0], myargs);
+
+        char *myargs[2];
+        myargs[0] = strdup("/bin/ls"); // pass the name of the program (`/bin/ls) we want to run as the first array element
+        myargs[1] = NULL; // marks the end of the array
 
         // runs the word count program,passing in the `myargs` array to the word count program as arguments
-        execvp(myargs[0], myargs);
-
+        //execvp(myargs[0], myargs);
+        execl(myargs[0], (char*) myargs);
         // doesn't reach here because a whole new program replaces this script
         printf("This should not be seen\n");
     } else {
