@@ -9,14 +9,13 @@
 int main(int argc, char* argv[])
 {
     // Your code here 
-    // REVISIT
     FILE *fp = fopen("text.txt", "w+"); // creates empty file w/ read/write privileges
     int rc = fork();
 
-    if (rc < 0) {
+    if (rc < 0) {   // fork failed; exit
       fprintf(stderr, "fork failed, exiting\n");
       exit(1);
-    } else if (rc == 0) {
+    } else if (rc == 0) {   // child process satisfies this branch
       printf("child process (pid: %d) writing %d\n");
     } else {
       printf("parent process (pid: %d) writing %d\n");
