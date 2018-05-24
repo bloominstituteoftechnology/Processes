@@ -67,9 +67,19 @@ simulated bank account, that is. Don't get your hopes up.)
    above plan at the same time? Is there more than one way things can go
    wrong?
 
+   If it's on a multi-core machine, multiple processes may be better, though you might need to check the number of processes that gets created as too much processes will be a overhead to maintain. 
+   
+   Resources are also not shared as much between processes so they can run independently. This could mean that it would be difficult for memory to be shared in between each process. 
+
 2. Study and understand the skeleton code in the `src/` directory.
 
    **Short answer**: what do each of the arguments to `open()` mean?
+
+   filename - name of the file
+
+   O_CREAT|O_RDWR - if the file does not exist, create it, then open the file so that it can be read from and written to.
+
+   0644 - type of permissions - the user can read and write, the group and others can read.
 
 3. Take the skeleton code in the `src/` directory and implement the
    pieces marked. Run it.
