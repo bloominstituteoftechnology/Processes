@@ -23,14 +23,24 @@ int main()
       fprintf(stderr, "Pipe failure\n");
       exit(1);
     }
+    
+    int rc = fork();
 
-    write(p[1], msg1, MSGSIZE);
-    write(p[1], msg2, MSGSIZE);
-    write(p[1], msg3, MSGSIZE);
+    if (rc < 0) {
+      fprintf(stderr, "Fork failure\n");
+    }
 
-    for (int i = 0; i < 3; i++) {
-      read(p[0], inbuf, MSGSIZE);
-      printf("%s\n", inbuf);
+    else if (rc == 0) {
+      write(p[1], msg1, MSGSIZE);
+      write(p[1], msg2, MSGSIZE);
+      write(p[1], msg3, MSGSIZE);
+    }
+    
+    else {
+      for (int i = 0; i < 3; i++) {
+        read(p[0], inbuf, MSGSIZE);
+        printf("%s\n", inbuf);
+      }
     }
 
     return 0;
