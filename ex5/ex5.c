@@ -15,7 +15,33 @@ char* msg3 = "hello world #3";
 
 int main()
 {
-    // Your code here
-    
+	char inbuf[MSGSIZE];	
+	int p[2];
+	
+	if (pipe(p) < 0) {
+		fprintf(stderr, "Unable to Pipe, please try again\n");
+		exit(1);
+	}
+	
+	int rc = fork();
+	
+	if(rc < 0) {
+		fprintf(stderr, "There was a problem while forking, please try again later\n");
+		exit(1);
+	} else if(rc == 0) {
+		printf("Writing the messages from the child process with rc %d to the parent\n", rc);
+		write(p[1], msg1, MSGSIZE);
+		write(p[1], msg2, MSGSIZE);
+		write(p[1], msg3, MSGSIZE);
+	} else {
+		printf("In the parent process with rc = %d\n", rc);
+		int i;
+		for (i = 0; i < 3; i++) {
+			read( p[0], inbuf, MSGSIZE);
+			printf("%s\n", inbuf);
+		}
+		printf("%d", rc);
+	}
+	
     return 0;
 }
