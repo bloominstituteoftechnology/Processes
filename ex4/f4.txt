@@ -1,0 +1,4 @@
+This is for ex4
+hello word
+strdup
+we are making progress
