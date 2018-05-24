@@ -15,6 +15,7 @@ and `clock_gettime()` should work just fine.
 #include <unistd.h>
 #include <stdlib.h>
 #include <time.h>
+#include <stdint.h>
 
 #define number_iter 1000000
 #define BILLION 1000000000L
@@ -24,7 +25,7 @@ int main()
     // Your code here
     uint64_t diff;
     struct timespec start, end;
-    float avg;
+    double avg;
 
     for (int i = 0; i < number_iter; i++)
     {

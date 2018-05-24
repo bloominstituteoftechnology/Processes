@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <string.h>
 
 int main(int argc, char *argv[])
 {
@@ -23,6 +24,10 @@ int main(int argc, char *argv[])
     {
         printf("Child pid %d\n", (int)getpid());
         fprintf(fp, "This is from the child\n");
+
+        //===== also
+        // char *child_str = "This is child string\n";  // also char child_str[] = "This is child string\n";
+        // fwrite(child_str, 1, strlen(child_str), fp); // 1 is for byte size.
     }
     else
     {

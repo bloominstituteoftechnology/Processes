@@ -18,11 +18,12 @@ int main()
     // Your code here
     char inbuf[MSGSIZE];
     int p[2];
+    int nbytes;
 
     if (pipe(p) < 0)
     {
         fprintf(stderr, "pipe failed\n");
-        exit(1);
+        exit(2); // 2 instead of 1 so we know if the pipe or fork failed since fork err is 1.
     }
 
     int rc = fork();
@@ -43,9 +44,15 @@ int main()
     {
         close(p[1]);
         printf("Parent reading from pipe:\n");
-        for (int i = 0; i < 3; i++)
+        // for (int i = 0; i < 3; i++)
+        // {
+        //     read(p[0], inbuf, MSGSIZE);
+        //     printf("%s\n", inbuf);
+        // }
+
+        //==========
+        while ((nbytes = read(p[0], inbuf, MSGSIZE)) > 0)
         {
-            read(p[0], inbuf, MSGSIZE);
             printf("%s\n", inbuf);
         }
     }

@@ -19,11 +19,21 @@ int main(int argc, char *argv[])
     }
     else if (rc == 0)
     {
-        printf("Hello from the child process! pid: %d\n", (int)getpid());
-        execl("/bin/ls", "ls", "-l", (char *)NULL);
+        // printf("Hello from the child process! pid: %d\n", (int)getpid());
+        // char *args[] = {"/bin/ls", "-l", NULL};
+        // execvp(args[0], args);
+        // printf("this should not be seen");
+
+        //======= OTHER EXEC CALLS ========
+        printf("Child here\n");
+        // char *args[] = {"ls", "-l", NULL};
+        // execvp(args[0], args);
+        // execl("/bin/ls", "ls", "-l", NULL);
+        execlp("ls", "ls", "-l", NULL);
     }
     else
     {
+        int wc = waitpid(rc, NULL, 0);
         printf("Hello from the parent process! pid: %d\n", (int)getpid());
     }
 

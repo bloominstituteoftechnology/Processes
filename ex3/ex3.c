@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
     }
     else
     {
-        int wc = waitpid(rc, NULL, 0);
+        int wc = waitpid(rc, NULL, 0); // (rc, NULL, WNOHANG)
         printf("GOODBYE (from the parent process pid: %d)\n", (int)getpid());
     }
 
