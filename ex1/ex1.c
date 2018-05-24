@@ -9,6 +9,24 @@
 int main(int argc, char *argv[])
 {
     // Your code here
+    printf("The program ran!\n");
+    int x = 100;
+    int rc = fork();
+    if (rc < 0)
+    {
+        fprintf(stderr, "Fork failed\n");
+        exit(1);
+    }
+    else if (rc == 0)
+    {
+        x = 23;
+        printf("%d\n", x);
+    }
+    else
+    {
+        x = 327;
+    }
+    printf("%d\n", x);
 
     return 0;
 }
