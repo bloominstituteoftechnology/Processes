@@ -120,7 +120,7 @@ int main(int argc, char **argv)
 	
 	// Store the number of processes in this variable:
 	// How many processes to fork at once
-	int num_processes = 10;
+	int num_processes = 100;
 
 	// Make sure the number of processes the user specified is more than
 	// 0 and print an error to stderr if not, then exit with status 2:
@@ -131,7 +131,7 @@ int main(int argc, char **argv)
 
 	// Start with $10K in the bank. Easy peasy.
 	int fd = open_balance_file(BALANCE_FILE);
-	write_balance(fd, 2000);
+	write_balance(fd, 10000);
 	close_balance_file(fd);
 
 	// Rabbits, rabbits, rabbits!
@@ -153,6 +153,7 @@ int main(int argc, char **argv)
 			// Open the balance file (feel free to call the helper
 			// functions, above).
 			int fd2 = open_balance_file(BALANCE_FILE);
+			flock(fd2, LOCK_EX); // lock the file
 
 			// Read the current balance
 			read_balance(fd2, &balance);
@@ -176,6 +177,9 @@ int main(int argc, char **argv)
 				// give auser a reason why they can't withdraw
 				printf("Only have $%d, can't withdraw $%d\n", balance, amount);
 			}
+
+			flock(fd2, LOCK_EX); // unlock the file
+
 			// Close the balance file
 			close_balance_file(fd2);
 			//^^^^^^^^^^^^^^^^^^^^^^^^^^

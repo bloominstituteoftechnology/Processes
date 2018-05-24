@@ -11,7 +11,6 @@
 3.  What happens? Do things go as planned and look
     sensible? What do you speculate is happening?
 
-
 ```
   Withdrew $516, new balance $1484
   Only have $0, can't withdraw $130
@@ -30,3 +29,20 @@ things look weird and out of wack! They don't make sense. Seems like the order i
 5.  Why is it working? How has adding locks fixed the
     problems you noted in question 1? How is overall performance of the
     application affected?
+
+```
+Withdrew $243, new balance $1757
+Withdrew $50, new balance $1707
+Withdrew $857, new balance $850
+Withdrew $664, new balance $186
+Only have $186, can't withdraw $471
+Only have $186, can't withdraw $278
+Withdrew $85, new balance $101
+Only have $101, can't withdraw $892
+Only have $101, can't withdraw $699
+Only have $101, can't withdraw $506
+```
+
+this now makes sense, nice!!
+
+the perfomance doesn't seem too bad! Almost the same.
