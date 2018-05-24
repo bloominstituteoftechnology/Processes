@@ -14,7 +14,7 @@ int main(int argc, char* argv[])
 
     int rc = fork();
     if (rc < 0)
-        printf("Shit didn't work\n");
+        printf("fork failed\n");
     else if (rc == 0)
         fprintf(fp, "%s\n", "Kiddo says hey");
     else
