@@ -46,3 +46,5 @@ Only have $101, can't withdraw $506
 this now makes sense, nice!!
 
 the perfomance doesn't seem too bad! Almost the same.
+
+* Have some processes simply check the balance without changing it. Do you need to lock? If so, do you need to use `LOCK_EX`? If not, what are the advantages of your approach? we don't need to, and might speed up the process by a little bit, but we should still lock it up just in case the user makes a decision using the balance and if the data has change, the user will be maikng a decision with the wrong information.
