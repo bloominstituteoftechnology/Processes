@@ -8,7 +8,22 @@
 
 int main(int argc, char* argv[])
 {
-    // Your code here 
+    // Your code here
+    FILE *fp = fopen("text.txt", "r+");
     
+    int rc = fork();
+    
+    if (rc == 0) {
+      printf("child here, fp: %d\n", fileno(fp));
+      fprintf(fp, "Child: testing\n");
+    } 
+    
+    else {
+      printf("parent here, fp: %d\n", fileno(fp));
+      fprintf(fp, "Parent: testing\n");
+    }
+
+    fclose(fp); 
+
     return 0;
 }
