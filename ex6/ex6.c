@@ -22,6 +22,15 @@ and `clock_gettime()` should work just fine.
 int main()
 {
     // Your code here
+    struct timespec start,end;
+    char *msg = "";
+    clock_gettime(CLOCK_MONOTONIC,&start);
+    for(int i = 0; i < number_iter ; i++){
+      write(STDOUT_FILENO,msg,0);
+    }
+    clock_gettime(CLOCK_MONOTONIC,&end);
+    long long unsigned int diff = (BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec) / number_iter;
+    printf("elapsed time: %llu nanoseconds\n", (long long unsigned int) diff);
     
     return 0;
 }
