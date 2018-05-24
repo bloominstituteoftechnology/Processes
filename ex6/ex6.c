@@ -11,10 +11,10 @@ turns out to only be the case for OSX versions < 10.12. Anything later than that
 and `clock_gettime()` should work just fine. 
 */
 
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <time.h>
+#include <stdio.h>  // for printf
+#include <unistd.h> //unsigned int
+#include <stdlib.h> // exit() definition
+#include <time.h>   // for clock_gettime
 
 #define number_iter 1000000
 #define BILLION 1000000000L
@@ -22,6 +22,21 @@ and `clock_gettime()` should work just fine.
 int main()
 {
     // Your code here
-    
+    uint64_t diff;
+    uint64_t totalDiffTime = 0;
+    uint64_t averageTime;
+    struct timespec start, end;
+    int i;
+
+    // do it a million times
+    for(i = 0; i < number_iter; i++){
+        clock_gettime(CLOCK_MONOTONIC, &start); // marks start time
+        write(1, "hello\n", 8);
+        clock_gettime(CLOCK_MONOTONIC, &end); // marks the end time
+        diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+        totalDiffTime += diff;
+    }
+    printf("average elapsed time = %llu nanoseconds\n", (long long unsigned int) totalDiffTime/ i);
+
     return 0;
 }
