@@ -29,7 +29,7 @@ int main()
       write(STDOUT_FILENO,msg,0);
     }
     clock_gettime(CLOCK_MONOTONIC,&end);
-    long long unsigned int diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+    long long unsigned int diff = (BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec) / number_iter;
     printf("elapsed time: %llu nanoseconds\n", (long long unsigned int) diff);
     
     return 0;
