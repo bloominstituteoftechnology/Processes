@@ -9,7 +9,16 @@
 
 int main(int argc, char* argv[])
 {
-    // Your code here    
-
+int rc = fork();
+    if (rc < 0) {
+        fprintf(stderr, "Fork Failed\n");
+        exit(1);
+    } else if (rc == 0) {
+        execl("/bin/ls", "ls", NULL);
+        printf("No peeking here");
+    } else {
+        int wait = waitpid(rc, NULL, 0);
+        printf("Parent after child.\n");
+    }
     return 0;
-}
+}      
