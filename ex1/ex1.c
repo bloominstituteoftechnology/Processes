@@ -9,7 +9,38 @@
 int main(int argc, char *argv[])
 {
     // Your code here
-    //
+    int x = 100;
+
+    printf("Hello World, Value of x is : %d\n PID: %d\n", x, (int)getpid());
+
+    // call the fork
+    int rc = fork();
+
+    // child process starts execution here
+    if (rc < 0)
+    {
+        // fork failed exit
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    }
+    else if (rc == 0)
+    {
+        // child process satisfies this branch
+        printf("hello, child here is x: %d \n (pid: %d) \n", x, (int)getpid());
+
+        // chenge the value of x
+        x += 200;
+        printf("The new value of x in child is %d \n", x);
+    }
+    else
+    {
+        printf("hello, parent here is x: %d \n (pid: %d) \n", x, (int)getpid());
+
+        // chenge the value of x
+        x += 400;
+
+        printf("The new value of x in parent is %d \n", x);
+    }
 
     return 0;
 }
