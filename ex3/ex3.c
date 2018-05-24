@@ -14,9 +14,13 @@ int main(int argc, char* argv[])
 
     if (rc == 0) {
       printf("hello\n");
-    } else if (rc < 0) {
+    } 
+    
+    else if (rc < 0) {
       printf("failure\n");
-    } else {
+    } 
+    
+    else {
       int wc = waitpid(rc, NULL, 0);
       printf("goodbye\n");
     }

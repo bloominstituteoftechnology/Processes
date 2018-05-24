@@ -13,14 +13,18 @@ int main(int argc, char *argv[])
     
     int rc = fork();
     
-    /* x += 25; */
-     
     if (rc < 0) {
      fprintf(stderr, "fork failed\n");
       exit(1);
-    } else if (rc == 0) {
+    } 
+    
+    else if (rc == 0) {
+      x += 25;
       printf("child exists, and x is %d\n", x);
-    } else {
+    } 
+    
+    else {
+      x += 50;
       printf("parent here, and x is %d\n", x);
     }
 

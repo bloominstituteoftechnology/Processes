@@ -15,9 +15,15 @@ int main(int argc, char* argv[])
     
     if (rc == 0) {
       printf("child here, fp: %d\n", fileno(fp));
-    } else {
+      fprintf(fp, "Child: testing\n");
+    } 
+    
+    else {
       printf("parent here, fp: %d\n", fileno(fp));
-    }   
+      fprintf(fp, "Parent: testing\n");
+    }
+
+    fclose(fp); 
 
     return 0;
 }
