@@ -31,7 +31,8 @@ int main()
     // do it a million times
     for(i = 0; i < number_iter; i++){
         clock_gettime(CLOCK_MONOTONIC, &start); // marks start time
-        write(1, "hello\n", 8);
+       // write(1, "hello\n", 8);
+        write(1, NULL, 8);
         clock_gettime(CLOCK_MONOTONIC, &end); // marks the end time
         diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
         totalDiffTime += diff;

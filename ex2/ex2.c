@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
     // // open the file using
     // // ptr = fopen("fileopen","mode")
     // // https://www.programiz.com/c-programming/c-file-input-output
-    fs = fopen("ex2/text.txt", "r");
+    fs = fopen("text.txt", "a+");
 
     if (fs == NULL)
     {
@@ -105,7 +105,7 @@ int main(int argc, char *argv[])
 
 
     // write the information to the file
-    fs = fopen("ex2/text.txt", "a+");
+    fs = fopen("text.txt", "a+");
     fprintf(fs,"%c", '{');
 
     fprintf(fs,"%s", "username:");
