@@ -20,11 +20,11 @@ int main(int argc, char *argv[])
     }
     else if (rc == 0)
     {
-        execl("/bin/ls");
+        execl("/bin/ls", "-l", NULL);
     }
     else if (rc > 0)
     {
-        printf("Parent completed");
+        wait(NULL);
     }
 
     return 0;
