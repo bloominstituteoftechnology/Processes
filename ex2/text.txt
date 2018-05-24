@@ -1,0 +1,18 @@
+{username:"emukupa	
+",first_name: "Edward
+",last_name: "Manda
+",age: 24},
+{username:"edizero
+",first_name: "Mulumba
+",last_name: "Mwanza
+",age: 20},
+{username:"subzero
+",first_name: "Joe
+",last_name: "Montana
+",age: 39},
+{username:"parent",first_name: "first_parent",last_name: "last_parent",age: 53},
+{username:"subzero
+",first_name: "Joe
+",last_name: "Montana
+",age: 39},
+{username:"child",first_name: "first_child",last_name: "last_child",age: 23},
