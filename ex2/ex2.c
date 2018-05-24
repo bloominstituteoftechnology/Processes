@@ -8,7 +8,22 @@
 
 int main(int argc, char* argv[])
 {
-    // Your code here 
+    FILE *fp = fopen("text.txt", "r+"); 
+    int rc = fork();
+    
+    if (rc < 0) {
+        printf("fork failed!\n");
+    } else if (rc > 0) {
+        printf("parent\n");
+        fprintf(fp, "parent writing to the file\n");
+    } else {
+        printf("child\n");
+        fprintf(fp, "child writing to the file\n");
+
+    }
     
     return 0;
+
+
+    
 }
