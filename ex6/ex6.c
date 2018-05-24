@@ -16,12 +16,35 @@ and `clock_gettime()` should work just fine.
 #include <stdlib.h>
 #include <time.h>
 
-#define number_iter 1000000
-#define BILLION 1000000000L
+// #define number_iter 1000000
+// #define BILLION 1000000000L
+
+long nanosec(struct timeval t)
+{ /* Calculate nanoseconds in a timeval structure */
+    return ((t.tv_sec * 1000000 + t.tv_usec) * 1000);
+}
 
 int main()
 {
     // Your code here
-    
+    int i, res;
+    int j[10] = {};
+    long N_iterations = 10;
+    float avgTimeSysCall;
+    struct timeval t1, t2;
+
+    res = clock_gettime(&t1, NULL);
+
+    for (i = 0; i < N_iterations; i++)
+    {
+        j[i] = res;
+        printf("%d\n", j[i]);
+    }
+
+    res = clock_gettime(&t2, NULL);
+    avgTimeSysCall = (nanosec(t2) - nanosec(t1)) / (N_iterations * 1.0);
+
+    printf("Average time for System call: %f\n", avgTimeSysCall);
+
     return 0;
 }
