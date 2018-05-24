@@ -6,10 +6,18 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <string.h>
 
-int main(int argc, char* argv[])
+int main()
 {
-    // Your code here    
-
+    pid_t pid = fork();
+    if(pid == 0){
+        printf("Child process %u Child's parent process %u\n",getpid(),getppid());
+        execl("/bin/pwd", "pwd", NULL);
+    } else {
+        wait(NULL);
+        printf("The parent is running at %u\n",getpid());
+        execl("/bin/ls", "ls", NULL);    
+    }
     return 0;
 }

@@ -9,6 +9,12 @@
 int main(int argc, char* argv[])
 {
     // Your code here
-
+    int forked = fork();
+    if(forked == 0){
+        printf("hello\n");
+    } else{
+        waitpid(forked, NULL, 0);  
+        printf("goodbye\n");
+    }
     return 0;
 }
