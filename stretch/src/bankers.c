@@ -88,7 +88,8 @@ int get_random_amount(void)
 {
 	// vvvvvvvvvvvvvvvvvv
 	// !!!! IMPLEMENT ME:
-
+	// will need fixing the randomness
+	return rand() % 1000;
 	// Return a random number between 0 and 999 inclusive using rand()
 
 	// ^^^^^^^^^^^^^^^^^^
@@ -119,7 +120,7 @@ int main(int argc, char **argv)
 	
 	// Store the number of processes in this variable:
 	// How many processes to fork at once
-	int num_processes = IMPLEMENT ME
+	int num_processes = 1000;
 
 	// Make sure the number of processes the user specified is more than
 	// 0 and print an error to stderr if not, then exit with status 2:
@@ -151,8 +152,11 @@ int main(int argc, char **argv)
 
 			// Open the balance file (feel free to call the helper
 			// functions, above).
+			int fd2 = open_balance_file(BALANCE_FILE);
+			flock(fd2, LOCK_EX); // lock the file
 
 			// Read the current balance
+			read_balance(fd2, &balance);
 
 			// Try to withdraw money
 			//
@@ -160,8 +164,40 @@ int main(int argc, char **argv)
 			//
 			// "Withdrew $%d, new balance $%d\n"
 			// "Only have $%d, can't withdraw $%d\n"
+			if(balance > amount && i % 10 != 0 && i % 7 != 0){
+				// subtract amount from balance
+				balance -= amount;
+
+				// write new balance to the file
+				write_balance(fd2, balance);
+
+				// give a message to the user
+				printf("Withdrew $%d, new balance $%d\n", amount, balance);
+			}else if (i % 10 == 0){
+				// deposite money
+				amount = get_random_amount();
+
+				// add amount to balance
+				balance += amount;
+
+				// write new balance to the file
+				write_balance(fd2, balance);
+
+				// give a message to the user
+				printf("Deposited $%d, new balance $%d\n", amount, balance);
+			} else if(i % 7 == 0){
+				// check balance
+				// we already have the balance, so just show it to the user
+				printf("Your balance is $%d\n", balance);
+			}else {
+				// give auser a reason why they can't withdraw
+				printf("Only have $%d, can't withdraw $%d\n", balance, amount);
+			}
+
+			flock(fd2, LOCK_EX); // unlock the file
 
 			// Close the balance file
+			close_balance_file(fd2);
 			//^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 			// Child process exits
