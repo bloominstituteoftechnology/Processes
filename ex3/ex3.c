@@ -8,30 +8,24 @@
 
 int main(int argc, char *argv[])
 {
-    // Your code here
-    char *hello = "hello";
+
+    pid_t pid = fork();
+
+    if (pid < 0)
+    {
+        printf("Fork failed\n");
+    }
+    else if (pid == 0)
+    {
+        char *hello = "hello";
+        printf("%s\n", hello);
+        exit(0);
+    }
+
+    // printf("Parent waiting for child to to greet");
     char *goodbye = "goodbye";
-
-    int pid = (int)getpid();
-    printf("pid BEFORE: (pid: %d)\n\n", pid);
-
-    int rc = fork();
-
-    if (rc < 0)
-    {
-        printf("Child forked unsuccessfully");
-    }
-    else if (rc == 0)
-    {
-        printf("pid in child: (pid: %d)\n", (int)getpid());
-        printf("Test: (pid: %d)\n", pid);
-        printf("Child forked, %s\n", hello);
-    }
-    else
-    {
-        printf("Test: (pid: %d)\n", pid);
-        printf("Parent forked, %s\n", goodbye);
-    }
+    wait(NULL);
+    printf("%s\n", goodbye);
 
     return 0;
 }
