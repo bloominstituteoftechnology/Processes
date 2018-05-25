@@ -8,7 +8,25 @@
 
 int main(int argc, char *argv[])
 {
-    // Your code here
+    int x = 25;
+    printf("Before: %d\n", x);
+    int rc = fork();
+    // new process begins
+    if (rc < 0)
+    {
+        fprintf(stderr, "Fork failed\n");
+        exit(1);
+    }
+    else if (rc == 0)
+    {
+        x++;
+        printf("Child: %d\n", x);
+    }
+    else
+    {
+        x--;
+        printf("Parent: %d\n", x);
+    }
 
     return 0;
 }
