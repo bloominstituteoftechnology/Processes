@@ -3,9 +3,9 @@
 // What happens to the variable when both the child and parent change the value of x?
 
 // To create a new process, duplicate a process currently running using fork()
-#include <stdio.h>  // to use printf
-#include <stdlib.h> // to use getpid?
-#include <unistd.h> // to use fork
+#include <stdio.h>  // to use printf(), perror()?
+#include <stdlib.h> // to use getpid()?
+#include <unistd.h> // to use fork()
 
 int main(int argc, char *argv[])
 {
@@ -23,12 +23,13 @@ int main(int argc, char *argv[])
     // returns 0 if child process is successful
     // return -1 if not successful, errno -g variable is set
     pid_t pid = fork();
-    printf("fork returned: %d\n", (int)pid);
+    printf("Fork returned: %d\n", (int)pid);
 
     // ===== child process executes from here =====
     if (pid < 0)
     {
-        perror("Fork failed");
+        // error printing that can be overwritten
+        perror("Fork failed\n");
     }
     if (pid == 0)
     {
@@ -41,6 +42,7 @@ int main(int argc, char *argv[])
         // print value of x after child changes the value
         printf("The value of 'x' after is %d\n", x);
 
+        // terminates with no errors
         exit(0);
     }
 
