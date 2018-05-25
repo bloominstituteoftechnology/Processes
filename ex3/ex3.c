@@ -6,9 +6,26 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
-    // Your code here
+
+    pid_t pid = fork();
+
+    if (pid < 0)
+    {
+        printf("Fork failed\n");
+    }
+    else if (pid == 0)
+    {
+        char *hello = "hello";
+        printf("%s\n", hello);
+        exit(0);
+    }
+
+    // printf("Parent waiting for child to to greet");
+    char *goodbye = "goodbye";
+    wait(NULL);
+    printf("%s\n", goodbye);
 
     return 0;
 }
