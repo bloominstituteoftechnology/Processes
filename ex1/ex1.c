@@ -8,7 +8,32 @@
 
 int main(int argc, char *argv[])
 {
-    // Your code here
+    //accessing variable
+    int x = 100;
+    //printing out that variable
+    printf("x is: %d\n", x);
 
+    int rc = fork();
+    //child process begins
+    if (rc < 0)
+    {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    }
+    else if (rc == 0)
+    {
+        x++;
+        printf("hello, child here %d\n", x);
+    }
+    else
+    {
+        printf("hello,parent here (pid: %d) of child %d and the value of x: %d\n", (int)getpid(), rc, x);
+        x--;
+        printf("hello, parent here (pid: %d) and the value of x: %d\n", rc, x);
+    }
+    //print of final value after fork()
+    printf("Value of x after the fork: %d\n", x);
+    //new x value
+    x = 75;
     return 0;
 }
