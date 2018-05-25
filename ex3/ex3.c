@@ -6,9 +6,24 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
-    // Your code here
+    int lf = fork();
+
+    if (lf < 0)
+    {
+        printf(stderr, "FATAL ERROR\n");
+        exit(1);
+    }
+    else if (lf == 0)
+    {
+        printf("Hello (pid: %d)\n", (int)getpid());
+    }
+    else
+    {
+        waitpid(lf, NULL, 0);
+        printf("Goodbye (pid: %d)\n", (int)getpid(), lf);
+    }
 
     return 0;
 }

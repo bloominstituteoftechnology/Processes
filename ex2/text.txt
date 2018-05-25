@@ -1,0 +1,2 @@
+Child aborted by parent
+A child is born
