@@ -20,10 +20,10 @@ int main(int argc, char *argv[])
       exit(1);
     } else if (rc == 0) {   // child process satisfies this branch
       x = 7;
-      printf("hello, child here (pid: %d) with x value %d\n", (int)getpid(), x);
+      printf("hello, I am child (pid: %d) with x value: %d\n", (int)getpid(), x);
     } else {
       x = 3;
-      printf("hello, parent here (pid: %d) with child x value %d\n", (int)getpid(), rc, x);
+      printf("hello, I am parent of %d (pid: %d) with x value: %d\n", (int)getpid(), rc, x);
     }
 
     return 0;
