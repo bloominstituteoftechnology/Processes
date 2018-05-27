@@ -29,6 +29,7 @@ int main()
         char *args[] = {"ls", "-1", NULL};
 
         // ====== exec() variants ======= // https://en.wikipedia.org/wiki/Exec_(system_call)
+        // https://linux.die.net/man/3/environ
 
         // execl("/bin/ls", "ls", "-1", (char *)NULL);
         // execlp("ls", "-1", NULL);

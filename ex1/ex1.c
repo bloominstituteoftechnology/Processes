@@ -23,14 +23,16 @@ int main(int argc, char *argv[])
     }
     else if (rc == 0)
     { // child process satisfies this branch
-        x = 101;
         // printf is equivalent/short-hand to writing `fprintf(stdout,...)`
-        printf("child x value: %d\n", x);
+        printf("Hi, I am child (pid: %d) and x value is: %d\n", (int)getpid(), x);
+        x++;
+        printf("child again, x is now: %d\n", x);
     }
     else
     {
-        x = 99;
-        printf("new parent x value: %d\n", x);
+        printf("Hi, I am parent of %d (pid: %d) and x value is: %d\n", rc, (int)getpid(), x);
+        x--;
+        printf("parent again, x is now: %d\n", x);
     }
 
     return 0;

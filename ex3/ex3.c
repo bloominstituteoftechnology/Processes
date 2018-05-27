@@ -2,6 +2,8 @@
 // the parent process should print "goodbye". You should ensure that the child
 // process always prints first.
 
+// On wait, waitpid, zombie process, orphan process and more! => https://notLike es.shichao.io/apue/ch8/#zombie-process
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
