@@ -17,7 +17,12 @@ char *msg3 = "hello world #3";
 
 int main()
 {
+    // Just like in the pipe example from the lecture we are going to go and
+    // define an inbuffer:
     char inbuf[MSGSIZE];
+    // We are going to hold our read and write file descripters in p
+    // nbytes stands for number of bytes.  Read returns the number of bytes
+    // that were read, so if it is
     int p[2], nbytes;
 
     if (pipe(p) < 0)
@@ -35,7 +40,7 @@ int main()
     }
     if (rc == 0)
     {
-        printf("Hi, child (pid: %d) here.  Writing messages...\n", getpid());
+        printf("Hi, child (pid: %d) here.  Writing messages to pipe...\n", getpid());
         write(p[1], msg1, MSGSIZE);
         write(p[1], msg2, MSGSIZE);
         write(p[1], msg3, MSGSIZE);
@@ -45,12 +50,13 @@ int main()
     else
     {
         wait(NULL);
-        close(p[1]);
-        printf("Hi, parent of %d (pid: %d) here, printing messages...\n", rc, getpid());
+        close(p[1]); // closes the right end of the pipe here, as child is done writing by this point
+        printf("Hi, parent of %d (pid: %d) here, reading and printing messages from pipe...\n", rc, getpid());
         while ((nbytes = read(p[0], inbuf, MSGSIZE)) > 0)
+        { // can also use `for(int i = 0; i < 3; i++){}` BUT this is static looping (not practical)
             printf("%s\n", inbuf);
-        if (nbytes == EOF) // Cool!  You can use End Of Line here too!
-            exit(2);
+        }
+
         printf("Finished reading\n");
     }
     return 0;

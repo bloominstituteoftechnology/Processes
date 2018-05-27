@@ -16,7 +16,6 @@
 int main()
 {
     int rc = fork();
-    printf("ex3 executing...\n");
 
     if (rc < 0)
     {
@@ -25,15 +24,16 @@ int main()
     }
     else if (rc == 0)
     {
-        printf("Child running...\nHello\n");
+        printf("Child (pid: %d)running...\nHello\n", getpid());
     }
     else
     {
         // `waitpid` call added here
         // #QUESTION: Why does it throw an 'unused variable' error?
         // // Fixed by removing `int wc =`
-        waitpid(rc, NULL, 0);
-        printf("Parent running...\nGoodbye\n");
+        int wc = waitpid(rc, NULL, 0);
+        printf("Child's exit status: %d\n", wc); // waitpid() returns the pid of whatever it waited on
+        printf("Parent (pid: %d) of %d running...\nGoodbye\n", getpid(), rc);
     }
     return 0;
 }

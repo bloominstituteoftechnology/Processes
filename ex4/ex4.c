@@ -25,25 +25,29 @@ int main()
 
         // ===== exec() variant parameters (uncomment if needed) ===== //
 
-        extern char *environ;
-        char *args[] = {"ls", "-1", NULL};
+        // extern char *environ;
+
+        // char *args[] = {"ls", "-l", NULL}; // #QUESTION: What is with the `-l`???
 
         // ====== exec() variants ======= // https://en.wikipedia.org/wiki/Exec_(system_call)
         // https://linux.die.net/man/3/environ
 
-        // execl("/bin/ls", "ls", "-1", (char *)NULL);
-        // execlp("ls", "-1", NULL);
+        execl("/bin/ls", "ls", "-l", (char *)NULL);
+        // execlp("ls", "ls", "-l", NULL);
 
         // execvp("ls", args);
         // execv("/bin/ls", args);
 
-        // execle("/bin/ls", "ls", "-1", (char *)NULL, environ);
+        // execle("/bin/ls", "ls", "-l", (char *)NULL, environ);
 
-        execve("/bin/ls", args, environ); // runs, but with warnings
+        // execve("/bin/ls", args, environ); // runs, but with warnings
     }
     else
     {
         wait(NULL);
+        // This also works:
+        // int wc = waitpid(rc, NULL, 0);
+        printf("parent here\n");
     }
     return 0;
 }
