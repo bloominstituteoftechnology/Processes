@@ -30,19 +30,19 @@ int main()
         exit(1);
     }
     else if (rc == 0) {
-        printf("hello, child  (pid: %d) \n", (int) getpid());
+        printf("hello, child\n");
         write(p[1], msg1, MSGSIZE);
         write(p[1], msg2, MSGSIZE);
         write(p[1], msg3, MSGSIZE);
    }
     else {
-        printf("hello, parent  (pid: %d) \n", (int) getpid());
-        int wc = waitpid(rc, NULL, 0);
+        close(p[1]);
+        printf("hello, parent\n");
+       
        for (int i = 0; i < 3; i++) {
         read(p[0], inbuf, MSGSIZE);
         printf("%s\n", inbuf);
     }
-}
 
     return 0;
 }
