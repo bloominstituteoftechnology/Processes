@@ -16,12 +16,15 @@ int main(int argc, char *argv[])
         exit(1);
 
     } else if (rc == 0) { // child process satisfies this branch
-        x = 40;
-        printf("hello, child here, x = %d) \n", x);
+        printf("hello, child , x = %d) \n", x);
+        x++;
+        printf("child again, x = %d\n",x)
     
     }else{
-        x = 400;
         printf("hello, parent here, x = %d\n", x);
+        x--;
+        printf("parent again, x = %d\n",x)
+
     }
 
     return 0;
