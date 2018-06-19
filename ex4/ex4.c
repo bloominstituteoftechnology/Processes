@@ -6,10 +6,28 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <wait.h>
 
 int main(int argc, char* argv[])
 {
-    // Your code here    
+    int rc = fork();
+
+    if (rc < 0)
+    {
+        fprintf(stderr, "fork failed\n");
+    }
+    else if (rc == 0) {
+
+        // this will list the files
+        execl("/bin/ls", "ls", "-1", NULL);
+
+        // this will list the files permissions and date last updated
+//         char *args[] = {"ls", "-l", NULL};
+//         execv("/bin/ls", args);
+    }
+    else {
+        wait(NULL);
+    }
 
     return 0;
 }
