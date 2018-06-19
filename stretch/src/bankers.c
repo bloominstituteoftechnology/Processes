@@ -92,7 +92,7 @@ int get_random_amount(void)
 	// Return a random number between 0 and 999 inclusive using rand()
 
 	// ^^^^^^^^^^^^^^^^^^
-	return -1;
+	return 1;
 }
 
 /**
