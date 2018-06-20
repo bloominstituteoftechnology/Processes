@@ -8,7 +8,19 @@
 
 int main(int argc, char *argv[])
 {
-    // Your code here
+    int x = 42;
+    int rc = fork();
+    if (rc < 0)
+    {
+        fprintf(stderr, "fork fail\n");
+        exit(1);
+    } else if(rc == 0){
+        x = 69;
+        printf("value of child %d:\n",x);
+    }else{
+        x = 30;
+        printf("value of parent %d:\n",x);
+    }
 
     return 0;
 }
