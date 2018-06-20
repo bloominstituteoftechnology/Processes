@@ -2,6 +2,9 @@
 // (e.g., x) and set its value to something (e.g., 100). What value is the variable in the child process?
 // What happens to the variable when both the child and parent change the value of x?
 
+// They both get their own copy of all the variables in the state they were in at time of fork
+// Also the variable themselves are independent after that point.
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
