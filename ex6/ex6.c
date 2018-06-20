@@ -21,7 +21,24 @@ and `clock_gettime()` should work just fine.
 
 int main()
 {
-    // Your code here
+    struct timespec start, end;
+    long total = 0;
+    double avgarge = 0.0;
+
+    for (int i = 0; i < number_iter; i++) {
+        clock_gettime(CLOCK_MONOTONIC, &start);
+
+        write(fileno(stdout), NULL, 0);
+
+        clock_gettime(CLOCK_MONOTONIC, &end);
+
+        long diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+        total += diff;
+    }
+
+    avgarge = total / (float) number_iter;
+
+    printf("AVG time is %f ns\n", avgarge);
     
     return 0;
 }
