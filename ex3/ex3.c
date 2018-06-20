@@ -5,10 +5,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <sys/wait.h>
 
 int main(int argc, char* argv[])
 {
-    // Your code here
-
+    char *c = "Hello";
+    char *p = "Goodbye";
+int rc =fork();
+if (rc <0)
+{
+    fprintf(stderr,"failed fork\n");
+}
+else if(rc == 0)
+{
+printf("Child: %s\n",c);
+}
+else
+{
+int wc = waitpid(rc,NULL,0);
+printf("Parent: %s\n",p);
+}
     return 0;
 }
