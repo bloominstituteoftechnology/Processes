@@ -15,6 +15,7 @@ int rc =fork();
 if (rc <0)
 {
     fprintf(stderr,"failed fork\n");
+    exit(1);
 }
 else if(rc == 0)
 {
