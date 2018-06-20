@@ -9,6 +9,6 @@
 int main(int argc, char* argv[])
 {
     // Your code here 
-    
+    fopen("text.txt", "r");
     return 0;
 }
