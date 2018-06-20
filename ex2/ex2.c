@@ -8,7 +8,14 @@
 
 int main(int argc, char* argv[])
 {
-    // Your code here 
+    // Your code here
+    FILE *fp;
+    fp = fopen("text.txt","r");
+
+    int c;
+    int rc = fork();
     
+    
+
     return 0;
 }
