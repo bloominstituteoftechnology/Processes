@@ -17,10 +17,10 @@ int main(int argc, char *argv[])
         } 
     else if (rc == 0) { 
         x = 40;
-        printf("child process, x = %d) \n", x);
+        printf("hello, child here, x = %d) \n", x);
     } else {
         x = 400;
-        printf("parent process, x = %d\n", x);
+        printf("hello, parent here, x = %d\n", x);
     }
     return 0;
 }
