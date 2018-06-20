@@ -9,6 +9,26 @@
 int main(int argc, char* argv[])
 {
     // Your code here 
+
+    FILE *fp;
+
+    fp = fopen("text.txt", "r+");
+    fprintf(fp, "%s %s %s %s\n", "Testing", "file", "with", "fork.");
+
+    int rc = fork();
+
+    if(rc < 0) {
+        fprintf(stderr, "fork failed.\n");
+        exit(1);
+    } else if (rc == 0) {
+        printf("Child Process started.\n");
+        fprintf(fp, "%s %s %s %s\n", "Testing", "file", "child", "fork.");
+    } else {
+        printf("Parent Process continues.\n");
+        fprintf(fp, "%s %s %s %s\n", "Testing", "file", "parent", "fork.");
+    }
+
+    fprintf(fp, "%s %s %s %s\n", "Testing", "file", "post", "fork.");
     
     return 0;
 }
