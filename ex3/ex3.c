@@ -6,9 +6,31 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
-    // Your code here
+    int rc = fork();
+    if (rc < 0)
+    {
+        fprintf(stderr, "forkfailed\n");
+        exit(1);
+    }
+    else if (rc == 0)
+    {
+        // grab pid using getpid() and pass it into printf
+        printf("hello, child here (pid: %d) \n", (int)getpid());
+    }
+    else
+    {
+        // You can use pid-specific wait function:
 
+        // waitpid(child process of interest, location where waitpid() can store status value, option)
+        // int wc = waitpid(rc, NULL, 0); // `waitpid` call added here;
+
+        /* OR */
+
+        wait(NULL); // note: any code before wait will be can be iterated before child, depending on environment.
+        
+        printf("hello, parent here (pid: %d) of child %d\n", (int)getpid(), rc);
+    }
     return 0;
 }

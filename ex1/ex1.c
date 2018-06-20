@@ -9,19 +9,18 @@
 
 int main(int argc, char *argv[])
 {
-    // Your code here
     int rc = fork();
-    if (rc < 0)
+    if (rc < 0) // if fork fails;
     {
         fprintf(stderr, "forkfailed\n");
         exit(1);
     }
-    else if (rc == 0)
+    else if (rc == 0) // child process;
     {
         int x = 100;
         printf("I am child, x = %d \n", x);
     }
-    else
+    else // parent process;
     {
         int x = 200;
         printf("I am parent, x = %d \n", x);

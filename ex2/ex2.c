@@ -11,7 +11,6 @@ When written concurrently, parent gets iterated first, then the child. */
 
 int main(int argc, char *argv[])
 {
-    // Your code here
     FILE *fp;
     fp = fopen("text.txt", "a");
     int rc = fork();
