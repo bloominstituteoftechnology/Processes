@@ -15,6 +15,9 @@ int main(int argc, char *argv[])
     if (rc < 0) { // Fail
       fprintf(stderr, "fork failed\n");
       exit(1);
+    } else if (rc == 0) { // Child
+      x -= 50;
+      printf("Child - X = %d\n", x);
     }
 
     return 0;
