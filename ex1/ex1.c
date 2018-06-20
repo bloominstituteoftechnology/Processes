@@ -9,6 +9,20 @@
 int main(int argc, char *argv[])
 {
     // Your code here
+    int x = 100;
+    int rc = fork();
+    if (rc < 0) {
+        printf("Error forking process."); 
+        exit(1);
+    }
+    else if(rc == 0){
+        x = 69;
+        printf("childX: %d, childPID: %d\n", x, (int) getpid());
+    }
+    else {
+        x = 30;
+        printf("parentX: %d, parentPID: %d\n", x, (int) getpid());
+    } 
 
     return 0;
 }
