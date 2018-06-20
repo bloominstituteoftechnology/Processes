@@ -5,10 +5,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <sys/wait.h>
 
 int main(int argc, char* argv[])
 {
-    // Your code here
+    
+    int rc = fork();
+    if (rc < 0) {
+        fprintf(stderr, "Forking Error\n");
+        exit(1);
+    } else if (rc == 0) {
+        printf("Goodbye(pid: %d)%d\n", (int) getpid(), rc);
+    } else {
+        printf("Hello (pid: %d) \n", (int) getpid());
+    }
 
     return 0;
 }
