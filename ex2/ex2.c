@@ -9,6 +9,13 @@
 int main(int argc, char* argv[])
 {
     // Your code here 
-    
-    return 0;
+int c;
+FILE *file;
+file = fopen("text.txt", "r");
+    if (file) {
+        while ((c = getc(file)) != EOF){
+            putchar(c); 
+        }
+        fclose(file);
+    }
 }
