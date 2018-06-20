@@ -9,7 +9,17 @@
 
 int main(int argc, char* argv[])
 {
-    // Your code here    
+    char *args[] = {
+        "ls",
+        "-la",
+        NULL
+    };
+    if(fork()==0) {
+        // execl("/bin/ls", "ls", "-la", NULL);
+        execv("/bin/ls", args);
+    } else {
+        wait(NULL);
+    }
 
     return 0;
 }
