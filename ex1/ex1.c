@@ -18,6 +18,9 @@ int main(int argc, char *argv[])
     } else if (rc == 0) { // Child
       x -= 50;
       printf("Child - X = %d\n", x);
+    } else { // Parent
+      x += 50;
+      printf("Parent - X = %d\n", x);
     }
 
     return 0;
