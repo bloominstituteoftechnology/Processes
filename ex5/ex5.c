@@ -3,6 +3,20 @@
 // the three messages to the parent and have the parent print out 
 // the messages. 
 
+/*
+    Pipes provide a unidirectional interprocess communication channel.
+
+    A pipe has a READ and WRITE end.
+        * data written to the WRITE end can be read from the READ end
+    
+    pipe(x) - where x is an array with two elements (read and write) - x[2]
+      * creates a new pipe
+      * returns two file descriptors
+        * pipefd[0] referring to the READ pipe
+        * pipefd[1] referring to the WRITE pipe
+      * data written to WRITE is buffered by the kernel until it is read by READ
+*/
+
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -16,25 +30,25 @@ char* msg3 = "hello world #3";
 int main()
 {
     char buffer[MSGSIZE];
-    int p[2], nBytes, childProcess;
+    int pipefd[2], nBytes, childProcess;
 
-    if (pipe(p) < 0){
+    if (pipe(pipefd) < 0){
         printf("PIPE FAILED.\n");
         exit(1);
     }
 
     if ((childProcess = fork()) > 0){
-        write(p[1], msg1, MSGSIZE);
-        write(p[1], msg2, MSGSIZE);
-        write(p[1], msg3, MSGSIZE);
+        write(pipefd[1], msg1, MSGSIZE);
+        write(pipefd[1], msg2, MSGSIZE);
+        write(pipefd[1], msg3, MSGSIZE);
 
-        close(p[1]);
+        close(pipefd[1]);
     }
 
     else {
-        close(p[1]);
+        close(pipefd[1]);
 
-        while ((nBytes = read(p[0], buffer, MSGSIZE)) > 0){
+        while ((nBytes = read(pipefd[0], buffer, MSGSIZE)) > 0){
             printf("%s \n", buffer);
         }
 
