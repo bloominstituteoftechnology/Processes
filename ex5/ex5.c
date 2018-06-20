@@ -13,9 +13,22 @@ char* msg1 = "hello world #1";
 char* msg2 = "hello world #2";
 char* msg3 = "hello world #3";
 
+
 int main()
 {
-    // Your code here
-    
+    char incomingDataBuffer[MSGSIZE];
+    int pipe[2];
+
+    int rc = fork();
+
+    if (rc == 0) {
+        write(pipe[1], msg1, MSGSIZE);
+        write(pipe[1], msg2, MSGSIZE);
+        write(pipe[1], msg3, MSGSIZE);
+    } else {
+        waitpid(rc, NULL, 0);
+        read(pipe[0], incomingDataBuffer, MSGSIZE);
+        printf("%s\n", incomingDataBuffer);
+    } 
     return 0;
 }
