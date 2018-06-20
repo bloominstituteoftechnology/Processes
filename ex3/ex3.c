@@ -9,6 +9,7 @@
 int main(int argc, char* argv[])
 {
     // Your code here
+    int rc = fork();
 
     return 0;
 }
