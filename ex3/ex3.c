@@ -9,6 +9,15 @@
 int main(int argc, char* argv[])
 {
     // Your code here
+    int rc = fork();
+    if(rc < 0) {
+        fprintf(stderr, "Fork was not successful, exiting program.\n");
+    } else if(rc == 0) {
+        printf("Hello!\n");
 
+    } else {
+        sleep(1);
+        printf("Goodbye!\n");
+    }
     return 0;
 }
