@@ -13,6 +13,7 @@ int main(int argc, char* argv[])
     if(RC < 0) 
     {
         fprintf(stderr, "Fork Failed\n");
+        exit(1);
     }
     else if (RC == 0) 
     {
