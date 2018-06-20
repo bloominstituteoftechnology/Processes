@@ -7,6 +7,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+// argc is the argument count
+// argv is an arry of character pointers to argument themselves.
 int main(int argc, char *argv[])
 {
     int rc = fork();
