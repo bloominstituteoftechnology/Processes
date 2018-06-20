@@ -9,6 +9,16 @@
 int main(int argc, char* argv[])
 {
     // Your code here
+if (fork()== 0) {
+    printf("Hello\n");
+    exit(2);
+    } else {
+        sleep(30);
+        int stat_loc;
+        wait(&stat_loc);
+        printf("Child status: %d\n", WEXITSTATUS(stat_loc));
 
+        printf("Goodbye\n");
+    }
     return 0;
 }

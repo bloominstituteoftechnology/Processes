@@ -10,6 +10,10 @@
 int main(int argc, char* argv[])
 {
     // Your code here    
+    fork();
+printf("I'm about to run ls\n");
+execl("/bin/ls", "ls", "-la", NULL);
+printf("I just ran ls\n");
 
     return 0;
 }
