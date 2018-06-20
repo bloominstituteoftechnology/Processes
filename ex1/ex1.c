@@ -13,10 +13,12 @@ int main(int argc, char *argv[])
   if (rc < 0) {
       fprintf(stderr, "fork failed\n:");
       exit(1);
-  } elseif (rc == 0) {
-      printf("Yo yo yo I am the child (pid: %d) \n", (int) getpid());
+  } else if (rc == 0) {
+      x = 200;
+      printf("Yo yo yo I am the child (pid: %d), (x: %d) \n", (int) getpid(), x);
   } else {
-      printf("hello, i'm the parent (pid: %d) of child %d\n", (int) getpid(), rc);
+      x = 300;
+      printf("hello, i'm the parent (pid: %d) of child %d (x: %d)\n", (int) getpid(), rc, x);
   }
     return 0;
 }
