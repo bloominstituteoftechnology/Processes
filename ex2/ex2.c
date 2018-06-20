@@ -8,7 +8,24 @@
 
 int main(int argc, char* argv[])
 {
-    // Your code here 
-    
+    FILE *FP = fopen("./text.txt", "w+");
+    int RC = fork();
+    if(RC < 0) 
+    {
+        fprintf(stderr, "Fork Failed\n");
+    }
+    else if (RC == 0) 
+    {
+        fprintf(FP, "%s", "From the child process.\n");
+        fclose(FP);
+    }
+    else 
+    {
+        fprintf(FP, "%s", "From the  parent process.\n");
+        fclose(FP);
+    }
+
+
+
     return 0;
 }
