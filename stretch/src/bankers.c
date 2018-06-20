@@ -98,17 +98,14 @@ int main(int argc, char **argv)
     if (argc != 2) {
         fprintf(stderr, "usage: bankers numprocesses\n");
     }
-	
+
 	// Store the number of processes in this variable:
 	// How many processes to fork at once
-	int num_processes = IMPLEMENT ME
+	int num_processes = atoi(argv[1]);
 
-	// Make sure the number of processes the user specified is more than
-	// 0 and print an error to stderr if not, then exit with status 2:
-	//
-	// "bankers: num processes must be greater than 0\n"
-
-	// ^^^^^^^^^^^^^^^^^^
+    if (num_processes < 1) {
+        fprintf(stderr, "bankers: num processes must be greater than 0\n");
+    }
 
 	// Start with $10K in the bank. Easy peasy.
 	int fd = open_balance_file(BALANCE_FILE);
@@ -128,23 +125,32 @@ int main(int argc, char **argv)
 
 			int balance;
 
-			// vvvvvvvvvvvvvvvvvvvvvvvvv
-			// !!!! IMPLEMENT ME
 
-			// Open the balance file (feel free to call the helper
-			// functions, above).
+            int file = open_balance_file(BALANCE_FILE);
 
-			// Read the current balance
+            // lock the file until we are done using it
+			flock(fd, LOCK_EX);
 
-			// Try to withdraw money
-			//
-			// Sample messages to print:
-			//
-			// "Withdrew $%d, new balance $%d\n"
-			// "Only have $%d, can't withdraw $%d\n"
+			// read the file
+            read_balance(fd, &balance);
 
-			// Close the balance file
-			//^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+            if (balance >= amount) {
+
+                balance -= amount;
+
+                // write new balance
+                write_balance(fd, balance);
+                printf("Withdrew $%d, new balance $%d\n", amount, balance);
+            }
+            else {
+                printf("Only have $%d, cannot withdraw $%d\n", balance, amount);
+            }
+
+            // unlock file
+            flock(file, LOCK_UN);
+
+            close_balance_file(file);
 
 			// Child process exits
 			exit(0);
