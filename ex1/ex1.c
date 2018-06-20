@@ -8,7 +8,22 @@
 
 int main(int argc, char *argv[])
 {
-    // Your code here
+ int q = 10;
+ printf("hi (pid: %d)\n", q);
+ int rc = fork();
+ if(rc < 0) {
+     fprintf(stderr, "fork failed\n");
+        exit(1);
+ }
+ else if(rc == 0){
+     q++;
+     printf("Child thing (pid: %d) \n", q);
+ } else {
+     
+      printf("Parental Unit 1 (pid: %d) \n", q);
+      q--;
+      printf("Parental Unit 2 (pid: %d) \n", q);
+ }
 
     return 0;
 }

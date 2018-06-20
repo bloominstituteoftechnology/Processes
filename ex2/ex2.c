@@ -9,6 +9,22 @@
 int main(int argc, char* argv[])
 {
     // Your code here 
-    
+    FILE *poo;
+    poo = fopen("text.txt", "r+");
+    int rc = fork();
+    if(rc < 0) {
+     fprintf(stderr, "fork failed\n");
+        exit(1);
+ }
+  else if(rc == 0){
+     printf("Child thing (pid: %d) \n", (int) getpid());
+     fprintf(poo, "This is my child\n");
+ } 
+ else { 
+     printf("Parent thing (pid: %d) \n", (int) getpid());
+     fprintf(poo, "This is my parent\n");
+ }
+    //"r+" means for reading and writing https://www.tutorialspoint.com/c_standard_library/c_function_fopen.htm
+
     return 0;
 }
