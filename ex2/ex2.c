@@ -51,4 +51,43 @@ int main(int argc, char* argv[])
     }
 
     return 0;
+
+    // ~~~~ alt ver ~~~~
+    // // fopen() text.txt
+    // FILE *file;
+    // file = fopen("./text.txt", "r+");
+
+    // int c;
+
+    // int rc = fork();
+    // // Child process starts here
+    // if (rc < 0)
+    // {
+    //     fprintf(stderr, "Fork Failed \n");
+    //     exit(1);
+    // }
+    // else if (rc == 0)
+    // { // Child process writes to text.txt
+    //     char stringChild[] = "This is the child process\n";
+    //     fwrite(stringChild, 1, sizeof(stringChild), file);
+
+    //     file = fopen("./text.txt", "r+");
+    //     while (1)
+    //     {
+    //         c = fgetc(file);
+    //         if (feof(file))
+    //         {
+    //             break;
+    //         }
+    //         printf("%c", c);
+    //     }
+    //     fclose(file);
+    // }
+    // else
+    // { // Parent process writes to text.txt
+    //     char stringParent[] = "This is the parent process\n";
+    //     fwrite(stringParent, 1, sizeof(stringParent), file);
+    // }
+
+    // return 0;
 }
