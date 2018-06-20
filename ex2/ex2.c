@@ -9,6 +9,18 @@
 int main(int argc, char* argv[])
 {
     // Your code here 
+    FILE * fp;
+  fp = fopen ("text.txt","w+");
+
+  int rc = fork();
+  if (rc < 0) {
+      fprintf(stderr, "fork failed\n");
+      exit(1);
+  }  else if (rc == 0) {
+        fprintf(fp, "%s %s %s %d","I", "am", "in", 2018 );
+  }  else {
+        printf(fp, "%s %s %s %d","The", "year", "is", 2018 );
+  }
     
     return 0;
 }
