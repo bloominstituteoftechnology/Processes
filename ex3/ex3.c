@@ -8,7 +8,18 @@
 
 int main(int argc, char* argv[])
 {
-    // Your code here
+
+    int rc = fork();
+
+    if (rc < 0) {
+        fprintf(stderr, "Fork failed\n");
+        exit(1);
+    } else if (rc == 0){
+        puts("hello");
+    } else {
+        waitpid(rc, NULL, 0);
+        puts("good bye");
+    }
 
     return 0;
 }
