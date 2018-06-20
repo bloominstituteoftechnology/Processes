@@ -6,9 +6,32 @@
 #include <unistd.h>
 #include <stdlib.h>
 
+int readFile(FILE *file)
+{
+    char content = fgetc(file);
+
+    while (content != EOF)
+    {
+        printf("%c", content);
+        content = fgetc(file);
+    }
+
+    printf("\n");
+
+    return 0;
+}
+
 int main(int argc, char* argv[])
 {
-    // Your code here 
+    FILE *pFile = fopen(argv[1], "r");
+
+    if (pFile == NULL){
+        printf("INVALID FILE. CANNOT READ. \n");
+        exit(0);
+    }
+
+    readFile(pFile);
+    fclose(pFile);
     
     return 0;
 }

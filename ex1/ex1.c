@@ -6,9 +6,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-/*
-    fork() is used by a parent process to create a new child process.
-*/
+/* fork() is used by a parent process to create a new child process. */
 
 int main(int argc, char *argv[])
 {
