@@ -15,9 +15,9 @@ int main(int argc, char *argv[])
         fprintf(stderr, "fork failed\n");
         exit(1);
     } else if (rc == 0) {
-        printf("hello, child here (pid: %d) \n", (int) getpid());
+        printf("hello, child here (pid: %d) \n", (int) x);
     } else {
-        printf("hello, parent here (pid: %d) of child %d\n", (int) getpid(), rc);
+        printf("hello, parent here (pid: %d) of child %d\n", (int) x, rc);
     }
     return 0;
 }
