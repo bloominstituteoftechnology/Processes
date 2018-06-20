@@ -9,6 +9,19 @@
 int main(int argc, char* argv[])
 {
     // Your code here 
+	FILE *file;
+	file = fopen("text.txt", "r+");
+
+	int rc = fork();
+	if (rc < 0) {
+		fprintf(stderr, "fork failed\n");
+	} else if (rc == 0) {
+		fprintf(file,"%s\n", "Child here");
+	} else {
+		fprintf(file,"%s\n", "Parent here");
+	}
+
+	fclose(file);
     
     return 0;
 }
