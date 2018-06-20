@@ -8,8 +8,10 @@
 #include <stdlib.h>
 
 int main(int argc, char* argv[])
+//needs fork added, and other variants of exec();
 {
-    // Your code here    
-
+    printf("I'm about to run ls\n");
+    execl("/bin/ls", "ls", "-la", NULL);
+    printf("I just ran ls\n");
     return 0;
 }
