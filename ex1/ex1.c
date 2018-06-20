@@ -8,7 +8,15 @@
 
 int main(int argc, char *argv[])
 {
-    // Your code here
-
+  int x = 100;
+  int rc = fork(); 
+  if (rc < 0) {
+      fprintf(stderr, "fork failed\n:");
+      exit(1);
+  } elseif (rc == 0) {
+      printf("Yo yo yo I am the child (pid: %d) \n", (int) getpid());
+  } else {
+      printf("hello, i'm the parent (pid: %d) of child %d\n", (int) getpid(), rc);
+  }
     return 0;
 }
