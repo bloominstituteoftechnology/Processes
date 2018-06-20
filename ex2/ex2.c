@@ -8,7 +8,35 @@
 
 int main(int argc, char* argv[])
 {
-    // Your code here 
-    
-    return 0;
+    // Your code here
+    FILE *text = fopen("text.txt", "r+");
+    int rc = fork();
+    if (rc < 0) 
+    {
+        exit(1);
+    }
+    else if (rc == 0)
+    {
+        fprintf(text, "hello");
+    }
+    else
+    {
+        waitpid(rc, NULL, 0);
+        fprintf(text, "goodbye");
+        fclose(text);
+
+        // Open the file to print it while the Docker container is still running
+        FILE *fp = fopen("text.txt", "r");
+        int c;
+        while (1)
+        {
+            c = fgetc(fp);
+            if (feof(fp))
+            {
+                break;
+            }
+            printf("%c", c);
+        }
+        return 0;
+    }
 }
