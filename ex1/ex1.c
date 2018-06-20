@@ -8,7 +8,10 @@
 
 int main(int argc, char *argv[])
 {
-    // Your code here
+    int x = 3;
+    fork();
+    x += 39;
+    printf("x is %d \n", x);
 
     return 0;
 }
