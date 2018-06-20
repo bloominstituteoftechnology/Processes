@@ -43,4 +43,24 @@ int main(int argc, char* argv[])
 	  // }
 
 	 	//  return 0;
+
+	// // Your code here
+    // int rc = fork();
+    // // Child process starts here
+    // if (rc < 0)
+    // {
+    //     fprintf(stderr, "Fork failed\n");
+    //     exit(1);
+    // }
+    // else if (rc == 0) // Child process prints Hello
+    // {
+    //     printf("Hello from child process!\n");
+    // }
+    // else // Parent process prints goodbye
+    // {
+    //     int wc = waitpid(rc, NULL, 0); // wait() suspends parents to print after child
+    //     printf("Goodbye from parent process!\n");
+    // }
+
+    // return 0;
 }
