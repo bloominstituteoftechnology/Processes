@@ -9,6 +9,19 @@
 int main(int argc, char *argv[])
 {
     // Your code here
+    int x = 100;
+    int rc = fork();
+
+    if (rc < 0) {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {
+        x = 7;
+        printf("Child x value: %d\n", x);
+    } else {
+        x = 3;
+        printf("Parent x value: %d\n", x);
+    }
 
     return 0;
 }
