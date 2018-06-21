@@ -59,7 +59,7 @@ void write_balance(int fd, int balance)
 /**
  * Read the balance from a file
  */
-void read_balance(int fd, int *balance)
+void read_balance(int fd, int* balance)
 {
 	char buffer[1024];
 
@@ -90,6 +90,17 @@ int get_random_amount(void)
     return rand() % (999 + 1 - 0) + 0;
 }
 
+void withDraw(int fd, int* balance, int amountToWithDraw)
+{
+    if (amountToWithDraw > *balance) {
+        printf("Only have $%d, can't withdraw $%d\n", *balance, amountToWithDraw);
+        exit(1);
+    } else {
+        *balance -= amountToWithDraw;
+        write_balance(fd, *balance);
+        printf("Withdrew $%d, new balance $%d\n", amountToWithDraw, *balance);
+    }
+}
 /**
  * Main
  */
@@ -120,7 +131,7 @@ int main(int argc, char **argv)
 			// random numbers:
 			srand(getpid());
 
-			int amountToWithDraw = get_random_amount();
+			int amount = get_random_amount();
 			int balance = 0;
             int fd = open_balance_file(BALANCE_FILE);
             flock(fd, LOCK_EX);
@@ -129,14 +140,7 @@ int main(int argc, char **argv)
 
             printf("Current balance: %d\n", balance);
 
-            if (amountToWithDraw > balance) {
-                printf("Only have $%d, can't withdraw $%d\n", balance, amountToWithDraw);
-                exit(1);
-            } else {
-                balance -= amountToWithDraw;
-                write_balance(fd, balance);
-                printf("Withdrew $%d, new balance $%d\n", amountToWithDraw, balance);
-            }
+            withDraw(fd, &balance, amount);
 
             flock(fd, LOCK_UN);
             close_balance_file(fd);
