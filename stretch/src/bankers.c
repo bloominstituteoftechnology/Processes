@@ -59,7 +59,7 @@ void write_balance(int fd, int balance)
 /**
  * Read the balance from a file
  */
-void read_balance(int fd, int *balance)
+void read_balance(int fd, int* balance)
 {
 	char buffer[1024];
 
@@ -86,54 +86,51 @@ void read_balance(int fd, int *balance)
  */
 int get_random_amount(void)
 {
-	// vvvvvvvvvvvvvvvvvv
-	// !!!! IMPLEMENT ME:
-
 	// Return a random number between 0 and 999 inclusive using rand()
-
-	// ^^^^^^^^^^^^^^^^^^
+    return rand() % (999 + 1 - 0) + 0;
 }
 
+void withDraw(int fd, int* balance, int amountToWithDraw)
+{
+    if (amountToWithDraw > *balance) {
+        printf("Only have $%d, can't withdraw $%d\n", *balance, amountToWithDraw);
+        exit(1);
+    } else {
+        *balance -= amountToWithDraw;
+        write_balance(fd, *balance);
+        printf("Withdrew $%d, new balance $%d\n", amountToWithDraw, *balance);
+    }
+}
+
+void deposit(int fd, int* balance, int amountToDeposit)
+{
+    *balance += amountToDeposit;
+    write_balance(fd, *balance);
+    printf("Deposited $%d, new balance $%d\n", amountToDeposit, *balance);
+}
 /**
  * Main
  */
 int main(int argc, char **argv)
 {
-	// Parse the command line
+  
+    if (argc != 2) {
+        fprintf(stderr, "usage: bankers numprocesses\n");
+        exit(1);
+    } 
 	
-	// vvvvvvvvvvvvvvvvvv
-	// !!!! IMPLEMENT ME:
+	int num_processes = atoi(argv[1]); 
 
-	// We expect the user to add the number of simulataneous processes
-	// after the command name on the command line.
-	//
-	// For example, to fork 12 processes:
-	//
-	//  ./bankers 12
-
-	// Check to make sure they've added one paramter to the command line
-	// with argc. If they didn't specify anything, print an error
-	// message to stderr, and exit with status 1:
-	//
-	// "usage: bankers numprocesses\n"
-	
-	// Store the number of processes in this variable:
-	// How many processes to fork at once
-	int num_processes = IMPLEMENT ME
-
-	// Make sure the number of processes the user specified is more than
-	// 0 and print an error to stderr if not, then exit with status 2:
-	//
-	// "bankers: num processes must be greater than 0\n"
-
-	// ^^^^^^^^^^^^^^^^^^
+    if (num_processes <= 0) {
+        fprintf(stderr, "bankers: num processes must be greater than 0\n");
+        exit(1);
+    } 
 
 	// Start with $10K in the bank. Easy peasy.
 	int fd = open_balance_file(BALANCE_FILE);
 	write_balance(fd, 10000);
 	close_balance_file(fd);
 
-	// Rabbits, rabbits, rabbits!
 	for (int i = 0; i < num_processes; i++) {
 		if (fork() == 0) {
 			// "Seed" the random number generator with the current
@@ -141,30 +138,29 @@ int main(int argc, char **argv)
 			// random numbers:
 			srand(getpid());
 
-			// Get a random amount of cash to withdraw. YOLO.
 			int amount = get_random_amount();
+			int balance = 0;
+            int fd = open_balance_file(BALANCE_FILE);
 
-			int balance;
+            // to show that just reading a file doesn't need locking
+            if (amount < 300) {
+                read_balance(fd, &balance);
+                printf("Current balance: %d\n", balance);
+                close_balance_file(fd);
+                exit(0);
+            }
 
-			// vvvvvvvvvvvvvvvvvvvvvvvvv
-			// !!!! IMPLEMENT ME
+            flock(fd, LOCK_EX);
 
-			// Open the balance file (feel free to call the helper
-			// functions, above).
+            read_balance(fd, &balance);
 
-			// Read the current balance
+            /* printf("Current balance: %d\n", balance); */
 
-			// Try to withdraw money
-			//
-			// Sample messages to print:
-			//
-			// "Withdrew $%d, new balance $%d\n"
-			// "Only have $%d, can't withdraw $%d\n"
+            // randomly deposit or withdraw based on random amount
+            amount > 600 ? withDraw(fd, &balance, amount) : deposit(fd, &balance, amount);
 
-			// Close the balance file
-			//^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-			// Child process exits
+            flock(fd, LOCK_UN);
+            close_balance_file(fd);
 			exit(0);
 		}
 	}
