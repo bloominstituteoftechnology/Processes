@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include <windows.h>
+#include <wait.h>
 
 int main(int argc, char *argv[])
 {
@@ -20,9 +20,9 @@ int main(int argc, char *argv[])
     }
     else if (rc == 0)
     {
-        exec1("/bin/ls", "ls", "-1", NULL);
+        execl("/bin/ls", "ls", "-1", NULL);
     } else {
-        sleep(NULL);
+        wait(NULL);
     }
 
     return 0;
