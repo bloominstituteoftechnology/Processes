@@ -86,12 +86,8 @@ void read_balance(int fd, int *balance)
  */
 int get_random_amount(void)
 {
-	// vvvvvvvvvvvvvvvvvv
-	// !!!! IMPLEMENT ME:
-
 	// Return a random number between 0 and 999 inclusive using rand()
-
-	// ^^^^^^^^^^^^^^^^^^
+    return rand() % (999 + 1 - 0) + 0;
 }
 
 /**
@@ -116,16 +112,26 @@ int main(int argc, char **argv)
 	// message to stderr, and exit with status 1:
 	//
 	// "usage: bankers numprocesses\n"
+    //
+  
+    if (argc != 2) {
+        fprintf(stderr, "usage: bankers numprocesses\n");
+        exit(1);
+    } 
 	
 	// Store the number of processes in this variable:
 	// How many processes to fork at once
-	int num_processes = IMPLEMENT ME
+	int num_processes = atoi(argv[1]); 
 
 	// Make sure the number of processes the user specified is more than
 	// 0 and print an error to stderr if not, then exit with status 2:
 	//
 	// "bankers: num processes must be greater than 0\n"
 
+    if (num_processes <= 0) {
+        fprintf(stderr, "bankers: num processes must be greater than 0\n");
+        exit(1);
+    } 
 	// ^^^^^^^^^^^^^^^^^^
 
 	// Start with $10K in the bank. Easy peasy.
@@ -134,6 +140,7 @@ int main(int argc, char **argv)
 	close_balance_file(fd);
 
 	// Rabbits, rabbits, rabbits!
+    /* printf("num_processes is %d", num_processes); */
 	for (int i = 0; i < num_processes; i++) {
 		if (fork() == 0) {
 			// "Seed" the random number generator with the current
@@ -142,9 +149,23 @@ int main(int argc, char **argv)
 			srand(getpid());
 
 			// Get a random amount of cash to withdraw. YOLO.
-			int amount = get_random_amount();
+			int amountToWithDraw = get_random_amount();
+			int balance = 0;
+            int fd = open_balance_file(BALANCE_FILE);
+            flock(fd, LOCK_EX);
 
-			int balance;
+            read_balance(fd, &balance);
+
+            printf("Current balance: %d\n", balance);
+
+            if (amountToWithDraw > balance) {
+                printf("Only have $%d, can't withdraw $%d\n", balance, amountToWithDraw);
+                exit(1);
+            } else {
+                balance -= amountToWithDraw;
+                write_balance(fd, balance);
+                printf("Withdrew $%d, new balance $%d\n", amountToWithDraw, balance);
+            }
 
 			// vvvvvvvvvvvvvvvvvvvvvvvvv
 			// !!!! IMPLEMENT ME
@@ -165,6 +186,8 @@ int main(int argc, char **argv)
 			//^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 			// Child process exits
+            flock(fd, LOCK_UN);
+            close_balance_file(fd);
 			exit(0);
 		}
 	}
