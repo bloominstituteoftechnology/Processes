@@ -6,10 +6,19 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <wait.h>
 
 int main(int argc, char* argv[])
 {
     // Your code here    
-
+    int rc = fork();
+    if (rc < 0) {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {
+        execl("/bin/ls", "ls", "-1", NULL);
+    } else {
+        wait(NULL);
+    }
     return 0;
 }

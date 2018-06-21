@@ -9,6 +9,19 @@
 int main(int argc, char *argv[])
 {
     // Your code here
-
+    int x = 20;
+    int rc = fork();
+    if (rc < 0) {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {
+        printf("hello, child here (pid: %d), x is: %d\n", (int) getpid(), x);
+        x++;
+        printf("child x is now: %d\n", x);
+    } else {
+        printf("hello, parent here (pid: %d), x is: %d\n", (int) getpid(), x);
+        x--;
+        printf("parent x is now: %d\n", x);
+    }
     return 0;
 }
