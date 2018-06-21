@@ -23,7 +23,11 @@ int main(int argc, char *argv[])
     {
         printf("Child process.\n");
         char *args[] = {"ls", "-1", NULL};
-        execv("/bin/ls", args);
+        execv("/bin/ls", args); //v requires you to provide the absolute path to the program
+        //execvp("ls", args);
+        //execl("/bin/ls", "ls", "-l", NULL);
+        //execlp("ls", "ls", "-1", NULL); path/name of program/flag/NULL
+
     }
     else
     {

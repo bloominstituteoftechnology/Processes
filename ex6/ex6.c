@@ -14,6 +14,8 @@ and `clock_gettime()` should work just fine.
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+
+#define _POSIX_C_SOURCE 199309L
 #include <time.h>
 
 #define number_iter 1000000
@@ -30,8 +32,8 @@ int main()
     {
         clock_gettime(CLOCK_MONOTONIC, &start);
 
-        write(fileno(stdout), NULL, 0);
-
+        //write(fileno(stdout), NULL, 0); //1536.45ns
+        printf(""); //538.31 ns
         clock_gettime(CLOCK_MONOTONIC, &end);
 
         long difference = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
@@ -40,7 +42,7 @@ int main()
 
     avg = sum / (float)number_iter;
 
-    printf("The average time it takes to make a call is %f ns. \n", avg);
-    
+    printf("The average time it takes to make a call is %f ns. \n", avg); //%f for float
+
     return 0;
 }

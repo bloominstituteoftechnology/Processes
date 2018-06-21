@@ -17,7 +17,7 @@ int main()
 {
     // Your code here
     char inbuf[MSGSIZE]; 
-    int p[2]; 
+    int p[2]; //handles both read and write file handles
     int pid; 
     int nbytes; 
 
@@ -37,7 +37,7 @@ int main()
         printf("Parent pipe.\n"); 
 
         while ((nbytes = read(p[0], inbuf, MSGSIZE)) > 0) {
-            printf("% s\n", inbuf); 
+            printf("%s\n", inbuf); 
         }
 
         if (nbytes != 0) {

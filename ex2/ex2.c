@@ -31,6 +31,6 @@ int main(int argc, char *argv[])
         char parentStr[] = "This is the Parent String. \n";
         fwrite(parentStr, 1, sizeof(parentStr) - 1, fp);
     }
-
+    fclose(fp); //closes file
     return 0;
 }
