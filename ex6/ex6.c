@@ -21,7 +21,24 @@ and `clock_gettime()` should work just fine.
 
 int main()
 {
-    // Your code here
-    
-    return 0;
+  // Your code here
+	struct timespec start, end;
+	uint64_t diff;
+ 	// use monotonic clock to measure elapsed time
+	// start clock
+	clock_gettime(CLOCK_MONOTONIC, &start);
+	// iterate 1 million times - make an empty write to stdout
+	for (int i = 0; i < number_iter; i++) {
+		printf("");
+	}
+	// end clock
+	clock_gettime(CLOCK_MONOTONIC, &end);
+	// print the elapsed time from start to end
+	// convert seconds to nano-seconds
+	diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+	printf("elapsed time = %llu nanoseconds\n", (long long unsigned int) diff);
+
+	int average = diff / number_iter;
+	printf("averagee: %d\n", average);
+  return 0;
 }
