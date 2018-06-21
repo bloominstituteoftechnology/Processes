@@ -8,7 +8,25 @@
 
 int main(int argc, char *argv[])
 {
-    // Your code here
+    int x = 100;
+    int ret = fork();
+    // printf("Starting value of x should be 100\n %d", x);
+    if (ret < 0) {
+        fprintf(stderr, "Child Process Failed \n");
+        exit(1);
+    }
+    else if ( ret == 0) {
+        printf("Child Process Successful-- should be 50 \n");
+        x = 50;
+        printf("x = %d\n", x);
+    }
+    else {
+        printf("Parent Process Here should be 25 \n");
+        x = 25;
+        printf("x = %d\n", x);
+    }
+
+    printf("I believe this is the main process again x =%d\n", x);
 
     return 0;
 }
