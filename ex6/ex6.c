@@ -10,7 +10,7 @@
 #define number_iter 1000000
 #define BILLION 1000000000L
 
-int main()
+int main(void)
 {
     struct timespec start, end;
     long sum = 0;
