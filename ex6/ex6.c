@@ -22,6 +22,24 @@ and `clock_gettime()` should work just fine.
 int main()
 {
     // Your code here
-    
+	__uint64_t diff;
+    	// uint64_t diff;
+	struct timespec start, end;
+	int i = 0;
+
+
+	/* the time spent sleeping will not count (but there is a bit of overhead */
+	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &start);	/* mark start time */
+	//sleep(1);	/* do stuff */
+	for (;i < number_iter; i++) {
+		fprintf(stdout, "");
+	}
+
+	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end);		/* mark the end time */
+
+	diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+	__uint64_t avg = (diff/number_iter);
+	printf("elapsed process CPU time = %llu nanoseconds\n", (long long unsigned int) diff);
+	printf("Average time, CPU time / number of interations: %llu\n", (long long unsigned int) avg);
     return 0;
 }
