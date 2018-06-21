@@ -19,8 +19,8 @@ int main(int argc, char* argv[])
     }   else if (rc == 0) {
         printf("Child (pid: %d)\n", (int) getpid());
         char *argarray[3];
-        argarray[0] = strdup("/bin/ls");
-        argarray[1] = strdup("ex4.c");
+        argarray[0] = strdup("ls");
+        argarray[1] = strdup("-l");
         argarray[2] = NULL;
         execvp(argarray[0], argarray);
         printf("If this message is read, there is something wrong with the child process");
