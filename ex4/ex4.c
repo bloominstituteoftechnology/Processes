@@ -18,7 +18,7 @@ int main(int argc, char* argv[])
         exit(1);
     }
     else if (RC == 0) {
-        execvp(argv[1], argv);
+        execlp("ls", "ls", "-l", NULL);
     }
     else {
         int wc = waitpid(RC, NULL, 0);
