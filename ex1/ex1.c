@@ -9,6 +9,21 @@
 int main(int argc, char *argv[])
 {
     // Your code here
+    int x = 100;
+    int rc = fork();
+
+    if (rc < 0) {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {
+        printf("hello, child here (pid: %d) \n", (int) getpid());
+        x = 10;
+        printf("x equals: %i\n", x);
+    } else {
+        printf("hello, parent here (pid: %d) of child %d\n", (int) getpid(), rc);
+        x = 120;
+        printf("parent x equals: %i\n", x);
+    }
 
     return 0;
 }
