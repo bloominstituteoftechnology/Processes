@@ -19,6 +19,10 @@ int main()
     char buffer[MSGSIZE];
     int p[2];
     pipe(p);
+    if(pipe(p) < 0){
+        fprintf(stderr, "pipe failed");
+        exit(1);
+    }
     printf("Here is the parent pid %d \n", getpid());
     int rc = fork();
     if (rc == 0)
@@ -31,9 +35,9 @@ int main()
     else
     {
         int wc = waitpid(rc, NULL, 0);
-        for (int i = 0; i < 3; i++)
+        close(p[1]);
+        while(read(p[0], buffer, MSGSIZE) > 0)
         {
-            read(p[0], buffer, MSGSIZE);
             printf("% s pid %d \n", buffer, getpid());
         }
     }
