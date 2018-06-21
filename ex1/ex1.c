@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int main(int argc, char *argv[])
+int main(void)
 {
     int x = 100;
     printf("hello world (pid: %d)\n", (int) getpid());
