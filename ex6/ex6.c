@@ -13,47 +13,37 @@ and `clock_gettime()` should work just fine.
 
 #include <stdio.h>
 #include <unistd.h>
-#include <stdint.h>
 #include <stdlib.h>
 #include <time.h>
 
 // #define number_iter 1000000
 #define number_iter 1000000
 #define BILLION 1000000000L
-int localpid(void) {
-	static int a[9] = { 0 };
-	return a[0];
-}
 
 
-int main(int argc, char **argv)
+int main()
 {
     // Your code here
 
-    uint64_t diff;
-	struct timespec start, end;
-	int i;
-    int numberOn = 0;
+    struct timespec start, end;
+    long sum = 0;
+    double avg;
 
-    clock_gettime(CLOCK_MONOTONIC, &start);
-    sleep(1);
-    clock_gettime(CLOCK_MONOTONIC, &end);
+    for(int i = 0; i < number_iter; i++) {
+        clock_gettime(CLOCK_MONOTONIC, &start);
 
+        write(fileno(stdout), NULL, 0);
 
-    diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
-    printf("elapsed time = %llu nanoseconds\n", (long long unsigned int) diff);
+        clock_gettime(CLOCK_MONOTONIC, &end);
 
-
-    clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &start);	/* mark start time */
-	sleep(1);
-    for (i = 0; i < number_iter; i++) {
-        numberOn++;
-        printf("Number:  %d\n", numberOn);
+        long difference = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+        sum += difference;
     }
-	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end);	
-    diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
-	printf("elapsed process CPU time = %llu nanoseconds\n", (long long unsigned int) diff);
 
-	exit(0);
-    // return 0;
+    avg = (float) sum / number_iter;
+
+    printf("Aeverage time to write stdout is %f ns\n", avg);
+
+    
+    return 0;
 }
