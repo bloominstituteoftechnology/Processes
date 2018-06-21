@@ -167,9 +167,13 @@ if (num_processes<1)
 				write_balance(current,balance);
 			printf("Withdrew $%d, new balance $%d, starting balance $%d,\n",amount,balance,startingBalence);
 			}
-			else if (amount >=balance)
+			else if (amount >=balance && balance >0)
 			{
-			printf("Only have $%d, can't withdraw $%d\n",balance, amount);
+			printf("Only have $%d, can't withdraw $%d\n",balance,amount);
+			}
+			else if(balance ==0)
+			{
+				printf("you have a remaining balance of $%d\n",balance);
 			}
 		
 
