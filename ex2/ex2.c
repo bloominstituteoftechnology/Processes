@@ -20,7 +20,7 @@ int main(int argc, char* argv[])
         fwrite(childTxt, 1, sizeof(childTxt)-1, txt);
     } else {
         printf("parent process \n");
-        char parentTxt[] = "Enjoy my child's text file.\n";
+        char parentTxt[] = "Enjoy my child's text file\n";
         fwrite(parentTxt, 1, sizeof(parentTxt), txt);
     }
 
