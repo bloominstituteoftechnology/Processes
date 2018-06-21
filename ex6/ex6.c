@@ -22,6 +22,10 @@ and `clock_gettime()` should work just fine.
 int main()
 {
     // Your code here
+    uint64_t diff;
+        struct timespec start, end;
+        double avg;
+        int i;
     
     return 0;
 }
