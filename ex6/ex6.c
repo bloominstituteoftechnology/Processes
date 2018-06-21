@@ -15,13 +15,30 @@ and `clock_gettime()` should work just fine.
 #include <unistd.h>
 #include <stdlib.h>
 #include <time.h>
+#include <stdint.h>
 
 #define number_iter 1000000
 #define BILLION 1000000000L
 
 int main()
 {
+    uint64_t diff;
+    uint64_t runtime;
+    struct timespec start, end;
+    int avgRuntime;
+
     // Your code here
+    for(int i = 1; i <= number_iter; i++){
+        clock_gettime(CLOCK_MONOTONIC, &start);
+        fprintf(stdout, "Here is message #%d.\n", i);
+        clock_gettime(CLOCK_MONOTONIC, &end);
+        diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+        runtime += diff;
+    }
+
+    avgRuntime = runtime/number_iter;
+
+    printf("Average runtime was %d nsec.\nTotal runtime was %llu nsec.\n", avgRuntime, (long long unsigned int)runtime);
     
     return 0;
 }

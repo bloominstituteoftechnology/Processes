@@ -6,10 +6,31 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <sys/wait.h>
+#include <string.h>
 
 int main(int argc, char* argv[])
 {
     // Your code here    
+    printf("Starting program.\n");
+
+    int rc = fork();
+    if(rc<0) {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {  //child process
+        printf("child started\n");
+        // call exec
+        char *myargs[2];
+        myargs[0] = strdup("/bin/ls");
+        //myargs[1] = strdup("ex4.c");
+        myargs[1] = NULL;
+        execv(myargs[0], myargs);
+        printf("this should not be seen");
+    } else {  // parent process
+        int wc = waitpid(rc, NULL, 0);
+        printf("parent finished.\n");
+    }
 
     return 0;
 }
