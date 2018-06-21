@@ -9,7 +9,19 @@
 
 int main(int argc, char* argv[])
 {
-    // Your code here    
+    int rc = fork();
+    
+    if (rc < 0) {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {
+        printf("child\n");
+        char *args[] = {"ls", "-l", NULL};
+        execvp("ls", args);
+    } else {
+        int wc = wait(NULL);
+        printf("parent\n");
+    }
 
     return 0;
 }
