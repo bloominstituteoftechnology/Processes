@@ -5,11 +5,29 @@
 
 // '/bin/ls' is what I know as just linux command 'ls', which lists contents of the directory.
 
-/* exec() have quite a family:
-execv(path, null terminated array of character pointers);
-execl(path, describes a list of one or more pointers to null-terminated strings that represent argument list available to the executed program);
-execle(specific environment of executed program via envp, array of pointers to null-terminated strings)
+/* exec() vs. fork()
+    exec() replaces the program in the current process with a new one.
+    fork() creates a brand new process with a duplicate of current program and state.
 
+    keyword:
+    For exec(): replace
+    For fork(): duplicate
+*/
+
+/* exec() have quite a family:
+
+references: 
+https://stackoverflow.com/questions/4204915/please-explain-the-exec-function-and-its-family <-- check both top 2 answers
+https://linux.die.net/man/3/exec
+
+// v: arguments (i.e. programs) are passed as an array of strings to the main()
+// l: arguments are passed as list of strings to the main()
+// p: path to search for the new running program.
+// e: envronment can be specified by caller.
+
+execv(path, pointer to null-terminated array);
+execl(path, pointer(s) to list of null-terminated strings);
+execvpe()
 */
 
 #include <stdio.h>
@@ -18,7 +36,6 @@ execle(specific environment of executed program via envp, array of pointers to n
 
 int main(int argc, char *argv[])
 {
-    // Your code here
     int rc = fork();
     if (rc < 0)
     {
@@ -26,11 +43,24 @@ int main(int argc, char *argv[])
     }
     else if (rc == 0)
     {
-        exec("/bin/ls");
+        printf("Child executing!\n");
+
+        // one way using execl:
+        execl("/bin/ls", "ls", NULL);
+
+        /* OR  */
+
+        // using execv:
+        char *args[2];       // allocate 2 bytes of memories for array
+        args[0] = "/bin/ls"; // full path to executeable
+        args[1] = NULL;      // null-terminate
+
+        execv(args[0], args);
     }
     else
     {
-        exec("/bin/ls");
+        wait(NULL); // wait for child; purely optional
+        printf("Parent executing!\n");
     }
     return 0;
 }
