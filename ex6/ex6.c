@@ -32,7 +32,10 @@ int main()
     for(int i =0;i <number_iter;i++)
     {
         clock_gettime(CLOCK_MONOTONIC,&start);
-            write(stdout,"",0);
+           // write(fileno(stdout,"",0));
+           
+           // is a lot faster
+           printf("");
         clock_gettime(CLOCK_MONOTONIC,&end);
         diff = end.tv_sec - start.tv_sec;
         nano = end.tv_nsec - start.tv_nsec;
