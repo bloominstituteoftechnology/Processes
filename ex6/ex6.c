@@ -15,13 +15,27 @@ and `clock_gettime()` should work just fine.
 #include <unistd.h>
 #include <stdlib.h>
 #include <time.h>
+#include <inttypes.h>
 
 #define number_iter 1000000
 #define BILLION 1000000000L
 
 int main()
-{
-    // Your code here
+{ 
+    uint64_t diff; 
+    struct timespec start, end; 
+    float sum = 0.0;
+    int i = 0; 
+    while (i < number_iter) {
+        clock_gettime(CLOCK_MONOTONIC, &start);
+        printf(" ");
+        clock_gettime(CLOCK_MONOTONIC, &end); 
+        sum += BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec; ;
+        i++;
+    }
+    printf("avg time per STDIO: %f\n", sum / number_iter);
+
     
+
     return 0;
 }
