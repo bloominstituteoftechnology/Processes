@@ -30,7 +30,7 @@ char* msg3 = "hello world #3";
 int main()
 {
     char buffer[MSGSIZE];
-    int pipefd[2], nBytes, childProcess;
+    int pipefd[2], childProcess, nBytes;
 
     if (pipe(pipefd) < 0){
         printf("PIPE FAILED.\n");
@@ -41,12 +41,10 @@ int main()
         write(pipefd[1], msg1, MSGSIZE);
         write(pipefd[1], msg2, MSGSIZE);
         write(pipefd[1], msg3, MSGSIZE);
-
-        close(pipefd[1]);
     }
 
     else {
-        close(pipefd[1]);
+        close(pipefd[1]); // close the WRITE pipe
 
         while ((nBytes = read(pipefd[0], buffer, MSGSIZE)) > 0){
             printf("%s \n", buffer);
@@ -54,7 +52,7 @@ int main()
 
         if (nBytes != 0) exit(2);
 
-        printf("\n~ Finished reading. ~\n");
+        printf("\nFinished reading.\n");
     }
     
     return 0;
