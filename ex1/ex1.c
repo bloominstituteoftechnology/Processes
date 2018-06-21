@@ -4,6 +4,8 @@
 
 // Answers: The child and parent retain the values in their variables since fork() is only creating a copy of the parent process. They cannot affect each other's data.
 
+// Random link: https://en.wikipedia.org/wiki/Standard_streams#1970s:_C_and_Unix
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
