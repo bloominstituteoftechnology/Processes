@@ -18,7 +18,12 @@ exit(1);
 }
 else if (rc == 0)
 {
-execvp(argv[1],argv);
+    //seans code
+// char *args[] = {"ls","-l",NULL}
+// execvp("ls",args)
+
+//our code
+ execvp(argv[1],argv);
 }
 else
 {
