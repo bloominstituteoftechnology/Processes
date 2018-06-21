@@ -5,10 +5,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <sys/wait.h>
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
-    // Your code here
-
+    printf("Parent pid %d \n", getpid());
+    int rc = fork();
+    if (rc == 0)
+    {
+        printf("Child pid %d saying hello \n", getpid());
+    }
+    else
+    {
+        int wc = waitpid(rc, NULL, 0);
+        printf("Parent pid %d saying goodbye\n", getpid());
+    }
     return 0;
 }

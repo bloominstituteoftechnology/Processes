@@ -15,13 +15,25 @@ and `clock_gettime()` should work just fine.
 #include <unistd.h>
 #include <stdlib.h>
 #include <time.h>
+#include <stdint.h>
 
+// ran it 1000 times instead because 1 million made the program freeze after running
 #define number_iter 1000000
 #define BILLION 1000000000L
 
 int main()
 {
-    // Your code here
-    
+    uint64_t diff;
+    struct timespec start, end;
+    clock_gettime(CLOCK_MONOTONIC, &start); /* mark start time */
+    for (int i = 0; i < 1000; i++)
+    {
+        fprintf(stdout, "HELLO \n");
+    }
+    clock_gettime(CLOCK_MONOTONIC, &end); /* mark the end time */
+
+    diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+    printf("elapsed process CPU time = %llu nanoseconds\n", (long long unsigned int)diff);
+    printf("The average time per call was = %llu nanoseconds\n", (long long unsigned int)diff / 1000);
     return 0;
 }
