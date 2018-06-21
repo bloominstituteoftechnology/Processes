@@ -25,3 +25,27 @@ int main(int argc, char *argv[])
 
     return 0;
 }
+
+//instructor solve
+// int main(int argc, char *argv[])
+// {
+
+//     int x = 100;
+
+//     int rc = fork();
+
+//     if (rc < 0) {
+//         fprintf(stderr, "fork failed\n");
+//         exit(1);
+//     } else if (rc == 0) {
+//         printf("child here %d; x is %d\n", getpid(), x);
+//         x++;
+//         printf("child again; x is now %d\n", x);
+//     } else {
+//         printf("parent here %d; x is %d\n", getpid(), x);
+//         x--;
+//         printf("parent again; x is now %d\n", x);
+//     }
+
+//     return 0;
+// }

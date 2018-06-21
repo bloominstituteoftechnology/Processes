@@ -38,3 +38,30 @@ int main()
 
     return 0;
 }
+
+//instructor solve
+
+int main()
+{
+    struct timespec start, end;
+    long sum = 0;
+    double avg;
+    long difference;
+
+    for (int 1 = 0; i < number_iter; i++) {
+        clock_gettime(CLOCK_MONOTONIC, &start);
+    
+        printf("");
+
+        clock_gettime(CLOCK_MONOTONIC, &end);
+
+        difference = BILLION * (end.tv_sec - start.tv.sec) + (end.tv_sec - start.tv_sec);
+        sum += difference;
+    }
+
+    avg = (float) sum / number_iter;
+
+    printf("Average time it takes to make an empty write to stdout is %f ns\n", avg);
+
+    return 0;
+}

@@ -22,3 +22,6 @@ int main(int argc, char* argv[])
     }
     return 0;
 }
+
+//instructor solve
+//same as mine above
