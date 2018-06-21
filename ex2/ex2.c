@@ -6,9 +6,48 @@
 #include <unistd.h>
 #include <stdlib.h>
 
+int readFile(FILE *file)
+{
+    char content = fgetc(file);
+
+    while (content != EOF)
+    {
+        printf("%c", content);
+        content = fgetc(file);
+    }
+
+    printf("\n");
+
+    return 0;
+}
+
 int main(int argc, char* argv[])
 {
-    // Your code here 
+    FILE *pFile = fopen(argv[1], "r");
+
+    if (pFile == NULL){
+        printf("INVALID FILE. CANNOT READ. \n");
+        exit(0);
+    }
+
+    readFile(pFile);
+    // fclose(pFile);
+
+    // INITIALIZE CHILD PROCESS
+    int childProcess = fork();
+
+    if (childProcess < 0){ // the fork failed
+        fprintf(stderr, "FORK FAILED\n");
+        exit(1);
+    }
+    else if (childProcess == 0){
+        printf("I AM THE CHILD PROCESS (pid: %d) \n", (int) getpid());
+        printf("child process ~ %p \n", pFile);
+    }
+    else {
+        printf("I AM THE PARENT PROCESS (pid: %d) OF CHILD %d \n", (int) getpid(), childProcess);
+        printf("parent ~ %p \n", pFile);
+    }
     
     return 0;
 }
