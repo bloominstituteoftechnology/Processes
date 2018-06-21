@@ -141,14 +141,23 @@ int main(int argc, char **argv)
 			int amount = get_random_amount();
 			int balance = 0;
             int fd = open_balance_file(BALANCE_FILE);
+
+            // to show that just reading a file doesn't need locking
+            if (amount < 300) {
+                read_balance(fd, &balance);
+                printf("Current balance: %d\n", balance);
+                close_balance_file(fd);
+                exit(0);
+            }
+
             flock(fd, LOCK_EX);
 
             read_balance(fd, &balance);
 
-            printf("Current balance: %d\n", balance);
+            /* printf("Current balance: %d\n", balance); */
 
             // randomly deposit or withdraw based on random amount
-            amount > 500 ? withDraw(fd, &balance, amount) : deposit(fd, &balance, amount);
+            amount > 600 ? withDraw(fd, &balance, amount) : deposit(fd, &balance, amount);
 
             flock(fd, LOCK_UN);
             close_balance_file(fd);
