@@ -21,7 +21,22 @@ and `clock_gettime()` should work just fine.
 
 int main()
 {
-    // Your code here
-    
+    struct timespec *start, *end;
+    long long unsigned int average;
+    for (int i = 0; i < number_iter; i++)
+    {
+
+        clock_gettime(CLOCK_MONOTONIC, start);
+
+        printf("");
+
+        clock_gettime(CLOCK_MONOTONIC, end);
+        average += (end - start);
+    }
+    average /= number_iter;
+    // average /= BILLION;
+
+    printf("The average runtime was %llu nanoseconds.\n", average);
+
     return 0;
 }
