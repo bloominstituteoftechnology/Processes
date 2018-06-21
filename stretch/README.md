@@ -66,17 +66,19 @@ simulated bank account, that is. Don't get your hopes up.)
 1. **Short answer**: How can things go wrong if two processes attempt the
    above plan at the same time? Is there more than one way things can go
    wrong?
+    * process one will take the balance and withdraw the specified amount but process two would have taken the balance variable before process one had the chance to update the value and then process two will just withdraw the specified amount from the pre-updated balance whitch would be incorrect.
 
 2. Study and understand the skeleton code in the `src/` directory.
 
    **Short answer**: what do each of the arguments to `open()` mean?
+    * first argument is the file name. the second is the Flags, and the third is the mode. 
 
 3. Take the skeleton code in the `src/` directory and implement the
    pieces marked. Run it.
    
    **Short answer**: What happens? Do things go as planned and look
    sensible? What do you speculate is happening?
-
+    * the balance is changing inconsistently. 
 4. Add calls to [`flock()`](https://linux.die.net/man/2/flock) to
    capture and release an exclusive lock on the file before reading and
    changing the data.
@@ -86,6 +88,7 @@ simulated bank account, that is. Don't get your hopes up.)
 5. **Short answer**: Why is it working? How has adding locks fixed the
    problems you noted in question 1? How is overall performance of the
    application affected?
+    * flock has allowed one process to access the file at one time, so the other processes dont read the value of balance before its been updated by the process before it. the performance has changed minimally. its hardly notice-able.
 
 
 ## Stretch Goals
