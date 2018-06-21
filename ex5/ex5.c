@@ -32,7 +32,7 @@ int main()
         close(p[1]);
         for (int i = 0; i < 3; i++) {
             read(p[0], inbuf, MSGSIZE);
-            printf("% s\n", inbuf);
+            printf("%s\n", inbuf);
         }
     }
     
