@@ -32,6 +32,10 @@ int main()
     if (child < 0) { // Fork Fail
 		fprintf(stderr, "fork failed\n");
 		exit(1);
+	  } else if (child == 0) { // Write 16 bytes of data to write the file descriptor
+        write(p[1], msg1, MSGSIZE);
+        write(p[1], msg2, MSGSIZE);
+        write(p[1], msg3, MSGSIZE);
 
     return 0;
 }
