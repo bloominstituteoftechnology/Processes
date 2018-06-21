@@ -101,6 +101,13 @@ void withDraw(int fd, int* balance, int amountToWithDraw)
         printf("Withdrew $%d, new balance $%d\n", amountToWithDraw, *balance);
     }
 }
+
+void deposit(int fd, int* balance, int amountToDeposit)
+{
+    *balance += amountToDeposit;
+    write_balance(fd, *balance);
+    printf("Deposited $%d, new balance $%d\n", amountToDeposit, *balance);
+}
 /**
  * Main
  */
@@ -140,7 +147,8 @@ int main(int argc, char **argv)
 
             printf("Current balance: %d\n", balance);
 
-            withDraw(fd, &balance, amount);
+            // randomly deposit or withdraw based on random amount
+            amount > 500 ? withDraw(fd, &balance, amount) : deposit(fd, &balance, amount);
 
             flock(fd, LOCK_UN);
             close_balance_file(fd);
