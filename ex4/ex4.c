@@ -15,6 +15,9 @@ int main(int argc, char* argv[])
     if (rc < 0) { // Fail -> exit
         fprintf(stderr, "fork failed\n");
         exit(1);
+      } else if (rc == 0) { // Child
+        printf("Child\n");
+        execl("ls", NULL);
       
     return 0;
 }
