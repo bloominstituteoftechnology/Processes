@@ -152,7 +152,7 @@ int main()
 {
     char inbuf[MSGSIZE];    // a buffer that will hold the incoming data that is being written
     int p[2];               // a two-element array to hold the read and write file descriptors that are used by the pipe   
-
+    [read, write]
     // establish our pipe, passing it the p array so that it gets populated by the read and write file descriptors
     if (pipe(p) < 0) {
         fprintf(stderr, "pipe failed\n");
