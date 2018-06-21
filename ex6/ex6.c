@@ -22,6 +22,18 @@ and `clock_gettime()` should work just fine.
 int main()
 {
     // Your code here
-    
+    struct timespec startTime, endTime;
+    int max = 0;
+    double avg;
+    int i;
+    for (i = 0; i < number_iter; i++) {
+        clock_gettime(CLOCK_MONOTONIC, &startTime);
+        write(fileno(stdout), NULL, 0);
+        clock_gettime(CLOCK_MONOTONIC, &endTime);
+        long diff = BILLION * (endTime.tv_sec - startTime.tv_sec) + endTime.tv_nsec - startTime.tv_nsec;
+        max += diff;
+    }
+    avg = max / (float) number_iter;
+    printf("AVG = %f ns", avg);    
     return 0;
 }

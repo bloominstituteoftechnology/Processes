@@ -16,7 +16,7 @@ int main(int argc, char* argv[])
         exit(1);
     }
  else if(rc == 0) {
-     execl("/bin/ls", "ls", "-l", NULL);
+     execl("/bin/ls", "ls", NULL);
     }
     else{
         waitpid(rc, NULL, 0);        
