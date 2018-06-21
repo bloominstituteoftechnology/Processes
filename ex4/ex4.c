@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
     }
     else if (rc == 0)
     {
-        execl("/bin/ls", "ls", "-1", NULL);
+        execl("/bin/ls", "ls", "-l", NULL);
     } else {
         wait(NULL);
     }
