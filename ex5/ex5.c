@@ -20,5 +20,12 @@ int main()
  	char inbuf[MSGSIZE]; // Buffer that will hold the incoming data that is being written
 	int p[2]; // Two-element array to hold the read & write file descriptors that are used by the pipe
 
+    // Establish our pipe, passing in the P array so that it gets
+    // populated by the read & write file descriptors
+	if (pipe(p) < 0) { // Pipe Fail
+		fprintf(stderr, "pipe failed\n");
+		exit(2); // 2 instead of 1 so we know if the pipe or fork failed since err is 1
+	}
+
     return 0;
 }
