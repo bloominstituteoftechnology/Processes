@@ -7,7 +7,10 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <sys/wait.h>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 281a4c7bd403b6df01af6b33b6c9043d378cbdb9
 #define MSGSIZE 16
 
 char *msg1 = "hello world #1";
