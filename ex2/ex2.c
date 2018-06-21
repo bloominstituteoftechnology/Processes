@@ -8,7 +8,27 @@
 
 int main(int argc, char* argv[])
 {
-    // Your code here 
-    
+    // Your code here
+    FILE *fp;
+    int rc = fork();
+
+    fp = fopen("text.txt", "r");
+
+    if (rc < 0) {
+        fprintf(stderr, "Child process failed.\n");
+        exit(1);
+    } else if (rc == 0) {
+        char text[30] = "This is child process.\n";
+        fwrite(text, 1, sizeof(text), fp);
+        // fprintf(fp, "Text from child process: %s\n", text); //accesses text file, writes its own text with no affect from parent
+        fclose(fp);
+    } else {
+        char text[30] = "This is parent process.\n";
+        fwrite(text, 1, sizeof(text), fp);
+        // fprintf(fp, "Text from parent process: %s\n", text); //accesses text file, writes its own text with no affect from child
+        fclose(fp);
+    }
+    fclose(fp);
+
     return 0;
 }

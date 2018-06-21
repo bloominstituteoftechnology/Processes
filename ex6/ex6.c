@@ -22,6 +22,23 @@ and `clock_gettime()` should work just fine.
 int main()
 {
     // Your code here
+    uint64_t diff;
+    struct timespec start, end;
+    int total_diff = 0;
+    int nano;
+
+    for (int i = 0; i < number_iter; i++) {
+        clock_gettime(CLOCK_MONOTONIC, &start);
+        write(STDOUT_FILENO, NULL, sizeof(NULL));
+        clock_gettime(CLOCK_MONOTONIC, &end);
+
+        diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+        total_diff += diff;
+    }
+
+    nano = total_diff / number_iter;
+
+    printf("Average time it takes for a single system call (in nanoseconds): %d\n", nano);
     
     return 0;
 }
