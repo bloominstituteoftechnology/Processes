@@ -8,7 +8,21 @@
 
 int main(int argc, char *argv[])
 {
+    int num = 10;
+    printf("My variable i access is \n", (int) getpid(), num);
     // Your code here
+    // calls fork 
+
+    int rc = fork();
+
+    if(rc < 0) { // fork failed exit
+
+        exit(1);
+    }  else if (rc == 0) { //child process runs this branch
+        printf("My value is \n", (int) getpid(), rc);
+    } else {
+        printf("Hello, parent here (pid: %d) of child \n", (int) getpid(), rc);
+    }
 
     return 0;
 }

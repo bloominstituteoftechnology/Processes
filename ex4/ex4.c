@@ -10,6 +10,24 @@
 int main(int argc, char* argv[])
 {
     // Your code here    
+    int rc = fork();
 
+    if(rc < 0 ) {
+        //do nothing
+        exit(1);
+    } else if (rc == 0) {
+        // this is the child process
+        char *myargs[3];
+        myargs[0] = strdup("/bin/ls");
+        myargs[1] = strdup("p3.c");
+        myargs[2] = NULL;
+        execvp(myargs[0], myargs);
+        //execcl(); // ask to explain int execl(const char *path, const char *arg, ...);
+        //execcle(); // ask to explain int execle(const char *path, const char *arg,
+                   //..., char * const envp[]);
+    } else {
+        // this is the parent process
+
+    }
     return 0;
 }
