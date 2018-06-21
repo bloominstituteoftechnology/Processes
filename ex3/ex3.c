@@ -18,6 +18,7 @@ int main(int argc, char *argv[])
     } else if (rc == 0) {    // child process satisfies this branch
         printf("hello \n");
     } else {
+        // we ensure that the parent process only runs after the child process has finished its execution
         int wc = waitpid(rc, NULL, 0);    // `waitpid` call added here
         printf("goodbye \n");
     }

@@ -10,12 +10,12 @@ int main(int argc, char* argv[])
 {
     // Your code here 
 int c;
-FILE *file;
-file = fopen("text.txt", "r");
+FILE *file;// pointer of FILE type
+file = fopen("text.txt", "r"); // open file <name> in CWD and read
     if (file) {
-        while ((c = getc(file)) != EOF){
-            putchar(c); 
+        while ((c = getc(file)) != EOF){ // as long as there not EOF
+            putchar(c); // keep printing chars
         }
-        fclose(file);
+        fclose(file);// close the file stream
     }
 }
