@@ -9,6 +9,21 @@
 int main(int argc, char* argv[])
 {
     // Your code here 
-    
+    FILE* txt = fopen("text.txt", "w");
+
+    int rc = fork();
+    if (rc < 0) {
+        fprintf(stderr, "fork failed\n");
+    } else if (rc == 0) {
+        printf("child process\n");
+        char childTxt[] = "this is in child\n";
+        fwrite(childTxt, 1, sizeof(childTxt)-1, txt);
+    } else {
+        printf("parent process \n");
+        char parentTxt[] = "this is in parent\n";
+        fwrite(parentTxt, 1, sizeof(parentTxt), txt);
+    }
+
+    fclose(txt);
     return 0;
 }

@@ -9,6 +9,18 @@
 int main(int argc, char *argv[])
 {
     // Your code here
+    int x = 100;
+    printf("exe1.c PID: %d\n", (int)getpid());
+    int rc = fork();
 
+    if (rc < 0)
+    {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {
+        printf("child accessed, PID: %d\n", (int)getpid());
+    } else {
+        printf("parent here, PID: %d of child, PID: %d\n", (int)getpid(), rc);
+    }
     return 0;
 }
