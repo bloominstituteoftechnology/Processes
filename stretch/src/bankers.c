@@ -158,6 +158,7 @@ if (num_processes<1)
 			// functions, above).
 				int current = open_balance_file(BALANCE_FILE);
 			// Read the current balance
+			flock(current,LOCK_EX);
 			read_balance(current, &balance);
 			// Try to withdraw money
 			if(amount <= balance)
@@ -167,7 +168,7 @@ if (num_processes<1)
 				write_balance(current,balance);
 			printf("Withdrew $%d, new balance $%d, starting balance $%d,\n",amount,balance,startingBalence);
 			}
-			else if (amount >=balance && balance >0)
+			else if (amount >balance && balance >0)
 			{
 			printf("Only have $%d, can't withdraw $%d\n",balance,amount);
 			}
@@ -181,6 +182,7 @@ if (num_processes<1)
 			close_balance_file(current);
 			//^^^^^^^^^^^^^^^^^^^^^^^^^^
 			// Child process exits
+			flock(current,LOCK_UN);
 			exit(0);
 		}
 	}
