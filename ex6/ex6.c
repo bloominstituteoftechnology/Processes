@@ -15,14 +15,12 @@ and `clock_gettime()` should work just fine.
 #include <unistd.h>
 #include <stdlib.h>
 #include <time.h>
-#include <inttypes.h>
 
 #define number_iter 1000000
 #define BILLION 1000000000L
 
 int main()
 { 
-    uint64_t diff; 
     struct timespec start, end; 
     float sum = 0.0;
     int i = 0; 
@@ -34,8 +32,5 @@ int main()
         i++;
     }
     printf("avg time per STDIO: %f\n", sum / number_iter);
-
-    
-
     return 0;
 }
