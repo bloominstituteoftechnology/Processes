@@ -19,10 +19,11 @@ int main(int argc, char* argv[])
         exit(1);
     } else if (rc == 0) {
         printf("hello, child here (pid: %d)\n", (int) getpid());
-        char *myargs[3];
-        myargs[0] = strdup("/bin/ls");
-        myargs[1] = strdup("ex4.c");
-        myargs[2] = NULL; 
+        char *myargs[3]; // Allocate an array of chars to hold 3 bytes
+        // 'strdup' duplicates the given input string
+        myargs[0] = strdup("/bin/ls"); // Pass the name of the program
+        myargs[1] = strdup("ex4.c"); // argument: the file to ls to
+        myargs[2] = NULL; // marks the end of the array, null terminator "\0"
         execvp(myargs[0], myargs);
         printf("this should not be seen");
     } else {
