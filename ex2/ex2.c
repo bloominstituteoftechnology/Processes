@@ -11,7 +11,7 @@ When written concurrently, parent gets iterated first, then the child. */
 
 int main(int argc, char *argv[])
 {
-    FILE *fp;
+    FILE *fp; // declare file pointer
     fp = fopen("text.txt", "a"); // option of appending 'text.txt' iterated
     int rc = fork();
     if (rc < 0)

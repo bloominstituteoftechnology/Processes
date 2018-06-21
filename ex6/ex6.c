@@ -21,7 +21,6 @@ and `clock_gettime()` should work just fine.
 
 int main()
 {
-    // Your code here
     
     return 0;
 }

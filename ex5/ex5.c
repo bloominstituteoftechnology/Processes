@@ -9,10 +9,11 @@ One end for granting write access, other end for granting read access.
 two-directional read and write would require two pipes.
 write to a pipe in FIFO order.
 
+FORK AFTER PIPE
+
 close(deallocate the file indicated)
 write(where to write the output, pointer to buffer of nbytes, number of bytes to write) 
 read(where to read from, read into the buffer pointed to, number of bytes to read)
-
 */
 
 #include <stdio.h>
@@ -29,42 +30,46 @@ int main()
 {
     char buffer[MSGSIZE]; // buffer to hold data
 
-    int p[2], nbytes;
+    int p[2];
 
-    pipe(p);
-    int rc = fork();
-
-    if (pipe(p) < 0)
+    if (pipe(p) < 0) // check for pipe fail
     {
         fprintf(stderr, "pipe failed\n");
         exit(1);
     }
-    if (rc < 0)
+
+    int rc = fork();
+
+    if (rc < 0) // forking
     {
         fprintf(stderr, "Fork failed\n");
-        exit(1);
+        exit(2); // try to give different exit number for different fails
     }
     else if (rc == 0)
     {
-
         printf("Child here\n");
-        close(p[0]);
-        // while (read(p[0], &buffer)) {}
+        // close(p[0]); // close up read side of pipe
+
         write(p[1], msg1, MSGSIZE);
         write(p[1], msg2, MSGSIZE);
         write(p[1], msg3, MSGSIZE);
+        // exit(0);
     }
     else
     {
-        printf("Parent here\n");
-        close(p[1]);
         wait(NULL);
+
+        close(p[1]); // close up write side of pipe
+
+        printf("Parent here\n");
 
         for (int i = 0; i < 3; i++)
         {
             read(p[0], buffer, MSGSIZE);
-            printf("Received string: %s\n", buffer);
+            printf("Received string: %s \n", buffer);
         }
+
+
     }
     return 0;
 }

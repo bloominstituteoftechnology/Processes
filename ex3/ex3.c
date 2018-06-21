@@ -4,7 +4,7 @@
 
 /* two choices on wait functions:
 1. You can use waitpid() for pid-specific execution OR
-2. wait() to just generally wait for child process to terminate first.
+2. wait() to just generally wait for ALL child process to terminate first.
 
 Placement of wait is important, since it determines how much of parent can run
 before it will wait for child process to complete.
