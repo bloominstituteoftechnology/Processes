@@ -11,6 +11,8 @@
 // argv is an arry of character pointers to argument themselves.
 int main(int argc, char *argv[])
 {
+    int x = 100;
+
     int rc = fork();
     if (rc < 0) // if fork fails;
     {
@@ -19,13 +21,15 @@ int main(int argc, char *argv[])
     }
     else if (rc == 0) // child process;
     {
-        int x = 100;
         printf("I am child, x = %d \n", x);
+        x++;
+        printf("I am child again, x = %d \n", x);
     }
     else // parent process;
     {
-        int x = 200;
         printf("I am parent, x = %d \n", x);
+        x += 2;
+        printf("I am parent again, x = %d \n", x);
     }
 
     return 0;
