@@ -27,7 +27,8 @@ int main()
 
     for (int i = 0; i < number_iter; i++) {
         clock_gettime(CLOCK_MONOTONIC, &start);
-        write(stdout, NULL, 0);
+        /* write(fileno(stdout), NULL, 0); */
+        printf("");
         clock_gettime(CLOCK_MONOTONIC, &end);
         diff += BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
     }
