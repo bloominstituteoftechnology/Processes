@@ -1,0 +1,2 @@
+This text is from the parent
+This text is from the child
