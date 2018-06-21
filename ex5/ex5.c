@@ -27,5 +27,7 @@ int main()
 		exit(2); // 2 instead of 1 so we know if the pipe or fork failed since err is 1
 	}
 
+	int child = fork();
+
     return 0;
 }
