@@ -122,7 +122,7 @@ int main(int argc, char **argv)
 	}
 	// Store the number of processes in this variable:
 	// How many processes to fork at once
-	int num_processes = argv[1]
+	int num_processes = atoi(argv[1]);
 
 	// Make sure the number of processes the user specified is more than
 	// 0 and print an error to stderr if not, then exit with status 2:
@@ -156,25 +156,26 @@ if (num_processes<1)
 				
 			// Open the balance file (feel free to call the helper
 			// functions, above).
-				fd();
+				int current = open_balance_file(BALANCE_FILE);
 			// Read the current balance
-			read_balance(fd, &balance);
+			read_balance(current, &balance);
 			// Try to withdraw money
-			if(amount< balance)
+			if(amount <= balance)
 			{
+				int startingBalence = balance;
 				balance -= amount;
-			printf("Withdrew $%d, new balance $%d\n",amount,balance);
+				write_balance(current,balance);
+			printf("Withdrew $%d, new balance $%d, starting balance $%d,\n",amount,balance,startingBalence);
 			}
-			else
+			else if (amount >=balance)
 			{
 			printf("Only have $%d, can't withdraw $%d\n",balance, amount);
 			}
 		
 
 			// Close the balance file
-			close_balance_file(fd)
+			close_balance_file(current);
 			//^^^^^^^^^^^^^^^^^^^^^^^^^^
-
 			// Child process exits
 			exit(0);
 		}
