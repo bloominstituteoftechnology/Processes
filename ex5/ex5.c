@@ -9,13 +9,16 @@
 
 #define MSGSIZE 16
 
-char* msg1 = "hello world #1";
-char* msg2 = "hello world #2";
-char* msg3 = "hello world #3";
+char* msg1 = "Hello World #1";
+char* msg2 = "Hello World #2";
+char* msg3 = "Hello World #3";
 
 int main()
 {
     // Your code here
-    
+    // https://www.geeksforgeeks.org/pipe-system-call/
+ 	char inbuf[MSGSIZE]; // Buffer that will hold the incoming data that is being written
+	int p[2]; // Two-element array to hold the read & write file descriptors that are used by the pipe
+
     return 0;
 }
