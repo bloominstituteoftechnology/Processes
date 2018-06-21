@@ -18,6 +18,10 @@ int main(int argc, char* argv[])
       } else if (rc == 0) { // Child
         printf("Child\n");
         execl("ls", NULL);
+      } else { // Parent
+        int wc = waitpid(rc, NULL, 0);
+        printf("Parent\n");
+      }
       
     return 0;
 }
