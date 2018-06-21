@@ -13,15 +13,47 @@ and `clock_gettime()` should work just fine.
 
 #include <stdio.h>
 #include <unistd.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include <time.h>
 
+// #define number_iter 1000000
 #define number_iter 1000000
 #define BILLION 1000000000L
+int localpid(void) {
+	static int a[9] = { 0 };
+	return a[0];
+}
 
-int main()
+
+int main(int argc, char **argv)
 {
     // Your code here
-    
-    return 0;
+
+    uint64_t diff;
+	struct timespec start, end;
+	int i;
+    int numberOn = 0;
+
+    clock_gettime(CLOCK_MONOTONIC, &start);
+    sleep(1);
+    clock_gettime(CLOCK_MONOTONIC, &end);
+
+
+    diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+    printf("elapsed time = %llu nanoseconds\n", (long long unsigned int) diff);
+
+
+    clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &start);	/* mark start time */
+	sleep(1);
+    for (i = 0; i < number_iter; i++) {
+        numberOn++;
+        printf("Number:  %d\n", numberOn);
+    }
+	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end);	
+    diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+	printf("elapsed process CPU time = %llu nanoseconds\n", (long long unsigned int) diff);
+
+	exit(0);
+    // return 0;
 }
