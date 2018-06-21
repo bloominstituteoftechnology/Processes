@@ -9,6 +9,24 @@
 int main(int argc, char *argv[])
 {
     // Your code here
+    int value = 100;
+
+    int rc = fork();
+
+    if (rc == 0) {
+        printf("c value: %d\n", value);
+        value *= value - 5;
+        printf("value after c change: %d\n", value);
+        return 0;
+    } else if (rc != 0) {
+        printf("p value: %d\n", value);
+        value += value - 12;
+        printf("value after p change: %d\n", value);
+        return 0;
+    } else {
+        printf("Error\n");
+        return 1;
+    };
 
     return 0;
 }
