@@ -5,19 +5,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <windows.h>
+#include <wait.h>
 
-int main(int argc, char* argv[])
-{
-    // Your code here
-    int rc = fork();
-    if(rc < 0) {
-        fprintf(stderr, "fork failed\n");
-    } else if (rc ==0) {
-        printf("child process\n");
-    } else {
-        sleep(1000);
-        printf("goodbye\n");
-    }
-    return 0;
+int main(int argc, char *argv[]) {
+	int state;
+	// Your code here
+	int rc = fork();
+	if (rc < 0) {
+		fprintf(stderr, "fork failed\n");
+	} else if (rc == 0) {
+		printf("child process\n");
+	} else {
+		while (waitpid(rc, &state, WNOHANG) == 0) {
+			sleep(1);
+		}
+		printf("goodbye\n");
+	}
+	return 0;
 }
