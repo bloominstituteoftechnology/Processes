@@ -36,6 +36,8 @@ int main()
         write(p[1], msg1, MSGSIZE);
         write(p[1], msg2, MSGSIZE);
         write(p[1], msg3, MSGSIZE);
+	  } else {
+          close (p[1]); // Close the write end of the pipe
 
     return 0;
 }
