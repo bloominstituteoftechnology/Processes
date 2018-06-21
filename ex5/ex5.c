@@ -28,6 +28,10 @@ int main()
 	}
 
 	int child = fork();
+	
+    if (child < 0) { // Fork Fail
+		fprintf(stderr, "fork failed\n");
+		exit(1);
 
     return 0;
 }
