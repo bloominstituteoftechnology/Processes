@@ -38,6 +38,11 @@ int main()
         write(p[1], msg3, MSGSIZE);
 	  } else {
           close (p[1]); // Close the write end of the pipe
+		    for (int i = 0; i < 3; i++) { // Read 16 bytes of data from the read file descriptor
+                read(p[0], inbuf, MSGSIZE);
+                    printf("%s\n", inbuf);
+		    }
+	    }   
 
     return 0;
 }
