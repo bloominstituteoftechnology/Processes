@@ -41,6 +41,7 @@ int main()
     else
     {
         int wc = waitpid(rc, NULL, 0);
+        
         for (int i = 0; i < 3; i++) {
         // read 16 bytes of data from the read file descriptor 
             read(p[0], inbuf, MSGSIZE);
