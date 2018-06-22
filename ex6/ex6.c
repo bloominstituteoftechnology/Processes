@@ -21,21 +21,24 @@ and `clock_gettime()` should work just fine.
 
 int main()
 {
-    long int diff, average;
     struct timespec start, finish;
+    long sum = 0;
+    double average;
 
     for (int i = 0; i < number_iter; i++)
     {
         clock_gettime(CLOCK_MONOTONIC, &start);
-        write(STDOUT_FILENO, NULL, 0);
+        write(STDOUT_FILENO, NULL, 0); // essentially the same as ~ printf("")
         clock_gettime(CLOCK_MONOTONIC, &finish);
 
-        diff += BILLION * (finish.tv_sec - start.tv_sec) + finish.tv_nsec - start.tv_nsec;
+        long difference = BILLION * (finish.tv_sec - start.tv_sec) + (finish.tv_nsec - start.tv_nsec);
+
+        sum += difference;
     }
 
-    average = diff / number_iter;
+    average = sum / (float) number_iter; // cast on number_inter
 
-    printf("\nAverage time over 1-billion iterations: %li ns \n\n", average);
+    printf("\nAverage time over 1-billion iterations: %f ns \n\n", average);
     
     return 0;
 }

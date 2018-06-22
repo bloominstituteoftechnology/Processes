@@ -5,6 +5,7 @@
 
 /*
     Pipes provide a unidirectional interprocess communication channel.
+        * a black of memory is allocated that each end of the pipe has access to
 
     A pipe has a READ and WRITE end.
         * data written to the WRITE end can be read from the READ end
@@ -29,7 +30,7 @@ char* msg3 = "hello world #3";
 
 int main()
 {
-    char buffer[MSGSIZE];
+    char buffer[MSGSIZE]; // holds the message on the read end of the pipe
     int pipefd[2], childProcess, nBytes;
 
     if (pipe(pipefd) < 0){
