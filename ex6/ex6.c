@@ -11,6 +11,13 @@ turns out to only be the case for OSX versions < 10.12. Anything later than that
 and `clock_gettime()` should work just fine. 
 */
 
+/* CLOCK_REALTIME = machine's best-guess as to the current wall-clock - real-world time or time-of-day time. Kind of based on the system clock of OS.
+   CLOCK_MONOTONIC = absolute elapsed wall-clock time since initiaion; essentially stopwatch.
+
+   CLOCK_MONOTONIC does not account for time spent in suspend,
+   CLOCK_BOOTTIME is the better choice if you expect some time to be spent in suspension.
+*/
+
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -19,8 +26,38 @@ and `clock_gettime()` should work just fine.
 #define number_iter 1000000
 #define BILLION 1000000000L
 
-int main()
+int main(int argc, char **argv)
 {
-    
+    struct timespec start, stop;
+    long accum = 0;
+    long difference;
+    double avg;
+
+    for (int i = 0; i < number_iter; i++) // loop A MILLION TIMES OMG
+    {
+        if (clock_gettime(CLOCK_MONOTONIC, &start) == -1)
+        {
+            perror("clock gettime");
+            exit(1);
+        }
+
+        // write NULL to stdout, pass 0 byte of data
+        write(fileno(stdout), NULL, 0); // stream pointer to file descriptor 'stdout'
+
+        if (clock_gettime(CLOCK_MONOTONIC, &stop) == -1)
+        {
+            perror("clock gettime");
+            exit(2);
+        }
+
+        difference = BILLION * (stop.tv_sec - start.tv_sec) + (stop.tv_nsec - start.tv_nsec);
+        accum += difference;
+    }
+
+    avg = accum / (float)number_iter;
+
+    printf("Average time: %lf ns.\n", avg);
+    // %f is calling for float type.
+    // %lf is for double.
     return 0;
 }

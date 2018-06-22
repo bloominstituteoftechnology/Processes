@@ -10,6 +10,7 @@ two-directional read and write would require two pipes.
 write to a pipe in FIFO order.
 
 FORK AFTER PIPE
+Pipe needs to be iterated before forking process begins
 
 close(deallocate the file indicated)
 write(where to write the output, pointer to buffer of nbytes, number of bytes to write) 
@@ -30,7 +31,7 @@ int main()
 {
     char buffer[MSGSIZE]; // buffer to hold data
 
-    int p[2];
+    int p[2], rc;
 
     if (pipe(p) < 0) // check for pipe fail
     {
@@ -38,9 +39,10 @@ int main()
         exit(1);
     }
 
-    int rc = fork();
-
-    if (rc < 0) // forking
+    // int rc = fork(); // initiate fork AFTER the pipe here, or
+    // if (rc < 0) // forking
+    // do like so below, and just declare rc as int, initially at the top.
+    if ((rc = fork()) < 0)
     {
         fprintf(stderr, "Fork failed\n");
         exit(2); // try to give different exit number for different fails
@@ -68,7 +70,6 @@ int main()
             read(p[0], buffer, MSGSIZE);
             printf("Received string: %s \n", buffer);
         }
-
 
     }
     return 0;
