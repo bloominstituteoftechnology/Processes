@@ -39,6 +39,8 @@ int main()
     }
 
     else {
+        wait(NULL);
+        //makes sure that child writing to pipe will always happen first
         close (p[1]);
         printf("parent reading from pipe\n");
         while (read(p[0], inbuf, MSGSIZE) > 0) {
