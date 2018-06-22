@@ -9,7 +9,20 @@
 
 int main(int argc, char *argv[])
 {
-    // my code here
+    int x = 100;
+    int rc = fork();
+    if (rc < 0) {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {
+        printf("This is child %d; x is %d\n", getpid(), x);
+        x++;
+        printf("child again; x is now %d\n", x);
+    } else {
+    printf("This is parent %d; x is %d\n", getpid(), x);
+    x--;
+    printf("parent again; x is now %d\n",x);
+    }
 
     return 0;
 }
