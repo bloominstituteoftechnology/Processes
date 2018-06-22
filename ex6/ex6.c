@@ -13,7 +13,6 @@ and `clock_gettime()` should work just fine.
 
 #include <stdio.h>
 #include <unistd.h>
-#include <stdlib.h>
 #include <time.h>
 
 #define number_iter 1000000
