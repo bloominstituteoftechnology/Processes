@@ -5,10 +5,32 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <time.h>
 
 int main(void)
 {
-    // Your code here
+    int i = rand() % 100 + 1;
+    printf("I am process id (pid): %d, and i is %d\n\n", (int)getpid(), i);
+
+    int rc = fork();
+
+    if (rc < 0)
+    {
+        fprintf(stderr, "sorry, fork failed\n");
+        exit(1);
+    }
+    else if (rc == 0)
+    {
+        printf("I am child process (pid: %d) and i is: %d\n\n", (int)getpid(), i);
+        i++;
+        printf("child again, i is now: %d\n\n", i);
+    }
+    else
+    {
+        printf("hello, I am parent of %d (pid: %d) and i is: %d\n\n", rc, (int)getpid(), i);
+        i--;
+        printf("parent again, i is now: %d\n\n", i);
+    }
 
     return 0;
 }
