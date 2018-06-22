@@ -9,7 +9,20 @@
 
 int main(int argc, char* argv[])
 {
-    // Your code here    
+    if (rc < 0) {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {
+        printf("child here\n");
+        // char *args[] = {"ls", "-l", NULL};
+        // execvp("ls", args);
+        //above is what sean put
+        execl("/bin/ls", "ls", "-l" NULL);
+        //p means you do not have to specify path
+    } else {
+        int wc = wait(NULL);
+        printf("parent here\n");
+    }
 
     return 0;
 }
