@@ -28,5 +28,6 @@ int main(int argc, char *argv[])
         fprintf(fp, "Parent writing to file. \n");
     }
 
+    fclose(fp);
     return 0;
 }

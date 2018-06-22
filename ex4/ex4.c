@@ -30,6 +30,7 @@ int main(int argc, char *argv[])
     }
     else
     {
+        int wc = wait(NULL);
         printf("This is the parent. \n");
     }
 

@@ -24,27 +24,35 @@ int main()
         exit(1);
     }
 
-    const int RC = fork();
+    int RC = fork();
 
     if (RC < 0)
     {
         fprintf(stderr, "fork failed!\n");
+        exit(2);
     }
 
     else if (RC == 0)
     {
+        printf("child writing to pipe\n");
+
         write(p[1], msg1, MSGSIZE);
         write(p[1], msg2, MSGSIZE);
         write(p[1], msg3, MSGSIZE);
     }
     else
     {
+        wait(NULL);
+        close(p[1]);
+
+        printf("parent reading from pipe\n");
         for (int i = 0; i < 3; i++)
         {
             // read 16 bytes of data from the read file descriptor
             read(p[0], inbuf, MSGSIZE);
             printf("parent: %s\n", inbuf);
         }
+        printf("parent done reading\n");
     }
 
     return 0;
