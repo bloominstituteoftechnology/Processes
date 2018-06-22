@@ -4,47 +4,53 @@
 // the messages. 
 
 #include <stdio.h>
-#include <stdlib.h>
 #include <unistd.h>
+#include <stdlib.h>
+#include <sys/wait.h>
+
 #define MSGSIZE 16
-char* msg1 = "hello, world #1";
-char* msg2 = "hello, world #2";
-char* msg3 = "hello, world #3";
- 
+
+char* msg1 = "hello world #1";
+char* msg2 = "hello world #2";
+char* msg3 = "hello world #3";
+
 int main()
 {
+    // Your code here
     char inbuf[MSGSIZE];
-    int p[2], pid, nbytes;
- 
+    int p[2];
+
     if (pipe(p) < 0) {
-        fprintf(stderr, "pipe failed");
+        fprintf(stderr, "pipe failed\n");
         exit(1);
     }
- 
-    if ((pid = fork()) > 0) {
 
-        printf("Child writing to pipe\n");
+    int rc = fork();
+    if (rc < 0) {
+        fprintf(stderr, "fork failed\n");
+        exit(2);
+    }
+
+    else if (rc == 0) {
+        printf("child writing to pipe\n");
 
         write(p[1], msg1, MSGSIZE);
         write(p[1], msg2, MSGSIZE);
         write(p[1], msg3, MSGSIZE);
     }
- 
+
     else {
-        // Close the write end of the pipe
+        wait(NULL);
+        
         close(p[1]);
+        printf("parent reading from pipe\n");
 
-        printf("Parent reading from pipe\n");
-
-        while ((nbytes = read(p[0], inbuf, MSGSIZE)) > 0) {
-            printf("% s\n", inbuf);
+        while (read(p[0], inbuf, MSGSIZE) > 0) {
+            printf("%s\n", inbuf);
         }
 
-        if (nbytes != 0) {
-            exit(2);
-        }
-
-        printf("Finished reading\n");
+        printf("finished reading\n");
     }
+    
     return 0;
 }
