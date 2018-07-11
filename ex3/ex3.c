@@ -9,7 +9,16 @@
 
 int main(void)
 {
-    // Your code here
+    int rc = fork();
+		if (rc < 0) {
+		   fprintf(stderr, "Child process failed.\n");
+			 exit(1);
+		} else if (rc == 0) {
+		   printf("hello\n");
+	  } else {
+		 int wc = waitpid(rc, NULL);
+		 printf("goodbye\n");
+	  }
 
     return 0;
 }

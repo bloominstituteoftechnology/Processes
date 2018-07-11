@@ -8,7 +8,21 @@
 
 int main(void)
 {
-    // Your code here 
-    
+    FILE *fp = fopen("text.txt", "w");
+
+		int rc = fork();
+
+		if (rc < 0) {
+		  fprintf(stderr, "Child process failed.\n");
+			exit(1);
+		} else if (rc == 0) {
+		   char str1[] = "This is the child process\n";
+			 fwrite(str1, 1, sizeof(str1), fp);
+			} else {
+			 char str2[] = "This is the parent process\n";
+			 fwrite(str2, 1, sizeof(str2), fp);
+			}
+
+			fclose(fp);
     return 0;
 }
