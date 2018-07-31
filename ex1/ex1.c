@@ -8,7 +8,16 @@
 
 int main(void)
 {
-    // Your code here
+    int x = 5;
+    printf("%d: the value of x is %d\n", getpid(), x);
+
+    fork();
+
+    if (x == 5)
+    {
+        x = 3;
+        printf("%d [parent: %d] The value of x is %d\n", getpid(), getppid(), x);
+    }
 
     return 0;
 }

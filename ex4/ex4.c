@@ -10,7 +10,9 @@
 
 int main(void)
 {
-    // Your code here    
+    printf("I'm about to run ls\n");
+    execl("/bin/ls", "ls", NULL);
+    printf("I just ran ls\n");   
 
     return 0;
 }
