@@ -16,11 +16,32 @@ and `clock_gettime()` should work just fine.
 #include <time.h>
 
 #define number_iter 1000000
-#define BILLION 1000000000L
+#define BILLION 1000000000
 
 int main()
 {
     // Your code here
-    
+
+//Resources I used:
+// http://www.cs.tufts.edu/comp/111/examples/Time/clock_gettime.c
+// https://linux.die.net/man/3/clock_gettime
+  int i;
+  float average;
+  long long unsigned int diff;
+  struct timespec start, finish;
+  clock_gettime(CLOCK_MONOTONIC, &start);
+  for (i = 0; i < number_iter; i++);
+  {
+    printf("");
+// haha! I get a warning that there is a zero-length printf string!
+// it's by design, really! 
+  }
+  clock_gettime(CLOCK_MONOTONIC, &finish); 
+
+  diff = BILLION * (finish.tv_sec - start.tv_sec) + finish.tv_nsec - start.tv_nsec;
+  average = diff/number_iter;
+  printf("Total time is %llu nanoseconds\n", diff);
+  printf("Average time is %f nanoseconds\n", average);
+
     return 0;
 }
