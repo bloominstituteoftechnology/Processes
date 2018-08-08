@@ -8,11 +8,16 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+int getx(int x){
+    if (x){
+        return x + 1;
+    } 
+}
 int main(void)
 {
-    int x = 100;
+    int x = rand();
 
-    printf("Hello World! (pid: %d, x: %d)\n", (int) getpid(), x);
+    printf("Hello World! (pid: %d, x: %d)\n", (int) getpid(), (int) getx(x));
     int rc = fork();
 
     if (rc < 0){
@@ -20,10 +25,10 @@ int main(void)
         exit(1);
     }
     else if (rc == 0){
-        printf("hello, child here (pid: %d, x: %d)\n", (int) getpid(), x + 1);
+        printf("hello, child here (pid: %d, x: %d)\n", (int) getpid(), (int) getx(x+1));
     }
     else{
-        printf("hello, parent here (pid: %d, x: %d) of child (pid: %d\n, x: %d)\n", (int) getpid(), x, rc, x+1);
+        printf("hello, parent here (pid: %d, x: %d) of child (pid: %d\n, x: %d)\n", (int) getpid(), (int) getx(x), rc, (int) getx(x+1));
     }
 
     return 0;
