@@ -10,7 +10,7 @@ int main(void)
 {
     printf("starting fork program!");
     int x = 100;
-    int rc - fork();
+    int rc = fork();
     // ------------------------------------------------ child process starts executing here
     if (rc < 0) {    // fork failed; exit
         fprintf(stderr, "fork failed\n");
