@@ -8,7 +8,25 @@
 
 int main(void)
 {
-    // Your code here 
+    FILE *fp;
+    fp = fopen("text.txt", "w");
+    // fprintf(fp, "%s", "this is a test\n");
+    // fprintf(fp, "%s", "this is a test2\n");
+    int rc = fork();
+    
+    if (rc < 0) {    // fork failed; exit
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {    // child process satisfies this branch
+        printf("hello, child here (pid: %d)\n", (int) getpid());
+        fprintf(fp, "%s", "this is a test in child\n");
+        
+    } else {
+        printf("Hello, parent here (pid: %d) of child %d\n", (int) getpid(), rc);
+        fprintf(fp, "%s", "this is a test in parent\n");
+        
+    }
+    fclose(fp);
     
     return 0;
 }
