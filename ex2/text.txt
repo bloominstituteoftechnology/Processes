@@ -1,0 +1,4 @@
+Parent gets first crack at writing to the file
+What if the parent writes too?
+Parent gets first crack at writing to the file
+Can a child write to this file?
