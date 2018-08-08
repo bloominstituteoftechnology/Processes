@@ -22,7 +22,7 @@ int main(void)
     } else {
         int wc = waitpid(rc, NULL, 0);    // `waitpid` call added here
         printf("hello, parent here (pid: %d) of child %d\n", (int) getpid(), rc);
-        printf("parent says: goodbye");
+        printf("parent says: goodbye\n");
     }
 
     return 0;
