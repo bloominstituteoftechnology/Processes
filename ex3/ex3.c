@@ -10,7 +10,7 @@
 int main(void)
 {
    
-    printf("File Descriptor: %d\n");
+    printf("File descriptor: %d\n");
 
     int rc = fork();
 
