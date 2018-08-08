@@ -10,8 +10,9 @@
 
 int getx(int x){
     if (x){
-        return x + 1;
+        x = x+ 1;
     } 
+    return x;
 }
 int main(void)
 {
@@ -23,6 +24,7 @@ int main(void)
     if (rc < 0){
         fprintf(stderr, "fork failed\n");
         exit(1);
+        return 1;
     }
     else if (rc == 0){
         printf("hello, child here (pid: %d, x: %d)\n", (int) getpid(), (int) getx(x+1));
