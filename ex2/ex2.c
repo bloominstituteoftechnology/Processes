@@ -37,8 +37,9 @@ int main(void)
     return 0;
 }
 
-// *********  OUTPUT  *********
 /*
+******************** First commit **************************
+*********  OUTPUT  *********
 TERMINAL
 === PARENT_1 HELLO ===
 === PARENT_2 BYE ===
@@ -52,5 +53,13 @@ Writing from Child
 I can infer that
 1. Due to the fact tha the file were open before the fork() were inviked: both files have access to this File.
 2. Both files can perform the operations allowed to the File, in this particular example "a+ (Read and Write)"
+
+******************** Second commit **************************
+ADD a call to fclose() in both the parent and child pricess.
+
+    Even tought the fclose() is called on one of the processes, the other
+    that executes after still has access to the File.
+
+    I understand that as if every single processes 'close' its own access to the File.
 
 */
