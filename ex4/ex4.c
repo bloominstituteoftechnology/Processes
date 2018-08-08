@@ -12,6 +12,7 @@ int main(void)
 {
   // printf("(pid:%d)\n", (int)getpid());
   int rc = fork();
+  char *const envp[2] = {"STEPLIB=SASC.V6.LINKLIB", NULL};
 
   if (rc < 0)
   {
@@ -21,8 +22,8 @@ int main(void)
   else if (rc == 0)
   {
     // printf("Child process");
-    execl("/bin/ls", "ls", "-l", (char *)NULL);
-    return (1);
+    execle("/bin/ls", "ls", "-l", NULL, envp);
+    printf("Return unexpected. It must be an execle() error.n");
   }
   else
   {
