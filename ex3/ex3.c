@@ -18,7 +18,7 @@ int main(void)
     } else if (rc == 0) {    // child process satisfies this branch
         printf("\nhello, child here (pid: %d) \n", (int) getpid());
         printf("Child says: Hello\n");
-        printf("this is the value of x in the child scope after change: %d\n", x);
+
     } else {
         int wc = waitpid(rc, NULL, 0);    // `waitpid` call added here
         printf("hello, parent here (pid: %d) of child %d\n", (int) getpid(), rc);
