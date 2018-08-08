@@ -137,6 +137,8 @@ why we still had to have the parent process `fork` a new child process.
 Conceptually, a pipe is a uni-directional channel between two processes that would otherwise be isolated from each other. When a pipe is established between two processes, one process has access to the write end of the pipe, while the other has read access to the other end of the pipe. Thus, if you want two-way communication between two processes, two pipes will have to be created between both processes, one in each direction. 
 
 Some things to keep in mind when working with pipes is that when a process writes to a pipe, the other process receives the data in FIFO order (which makes sense when you think about the pipe analogy in real life). Additionally, if the process with read access tries to read from the pipe before anything has been written to it, the reading process is suspended until there is some data to read. 
+
+Remember to pipe before forking.
 ```c
 #include <stdio.h>
 #include <stdlib.h>
