@@ -9,7 +9,30 @@
 int main(void)
 {
     // Your code here
-    
+    int x = 100;
+    int rc = fork();  // creates a new child process that runs its code starting under this line
+
+    if (rc < 0)
+    {
+        fprintf(stderr, "For failed!\n");
+        exit(1);
+    }
+    else if (rc == 0)
+    {
+        printf("Child variable `x` is equal to: %d\n", x);
+
+        x = 50;  // child changes the value of `x`
+
+        printf("Child variable `x` is equal to: %d\n", x);
+    }
+    else
+    {
+        printf("Parent variable `x` is equal to: %d\n", x);
+
+        x = 150;  // parent changes the value of `x`
+
+        printf("Parent variable `x` is equal to: %d\n", x);
+    }
     
     return 0;
 }
