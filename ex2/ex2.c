@@ -27,4 +27,4 @@ int main(void)
     return 0;
 }
 
-/* Who ever is last to make the write on the text.txt is going to override that text file. 
+/* Who ever is last to make the write on the text.txt is going to override that text file. */
