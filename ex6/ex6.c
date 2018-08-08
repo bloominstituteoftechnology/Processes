@@ -20,7 +20,20 @@ and `clock_gettime()` should work just fine.
 
 int main()
 {
-    // Your code here
-    
-    return 0;
+  uint64_t totalRuntime = 0;
+  uint64_t averageRuntime = 0;
+  struct timespec start, end;
+
+  for (int i = 0; i < number_iter; i++)
+  {
+    clock_gettime(CLOCK_MONOTONIC, &start);
+    write(STDOUT_FILENO, "", sizeof("") - 1); // Empty write to stdout
+    clock_gettime(CLOCK_MONOTONIC, &end);
+
+    totalRuntime = totalRuntime + (BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec);
+  }
+
+  averageRuntime = totalRuntime / number_iter;
+  printf("Average time to make a system call an empty write to stdout: %llu nanoseconds\n", (long long unsigned int)averageRuntime);
+  return 0;
 }
