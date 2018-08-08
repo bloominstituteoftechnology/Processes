@@ -18,22 +18,41 @@ and `clock_gettime()` should work just fine.
 #define number_iter 1000000
 #define BILLION 1000000000L
 
-int main()
+uint64_t getAverageTime(int method)
 {
   uint64_t totalRuntime = 0;
-  uint64_t averageRuntime = 0;
   struct timespec start, end;
 
   for (int i = 0; i < number_iter; i++)
   {
     clock_gettime(CLOCK_MONOTONIC, &start);
-    write(STDOUT_FILENO, "", sizeof("") - 1); // Empty write to stdout
+    
+    switch (method)
+    {
+      case 1:
+        write(STDOUT_FILENO, "", sizeof("") - 1);
+        break;
+    
+      case 2:
+        printf("");
+        break;
+    }
+
     clock_gettime(CLOCK_MONOTONIC, &end);
 
     totalRuntime = totalRuntime + (BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec);
   }
 
-  averageRuntime = totalRuntime / number_iter;
-  printf("Average time to make a system call an empty write to stdout: %llu nanoseconds\n", (long long unsigned int)averageRuntime);
+  return totalRuntime / number_iter;
+}
+
+int main()
+{
+  
+  printf("Average time to make a system call to do an empty write to stdout: %llu nanoseconds\n", (long long unsigned int)getAverageTime(1));
+
+  // Comparing system call to stdio library function printf
+  printf("Average time to call standard library function printf(): %llu nanoseconds\n", (long long unsigned int)getAverageTime(2));
+
   return 0;
 }
