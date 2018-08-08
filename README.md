@@ -13,7 +13,7 @@ executes `fork()`, the new child process that is created is an almost exact copy
 calling process from the operating system's perspective. We say _almost_ an exact copy 
 to delineate the fact that while the new child process has the same instruction set 
 (i.e. code) as its parent process, the child process starts executing at the point right 
-after `fork()` is called in the parent process. 
+after `fork()` is called in the parent process.  
 
 Let's look at a program that calls `fork()` to try to give an example of what this means:
 ```c
