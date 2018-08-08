@@ -17,6 +17,27 @@ char* msg3 = "hello world #3";
 int main(void)
 {
     // Your code here
-    
+    int childpid;
+    int rc = fork();
+    if(rc == 0){
+        childpid = getpid();
+    }
+    char inbuf[MSGSIZE];    // a buffer that will hold the incoming data that is being written
+    int p[2];
+
+    pipe(p);
+    write(p[1], msg1, MSGSIZE);
+    write(p[1], msg2, MSGSIZE);
+    write(p[1], msg3, MSGSIZE);
+
+    //_Exit(0);
+    if(getpid() == childpid){
+        exit(1);
+    }
+    for (int i = 0; i < 3; i++) {
+        // read 16 bytes of data from the read file descriptor 
+        read(p[0], inbuf, MSGSIZE);
+        printf("string: %s  pid:%d\n", inbuf, getpid());
+    }
     return 0;
 }
