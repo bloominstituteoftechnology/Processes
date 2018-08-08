@@ -21,12 +21,16 @@ int main(void)
     {
         printf("=== CHILD_1 HELLO ===\n");
         fprintf(file, "%s\n", "Writing from Child");
+        printf("File closed\n");
+        fclose(file);
         printf("=== CHILD_2 BYE ===\n");
     }
     else
     {
         printf("=== PARENT_1 HELLO ===\n");
         fprintf(file, "%s\n", "Writing from Parent");
+        printf("File closed\n");
+        fclose(file);
         printf("=== PARENT_2 BYE ===\n");
     }
 
