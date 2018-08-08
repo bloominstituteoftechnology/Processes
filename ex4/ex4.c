@@ -17,11 +17,11 @@ int main(void)
         exit(1);
     }
     else if (forked == 0) { //this is the child process
-        char *args[]={"/bin/ls","-a", "--color", NULL};
+        char *args[]={"/bin/ls","-a", NULL};
         execvp(args[0],args);
     }
     else {
-        char *args[]={"/bin/ls","-lA", "--color", NULL};
+        char *args[]={"/bin/ls","-lA", NULL};
         execv(args[0],args);
     }
 
