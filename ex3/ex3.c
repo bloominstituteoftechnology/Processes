@@ -9,7 +9,20 @@
 
 int main(void)
 {
-    // Your code here
+   
+    printf("File Descriptor: %d\n");
+
+    int rc = fork();
+
+    if (rc < 0) {
+        printf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {
+        printf("hello from child\n");
+    } else {
+        int wc = waitpid(rc, NULL, 0); // rc (i.e. fork()) returns the pid of the child
+        printf("goodbye from parent\n");
+    }
 
     return 0;
 }
