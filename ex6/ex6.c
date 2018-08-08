@@ -48,7 +48,6 @@ uint64_t getAverageTime(int method)
 
 int main()
 {
-  
   printf("Average time to make a system call to do an empty write to stdout: %llu nanoseconds\n", (long long unsigned int)getAverageTime(1));
 
   // Comparing system call to stdio library function printf
