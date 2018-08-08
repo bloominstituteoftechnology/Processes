@@ -8,7 +8,17 @@
 
 int main(int argc, char *argv[])
 {
-    // Your code here
+  // Your code here
+  int x = 100;
 
-    return 0;
+  int rc = fork();
+
+  if (rc < 0) {
+    fprintf(stderr, "fork failed\n");
+    exit(1);
+  } else if (rc == 0) {
+    printf("milkDuds\n");
+  }
+
+  return 0;
 }
