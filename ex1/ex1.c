@@ -8,7 +8,7 @@
 
 int main(void)
 {
-    printf('starting fork program!')
+    printf("starting fork program!");
     int x = 100;
     int rc - fork();
     // ------------------------------------------------ child process starts executing here
