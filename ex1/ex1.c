@@ -8,7 +8,31 @@
 
 int main(void)
 {
-    // Your code here
+  int x = 100;
+  int rc = fork();
+  if (rc < 0)
+  {
+    fprintf(stderr, "fork failed\n");
+    exit(1);
+  }
+  else if (rc == 0)
+  {
+    printf("Child process created (pid: %d) and (x:%d) \n", (int)getpid(), x);
+    x++;
+    printf("child again, x is now %d\n", x);
+  }
+  else
+  {
+    printf("Parent process here (pid: %d) of child (rc: %d)\n", (int)getpid(), rc);
+    x--;
+    printf("parent here again, x is now %d \n", x);
+  }
 
-    return 0;
+  return 0;
 }
+
+// Parent process here (pid: 3447) of child (rc: 3448)
+// Child process created (pid: 3448) and (x:100)
+// The parent child processes are distinct working on their own copy of the variable x.
+// parent here again, x is now 99
+// child again, x is now 101
