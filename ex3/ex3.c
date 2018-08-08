@@ -11,5 +11,17 @@ int main(void)
 {
     // Your code here
 
+    int rc = fork();
+    int waitPID = waitpid(rc, NULL, 0);
+
+    if (rc < 0) {
+        fprintf(stderr, "Failure to fork\n");
+        exit(1);
+    } else if (rc == 0) {
+        printf("Child \t Hello \n");
+    } else {
+        printf("Parent \t Goodbye \n");
+    }
+    
     return 0;
 }
