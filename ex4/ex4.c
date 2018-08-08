@@ -11,6 +11,27 @@
 int main(void)
 {
     // Your code here    
+    int child = fork();
+
+    if (child < 0)
+    {
+        printf("Error creating child process");
+        exit(1);
+    }
+    else if (child == 0)
+    {
+        char *my_args[3];
+        my_args[0] = "/bin/ls";
+        my_args[1] = "-la";
+        my_args[2] = NULL;
+        
+        execv("/bin/ls", my_args);
+    }
+    else
+    {
+        waitpid(child, NULL, 0);
+        printf("\nParent Complete\n\n");
+    }
 
     return 0;
 }
