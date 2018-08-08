@@ -8,7 +8,20 @@
 
 int main(void)
 {
-    // Your code here
+    printf("hello world (pid: %d)\n", (int) getpid());
+    int x = 100;
+    int rc = fork();
+    // ------------------------------------------------ child process starts executing here
+    if (rc < 0) {    // fork failed; exit
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {    // child process satisfies this branch
+        x=102;
+        printf("hello, child here (pid: %d), value of child's x:%d \n", (int) getpid(), x);
+    } else {
+        x=101;
+        printf("hello, parent here (pid: %d) of child %d\n, value of parent's x:%d", (int) getpid(), rc, x);
+    }
 
     return 0;
 }
