@@ -9,6 +9,15 @@
 int main(void)
 {
     // Your code here 
-    
+    FILE * fp;
+    fp = fopen("text.txt", "a");
+    fprintf(fp, "%s %s %s %d", "We", "are", "in", 2012);
+    int rv = fork();
+    if(rv < 0){
+        printf("fork failed!");
+    }else if(rv == 0){
+        printf("Hey, I'm the child process :) %d\n", getpid());
+        fprintf(fp, "\n%s %s", "Boooya!\n", "child can access too :)\n");
+    }
     return 0;
 }

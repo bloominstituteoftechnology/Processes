@@ -20,8 +20,10 @@ int main(void)
         variable = 25;
         printf("hello, child here (pid: %d) \n", (int) getpid());
         printf("variable in child process: %d\n", variable);
+        exit(0);
     }else{
         printf("hello, parent here (pid: %d) of child %d\n", (int) getpid(), rc);
+        printf("parent level var: %d\n", variable);
     }
     return 0;
 }
