@@ -8,7 +8,29 @@
 
 int main(void)
 {
-    // Your code here
+  int x = 100;
+  printf("Main process (pid: %d): x initialized to %d\n", (int)getpid(), x);
+  printf("Forking child process...\n");
+  int child = fork();
 
-    return 0;
+  if(child < 0){
+    fprintf(stderr, "Fork failed\n");
+    exit(1);
+  }
+  else if (child == 0)
+  {
+    printf("Child process (pid: %d): x is %d\n", (int)getpid(), x);
+    printf("Child %d is changing the value of x to 75...\n", (int)getpid());
+    x = 75;
+    printf("Child process (pid: %d): x is %d\n", (int)getpid(), x);
+  }
+  else
+  {
+    printf("Parent process (pid: %d) of child %d: x is %d\n", (int)getpid(), child, x);
+    printf("Parent %d is changing the value of x to 25...\n", (int)getpid());
+    x = 25;
+    printf("Parent process (pid: %d): x is %d\n", (int)getpid(), x);
+  }
+
+  return 0;
 }
