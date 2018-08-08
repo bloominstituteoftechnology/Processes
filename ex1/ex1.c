@@ -13,7 +13,7 @@ int main(void)
     int rc = fork();
     // ------------------------------------------------ child process starts executing here
     if (rc < 0) {    // fork failed; exit
-        printf(stderr, "fork failed\n");
+        fprintf(stderr, "fork failed\n");
         exit(1);
     } else if (rc == 0) {    // child process satisfies this branch
         printf("hello, child here (pid: %d) \n", (int) getpid());
