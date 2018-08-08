@@ -10,7 +10,7 @@ int main(void)
 {
     FILE *fp;
     
-    fp = fopen("text.txt", "w+");
+    fp = fopen("text.txt", "r");
 
     int rc = fork();
     // ------------------------------------------------ child process starts executing here
