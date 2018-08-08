@@ -8,7 +8,7 @@
 
 int main(void)
 {
-    printf("starting fork program!");
+    printf("starting fork program!\n");
     int x = 100;
     int rc = fork();
     // ------------------------------------------------ child process starts executing here
@@ -20,7 +20,7 @@ int main(void)
         printf("this is the value of x in the child scope: %d\n", x);
     } else {
         printf("hello, parent here (pid: %d) of child %d\n", (int) getpid(), rc);
-        printf("this is x in the parent scope: %d", x);
+        printf("this is x in the parent scope: %d\n", x);
     }
 
     return 0;
