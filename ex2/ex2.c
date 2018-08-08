@@ -17,7 +17,7 @@ int main(void)
         printf("fork failed!");
     }else if(rv == 0){
         printf("Hey, I'm the child process :) %d\n", getpid());
-        fprintf(fp, "\n%s %s", "Boooya!\n", "child can access too :)\n");
+        fprintf(fp, "%s %s", "Boooya!\n", "child can access too :)\n");
     }
     return 0;
 }
