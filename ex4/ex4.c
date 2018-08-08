@@ -17,7 +17,7 @@ int main(void)
     exit(1);   
     } else if (rc == 0) {    // child process satisfies this branch
         printf("hello, child here (pid: %d) \n", (int) getpid());
-        execv("/bin/ls", NULL);     // runs the word count program, passing in the `myargs` array to the word count program as arguments
+        execv("/bin/ls", NULL); 
         printf("this should not be seen");
     } else {
         int wc = waitpid(rc, NULL, 0);    // `waitpid` call added here
