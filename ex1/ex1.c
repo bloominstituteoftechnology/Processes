@@ -13,11 +13,11 @@ int main(void)
     int rc = fork();
     // ------------------------------------------------ child process starts executing here
     if (rc < 0) {    // fork failed; exit
-        fprintf(stderr, "fork failed\n");
+        printf(stderr, "fork failed\n");
         exit(1);
     } else if (rc == 0) {    // child process satisfies this branch
         printf("hello, child here (pid: %d) \n", (int) getpid());
-        print("this is the value of x in the child scope: %d\n", x);
+        printf("this is the value of x in the child scope: %d\n", x);
     } else {
         printf("hello, parent here (pid: %d) of child %d\n", (int) getpid(), rc);
         printf("this is x in the parent scope: %d", x);
