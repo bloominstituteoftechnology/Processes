@@ -9,7 +9,20 @@
 
 int main(void)
 {
-    // Your code here
-
+    int rc = fork();
+    int waitProcessID = waitpid(rc, NULL, 0);
+    if(rc<0)
+    {
+        fprintf(stderr, "fork failed\n");
+    }
+    else if (rc==0)
+    {
+        printf("Child Process \t Hello! \n");
+    }
+    else 
+    {
+        printf("Parent process \t Goodbye \n");
+    }
+    
     return 0;
 }
