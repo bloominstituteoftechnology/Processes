@@ -9,6 +9,6 @@
 int main(void)
 {
     // Your code here
-
+int fork();
     return 0;
 }
