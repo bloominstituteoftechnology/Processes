@@ -9,6 +9,8 @@
 int main(void)
 {
     // Your code here
+    int x = 102l;
+    
 
     return 0;
 }
