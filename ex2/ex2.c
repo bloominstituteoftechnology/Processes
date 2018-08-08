@@ -20,6 +20,7 @@ int main(void)
     } else if (rc == 0) {    // child process satisfies this branch
         printf("\nhello, child here (pid: %d) \n", (int) getpid());
         fp = fopen("text.txt", "w+");
+        //memory location seems to change when the file is opened in the child process
         printf("this is the file descriptor in the child scope: %p\n", fp);
         
     } else {
