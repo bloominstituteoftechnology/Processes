@@ -21,9 +21,9 @@ int main(void)
     else if (child == 0)
     {
         char *my_args[3];
-        my_args[0] = "/bin/ls";
-        my_args[1] = "-la";
-        my_args[2] = NULL;
+        my_args[0] = "/bin/ls";  // this is analogous to using `ls` in the terminal
+        my_args[1] = "-la";  // the same as using the `-la` flag with `ls`, e.g. `ls -la`
+        my_args[2] = NULL;  // calls to any `exec` function requires our char pointer array to be terminated with a `NULL`
         
         execv("/bin/ls", my_args);
     }
