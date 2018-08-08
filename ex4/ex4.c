@@ -29,6 +29,7 @@ int main(void)
         execv("/bin/ls", myargs);
         printf("If you're reading this, something went wrong\n");
     } else {
+		sleep(1);
         execl("/bin/ls", "ls", "-1", NULL);
         printf("If you're reading this, something went wrong\n");
     }
