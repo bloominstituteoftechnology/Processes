@@ -16,7 +16,7 @@ int main(void)
         fprintf(stderr, "fork failed\n");
         exit(1);
     } else if (rc == 0) {    // child process satisfies this branch
-        printf("hello, child here (pid: %d) \n", (int) getpid());
+        printf("\nhello, child here (pid: %d) \n", (int) getpid());
         printf("this is the value of x in the child scope: %d\n", x);
     } else {
         printf("hello, parent here (pid: %d) of child %d\n", (int) getpid(), rc);
