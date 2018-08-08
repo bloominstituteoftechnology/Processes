@@ -10,11 +10,15 @@ int main(void)
 {
     // Your code here
     int x = 100;
+    // The fork() system call allow us to spawn or create new child processes
+    // rc = "run command"?
     int rc = fork();
 
 if (rc < 0)
 {
-    fprintf(stderr, "Failed\n");
+    // The fprintf function sends formatted output to a stream
+    // "stderr" stands for standard error
+    fprintf(stderr, "Fork failed!\n");
     exit(1);
 }
 else if (rc == 0)
