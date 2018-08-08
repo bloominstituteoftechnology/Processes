@@ -38,7 +38,6 @@ int main(void)
     // in our `child` `fork()` the `child` is now the READ and the `parent` is now the WRITE
     else if (child == 0)
     {
-
         write(fds[1], msg1, MSGSIZE);
         write(fds[1], msg2, MSGSIZE);
         write(fds[1], msg3, MSGSIZE);
