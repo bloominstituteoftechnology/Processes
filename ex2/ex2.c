@@ -9,6 +9,22 @@
 int main(void)
 {
     // Your code here 
+    FILE *pText;
+    pText = fopen("text.txt", "w");
+    int rc = fork();
+    if(rc < 0) {
+        perror("Error with forking");
+        exit(-1);
+    }
+    if(rc == 0) {
+        fprintf(pText, "Child wrote this text");
+        
+    }   else {
+        fprintf(pText, "Parent wrote this text");
+    }
+    fclose(pText);
     
     return 0;
 }
+
+/* Who ever is last to make the write on the text.txt is going to override that text file. 
