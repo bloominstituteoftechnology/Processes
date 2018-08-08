@@ -20,12 +20,14 @@ int main(void)
     } else if (rc == 0) {
         printf("hello, child here (pid: %d) \n", (int) getpid());
         x++;
-        printf("child x is now %d\n", x);
+        printf("child x is now %d\n", x); // x is 101
     } else {
         printf("Parent of %d, (pid: %d),  x is %d \n", rc, (int) getpid(), x);
         x++;
-        printf("Parent x is now %d\n", x);
+        printf("Parent x is now %d\n", x); //x is 101
     }
 
     return 0;
 }
+
+// x is defined separately in Parent and child, so changes in Parent to don't affect child after fork and vice versa
