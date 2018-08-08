@@ -21,16 +21,14 @@ int main(void)
         fprintf(stderr, "fork failed\n");
         exit(1);
     } else if (rc == 0) {    // child process satisfies this branch
-        printf("hello, child here \n");
+        printf("hello, Im the child \n");
         printf("Child x = %d \n",x);
         printf("Child second time printf x = %d \n",x);
         x = 18;
-        printf("Child x = %d \n",x);
     } else {
-        printf("hello, parent here of child\n");
+        printf("hello, Im the parent of child\n");
         printf("Parent x = %d \n",x);
         x = 90;
-        printf("Parent x = %d \n",x);
     }
     printf("Variable x = %d (pid: %d) \n",x, (int) getpid());
     return 0;
