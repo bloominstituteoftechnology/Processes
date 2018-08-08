@@ -10,7 +10,7 @@
 
 int main(void)
 {
-    char *env[] = { "HOME=/usr/home", "LOGNAME=home", (char *)0 };
+    // char *env[] = { "HOME=/usr/home", "LOGNAME=home", (char *)0 }; used with execle
     int rc = fork();
     if (rc < 0)
     {
@@ -21,8 +21,8 @@ int main(void)
     {
         printf("Child process, pid(%d)\n", (int) getpid());
         // execl("/bin/ls", "ls", "-l", 0);
-        
-        execle("/bin/ls", "ls", "-l", (char *)0, env);
+        char *args[]={"/bin/ls", "-a", "/Users/amyshackles/LambdaSchool/CS10", NULL };
+        execvp(args[0], args);
         printf("I've made a terrible mistake\n");
     }
     else
