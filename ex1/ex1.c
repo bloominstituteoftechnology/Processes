@@ -6,9 +6,15 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int main(void)
+int main()
 {
     // Your code here
-
-    return 0;
+    int some_digit = 9999;
+    printf("pre fork: %d\n", some_digit);
+    int pid = -1;
+    pid = fork();
+    printf("post fork: %d\n", some_digit);
+    some_digit = pid;
+    printf("post fork changed to pid: %d\n", some_digit);
+    return EXIT_SUCCESS;
 }

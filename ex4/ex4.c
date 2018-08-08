@@ -11,6 +11,7 @@
 int main(void)
 {
     // Your code here    
-
+    fork();
+    execle("/bin/ls", "");
     return 0;
 }

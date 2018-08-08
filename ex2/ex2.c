@@ -6,9 +6,10 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-int main(void)
+int main()
 {
-    // Your code here 
-    
-    return 0;
+    FILE* f = fopen("./text.txt", "r+");
+    fork();
+    fprintf(f, "I AM WRITING");
+    return EXIT_SUCCESS;
 }

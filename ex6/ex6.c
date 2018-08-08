@@ -12,15 +12,24 @@ and `clock_gettime()` should work just fine.
 */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <time.h>
 
 #define number_iter 1000000
 #define BILLION 1000000000L
+#define KAJILLIONBILLIONZILLION 1000000000000000000000000000000000000000000000000000L
 
 int main()
 {
-    // Your code here
-    
-    return 0;
+    unsigned long long clock_ticks = 0;
+    clock_t a_clock;
+    for (size_t i = 0; i < number_iter; i++) {
+        a_clock = clock();
+        printf("");
+        clock_ticks += (unsigned long long)(clock() - a_clock);
+    }
+    printf("Average of %lu runs is %llu nanoseconds\n", 
+        number_iter, (clock_ticks * BILLION / CLOCKS_PER_SEC) / number_iter);
+    return EXIT_SUCCESS;
 }
