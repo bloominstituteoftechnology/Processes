@@ -9,6 +9,19 @@
 int main(void)
 {
     // Your code here
+    int x = 100;
+    printf("The value of x is: %d\n", x);
+    int rc = fork();
 
+    if (rc < 0) {
+        fprintf(stderr, "Failed fork operation.\n");
+        exit(1);
+    } else if (rc == 0) {
+        x = 50;
+        printf("The child process (pid: %d): x-value is %d\n", (int) getpid(), x);
+    } else {
+        x = 25;
+        printf("This parent process (pid: %d) of %d - x-value is %d\n", (int) getpid(), rc, x);
+    }
     return 0;
 }
