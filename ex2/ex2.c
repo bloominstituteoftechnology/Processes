@@ -2,6 +2,8 @@
 // and then calls `fork()` to create a new process. Can both the child and parent access the file descriptor 
 // returned by `fopen()`? What happens when they are written to the file concurrently?
 
+// Both parent and child wrote in the txt file
+
 //referenced: https://www.tutorialspoint.com/c_standard_library/c_function_fopen.htm and https://www.tutorialspoint.com/c_standard_library/c_function_fwrite.htm
 
 #include <stdio.h>
