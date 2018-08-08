@@ -11,5 +11,22 @@ int main(void)
 {
     // Your code here
 
+printf("Main process: %d \n", (int)getpid());
+  int rc = fork();
+   if (rc < 0)
+  {
+    fprintf(stderr, "fork failure alert!\n");
+    exit(1);
+  }
+  else if (rc == 0)
+  {
+    printf("Hello (from child %d)\n", (int)getpid());
+  }
+  else
+  {
+    int wait = waitpid(rc, NULL, 0);
+    if (wait != -1)
+   printf("Goodbye (from parent %d of child %d)\n", (int)getpid(), rc);
+  }
     return 0;
 }
