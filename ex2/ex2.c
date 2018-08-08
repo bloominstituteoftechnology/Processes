@@ -9,6 +9,24 @@
 int main(void)
 {
     // Your code here 
-    
+    FILE *text = fopen("./text.txt", "r+");
+
+    int child = fork();
+
+    if (child < 0)
+    {
+        printf("Error when creating child process.");
+        exit(1);
+    }
+    else if (child == 0)
+    {
+        printf("Pointer to child process 'text.txt': %p\n", text);
+        fwrite("Child", 1, 5, text);
+    }
+    else
+    {
+        printf("Pointer to parent process 'text.txt': %p\n", text);
+        fwrite("Parent\n", 1, 8, text);
+    }
     return 0;
 }
