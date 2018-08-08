@@ -8,7 +8,22 @@
 
 int main(void)
 {
-    // Your code here 
+    FILE *fp;
     
+    fp = fopen("text.txt", "w+");
+
+    int rc = fork();
+    // ------------------------------------------------ child process starts executing here
+    if (rc < 0) {    // fork failed; exit
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {    // child process satisfies this branch
+        printf("\nhello, child here (pid: %d) \n", (int) getpid());
+        printf("this is the file descriptor in the child scope: %s\n", fp);
+    } else {
+        printf("hello, parent here (pid: %d) of child %d\n", (int) getpid(), rc);
+        printf("this is the file descriptor in the parent scope: %s\n", fp);
+    }
+
     return 0;
 }
