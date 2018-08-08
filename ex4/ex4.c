@@ -11,6 +11,20 @@
 int main(void)
 {
     // Your code here    
+    int rc = fork();
+    if (rc < 0) {    // fork failed; exit
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {
+        printf("this should be seen\n");
+        char *execArgs[3];  
+        execArgs[0] = strdup("/bin/ls");  
+        execArgs[1] = NULL;        
+        execvp(execArgs[0], execArgs);
+        printf("this should not be seen\n");
+    } else {
+        int wc = waitpid(rc, NULL, 0);    // `waitpid` call added here
+    }
 
     return 0;
 }
