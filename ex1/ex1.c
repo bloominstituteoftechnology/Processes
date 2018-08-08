@@ -9,8 +9,25 @@
 int main(void)
 {
     // Your code here
+    int x = 100;
+    int rc = fork();
 
+if (rc < 0)
+{
+    fprintf(stderr, "Failed\n");
+    exit(1);
+}
+else if (rc == 0)
+{
+    printf("Child variable x is equal to %d\n", x);
+    x = 50;
+    printf("Child variable x is equal to %d\n", x);
+}
+else
+{
+    printf("Parent variable x is equal to %d\n", x);
+    x = 150;
+    printf("Parent variable x is equal to %d\n", x);
+}
     return 0;
 }
-
-// Pseudocode here...
