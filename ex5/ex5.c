@@ -21,11 +21,17 @@ int main(void)
     int rc = fork();
     if(rc == 0){
         childpid = getpid();
+    } else if(rc < 0){
+        printf("u done wrong kid!\n");
     }
     char inbuf[MSGSIZE];    // a buffer that will hold the incoming data that is being written
     int p[2];
 
-    pipe(p);
+    if(pipe(p) < 0)
+    {
+        printf("pipe did nothing wrong, y did you murder it?! :(\n");
+    }
+
     write(p[1], msg1, MSGSIZE);
     write(p[1], msg2, MSGSIZE);
     write(p[1], msg3, MSGSIZE);
