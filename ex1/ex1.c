@@ -20,7 +20,7 @@ int main(void)
         print("this is the value of x in the child scope: %d\n", x);
     } else {
         printf("hello, parent here (pid: %d) of child %d\n", (int) getpid(), rc);
-        print("this is x in the parent scope: %d", x);
+        printf("this is x in the parent scope: %d", x);
     }
 
     return 0;
