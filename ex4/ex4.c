@@ -19,13 +19,17 @@ int main(void)
         exit(1);
     } else if (rc == 0) {    // child process satisfies this branch
         printf("hello, child here (pid: %d) \n", rc);
-        char *myargs[2];    // allocate an array of chars to hold 2 bytes
+        char *myargs[4];    // allocate an array of chars to hold 2 bytes
         // `strdup` duplicates the given input string 
         myargs[0] = strdup("/bin/ls");      // pass the name of the program we want to run as the first array element 
-        myargs[1] = NULL;              // marks the end of the array
-        // execl(myargs[0], myargs);
+        myargs[1] = strdup("ls");      // pass the name of the program we want to run as the first array element 
+        // myargs[2] = strdup("--help");      // pass the name of the program we want to run as the first array element 
+        myargs[2] = NULL;
+        execl(myargs[0], myargs[1], myargs[2]);
         // execle(myargs[0], myargs);
-        execvp(myargs[0], myargs);
+        // execvp(myargs[0], myargs);
+        // execl(myargs[0], myargs[1], "-l", (char*)0 );
+
         printf("Ending.....");
     } else {
         int wc = waitpid(rc, NULL, 0);    // `waitpid` call added here
