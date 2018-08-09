@@ -25,6 +25,8 @@ int localpid(void) {
 
 int main(int argc, char **argv)
 {
+	FILE * fp;
+    fp = fopen("/Users/samar/code/c/Processes/ex2/text.txt", "w+");
 	uint64_t diff;
 	struct timespec start, end;
 	int i;
@@ -40,7 +42,7 @@ int main(int argc, char **argv)
 	/* now re-do this and measure CPU time */
 	/* the time spent sleeping will not count (but there is a bit of overhead */
 	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &start);	/* mark start time */
-	sleep(1);	/* do stuff */
+	fprintf(fp, "%s %s %s %d", "We", "are", "in", 2012);	/* do stuff */
 	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end);		/* mark the end time */
 
 	diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
