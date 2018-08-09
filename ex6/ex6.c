@@ -30,9 +30,9 @@ int main()
         printf("");
         clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end);
         results[1] = results[1] + 1;
-        results[0] = (results[0] + end.tv_nsec - start.tv_nsec);
+        results[0] = (results[0] + (BILLION * (end.tv_sec - end.tv_sec) + end.tv_nsec - start.tv_nsec));
     }
-    printf("time: %lu\n", results[0] / results[1]);
+    printf("time: %lu\n", results[0] / results[1]); // time: 494
 
     return 0;
 }
