@@ -78,6 +78,15 @@ void withdraw(int fd, int amount, int *balance)
 }
 
 /**
+ * Deposit amount into balance
+ */
+void deposit(int fd, int amount, int *balance){
+  *balance = *balance + amount;
+  write_balance(fd, *balance);
+  printf("Deposited $%d, new balance $%d\n", amount, *balance);
+}
+
+/**
  * Get current balance
  */
 void get_balance(int balance){
@@ -135,15 +144,17 @@ int main(int argc, char **argv)
         case 1:
           withdraw(bf, amount, &balance);
           break;
-      
         case 2:
+          deposit(bf, amount, &balance);
+          break;
+        case 3:
           get_balance(balance);
           break;
-      }
+        }
 
-      close_balance_file(bf);
-      flock(bf, LOCK_UN);
-      exit(0); // Child process exits
+        close_balance_file(bf);
+        flock(bf, LOCK_UN);
+        exit(0); // Child process exits
     }
   }
 
