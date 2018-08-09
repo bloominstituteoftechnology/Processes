@@ -11,6 +11,9 @@
 // This is the file where we store the balance
 #define BALANCE_FILE "balance.txt"
 
+struct flock fl;
+
+
 /**
  * Open the file containing the balance
  */
@@ -19,6 +22,11 @@ int open_balance_file(char *filename)
 	// This line returns an open "file descriptor" (a number, how Unix
 	// tracks open files) for both reading and writing. If the file does
 	// not exist, it is created with 0644 permissions.
+	fl.l_type = F_WRLCK;
+	fl.l_whence = SEEK_SET;
+	fl.l_start = 0;
+	fl.l_len = 0;
+	fl.l_pid = getpid();
 	return open(filename, O_CREAT|O_RDWR, 0644);
 }
 
@@ -36,6 +44,7 @@ int close_balance_file(int fd)
  */
 void write_balance(int fd, int balance)
 {
+	flock(fd, F_SETLKW);
 	// Print the balance into a buffer
 	char buffer[1024];
 	int size = sprintf(buffer, "%d", balance);
@@ -61,6 +70,7 @@ void write_balance(int fd, int balance)
  */
 void read_balance(int fd, int *balance)
 {
+	flock(fd, F_SETLKW);
 	char buffer[1024];
 
 	// Seek to the beginning of the file, just in case we're not there
@@ -86,12 +96,7 @@ void read_balance(int fd, int *balance)
  */
 int get_random_amount(void)
 {
-	// vvvvvvvvvvvvvvvvvv
-	// !!!! IMPLEMENT ME:
-
-	// Return a random number between 0 and 999 inclusive using rand()
-
-	// ^^^^^^^^^^^^^^^^^^
+	return rand() % 100;
 }
 
 /**
@@ -116,20 +121,35 @@ int main(int argc, char **argv)
 	// message to stderr, and exit with status 1:
 	//
 	// "usage: bankers numprocesses\n"
-	
+	if ( argc != 2 )
+	{
+		fprintf(stderr, "usage: bankers numprocesses\n");
+		exit(1);
+	}
+
 	// Store the number of processes in this variable:
 	// How many processes to fork at once
-	int num_processes = IMPLEMENT ME
+	int num_processes;
 
 	// Make sure the number of processes the user specified is more than
 	// 0 and print an error to stderr if not, then exit with status 2:
 	//
 	// "bankers: num processes must be greater than 0\n"
+	if (atoi(argv[1]) < 1)
+	{
+		fprintf(stderr, "bankers: num processes must be greater than 0\n");
+		exit(2);
+	}
+	else
+	{
+		num_processes = atoi(argv[1]);
+	}
 
 	// ^^^^^^^^^^^^^^^^^^
 
 	// Start with $10K in the bank. Easy peasy.
 	int fd = open_balance_file(BALANCE_FILE);
+
 	write_balance(fd, 10000);
 	close_balance_file(fd);
 
@@ -151,19 +171,33 @@ int main(int argc, char **argv)
 
 			// Open the balance file (feel free to call the helper
 			// functions, above).
-
+			int fd = open_balance_file(BALANCE_FILE);
+			flock(fd, LOCK_EX);
 			// Read the current balance
-
+			read_balance(fd, &balance);
 			// Try to withdraw money
 			//
 			// Sample messages to print:
 			//
 			// "Withdrew $%d, new balance $%d\n"
 			// "Only have $%d, can't withdraw $%d\n"
+			if (amount <= balance)
+			{
+				int start_balance = balance;
+				balance -= amount;
+				write_balance(fd, balance);
+				printf("Withdrew $%d, starting balance was %d, new balance $%d\n", amount, start_balance, balance);
+			}
+			else
+			{
+				fprintf(stderr, "Only have $%d, can't withdraw $%d\n", balance, amount);
+				exit(2);
+				
+			}
 
 			// Close the balance file
 			//^^^^^^^^^^^^^^^^^^^^^^^^^^
-
+			close_balance_file(fd);
 			// Child process exits
 			exit(0);
 		}
