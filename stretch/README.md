@@ -67,9 +67,22 @@ simulated bank account, that is. Don't get your hopes up.)
    above plan at the same time? Is there more than one way things can go
    wrong?
 
+   If multiple processes attempt to withdraw money at the same time you could end up withdrawing more money than you have in your account. Even if you don't overdraft, the balance will not accurately reflect all withdraws processed allowing you to withdraw more than you should have access to. If an additional process reads the balance before it is fully updated by a prior process, both withdrawals could be processed but only one will be recorded; the final  process will overwrite the balance recorded from the first process.
+
 2. Study and understand the skeleton code in the `src/` directory.
 
    **Short answer**: what do each of the arguments to `open()` mean?
+
+    ```c
+    open(filename, O_CREAT|O_RDWR, 0644);
+    ```
+
+    - **filename** is the pathname for the file you want to open
+    - **O_CREAT|O_RDWR** are flags dictating open's access mode and behaviour
+      - O_CREAT tells open that it should create the file if it does not already exist
+      - O_RDWR sets the access mode to read and write
+    - **0644** represents the file permission -rw-r--r-- if open has to create a new file. The permission breakdown is read and write privileges for the user and read privileges for the group and other.
+
 
 3. Take the skeleton code in the `src/` directory and implement the
    pieces marked. Run it.
