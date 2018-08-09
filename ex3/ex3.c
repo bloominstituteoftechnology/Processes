@@ -10,6 +10,36 @@
 int main(void)
 {
     // Your code here
+    int fork_process = fork();
+
+    if (fork_process < 0)
+    {
+        fprintf(stderr, "Something went wronk forking %d process\n", (int)getpid());
+    }
+    else if (fork_process == 0)
+    {
+        printf("=== CHILD_1 ===\n");
+        printf("hello\n");
+        printf("=== CHILD_2 ===\n");
+    }
+    else
+    {
+        printf("=== PARENT_1 ===\n");
+        waitpid(fork_process, NULL, 0);
+        printf("goodbye\n");
+        printf("=== PARENT_2 ===\n");
+    }
 
     return 0;
 }
+
+/*
+*********  OUTPUT  *********
+TERMINAL
+=== PARENT_1 ===
+=== CHILD_1 ===
+hello
+=== CHILD_2 ===
+goodbye
+=== PARENT_2 ===
+*/
