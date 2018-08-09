@@ -117,14 +117,26 @@ int main(int argc, char **argv)
 	//
 	// "usage: bankers numprocesses\n"
 	
+    if (argc < 2)
+    {
+        fprintf(stderr, "\nMust supply a number of processes greater than 0\n\n");
+        exit(1);
+    }
+    
 	// Store the number of processes in this variable:
 	// How many processes to fork at once
-	int num_processes = IMPLEMENT ME
+	int num_processes = *argv[1] - '0';  // cast argv[1] to type int
 
 	// Make sure the number of processes the user specified is more than
 	// 0 and print an error to stderr if not, then exit with status 2:
 	//
 	// "bankers: num processes must be greater than 0\n"
+
+    if (num_processes < 1)
+    {
+        fprintf(stderr, "\nMust supply a number of processes greater than 0\n\n");
+        exit(2);
+    }
 
 	// ^^^^^^^^^^^^^^^^^^
 
