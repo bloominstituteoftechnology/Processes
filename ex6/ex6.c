@@ -18,9 +18,30 @@ and `clock_gettime()` should work just fine.
 #define number_iter 1000000
 #define BILLION 1000000000L
 
+// Sean's solution-----------
+// main(int argc, char **argv)
+// {   
+    // struct timespec start, end;
+    // long sum = 0;
+    // long difference;
+    // doubl avg;
+
+    // for (int i = 0; i < number_liter; i++) {
+    //     clock_gttime(CLOCK_MONOTONIC, &start);
+    //     print("Some string\n");
+    //     clock_gettime(CLOCK_MONOTONIC, &end);
+
+    //     diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+    //        sume += difference;
+    // }
+
+    // avg = sum / (float) number_iter;
+    // printf("Average time it takes to write to stdout is %f ns.\n", avg);
+    // return0;
+// }
 
 main(int argc, char **argv)
-{
+{  
 	uint64_t diff;
 	struct timespec start, end;
 	int i;
