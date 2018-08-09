@@ -31,35 +31,27 @@ int main()
     uint64_t diff;
 	struct timespec start, end;
 	int i;
-    double avg;
+    long long unsigned avg;
+    long long unsigned sum=0;
 
-    double approxRollingAverage (double avg, double new_sample) {
-
-    avg -= avg / 1000000;
-    avg += new_sample / 1000000;
-
-    return avg;
-    }
-    
-	/* measure monotonic time */
+ /* measure monotonic time */
 	clock_gettime(CLOCK_MONOTONIC, &start);	/* mark start time */
-	//sleep(1);
     fprintf( stdout, "" );
 	clock_gettime(CLOCK_MONOTONIC, &end);	/* mark the end time */
-
 	diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
-	//printf("elapsed time = %llu nanoseconds\n", (long long unsigned int) diff);
-    //printf("time = %d\n", approxRollingAverage(diff, diff));//create the first average
-    approxRollingAverage(diff, diff);//create the first average
+    
 
-    for(i=1; i<1000000; i++){
+    printf("Only 1 iteration takes %d\n", (int) diff);
+
+    for(i=0; i<1000000; i++){
         /* measure monotonic time */
 	clock_gettime(CLOCK_MONOTONIC, &start);	/* mark start time */
     fprintf( stdout, "" );
 	clock_gettime(CLOCK_MONOTONIC, &end);	/* mark the end time */
 	diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
-    approxRollingAverage(avg, diff);//update the average 1million times
+    sum=sum+diff;//update the average 1million times
     }
-    printf("This is the avg after 1 million iterations %d\n", avg);
+    avg=sum/1000000;
+    printf("This is the avg after 1 million iterations %d\n", (int) avg);
     return 0;
 }
