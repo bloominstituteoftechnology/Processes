@@ -10,6 +10,15 @@
 int main(void)
 {
     // Your code here
-
+    int forked = fork();
+    if (forked < 0) {
+        fprintf(stderr, "Fork failed.\n");
+        exit(1);
+    } else if (forked == 0){
+        puts("hello");
+    } else {
+        waitpid(forked, NULL, 0);
+        puts("goodbye");
+    }
     return 0;
 }
