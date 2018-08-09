@@ -10,6 +10,22 @@
 int main(void)
 {
     // Your code here
+    int child = fork();
+
+    if (child < 0)
+    {
+        printf("Error trying to create child process");
+        exit(1);
+    }
+    else if (child == 0)
+    {
+        printf("hello\n");
+    }
+    else
+    {
+        waitpid(child, NULL, 0);  // waits for child process to complete
+        printf("goodbye\n");
+    }
 
     return 0;
 }

@@ -10,6 +10,7 @@
 
 // This is the file where we store the balance
 #define BALANCE_FILE "balance.txt"
+// #define RAND_MAX
 
 /**
  * Open the file containing the balance
@@ -90,6 +91,7 @@ int get_random_amount(void)
 	// !!!! IMPLEMENT ME:
 
 	// Return a random number between 0 and 999 inclusive using rand()
+    return rand();
 
 	// ^^^^^^^^^^^^^^^^^^
 }
@@ -117,14 +119,26 @@ int main(int argc, char **argv)
 	//
 	// "usage: bankers numprocesses\n"
 	
+    if (argc < 2)
+    {
+        fprintf(stderr, "\nMust supply a number of processes greater than 0\n\n");
+        exit(1);
+    }
+    
 	// Store the number of processes in this variable:
 	// How many processes to fork at once
-	int num_processes = IMPLEMENT ME
+	int num_processes = *argv[1] - '0';  // cast argv[1] to type int
 
 	// Make sure the number of processes the user specified is more than
 	// 0 and print an error to stderr if not, then exit with status 2:
 	//
 	// "bankers: num processes must be greater than 0\n"
+
+    if (num_processes < 1)
+    {
+        fprintf(stderr, "\nMust supply a number of processes greater than 0\n\n");
+        exit(2);
+    }
 
 	// ^^^^^^^^^^^^^^^^^^
 
@@ -139,10 +153,13 @@ int main(int argc, char **argv)
 			// "Seed" the random number generator with the current
 			// process ID. This makes sure all processes get different
 			// random numbers:
-			srand(getpid());
+			// we need to `seed` `srand()` with a different number for each process
+            // if a different number is not provided to `srand()` we will be returned with the same number for each process
+            srand(getpid());
 
 			// Get a random amount of cash to withdraw. YOLO.
-			int amount = get_random_amount();
+			int amount = get_random_amount() % 10000;  // adding a `% int` we can restrict the max number that will be generated from `rand()`
+            int action = rand() % 2;  // if 0: withdraw || if 1: deposit
 
 			int balance;
 
@@ -153,6 +170,8 @@ int main(int argc, char **argv)
 			// functions, above).
 
 			// Read the current balance
+            fd = open_balance_file(BALANCE_FILE);
+            read_balance(fd, &balance);
 
 			// Try to withdraw money
 			//
@@ -160,8 +179,36 @@ int main(int argc, char **argv)
 			//
 			// "Withdrew $%d, new balance $%d\n"
 			// "Only have $%d, can't withdraw $%d\n"
+            printf("%d", action);
+            if (action > 0)
+            {
+                int new_balance = balance + amount;
+
+                write_balance(fd, new_balance);
+
+                printf("\nYou have deposited $%d, new balance is $%d\n\n", amount, new_balance);
+            }
+            else
+            {
+                if (amount > balance)
+                {
+                    printf("\n===== Insufficient funds =====");
+                    printf("\nOnly have $%d,  can't withdraw $%d\n\n", balance, amount);
+                }
+                else
+                {
+                    int new_balance = balance - amount;
+
+                    write_balance(fd, new_balance);
+                    
+                    printf("\n$$$$$ Sufficient Funds $$$$$");
+                    printf("\nWithdrew $%d, new balance is $%d\n\n", amount, new_balance);
+                }
+            }
 
 			// Close the balance file
+            close_balance_file(fd);
+            
 			//^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 			// Child process exits
