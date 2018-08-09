@@ -17,14 +17,14 @@ int main(void)
         exit(-1);
     }
     if(rc == 0) {
-        fprintf(pText, "Child wrote this text");
+        fprintf(pText, "Child wrote this text\n");
         
     }   else {
-        fprintf(pText, "Parent wrote this text");
+        fprintf(pText, "Parent wrote this text\n");
     }
     fclose(pText);
     
     return 0;
 }
 
-/* Who ever is last to make the write on the text.txt is going to override that text file. */
+/* both can write on the text.txt */

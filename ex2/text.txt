@@ -1,1 +1,2 @@
-Parent wrote this textChild wrote this text
+Parent wrote this text
+Child wrote this text
