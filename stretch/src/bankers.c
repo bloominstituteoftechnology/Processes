@@ -15,7 +15,7 @@
  */
 int open_balance_file(char *filename)
 {
-	return open(filename, O_CREAT|O_RDWR, 0644);
+  return open(filename, O_CREAT | O_RDWR, 0644);
 }
 
 /**
@@ -23,7 +23,7 @@ int open_balance_file(char *filename)
  */
 int close_balance_file(int fd)
 {
-	return close(fd);
+  return close(fd);
 }
 
 /**
@@ -37,9 +37,10 @@ void write_balance(int fd, int balance)
   lseek(fd, 0, SEEK_SET);                      // Move r/w position to start
   int bytes_written = write(fd, buffer, size); // Now we write the new balance
 
-	if (bytes_written < 0) {
-		perror("write");
-	}
+  if (bytes_written < 0)
+  {
+    perror("write");
+  }
 }
 
 /**
@@ -47,15 +48,16 @@ void write_balance(int fd, int balance)
  */
 void read_balance(int fd, int *balance)
 {
-	char buffer[1024];
+  char buffer[1024];
   lseek(fd, 0, SEEK_SET);                           // Move r/w position to start
   int bytes_read = read(fd, buffer, sizeof buffer); // Read the balance into a buffer
   buffer[bytes_read] = '\0';
 
-	if (bytes_read < 0) {
-		perror("read");
-		return;
-	}
+  if (bytes_read < 0)
+  {
+    perror("read");
+    return;
+  }
 
   *balance = atoi(buffer); // Convert buffer to integer and store in balance
 }
@@ -80,7 +82,8 @@ void withdraw(int fd, int amount, int *balance)
 /**
  * Deposit amount into balance
  */
-void deposit(int fd, int amount, int *balance){
+void deposit(int fd, int amount, int *balance)
+{
   *balance = *balance + amount;
   write_balance(fd, *balance);
   printf("Deposited $%d, new balance $%d\n", amount, *balance);
@@ -89,7 +92,8 @@ void deposit(int fd, int amount, int *balance){
 /**
  * Get current balance
  */
-void get_balance(int balance){
+void get_balance(int balance)
+{
   printf("Checking balance, current balance $%d\n", balance);
 }
 
@@ -104,7 +108,8 @@ int get_random_amount(void)
 /**
  * Returns a random amount between 1 and 3.
  */
-int get_random_action(void){
+int get_random_action(void)
+{
   return rand() % 3 + 1;
 }
 
@@ -127,10 +132,12 @@ int main(int argc, char **argv)
   int num_processes = atoi(argv[1]);
   int fd = open_balance_file(BALANCE_FILE);
   write_balance(fd, 10000);
-	close_balance_file(fd);
+  close_balance_file(fd);
 
-  for (int i = 0; i < num_processes; i++) {
-  	if (fork() == 0) {
+  for (int i = 0; i < num_processes; i++)
+  {
+    if (fork() == 0)
+    {
       srand(getpid()); // "Seed" rand number generator to ensure unique values per process
       int amount = get_random_amount();
       int action = get_random_action();
@@ -141,26 +148,27 @@ int main(int argc, char **argv)
 
       switch (action)
       {
-        case 1:
-          withdraw(bf, amount, &balance);
-          break;
-        case 2:
-          deposit(bf, amount, &balance);
-          break;
-        case 3:
-          get_balance(balance);
-          break;
-        }
+      case 1:
+        withdraw(bf, amount, &balance);
+        break;
+      case 2:
+        deposit(bf, amount, &balance);
+        break;
+      case 3:
+        get_balance(balance);
+        break;
+      }
 
-        close_balance_file(bf);
-        flock(bf, LOCK_UN);
-        exit(0); // Child process exits
+      close_balance_file(bf);
+      flock(bf, LOCK_UN);
+      exit(0); // Child process exits
     }
   }
 
   // Parent process: wait for all forked processes to complete
-  for (int i = 0; i < num_processes; i++) {
-  	wait(NULL);
+  for (int i = 0; i < num_processes; i++)
+  {
+    wait(NULL);
   }
 
   return 0;
