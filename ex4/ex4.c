@@ -10,7 +10,19 @@
 
 int main(void)
 {
-    // Your code here    
+    int rc = fork();
+    if (rc < 0) {    // fork failed; exit
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {    // child process
+        execl("/bin/ls", "/bin/ls", "-l", NULL);
+    } else {
+        int wc = waitpid(rc, NULL, 0);
+    }
 
     return 0;
 }
+
+/* The different variants are useful depending on how much one knows in advance about the sort of arguments
+that are going to be passed to the process being executed. The other factor that matters is whether the name
+of the file to be executed is known, or the path to it. */
