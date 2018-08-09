@@ -5,28 +5,40 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <string.h>
 
 int main(void)
 {
-    // Your code here 
-    FILE *text = fopen("./text.txt", "r+");
+    // Your code here
+    // "fp" stands for "file pointer" 
+    FILE* fp;
+    fp = fopen("text.txt", "w");
 
-    int child = fork();
-
-    if (child < 0)
+    // "rc" stands for "run command"
+    int rc = fork();
+    
+    if (rc < 0)
     {
-        printf("Error when creating child process.");
+        // The fprintf function sends formatted output to a stream. A stream is a sequence of bytes of data.
+        fprintf(stderr, "Fork unsuccessful!\n");
         exit(1);
     }
-    else if (child == 0)
+
+    else if (rc == 0)
     {
-        printf("Pointer to child process 'text.txt': %p\n", text);
-        fwrite("Child", 1, 5, text);
+        printf("This is the child process.\n");
+        char *child_str = "This is the child string.\n";
+        // Writes data to the stream. A stream is a sequence of bytes of data.
+        fwrite(child_str, sizeof(char), strlen(child_str), fp);
     }
+
     else
     {
-        printf("Pointer to parent process 'text.txt': %p\n", text);
-        fwrite("Parent\n", 1, 8, text);
+        printf("This is the parent process.\n");
+        char *parent_str = "This is the parent string.\n";
+        fwrite(parent_str, sizeof(char), strlen(parent_str), fp);
     }
+
+    fclose(fp);
     return 0;
 }

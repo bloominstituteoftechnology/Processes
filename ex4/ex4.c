@@ -8,29 +8,40 @@
 #include <stdlib.h>
 #include <sys/wait.h>
 
-int main(void)
+int main(int argc, char* argv[])
 {
     // Your code here    
-    int child = fork();
+    printf("This is the parent process.\n");
+    int rc = fork();
 
-    if (child < 0)
+    if (rc < 0)
     {
-        printf("Error: Can't create child process.");
+        fprintf(stderr, "Fork unsuccessful.\n");
         exit(1);
     }
-    else if (child == 0)
-    {
-        char *my_args[3];
-        my_args[0] = "/bin/ls";
-        my_args[1] = "-la";
-        my_args[2] = NULL;
 
-        execv("/bin/ls", my_args);
+    else if (rc == 0)
+    {
+        printf("This is the child process.\n");
+
+        // The "l" in the execl() system call signifies individual parameters in the call
+        // The "v" in the execv() system call signifies an array of characters, when it's not known whether there'll be 
+        // more than 1 parameter to be passed into the child process
+        execl("/bin/ls", "ls", "-l", (char *) NULL);
+
+        // char *args[] = {"ls", "-1", NULL};
+        // execv("/bin/ls", args);
+
+        // execlp("ls", "ls", "-l", (char *) NULL);        
+
+        // char *args[] = {"ls", "-1", NULL};
+        // execvp("ls", args);
     }
+
     else
     {
-        waitpid(child, NULL, 0);
-        printf("Parent Complete\n");
+        wait(NULL);
     }
+
     return 0;
 }

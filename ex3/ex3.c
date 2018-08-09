@@ -1,5 +1,5 @@
-// Write another program using `fork()`. The child process should print "hello";
-// the parent process should print "goodbye". You should ensure that the child
+// Write another program using `fork()`. The child process should print "Hello"
+// while the parent process should print "Goodbye". You should ensure that the child
 // process always prints first.
 
 #include <stdio.h>
@@ -10,21 +10,27 @@
 int main(void)
 {
     // Your code here
-    int child = fork();
+    int rc = fork();
 
-    if (child < 0)
+    if (rc < 0)
     {
-        printf("Error: Can't create child process.");
+        // "Formatted print"
+        fprintf(stderr, "Fork unsuccessful!\n");
         exit(1);
     }
-    else if (child == 0)
+
+    else if (rc == 0)
     {
-        printf("Hello!\n");
+        // This is the child process
+        printf("Child process: 'Hello!'\n");
     }
+
     else
     {
-        waitpid(child, NULL, 0);
-        printf("Goodbye!\n");
+        int wc = wait(NULL);
+        // This is the parent process
+        printf("Parent process: 'Goodbye!'\n");
     }
+
     return 0;
 }

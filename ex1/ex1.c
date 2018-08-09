@@ -6,32 +6,40 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+// The parent process is also called the "calling program"
+
 int main(void)
 {
     // Your code here
     int x = 100;
-    // The fork() system call allow us to spawn or create new child processes
-    // rc = "run command"?
+    printf("Hello, world! (pid: %d)\n", (int) getpid());
+
+    // The fork() system call allow us to spawn or create a new child processes
+    // "rc" stands for  "run command"?
     int rc = fork();
 
-if (rc < 0)
-{
-    // The fprintf function sends formatted output to a stream
-    // "stderr" stands for standard error
-    fprintf(stderr, "Fork failed!\n");
-    exit(1);
-}
-else if (rc == 0)
-{
-    printf("Child variable x is equal to %d\n", x);
-    x = 50;
-    printf("Child variable x is equal to %d\n", x);
-}
-else
-{
-    printf("Parent variable x is equal to %d\n", x);
-    x = 150;
-    printf("Parent variable x is equal to %d\n", x);
-}
+    if (rc < 0)
+    {
+        // The fprintf function sends formatted output to a stream
+        // "stderr" stands for "standard error"
+        fprintf(stderr, "Fork failed!\n");
+        exit(1);
+    }
+
+    else if (rc == 0)
+    {
+
+        printf("Hi, I am the child process (pid: %d) and my x variable has a value of %d.\n", (int) getpid(), x);
+        x++;
+        printf("Still the child process, and my x variable is now %d.\n", x);
+    }
+    
+    else
+    {
+        printf("Hello, I am the parent process of %d (pid: %d) and my x variable has a value of %d.\n", rc, (int) getpid(), x);
+        x--;
+        printf("Still the parent process, and my x variable is now %d.\n", x);
+    }
+
     return 0;
 }
