@@ -10,18 +10,16 @@ int main(void)
 {
     // Your code here
 
-int x = 0;
-     x = 100;
+int x = 100;
     printf("Variable x = %d\n",x);
      int rc = fork();
     // start of child process
     if (rc < 0) {    // fork failed;
         fprintf(stderr, "fork failed\n");
         exit(1); //exit
-    } else if (rc == 0) {    // child process satisfies this branch
+    } else if (rc == 0) {
         printf("Hello, child \n");
         printf("Child x = %d \n",x);
-        printf("Child second timex = %d \n",x);
         x = 10;
         printf("Child x = %d \n",x);
     } else {
