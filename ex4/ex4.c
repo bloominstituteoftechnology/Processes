@@ -22,10 +22,10 @@ int main(void)
         exit(1);
     }
     else if (rc == 0){
-        printf("\nYo...there's a kid here...\n");
+        printf("\nYo...there's a kid here...(pid: %d)\n",(int) getpid());
         char *myargs[3];
         myargs[0] = strdup("/bin/ls");
-        myargs[1] = strdup("ex4");
+        myargs[1] = strdup("-l");
         myargs[2] = NULL;
         execvp(myargs[0], myargs);
         printf("\nlalalalala this should not be seen if all goes according to plan....\n");
