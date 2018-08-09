@@ -78,11 +78,25 @@ void withdraw(int fd, int amount, int *balance)
 }
 
 /**
+ * Get current balance
+ */
+void get_balance(int balance){
+  printf("Checking balance, current balance $%d\n", balance);
+}
+
+/**
  * Returns a random amount between 0 and 999.
  */
 int get_random_amount(void)
 {
   return rand() % 1000;
+}
+
+/**
+ * Returns a random amount between 1 and 3.
+ */
+int get_random_action(void){
+  return rand() % 3 + 1;
 }
 
 /**
@@ -110,12 +124,22 @@ int main(int argc, char **argv)
   	if (fork() == 0) {
       srand(getpid()); // "Seed" rand number generator to ensure unique values per process
       int amount = get_random_amount();
-      int balance;
+      int action = get_random_action();
       int bf = open_balance_file(BALANCE_FILE);
+      int balance;
       flock(bf, LOCK_EX);
       read_balance(bf, &balance);
 
-      withdraw(bf, amount, &balance);
+      switch (action)
+      {
+        case 1:
+          withdraw(bf, amount, &balance);
+          break;
+      
+        case 2:
+          get_balance(balance);
+          break;
+      }
 
       close_balance_file(bf);
       flock(bf, LOCK_UN);
