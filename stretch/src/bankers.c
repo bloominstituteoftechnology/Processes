@@ -8,7 +8,6 @@
 #include <fcntl.h>
 #include <time.h>
 
-// This is the file where we store the balance
 #define BALANCE_FILE "balance.txt"
 
 /**
@@ -16,9 +15,6 @@
  */
 int open_balance_file(char *filename)
 {
-	// This line returns an open "file descriptor" (a number, how Unix
-	// tracks open files) for both reading and writing. If the file does
-	// not exist, it is created with 0644 permissions.
 	return open(filename, O_CREAT|O_RDWR, 0644);
 }
 
@@ -27,7 +23,6 @@ int open_balance_file(char *filename)
  */
 int close_balance_file(int fd)
 {
-	// Close the file descriptor
 	return close(fd);
 }
 
@@ -36,22 +31,13 @@ int close_balance_file(int fd)
  */
 void write_balance(int fd, int balance)
 {
-	// Print the balance into a buffer
-	char buffer[1024];
-	int size = sprintf(buffer, "%d", balance);
+  char buffer[1024];
+  int size = sprintf(buffer, "%d", balance);   // Print the balance into a buffer
+  ftruncate(fd, 0);                            // Truncate file to 0 bytes
+  lseek(fd, 0, SEEK_SET);                      // Move r/w position to start
+  int bytes_written = write(fd, buffer, size); // Now we write the new balance
 
-	// We want to replace the balance in the file with a new balance. To
-	// do that, we first truncate the file to 0 bytes size, then move
-	// the current read/write position to the start of the file.
-	ftruncate(fd, 0);
-	lseek(fd, 0, SEEK_SET);
-
-	// Now we write the new balance
-	int bytes_written = write(fd, buffer, size);
-
-	// Make sure nothing went wrong
 	if (bytes_written < 0) {
-		// What does perror do? man 3 perror
 		perror("write");
 	}
 }
@@ -62,23 +48,16 @@ void write_balance(int fd, int balance)
 void read_balance(int fd, int *balance)
 {
 	char buffer[1024];
+  lseek(fd, 0, SEEK_SET);                           // Move r/w position to start
+  int bytes_read = read(fd, buffer, sizeof buffer); // Read the balance into a buffer
+  buffer[bytes_read] = '\0';
 
-	// Seek to the beginning of the file, just in case we're not there
-	// already:
-	lseek(fd, 0, SEEK_SET);
-
-	// Read the balance into a buffer
-	int bytes_read = read(fd, buffer, sizeof buffer);
-	buffer[bytes_read] = '\0';
-
-	// Error check
 	if (bytes_read < 0) {
 		perror("read");
 		return;
 	}
 
-	// Convert buffer to integer and store in balance
-	*balance = atoi(buffer);
+  *balance = atoi(buffer); // Convert buffer to integer and store in balance
 }
 
 /**
@@ -86,12 +65,7 @@ void read_balance(int fd, int *balance)
  */
 int get_random_amount(void)
 {
-	// vvvvvvvvvvvvvvvvvv
-	// !!!! IMPLEMENT ME:
-
-	// Return a random number between 0 and 999 inclusive using rand()
-
-	// ^^^^^^^^^^^^^^^^^^
+  return rand() % 1000;
 }
 
 /**
@@ -99,80 +73,51 @@ int get_random_amount(void)
  */
 int main(int argc, char **argv)
 {
-	// Parse the command line
-	
-	// vvvvvvvvvvvvvvvvvv
-	// !!!! IMPLEMENT ME:
+  if (argc != 2)
+  {
+    printf("usage: bankers numprocesses\n");
+    exit(1);
+  }
+  else if (atoi(argv[1]) <= 0)
+  {
+    fprintf(stderr, "bankers: num processes must be greater than 0\n");
+    exit(2);
+  }
 
-	// We expect the user to add the number of simulataneous processes
-	// after the command name on the command line.
-	//
-	// For example, to fork 12 processes:
-	//
-	//  ./bankers 12
-
-	// Check to make sure they've added one paramter to the command line
-	// with argc. If they didn't specify anything, print an error
-	// message to stderr, and exit with status 1:
-	//
-	// "usage: bankers numprocesses\n"
-	
-	// Store the number of processes in this variable:
-	// How many processes to fork at once
-	int num_processes = IMPLEMENT ME
-
-	// Make sure the number of processes the user specified is more than
-	// 0 and print an error to stderr if not, then exit with status 2:
-	//
-	// "bankers: num processes must be greater than 0\n"
-
-	// ^^^^^^^^^^^^^^^^^^
-
-	// Start with $10K in the bank. Easy peasy.
-	int fd = open_balance_file(BALANCE_FILE);
-	write_balance(fd, 10000);
+  int num_processes = atoi(argv[1]);
+  int fd = open_balance_file(BALANCE_FILE);
+  write_balance(fd, 10000);
 	close_balance_file(fd);
 
-	// Rabbits, rabbits, rabbits!
-	for (int i = 0; i < num_processes; i++) {
-		if (fork() == 0) {
-			// "Seed" the random number generator with the current
-			// process ID. This makes sure all processes get different
-			// random numbers:
-			srand(getpid());
+  for (int i = 0; i < num_processes; i++) {
+  	if (fork() == 0) {
+  		srand(getpid());  // "Seed" rand number generator to ensure unique values per process
+  		int amount = get_random_amount();
+  		int balance;
 
-			// Get a random amount of cash to withdraw. YOLO.
-			int amount = get_random_amount();
+  		// Withdraw money
+      int bf = open_balance_file(BALANCE_FILE);
+      read_balance(bf, &balance);
+      
+      if (amount <= balance){
+        balance = balance - amount;
+        write_balance(fd, balance);
+        printf("Withdrew $%d, new balance $%d\n", amount, balance);
+      }
+      else
+      {
+        printf("Only have $%d, can't withdraw $%d\n", amount, balance);
+      }
 
-			int balance;
+      close_balance_file(bf);
+      exit(0); // Child process exits
+    }
+  }
 
-			// vvvvvvvvvvvvvvvvvvvvvvvvv
-			// !!!! IMPLEMENT ME
+  // Parent process: wait for all forked processes to complete
+  for (int i = 0; i < num_processes; i++) {
+  	wait(NULL);
+  }
 
-			// Open the balance file (feel free to call the helper
-			// functions, above).
-
-			// Read the current balance
-
-			// Try to withdraw money
-			//
-			// Sample messages to print:
-			//
-			// "Withdrew $%d, new balance $%d\n"
-			// "Only have $%d, can't withdraw $%d\n"
-
-			// Close the balance file
-			//^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-			// Child process exits
-			exit(0);
-		}
-	}
-
-	// Parent process: wait for all forked processes to complete
-	for (int i = 0; i < num_processes; i++) {
-		wait(NULL);
-	}
-
-	return 0;
+  return 0;
 }
