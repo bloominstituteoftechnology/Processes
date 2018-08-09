@@ -12,7 +12,7 @@ int main(void)
     // Your code here
     int rc = fork(); 
     if (rc < 0) { // fork failed; exit 
-        fprintf(stderr, "fork failed\n"); 
+        fprintf(stderr, "Fork Failed\n"); 
         exit(1); 
     }
     else if (rc == 0) { // child process satisfies this branch 
