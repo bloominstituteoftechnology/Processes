@@ -18,12 +18,14 @@ int main(void)
         exit(1); 
     }
     else if (rc == 0) { // Child process satisfies this branch 
-    printf("\nThe value of x in the child process before its changed is %d and its pid is %d.\n", x, (int) getpid()); 
+    printf("\nThe value of x in the child process before it is changed is %d and it's pid is %d.\n", x, (int) getpid()); 
     x = 25; 
-    printf("The value of x in the child process after its changed is %d and its pid is %d.\n", x, (int) getpid()); 
+    printf("The value of x in the child process after its changed is %d and it's pid is %d.\n", x, (int) getpid()); 
     }
     else {
-        printf("The value of x after the child process executes is %d. The parent pid is %d and the child pid is %d.\n", x, (int) getpid(), rc); 
+        x = 50; 
+        printf("The value of x after its changed in the parent process and after the child process executes is %d. The parent pid is %d and the child pid is %d.\n", x, (int) getpid(), rc); 
     }
+
     return 0;
 }
