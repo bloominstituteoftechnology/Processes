@@ -9,7 +9,29 @@
 
 int main(void)
 {
-    // Your code here
+  int rc = fork();
+  int waitProcessID = waitpid(rc, NULL, 0);
+  if (rc < 0)
+  {
+    fprintf(stderr, "fork failed\n");
+    exit(1);
+  }
+  else if (rc == 0)
+  {
+    printf("Child process \t Hello!! \n");
+  }
+  else
+  {
+    printf("Parent process \t Goodbye \n");
+  }
 
-    return 0;
+  return 0;
 }
+
+// Before waitpid on rc is put
+// Parent process   Goodbye
+// Child process    Hello!!
+
+//  After the made to wait on child process to finish
+// Child process    Hello!!
+// Parent process   Goodbye
