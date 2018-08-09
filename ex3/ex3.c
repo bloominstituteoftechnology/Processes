@@ -9,7 +9,25 @@
 
 int main(void)
 {
-    // Your code here
+    printf("hello world (pid: %d)\n", (int)getpid());
+    int rc = fork();
+
+    if (rc < 0)
+    { // fork failed; exit
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    }
+    else if (rc == 0)
+    { // child process satisfies this branch
+        printf("hello, child here (pid: %d) \n", (int)getpid());
+        printf("hello, from the child\n");
+    }
+    else
+    {
+        waitpid(rc, NULL, 0);
+        printf("hello, parent here (pid: %d) of child %d\n", (int)getpid(), rc);
+        printf("goodbye, from the parent\n");
+    }
 
     return 0;
 }
