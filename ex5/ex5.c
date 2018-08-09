@@ -22,6 +22,9 @@ int main(void)
 
     printf("%d is the current process running\n", (int) getpid());
 // establish the pipe
+// This creates two new opened file desriptors - 
+// the read-only end and the write-only end.
+
 // print an error to stderr if failure
     if (pipe(p) < 0)
     {
@@ -32,30 +35,28 @@ int main(void)
     {
         int rc = fork();
 
-    if (rc < 0)
-    {
-        fprintf(stderr, "Fork failed\n");
-        exit(1);
-    }
-    else if (rc == 0)
-    {
+        if (rc < 0)
+        {
+            fprintf(stderr, "Fork failed\n");
+            exit(1);
+        }
+        else if (rc == 0)
+        {
         printf("%d is the process running before writing\n", (int) getpid());
         write(p[1], msg1, MSGSIZE);
         write(p[1], msg2, MSGSIZE);
         write(p[1], msg3, MSGSIZE);
         printf("%d is the process running after writing\n", (int) getpid());
-    }
-    else
-    {
-        waitpid(rc, NULL, 0);
-        for (int i = 0; i < 3; i++)
+        }
+        else
         {
+            waitpid(rc, NULL, 0);
+             for (int i = 0; i < 3; i++)
+            {
             read(p[0], inbuf, MSGSIZE);
             printf("%d prints out the message %s\n", (int) getpid(), inbuf);
+            }
         }
     }
-    }
-
-    
     return 0;
 }

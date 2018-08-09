@@ -3,6 +3,12 @@
 // `execl()`, `execle()`, `execv()`, and others. Why do you think there 
 // are so many variants of the same basic call?
 
+// Notes to future self:
+// exec() functions never return to the caller if the exec() was successful
+// As a new process isn't created, the PID doesn't change - however, 
+// the machine code, data, heap, and stack of the process are replaced by 
+// the new program being executed.
+
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -20,9 +26,9 @@ int main(void)
     else if (rc == 0)
     {
         printf("Child process, pid(%d)\n", (int) getpid());
-        // execl("/bin/ls", "ls", "-l", 0);
-        char *args[]={"/bin/ls", "-a", "/Users/amyshackles/LambdaSchool/CS10", NULL };
-        execvp(args[0], args);
+        execl("/bin/ls", "ls", "-l", 0);
+        // char *args[]={"/bin/ls", "-a", "/Users/amyshackles/LambdaSchool/CS10", NULL };
+        // execvp(args[0], args);
         printf("I've made a terrible mistake\n");
     }
     else

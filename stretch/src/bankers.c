@@ -22,12 +22,7 @@ int open_balance_file(char *filename)
 	// This line returns an open "file descriptor" (a number, how Unix
 	// tracks open files) for both reading and writing. If the file does
 	// not exist, it is created with 0644 permissions.
-	fl.l_type = F_WRLCK;
-	fl.l_whence = SEEK_SET;
-	fl.l_start = 0;
-	fl.l_len = 0;
-	fl.l_pid = getpid();
-	return open(filename, O_CREAT|O_RDWR, 0644);
+	return open(filename, O_CREAT|O_RDWR|O_CLOEXEC, 0644);
 }
 
 /**
@@ -44,7 +39,6 @@ int close_balance_file(int fd)
  */
 void write_balance(int fd, int balance)
 {
-	flock(fd, F_SETLKW);
 	// Print the balance into a buffer
 	char buffer[1024];
 	int size = sprintf(buffer, "%d", balance);
@@ -70,7 +64,6 @@ void write_balance(int fd, int balance)
  */
 void read_balance(int fd, int *balance)
 {
-	flock(fd, F_SETLKW);
 	char buffer[1024];
 
 	// Seek to the beginning of the file, just in case we're not there
@@ -105,7 +98,7 @@ int get_random_amount(void)
 int main(int argc, char **argv)
 {
 	// Parse the command line
-	
+	printf("Before the children are called, %d\n", getpid());
 	// vvvvvvvvvvvvvvvvvv
 	// !!!! IMPLEMENT ME:
 
@@ -149,7 +142,6 @@ int main(int argc, char **argv)
 
 	// Start with $10K in the bank. Easy peasy.
 	int fd = open_balance_file(BALANCE_FILE);
-
 	write_balance(fd, 10000);
 	close_balance_file(fd);
 
@@ -171,10 +163,12 @@ int main(int argc, char **argv)
 
 			// Open the balance file (feel free to call the helper
 			// functions, above).
-			int fd = open_balance_file(BALANCE_FILE);
-			flock(fd, LOCK_EX);
+			int balance_sheet = open_balance_file(BALANCE_FILE);
+			// Have to declare the lock in the child process, not the parent process
+			
+			flock(balance_sheet, LOCK_EX);
 			// Read the current balance
-			read_balance(fd, &balance);
+			read_balance(balance_sheet, &balance);
 			// Try to withdraw money
 			//
 			// Sample messages to print:
@@ -185,12 +179,12 @@ int main(int argc, char **argv)
 			{
 				int start_balance = balance;
 				balance -= amount;
-				write_balance(fd, balance);
-				printf("Withdrew $%d, starting balance was %d, new balance $%d\n", amount, start_balance, balance);
+				write_balance(balance_sheet, balance);
+				printf("Process %d Withdrew $%d, starting balance was %d, new balance $%d\n", getpid(), amount, start_balance, balance);
 			}
 			else
 			{
-				fprintf(stderr, "Only have $%d, can't withdraw $%d\n", balance, amount);
+				fprintf(stderr, "Process %d says Only have $%d, can't withdraw $%d\n", getpid(), balance, amount);
 				exit(2);
 				
 			}
@@ -199,6 +193,7 @@ int main(int argc, char **argv)
 			//^^^^^^^^^^^^^^^^^^^^^^^^^^
 			close_balance_file(fd);
 			// Child process exits
+			flock(balance_sheet, LOCK_UN);
 			exit(0);
 		}
 	}
