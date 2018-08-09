@@ -19,24 +19,25 @@ int main(void)
     
     if (rc < 0)
     {
-        // The fprintf function sends formatted output to a stream. A stream is a sequence of bytes of data.
+        // The fprintf function sends formatted output to a stream. 
         fprintf(stderr, "Fork unsuccessful!\n");
         exit(1);
     }
 
     else if (rc == 0)
     {
-        printf("This is the child process.\n");
+        printf("This is the child process. Pointer: %p\n", fp);
         char *child_str = "This is the child string.\n";
-        // Writes data to the stream. A stream is a sequence of bytes of data.
-        fwrite(child_str, sizeof(char), strlen(child_str), fp);
+        // Writes data to the stream. A stream is a sequence of bytes of data
+        // The first integer stands for the size of the character. The second stands for the length of the string
+        fwrite("This is the child string.", 1, 5, fp);
     }
 
     else
     {
-        printf("This is the parent process.\n");
+        printf("This is the parent process. Pointer: %p\n", fp);
         char *parent_str = "This is the parent string.\n";
-        fwrite(parent_str, sizeof(char), strlen(parent_str), fp);
+        fwrite("This is the parent string.", 1, 8, fp);
     }
 
     fclose(fp);

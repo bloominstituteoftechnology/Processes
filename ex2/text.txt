@@ -1,2 +1,1 @@
-This is the parent string.
-This is the child string.
+This is This 
