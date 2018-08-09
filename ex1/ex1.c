@@ -1,4 +1,4 @@
-// Write a program that calls `fork()`. Before calling `fork()`, have the main process access a variable
+ // Write a program that calls `fork()`. Before calling `fork()`, have the main process access a variable
 // (e.g., x) and set its value to something (e.g., 100). What value is the variable in the child process? -> They are the same
 // What happens to the variable when both the child and parent change the value of x? -> they change independantly of each other.
 
@@ -21,7 +21,7 @@ int main(void)
     {
         printf("hello, I am child (pid: %d) and x is %d\n", (int) getpid(), x);
         x++;
-        printf("child again, x is now: %d", x);
+        printf("child again, x is now: %d\n", x);
     } else{
         printf("hello, I am parent of pid: %d and x is %d\n", (int) getpid(), x);
         x--;

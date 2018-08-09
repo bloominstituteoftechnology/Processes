@@ -21,6 +21,12 @@ and `clock_gettime()` should work just fine.
 int main()
 {
     // Your code here
-    
+    int rc = fork();
+
+    if (rc < 0)
+    {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    }
     return 0;
 }

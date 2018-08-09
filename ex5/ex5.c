@@ -17,6 +17,12 @@ char* msg3 = "hello world #3";
 int main(void)
 {
     // Your code here
-    
+    int rc = fork();
+
+    if (rc < 0)
+    {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    }
     return 0;
 }
