@@ -10,6 +10,7 @@
 
 // This is the file where we store the balance
 #define BALANCE_FILE "balance.txt"
+// #define RAND_MAX
 
 /**
  * Open the file containing the balance
@@ -152,10 +153,12 @@ int main(int argc, char **argv)
 			// "Seed" the random number generator with the current
 			// process ID. This makes sure all processes get different
 			// random numbers:
-			srand(getpid());
+			// we need to `seed` `srand()` with a different number for each process
+            // if a different number is not provided to `srand()` we will be returned with the same number for each process
+            srand(getpid());
 
 			// Get a random amount of cash to withdraw. YOLO.
-			int amount = get_random_amount();
+			int amount = get_random_amount() % 100000;  // adding a `% int` we can restrict the max number that will be generated from `rand()`
 
 			int balance;
 
@@ -166,6 +169,7 @@ int main(int argc, char **argv)
 			// functions, above).
 
 			// Read the current balance
+            read_balance(fd, &balance);
 
 			// Try to withdraw money
 			//
@@ -173,6 +177,17 @@ int main(int argc, char **argv)
 			//
 			// "Withdrew $%d, new balance $%d\n"
 			// "Only have $%d, can't withdraw $%d\n"
+            if (amount > balance)
+            {
+                printf("\n===== Insufficient funds =====");
+                printf("\nOnly have $%d,  can't withdraw $%d\n\n", balance, amount);
+            }
+            else
+            {
+                printf("\n$$$$$ Sufficient Funds $$$$$");
+                printf("\nWithdrew $%d, new balance is $%d\n\n", amount, balance);
+            }
+            
 
 			// Close the balance file
 			//^^^^^^^^^^^^^^^^^^^^^^^^^^
