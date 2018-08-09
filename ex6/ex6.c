@@ -21,28 +21,34 @@ and `clock_gettime()` should work just fine.
 #define BILLION 1000000000L
 
 
+
 int main(void)
 {
+long sum = 0;
+double average;
 struct timespec start, end;
 
-for(int i = 0; i < number_iter; i++){
+    for(int i = 0; i < number_iter; i++){
 
-    clock_gettime(CLOCK_MONOTONIC, &start);
-    //do stuff
-    FILE *fp;
-        // char data[140];
-        fp = fopen("text.txt", "r+");
-        if (fp == NULL){
-            return 1;
-        }
-        char *fileStr1 = "";
-        fwrite(fileStr1, 1, strlen(fileStr1), fp);
-        fclose(fp);
-    //end do stuff
-    clock_gettime(CLOCK_MONOTONIC, &end);
-}
-uint64_t diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
-long long unsigned int average = diff/number_iter;
-printf("average elapsed time = %llu nanoseconds\n", (long long unsigned int) average);
+        clock_gettime(CLOCK_MONOTONIC, &start);
+        //do stuff
+        FILE *fp;
+            // char data[140];
+            fp = fopen("text.txt", "r+");
+            if (fp == NULL){
+                return 1;
+            }
+            char *fileStr1 = "";
+            fwrite(fileStr1, 1, strlen(fileStr1), fp);
+            fclose(fp);
+        //end do stuff
+        clock_gettime(CLOCK_MONOTONIC, &end);
+        float diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+        sum += diff;
+
+    }
+
+    average = sum/number_iter;
+    printf("average elapsed time = %llu nanoseconds\n", (long long unsigned int) average);
     return 0;
 }

@@ -126,63 +126,59 @@ int main(int argc, char **argv)
 	printf("Prompt>");
 	int num_processes = scanf("%s %d", &argv, &argc);
 
-	if (argc == 0) {
+	if (argc == 0 || NULL) {
 		fprintf(stderr, "bankers: num processes must be greater than 0\n");
 		exit(2);
 	}
+	else{
+		int fd = open_balance_file(BALANCE_FILE);
+			write_balance(fd, 10000);
+			close_balance_file(fd);
 
-	// Make sure the number of processes the user specified is more than
-	// 0 and print an error to stderr if not, then exit with status 2:
-	//
-	// "bankers: num processes must be greater than 0\n"
+			// Rabbits, rabbits, rabbits!
+			for (int i = 0; i < num_processes; i++) {
+				if (fork() == 0) {
+					// "Seed" the random number generator with the current
+					// process ID. This makes sure all processes get different
+					// random numbers:
+					srand(getpid());
+					printf(getpid());
+					// Get a random amount of cash to withdraw. YOLO.
+					int amount = get_random_amount();
 
-	// ^^^^^^^^^^^^^^^^^^
+					int balance;
 
-	// Start with $10K in the bank. Easy peasy.
-	int fd = open_balance_file(BALANCE_FILE);
-	write_balance(fd, 10000);
-	close_balance_file(fd);
+					// vvvvvvvvvvvvvvvvvvvvvvvvv
+					// !!!! IMPLEMENT ME
 
-	// Rabbits, rabbits, rabbits!
-	for (int i = 0; i < num_processes; i++) {
-		if (fork() == 0) {
-			// "Seed" the random number generator with the current
-			// process ID. This makes sure all processes get different
-			// random numbers:
-			srand(getpid());
+					// Open the balance file (feel free to call the helper
+					// functions, above).
+						open_balance_file(BALANCE_FILE);
+					// Read the current balance
+						read_balance(fd, balance);
+					// Try to withdraw money
+						printf("Test print to see if func gets here");
+					// Sample messages to print:
+					//
+					// "Withdrew $%d, new balance $%d\n"
+					// "Only have $%d, can't withdraw $%d\n"
 
-			// Get a random amount of cash to withdraw. YOLO.
-			int amount = get_random_amount();
+					// Close the balance file
+					//^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-			int balance;
+					// Child process exits
+					exit(0);
+				}
+			}
 
-			// vvvvvvvvvvvvvvvvvvvvvvvvv
-			// !!!! IMPLEMENT ME
+			// Parent process: wait for all forked processes to complete
+			for (int i = 0; i < num_processes; i++) {
+				wait(NULL);
+			}
 
-			// Open the balance file (feel free to call the helper
-			// functions, above).
-			    open_balance_file(BALANCE_FILE);
-			// Read the current balance
-				read_balance(fd, balance);
-			// Try to withdraw money
-				
-			// Sample messages to print:
-			//
-			// "Withdrew $%d, new balance $%d\n"
-			// "Only have $%d, can't withdraw $%d\n"
-
-			// Close the balance file
-			//^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-			// Child process exits
-			exit(0);
+			return 0;
 		}
-	}
 
-	// Parent process: wait for all forked processes to complete
-	for (int i = 0; i < num_processes; i++) {
-		wait(NULL);
 	}
-
-	return 0;
-}
+	
+	
