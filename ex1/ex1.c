@@ -10,23 +10,50 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+// int main(void)
+// {
+//     // Your code here
+//     int x = 100;
+//     int rc = fork();
+
+//     if (rc < 0) {
+//         fprintf(stderr, "fork failed\n");
+//         exit(1);
+//     } else if (rc == 0) {
+//         printf("x = %d in child before change\n", x);
+//         x = 50;
+//         printf("x = %d in child after change\n", x);
+//     } else {
+//         printf("x = %d in parent before change\n", x);
+//         x = 111;
+//         printf("x = %d in parent after change\n", x);
+//     }
+
+//     return 0;
+// }
+
+
 int main(void)
 {
     // Your code here
-    int x = 100;
-    int rc = fork();
+    int fork_process = fork();
+    int v = 0;
 
-    if (rc < 0) {
-        fprintf(stderr, "fork failed\n");
-        exit(1);
-    } else if (rc == 0) {
-        printf("x = %d in child before change\n", x);
-        x = 50;
-        printf("x = %d in child after change\n", x);
-    } else {
-        printf("x = %d in parent before change\n", x);
-        x = 111;
-        printf("x = %d in parent after change\n", x);
+    if (fork_process < 0)
+    {
+        fprintf(stderr, "Something went wronk forking %d process\n", (int)getpid());
+    }
+    else if (fork_process == 0)
+    {
+        printf("=== CHILD_1 === variable 'v' = %d\n", v);
+        v++;
+        printf("=== CHILD_2 === variable 'v' = %d\n", v);
+    }
+    else
+    {
+        printf("=== PARENT_1 === variable 'v' = %d\n", v);
+        v--;
+        printf("=== PARENT_2 === variable 'v' = %d\n", v);
     }
 
     return 0;
