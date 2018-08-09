@@ -67,7 +67,7 @@ simulated bank account, that is. Don't get your hopes up.)
    above plan at the same time? Is there more than one way things can go
    wrong?
 
-   If multiple processes attempt to withdraw money at the same time you could end up withdrawing more money than you have in your account. Even if you don't overdraft, the balance will not accurately reflect all withdraws processed allowing you to withdraw more than you should have access to. If an additional process reads the balance before it is fully updated by a prior process, both withdrawals could be processed but only one will be recorded; the final  process will overwrite the balance recorded from the first process.
+   If multiple processes attempt to withdraw money at the same time you could end up withdrawing more money than you have in your account. Even if you don't overdraft, the balance will not accurately reflect all withdraws processed allowing you to withdraw more than you should have access to. If an additional process reads the balance before it is fully updated by a prior process, both withdrawals could be processed but only one will be recorded; the final process will overwrite the balance recorded from the first process.
 
 2. Study and understand the skeleton code in the `src/` directory.
 
@@ -89,6 +89,15 @@ simulated bank account, that is. Don't get your hopes up.)
    
    **Short answer**: What happens? Do things go as planned and look
    sensible? What do you speculate is happening?
+
+   As is the program is not withdrawing money correctly; the balance does not accurately reflect all of the withdraws that have been made. As detailed in the first short answer, processes are reading the balance sheet before some prior processes have had a chance to write the updated balance. Those later processes end up reading in an outdated balance. Example:
+
+   - 1st process: Withdrew $924, new balance $9076
+   - 2nd process: Withdrew $731, new balance $8345
+   - 3rd process: Withdrew $538, new balance $7807
+   - 4th process: Withdrew $345, new balance $8000
+
+   The 4th process reads the balance before the 3rd process has had a chance to finish updating. While the actual balance when process 3 finishes is $7807, process 4 read in $8345 effectively giving up $538 without recording it.
 
 4. Add calls to [`flock()`](https://linux.die.net/man/2/flock) to
    capture and release an exclusive lock on the file before reading and
