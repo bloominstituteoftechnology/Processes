@@ -159,6 +159,7 @@ int main(int argc, char **argv)
 
 			// Get a random amount of cash to withdraw. YOLO.
 			int amount = get_random_amount() % 10000;  // adding a `% int` we can restrict the max number that will be generated from `rand()`
+            int action = rand() % 2;  // if 0: withdraw || if 1: deposit
 
 			int balance;
 
@@ -178,19 +179,31 @@ int main(int argc, char **argv)
 			//
 			// "Withdrew $%d, new balance $%d\n"
 			// "Only have $%d, can't withdraw $%d\n"
-            if (amount > balance)
+            printf("%d", action);
+            if (action > 0)
             {
-                printf("\n===== Insufficient funds =====");
-                printf("\nOnly have $%d,  can't withdraw $%d\n\n", balance, amount);
+                int new_balance = balance + amount;
+
+                write_balance(fd, new_balance);
+
+                printf("\nYou have deposited $%d, new balance is $%d\n\n", amount, new_balance);
             }
             else
             {
-                int new_balance = balance - amount;
+                if (amount > balance)
+                {
+                    printf("\n===== Insufficient funds =====");
+                    printf("\nOnly have $%d,  can't withdraw $%d\n\n", balance, amount);
+                }
+                else
+                {
+                    int new_balance = balance - amount;
 
-                write_balance(fd, new_balance);
-                
-                printf("\n$$$$$ Sufficient Funds $$$$$");
-                printf("\nWithdrew $%d, new balance is $%d\n\n", amount, new_balance);
+                    write_balance(fd, new_balance);
+                    
+                    printf("\n$$$$$ Sufficient Funds $$$$$");
+                    printf("\nWithdrew $%d, new balance is $%d\n\n", amount, new_balance);
+                }
             }
 
 			// Close the balance file
