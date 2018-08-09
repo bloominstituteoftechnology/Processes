@@ -17,24 +17,47 @@ char* msg3 = "hello world #3";
 int main(void)
 {
     char inbuf[MSGSIZE];    // a buffer that will hold the incoming data that is being written
-    int p[2];               // a two-element array to hold the read and write file descriptors that are used by the pipe   
+    int p[2];               // a two-element array to hold the read and write file descriptors that are used by the pipe 
+    int rc = fork();  
 
     // establish our pipe, passing it the p array so that it gets populated by the read and write file descriptors
     if (pipe(p) < 0) {
         fprintf(stderr, "pipe failed\n");
         exit(1);
     }
-
-    // write 16 bytes of data to the write file descriptor
+    if (rc == 0) 
+    {
+            // write 16 bytes of data to the write file descriptor
     write(p[1], msg1, MSGSIZE);
     write(p[1], msg2, MSGSIZE);
     write(p[1], msg3, MSGSIZE);
-
-    for (int i = 0; i < 3; i++) {
+    }
+    else
+    {
+        for (int i = 0; i < 3; i++) {
         // read 16 bytes of data from the read file descriptor 
         read(p[0], inbuf, MSGSIZE);
         printf("% s\n", inbuf);
-    }
-
+        }
+    }t
     return 0;
 }
+
+
+// int main(void)
+// {
+//     int rc = fork();
+
+//     if (rc < 0) {    // fork failed; exit
+//         fprintf(stderr, "fork failed\n");
+//         exit(1);
+//     } else if (rc == 0) {  
+//         // child process satisfies this branch
+//         x = x+5;// replace
+//         printf("the value of x for the child is %d \n", x);
+//     } else {
+//         x = x*10;// replace
+//         printf("the value of x for the parent is %d \n", x);
+//     }
+//     return 0;
+// }
