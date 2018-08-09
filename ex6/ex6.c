@@ -19,8 +19,28 @@ and `clock_gettime()` should work just fine.
 #define BILLION 1000000000L
 
 int main()
-{
-    // Your code here
+{   
+    FILE * fd;
+    fd = fopen("text.txt", "r+");
+
+    uint64_t total_time, average_time;
+    struct timespec start, end;
+
+    clock_gettime(CLOCK_MONOTONIC, &start);	// T I M E R - O N
+
+    int count = 0;
+    while(count < number_iter) {
+       fprintf(fd, "%s\n", "");
+       count++;
+    }
+    
+	clock_gettime(CLOCK_MONOTONIC, &end); // T I M E R - O F F
+
+    total_time = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+    average_time = total_time / number_iter;
+
+	printf("average time = %llu nanoseconds\n", (long long unsigned int) average_time);
+
     
     return 0;
 }

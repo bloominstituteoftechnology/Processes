@@ -12,9 +12,6 @@ int main(void)
     fd = fopen("text.txt", "r+");
     printf("File Descriptor: %d\n", fd);
 
-    // int size = sizeof(fd);
-    // int buffer[size];
-
     int rc = fork();
 
     if (rc < 0) {
