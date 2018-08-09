@@ -16,7 +16,41 @@ char* msg3 = "hello world #3";
 
 int main(void)
 {
-    // Your code here
-    
+  int pipefd[2]; 
+  char buf[MSGSIZE]; 
+
+  // creating the pipe
+  if (pipe(pipefd) < 0)
+  {
+    fprintf(stderr, "pipe failure alert!\n");
+    exit(1);
+  }
+
+  int rc = fork();
+  if (rc < 0)
+  {
+    fprintf(stderr, "fork failure alert!\n");
+    exit(1);
+  }
+  else if (rc == 0)
+  {
+    close(pipefd[0]); 
+    write(pipefd[1], msg1, MSGSIZE);
+    write(pipefd[1], msg2, MSGSIZE);
+    write(pipefd[1], msg3, MSGSIZE);
+    close(pipefd[1]); 
+  }
+  else
+  {
+    int wait = waitpid(rc, NULL, 0); 
+    close(pipefd[1]); 
+    int i; 
+    for (i = 0; i < 3; i++)
+    {
+      read(pipefd[0], buf, MSGSIZE);
+      printf(" %s\n", buf);
+    } 
+  } 
+  
     return 0;
 }
