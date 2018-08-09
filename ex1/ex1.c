@@ -9,7 +9,7 @@
 int main(void)
 {
     // Your code here
-    int x = 0;
+    int x;
     x = 100;
     printf("Variable x = %d\n",x);
 
