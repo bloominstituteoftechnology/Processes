@@ -29,7 +29,7 @@ int main(int argc, char* argv[])
         char *args[] = {"ls", "-l", NULL};
         execvp("ls", args);
     } else {
-        wait(NULL);
+        int wc = waitpid(rc, NULL, 0);
     }
 
     return 0;
