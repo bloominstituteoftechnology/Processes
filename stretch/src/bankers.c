@@ -97,8 +97,9 @@ int main(int argc, char **argv)
 
   		// Withdraw money
       int bf = open_balance_file(BALANCE_FILE);
+      flock(bf, LOCK_EX);
       read_balance(bf, &balance);
-      
+
       if (amount <= balance){
         balance = balance - amount;
         write_balance(fd, balance);
@@ -110,6 +111,7 @@ int main(int argc, char **argv)
       }
 
       close_balance_file(bf);
+      flock(bf, LOCK_UN);
       exit(0); // Child process exits
     }
   }
