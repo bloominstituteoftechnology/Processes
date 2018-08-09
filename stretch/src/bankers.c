@@ -107,7 +107,7 @@ int main(int argc, char **argv)
 	
 	// vvvvvvvvvvvvvvvvvv
 	// !!!! IMPLEMENT ME:
-
+	
 	// We expect the user to add the number of simulataneous processes
 	// after the command name on the command line.
 	//
@@ -123,7 +123,13 @@ int main(int argc, char **argv)
 	
 	// Store the number of processes in this variable:
 	// How many processes to fork at once
-	int num_processes = IMPLEMENT ME
+	printf("Prompt>");
+	int num_processes = scanf("%s %d", &argv, &argc);
+
+	if (argc == 0) {
+		fprintf(stderr, "bankers: num processes must be greater than 0\n");
+		exit(2);
+	}
 
 	// Make sure the number of processes the user specified is more than
 	// 0 and print an error to stderr if not, then exit with status 2:
@@ -155,11 +161,11 @@ int main(int argc, char **argv)
 
 			// Open the balance file (feel free to call the helper
 			// functions, above).
-
+			    open_balance_file(BALANCE_FILE);
 			// Read the current balance
-
+				read_balance(fd, balance);
 			// Try to withdraw money
-			//
+				
 			// Sample messages to print:
 			//
 			// "Withdrew $%d, new balance $%d\n"
