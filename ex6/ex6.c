@@ -49,6 +49,6 @@ struct timespec start, end;
     }
 
     average = sum/number_iter;
-    printf("average elapsed time = %llu nanoseconds\n", (long long unsigned int) average);
+    printf("average elapsed time = %lf nanoseconds\n", average);
     return 0;
 }
