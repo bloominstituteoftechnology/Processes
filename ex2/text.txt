@@ -1,2 +1,2 @@
-This is parent string
-This is child string!
+This is parent string2
+This is child string2!
