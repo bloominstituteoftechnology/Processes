@@ -158,7 +158,7 @@ int main(int argc, char **argv)
             srand(getpid());
 
 			// Get a random amount of cash to withdraw. YOLO.
-			int amount = get_random_amount() % 100000;  // adding a `% int` we can restrict the max number that will be generated from `rand()`
+			int amount = get_random_amount() % 10000;  // adding a `% int` we can restrict the max number that will be generated from `rand()`
 
 			int balance;
 
@@ -169,6 +169,7 @@ int main(int argc, char **argv)
 			// functions, above).
 
 			// Read the current balance
+            fd = open_balance_file(BALANCE_FILE);
             read_balance(fd, &balance);
 
 			// Try to withdraw money
@@ -184,8 +185,12 @@ int main(int argc, char **argv)
             }
             else
             {
+                int new_balance = balance - amount;
+
+                write_balance(fd, new_balance);
+                
                 printf("\n$$$$$ Sufficient Funds $$$$$");
-                printf("\nWithdrew $%d, new balance is $%d\n\n", amount, balance);
+                printf("\nWithdrew $%d, new balance is $%d\n\n", amount, new_balance);
             }
 
 			// Close the balance file
