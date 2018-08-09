@@ -20,7 +20,26 @@ and `clock_gettime()` should work just fine.
 
 int main()
 {
-    // Your code here
+    struct timespec start, end;
+    long sum;
+    long diff;
+    // float average;
+    // double is a 64bit float (15-16 digits)
+    double average;
+
+    for(int i = 0; i < number_iter; i++){
+        clock_gettime(CLOCK_MONOTONIC, &start);
+        printf("");
+        clock_gettime(CLOCK_MONOTONIC, &start);
+
+        diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+        sum += diff;
+
+    }
+
+    average = sum / number_iter;
+    printf("Ave time is nanoseconds %f\n", average);
+
     
     return 0;
 }
