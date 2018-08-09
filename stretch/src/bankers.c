@@ -10,6 +10,7 @@
 
 // This is the file where we store the balance
 #define BALANCE_FILE "balance.txt"
+#define RAND_MAX = 1000;
 
 /**
  * Open the file containing the balance
@@ -90,6 +91,9 @@ int get_random_amount(void)
 	// !!!! IMPLEMENT ME:
 
 	// Return a random number between 0 and 999 inclusive using rand()
+
+	int rand_num = rand();
+	return rand_num;
 
 	// ^^^^^^^^^^^^^^^^^^
 }
