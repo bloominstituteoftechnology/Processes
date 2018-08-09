@@ -11,13 +11,14 @@ int main(int argc, char *argv[])
   // Your code here
   int x = 100;
 
+  // creating a new process
   int rc = fork();
 
   if (rc < 0) {
     fprintf(stderr, "fork failed\n");
     exit(1);
   } else if (rc == 0) {
-    printf("milkDuds\n");
+    printf("parent fork worked, I'm the child process\n");
   }
 
   return 0;

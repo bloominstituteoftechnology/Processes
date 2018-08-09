@@ -8,21 +8,22 @@
 
 int main(int argc, char* argv[])
 {
-    // Your code here
-    int status;
-    int rc = fork();
+  // Your code here
+  int status;
+  int rc = fork();
 
-    if (rc < 0) {
-        fprintf(stderr, "fork failed \n");
-        exit(1);
-    } else if (rc == 0) {
-        printf("Hello\n");
-    } else {
-        while (waitpid(rc, &status, WNOHANG) == 0) {
-            sleep(1);
-        }
-        printf("Goodbye!\n");
-    }
+  if (rc < 0) {
+    fprintf(stderr, "fork failed \n");
+    exit(1);
+  } else if (rc == 0) {
+    printf("Hello, child process here\n");
+  } else {
+      // Still don't understand this
+      while (waitpid(rc, &status, WNOHANG) == 0) {
+        sleep(1);
+      }
+    printf("Bye Felica!\n");
+  }
 
-    return 0;
+  return 0;
 }

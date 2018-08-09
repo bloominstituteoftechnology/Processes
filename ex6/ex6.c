@@ -6,6 +6,7 @@
 // For some helpful documentation and examples of using time-related system calls,
 // visit this site: https://www.cs.rutgers.edu/~pxk/416/notes/c-tutorials/gettime.html
 
+/* INCOMPLETE STILL */
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -24,16 +25,16 @@ int main()
   for (int i = 0; i < number_iter; i++) {
     clock_gettime(CLOCK_MONOTONIC, &startTime);
 
-    write(fileno(stdout), NULL, 0);
+    // write(fileno(stdout), NULL, 0);
 
     clock_gettime(CLOCK_MONOTONIC, &endTime);
 
-    long difference = BILLION * (endTime.tv_sec - startTime.tv_sec) + endTime/// sum += difference;
+    // sum += difference;
   }
 
   avg = sum / (float) number_iter;
 
-  printf("Average time it takes to make a write system call is %f ns.\n", avg//////)
+  printf("Average time it takes to make a write system call is %f ns.\n", avg);
 
   return 0;
 }
