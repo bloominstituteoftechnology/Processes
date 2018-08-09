@@ -20,7 +20,7 @@ int main(void)
     }
     else if (rc == 0)
     {
-        printf("Hello. Child Process (pid: %d)\n", (int) getpid());
+        printf("Hello. Child Process (pid: %d)\n", (int) getpid()); 
     }
     else
     {

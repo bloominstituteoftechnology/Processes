@@ -35,7 +35,7 @@ int main(void)
     }
     else
     {
-        printf("Parent process (pid: %d)\n", (int) getpid(), rc); 
+        printf("Parent process (pid: %d)\n", (int) getpid()); 
         fputs("This is written by parent.\n", fp);
     }
 
@@ -43,4 +43,3 @@ int main(void)
 
     return 0;
 }
-// got warning on line 38 when compiling `rc: data argument not used by format string [-Wformat-extra-args]
