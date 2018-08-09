@@ -187,9 +187,10 @@ int main(int argc, char **argv)
                 printf("\n$$$$$ Sufficient Funds $$$$$");
                 printf("\nWithdrew $%d, new balance is $%d\n\n", amount, balance);
             }
-            
 
 			// Close the balance file
+            close_balance_file(fd);
+            
 			//^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 			// Child process exits
