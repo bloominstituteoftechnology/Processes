@@ -8,7 +8,7 @@
 
 int main(void)
 {
-    FILE * text_file;
+    FILE *text_file;
     text_file = fopen("text.txt", "r+");
     int forked = fork();
 
