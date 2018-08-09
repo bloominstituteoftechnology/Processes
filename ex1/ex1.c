@@ -5,8 +5,7 @@
 /*
 > What value is the variable in the child process?
 
-The value of the variable in the child process is the same in the parent. This seems to illustrate
-that the child process is the 
+The value of the variable in the child process is the same in the parent before any reasssignment.
 
 > What happens to the variable when both the child and parent change the value of x?
 

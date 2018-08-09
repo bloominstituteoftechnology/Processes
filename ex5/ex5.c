@@ -2,6 +2,8 @@
 // between the parent and child processes. Have the child write 
 // the three messages to the parent and have the parent print out 
 // the messages. 
+// Additional resource:
+// https://www.tldp.org/LDP/lpg/node11.html
 
 #include <stdio.h>
 #include <unistd.h>
@@ -32,12 +34,16 @@ int main(void)
         exit(1);
     }
     else if (rc == 0) {
+        close(p[0]);
+
         printf("I'm just a child.\n");
         write(p[1], msg1, MSGSIZE);
         write(p[1], msg2, MSGSIZE);
         write(p[1], msg3, MSGSIZE);
     }
     else {
+        close(p[1]);
+
         printf("Parental unit activate.\n");
         /*
         I think it's best to put a wait in here, but it's not necessary because:
