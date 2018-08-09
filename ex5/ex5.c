@@ -18,7 +18,13 @@ int main(void)
 {
     char inbuf[MSGSIZE];
     int p[2];
+
+    if (pipe(p) < 0) { //initialize pipe
+        fprintf(stderr, "pipe failed\n");
+        exit(1);
+    }
     int forked = fork();
+
 
     if (forked < 0) {    // fork failed; exit
         fprintf(stderr, "fork failed\n");
@@ -29,11 +35,11 @@ int main(void)
         write(p[1], msg2, MSGSIZE);
         write(p[1], msg3, MSGSIZE);
     }
-    else {
-        int wc = waitpid(forked, NULL, 0);
+    else { //this is the parent process
+        waitpid(forked, NULL, 0);
         for (int i = 0; i < 3; i++) {
             read(p[0], inbuf, MSGSIZE);
-            printf("% s\n", inbuf);
+            printf("%s\n", inbuf);
         }
     }
     return 0;
