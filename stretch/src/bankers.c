@@ -92,6 +92,7 @@ int get_random_amount(void)
 	// Return a random number between 0 and 999 inclusive using rand()
 
 	// ^^^^^^^^^^^^^^^^^^
+    return rand() % 1000;
 }
 
 /**
@@ -116,17 +117,28 @@ int main(int argc, char **argv)
 	// message to stderr, and exit with status 1:
 	//
 	// "usage: bankers numprocesses\n"
+
+    if (argc != 2)
+    {
+        fprintf(stderr, "usage: bankers numprocesses\n");
+        exit(1);
+    }
 	
 	// Store the number of processes in this variable:
 	// How many processes to fork at once
-	int num_processes = IMPLEMENT ME
-
-	// Make sure the number of processes the user specified is more than
+	int num_processes = atoi(argv[1]);
+	
+    // Make sure the number of processes the user specified is more than
 	// 0 and print an error to stderr if not, then exit with status 2:
 	//
 	// "bankers: num processes must be greater than 0\n"
 
 	// ^^^^^^^^^^^^^^^^^^
+    if (num_processes < 1)
+    {
+        fprintf(stderr, "bankers: num processes must be greater than 0\n");
+        exit(2);
+    }
 
 	// Start with $10K in the bank. Easy peasy.
 	int fd = open_balance_file(BALANCE_FILE);
@@ -134,7 +146,9 @@ int main(int argc, char **argv)
 	close_balance_file(fd);
 
 	// Rabbits, rabbits, rabbits!
-	for (int i = 0; i < num_processes; i++) {
+// My compiler cries when there are counter declarations inside for loops
+    int i;
+	for (i = 0; i < num_processes; i++) {
 		if (fork() == 0) {
 			// "Seed" the random number generator with the current
 			// process ID. This makes sure all processes get different
@@ -151,26 +165,43 @@ int main(int argc, char **argv)
 
 			// Open the balance file (feel free to call the helper
 			// functions, above).
-
+            int balfile = open_balance_file(BALANCE_FILE);
 			// Read the current balance
-
+// Used this to make sure file was locked: https://linux.die.net/man/2/flock
+// I'm trying to make it so that only one process can use it at a time.
+            flock(balfile, LOCK_EX);
+            read_balance(balfile, &balance);
 			// Try to withdraw money
 			//
 			// Sample messages to print:
 			//
 			// "Withdrew $%d, new balance $%d\n"
 			// "Only have $%d, can't withdraw $%d\n"
-
+            if (amount <= balance)
+            {
+                balance -= amount;
+                write_balance(balfile, balance);
+                printf("Withdrew $%d, new balance $%d\n", amount, balance);
+            }
+            else
+            {
+                printf("Only have $%d, can't withdraw $%d\n", balance, amount); 
+            }
 			// Close the balance file
 			//^^^^^^^^^^^^^^^^^^^^^^^^^^
+            close_balance_file(balfile);
 
 			// Child process exits
+            flock(balfile,LOCK_UN);
 			exit(0);
 		}
 	}
 
 	// Parent process: wait for all forked processes to complete
-	for (int i = 0; i < num_processes; i++) {
+// I apparently do not have a C99 compiler and it hates counter declarations
+// inside for loops.
+    int j;	
+    for (j = 0; j < num_processes; j++) {
 		wait(NULL);
 	}
 
