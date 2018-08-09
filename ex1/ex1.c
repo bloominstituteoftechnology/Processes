@@ -5,14 +5,23 @@
 /*
 > What value is the variable in the child process?
 
+The value of the variable in the child process is the same in the parent. This seems to illustrate
+that the child process is the 
 
 > What happens to the variable when both the child and parent change the value of x?
 
+The variables appear to be independent. For example, when a `wait()` is placed so that the child comes first, 
+any reassignment in the child process doesn't seem to change the value in the parent process.
 
+Conversely, doing a reassignment within the parent doesn't appear to change the value for the child.
+Would it be accurate to say that these two after the fork are two discrete processes with their own
+block of memory?
 */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <sys/wait.h>
 
 int main(void)
 {
@@ -24,11 +33,12 @@ int main(void)
         exit(1);
     }
     else if (rc == 0) {
-        hot_var = 0;
+        // hot_var = 0;
         printf("The value of hot_var is ICE COLD, BRUH! %i DEGREEEES\n", hot_var);
     } 
     else {
         hot_var = 69;
+        // waitpid(rc, NULL, 0);
         printf("The value of hot_var is %i\n", hot_var);
     }
     

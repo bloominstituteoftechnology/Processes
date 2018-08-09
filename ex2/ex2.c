@@ -9,7 +9,7 @@ Yes, both the child and parent can access the file, even if it was opened before
 
 > What happens when they are written to the file concurrently?
 
-There doesn't appear to be any conflicts. The parent process appears to do it's write operation first before the child.
+There doesn't appear to be any conflicts. The parent process appears to do its write operation first before the child.
 */
 
 #include <stdio.h>
