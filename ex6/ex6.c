@@ -21,6 +21,25 @@ and `clock_gettime()` should work just fine.
 int main()
 {
     // Your code here
+    FILE * fp;
+    fp = fopen("text.txt", "w+");
+
+    struct timespec start, end;
+    long long int diff;
+    long int sum;
+    long int avg;
+
+    for (int i = 0; i < number_iter; i++) {
+        clock_gettime(CLOCK_MONOTONIC, &start);
+        fprintf(fp, "");
+        clock_gettime(CLOCK_MONOTONIC, &end);
+
+        diff = (BILLION*(end.tv_sec-start.tv_sec) + end.tv_nsec-start.tv_nsec);
+        sum += diff;
+    }
+    avg = sum / number_iter;
+    
+    printf("Average Call Time: %lli nanoseconds\n", avg);
     
     return 0;
 }
