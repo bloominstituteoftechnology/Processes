@@ -17,34 +17,36 @@ char* msg3 = "hello world #3";
 int main(void)
 {
     // Your code here
-    char inbuf[MSGSIZE];
-    int i[2];
+    char inbuf[MSGSIZE]; 
+    int p[2]; 
+    printf("%d is the current process running\n", (int) getpid());
 
-    printf("%d is currently running\n", (int) getpid());
-
-    if (pipe(i) < 0) {
-        fprintf(stderr, "Failed pipe\n");
+    if (pipe(p) < 0) {
+        fprintf(stderr, "Failed pipe.\n");
         exit(1);
     } else {
         int rc = fork();
-    
 
-    if (rc < 0) {
-        fprintf(stderr, "Failed fork\n");
-        exit(1);
-    } else if (rc == 0) {
-        printf("%d will run before writing\n", (int) getpid());
-        write(i[1], msg1, MSGSIZE);
-        write(i[1], msg2, MSGSIZE);
-        write(i[1], msg3, MSGSIZE);
-        printf("%d will run after writing\n", (int) getpid());
-    } else {
-        waitpid(rc, NULL, 0);
-        for (int i = 0; i < 3; i++) {
-            read(i[0], inbuf, MSGSIZE);
-            printf("%d returns %s\n", (int), getpid(), inbuf);
+        if (rc < 0)
+        {
+            fprintf(stderr, "Failure to fork.\n");
+            exit(1);
         }
-    }
+        else if (rc == 0)
+        {
+            printf("%d runs before writing\n", (int) getpid());
+            write(p[1], msg1, MSGSIZE);
+            write(p[1], msg2, MSGSIZE);
+            write(p[1], msg3, MSGSIZE);
+            printf("%d runs after writing\n", (int) getpid());
+        }
+        else {
+            waitpid(rc, NULL, 0);
+            for (int i = 0; i < 3; i++) {
+                read(p[0], inbuf, MSGSIZE);
+                printf("%d prints %s\n", (int) getpid(), inbuf);
+            }
+        }
     }
     return 0;
 }
