@@ -11,6 +11,7 @@ Anything later than that and `clock_gettime()` should work just fine.
 
 #include <stdio.h>
 #include <unistd.h>
+#include <stdlib.h>
 #include <time.h>
 
 #define number_iter 1000000
@@ -18,11 +19,11 @@ Anything later than that and `clock_gettime()` should work just fine.
 
 int main()
 {
-    // Your code here
     struct timespec startTime, endTime;
     long sum = 0;
     double avg;
-    for (int i = 0; i < number_iter; i++){
+    for (int i = 0; i < number_iter; i++)
+    {
         clock_gettime(CLOCK_MONOTONIC, &startTime);
         printf("");
         //write(fileno(stdout), NULL, 0);
@@ -31,18 +32,9 @@ int main()
         sum += difference;
     }
 
-    avg = sum / (float) number_iter;
+    avg = sum / (float)number_iter;
 
     printf("Average time it takes to make a printf call is %f ns\n", avg);
 
-
-
-    // int rc = fork();
-
-    // if (rc < 0)
-    // {
-    //     fprintf(stderr, "fork failed\n");
-    //     exit(1);
-    // }
     return 0;
 }
