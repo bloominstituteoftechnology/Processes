@@ -40,7 +40,7 @@ int main()
     }
 
     else {
-        wait(NULL);
+        int wc = waitpid(rc, NULL, 0);
         
         close(p[1]);
         printf("parent reading from pipe\n");
