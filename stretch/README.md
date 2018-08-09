@@ -109,6 +109,8 @@ simulated bank account, that is. Don't get your hopes up.)
    problems you noted in question 1? How is overall performance of the
    application affected?
 
+   By locking a file before it is read by a process and only releasing it after the balance has been updated, no other process can read the file before the balance update. While this solves the problem of performing withdraws based on outdated balances, it will make the application run longer as processes can no longer run parallel. Each process must wait until the prior process has released the file before continuing.
+
 
 ## Stretch Goals
 
