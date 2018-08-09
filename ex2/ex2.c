@@ -28,5 +28,8 @@ int main(void)
         printf("hello, parent here (pid: %d, File Descriptor: %d) of child %d\n", (int) getpid(), fd, rc);
     }
 
+
+    fclose(fd);
+
     return 0;
 }
