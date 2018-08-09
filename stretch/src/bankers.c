@@ -61,6 +61,23 @@ void read_balance(int fd, int *balance)
 }
 
 /**
+ * Withdraw amount from balance
+ */
+void withdraw(int fd, int amount, int *balance)
+{
+  if (amount <= *balance)
+  {
+    *balance = *balance - amount;
+    write_balance(fd, *balance);
+    printf("Withdrew $%d, new balance $%d\n", amount, *balance);
+  }
+  else
+  {
+    printf("Only have $%d, can't withdraw $%d\n", amount, *balance);
+  }
+}
+
+/**
  * Returns a random amount between 0 and 999.
  */
 int get_random_amount(void)
@@ -91,24 +108,14 @@ int main(int argc, char **argv)
 
   for (int i = 0; i < num_processes; i++) {
   	if (fork() == 0) {
-  		srand(getpid());  // "Seed" rand number generator to ensure unique values per process
-  		int amount = get_random_amount();
-  		int balance;
-
-  		// Withdraw money
+      srand(getpid()); // "Seed" rand number generator to ensure unique values per process
+      int amount = get_random_amount();
+      int balance;
       int bf = open_balance_file(BALANCE_FILE);
       flock(bf, LOCK_EX);
       read_balance(bf, &balance);
 
-      if (amount <= balance){
-        balance = balance - amount;
-        write_balance(fd, balance);
-        printf("Withdrew $%d, new balance $%d\n", amount, balance);
-      }
-      else
-      {
-        printf("Only have $%d, can't withdraw $%d\n", amount, balance);
-      }
+      withdraw(bf, amount, &balance);
 
       close_balance_file(bf);
       flock(bf, LOCK_UN);
