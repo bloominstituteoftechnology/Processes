@@ -23,15 +23,15 @@ int main(void)
    } else {
        fprintf(fp, "%s %s %s %s %d\n", "Let's", "party", "like", "it's", 1999);
    }
-   
-   fp = fopen("text.txt", "r");
+
+ fp = fopen("text.txt", "r");
    while(1) {
       c = fgetc(fp);
       if( feof(fp) ) { 
          break ;
       }
       printf("%c", c);
-   }
+   }  
    fclose(fp);
 
    return(0);

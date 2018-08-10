@@ -20,31 +20,36 @@ and `clock_gettime()` should work just fine.
 #define number_iter 100000
 #define BILLION 1000000000L
 
-
+//edited with solution lecture
 int main () 
 { 
-    uint64_t diff;
     struct timespec start, finish; 
-    long double average, total; 
+    //long double average, total; 
+    long sum = 0;
+    long difference;
+    double avg;
 
     // chew up some CPU time
-    clock_gettime(CLOCK_REALTIME, &start); 
     for (int i = 0; i < number_iter; i++) { 
-        write(1, "", 1);
+    clock_gettime(CLOCK_MONOTONIC, &start); 
+        // write(fileno(stdout), NULL, 0);
+        printf("");
+        // getpid();
+    clock_gettime(CLOCK_MONOTONIC, &finish); 
+    difference = BILLION * (finish.tv_sec - start.tv_sec) + finish.tv_nsec - start.tv_nsec;
+    sum += difference;
     }     
-    clock_gettime(CLOCK_REALTIME, &finish); 
-    diff = BILLION * (finish.tv_sec - start.tv_sec) + finish.tv_nsec - start.tv_nsec;
     long seconds = finish.tv_sec - start.tv_sec; 
     long ns = finish.tv_nsec - start.tv_nsec; 
     
-    if (start.tv_nsec > finish.tv_nsec) { // clock underflow 
-	--seconds; 
-	ns += 1000000000; 
-    } 
-    average = diff / number_iter;
+    // if (start.tv_nsec > finish.tv_nsec) { // clock underflow 
+	// --seconds; 
+	// //ns += 1000000000; 
+    // } 
+    avg = sum / (float) number_iter;
     printf("seconds without ns: %ld\n", seconds); 
     printf("nanoseconds: %ld\n", ns); 
-    printf("diff: %ld\n", diff); 
-    printf("average time per write: %Lg ns\n", average);
+    printf("diff: %ld\n", difference); 
+    printf("avg time per write: %f ns\n", avg);
 
 } 

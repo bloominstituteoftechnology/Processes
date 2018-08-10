@@ -11,18 +11,6 @@
 
 int main(int argc, char *argv[])
 {
-    // Your code here
-    // printf("hello world (pid: %d)\n", getpid());
-    // int rc = fork();
-    // // ------------------------------------------------ child process starts executing here
-    // if (rc < 0) {    // fork failed; exit
-    //     fprintf(stderr, "fork failed\n");
-    //     exit(1);
-    // } else if (rc == 0) {    // child process satisfies this branch
-    //     printf("hello, child here (pid: %d) \n", getpid());
-    // } else {
-    //     printf("hello, parent here (pid: %d) of child %d\n", getpid(), rc);
-    // }
     int x = 100;
     int rc = fork();
     if (rc < 0) {
@@ -35,6 +23,31 @@ int main(int argc, char *argv[])
         int wc = waitpid(rc, NULL, 0);
         x = 19;
         printf("Parent: %d\n", x);
+    }
+
+    return 0;
+}
+
+//solution lecture code
+
+int main(void)
+{
+    inx = 100
+    printf("hello (pod %d\n", (int) getpid());
+
+    int rc = fork();
+
+    if (rc < 0) {
+        fprintf(stderr, "fork failed\n");
+
+    } else if(rc == 0) {
+        printf("hello child (pid: %d) and x is: %d\n", (int) getpid(), x);
+        x++;
+        printf("child again x is now: %d\n", x);
+    } else {
+        printf("hello parent (pid: %d) and x is: %d\n", rc, getpid(), x);
+        x--;
+        printf("child again x is now: %d\n", x);
     }
 
     return 0;
