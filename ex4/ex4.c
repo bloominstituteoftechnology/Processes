@@ -19,7 +19,7 @@ int main(void)
     // Your code here    
     int rc = fork();
     if (rc < 0) {
-        printf("Have you tried using spoons? Stop with the forks already!\n");
+        fprintf(stderr, "Have you tried using spoons? Stop with the forks already!\n");
         exit(1);
     } 
     else if (rc == 0) {
