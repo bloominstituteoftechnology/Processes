@@ -21,6 +21,23 @@ and `clock_gettime()` should work just fine.
 int main()
 {
     // Your code here
+    struct timespec start, end;
+    long sum = 0;
+    double avg;
+
+    for (int i = 0; i < number_iter; i++)
+    {
+        clock_gettime(CLOCK_MONOTONIC, &start);
+        write(fileno(stdout), NULL, 0);
+        clock_gettime(CLOCK_MONOTONIC, &end);
+
+        long diff = BILLION * (end.tv_sec - start.tv_sec) + (end.tv_sec - start.tv_sec);
+
+        sum += diff;
+    }
+
+    avg = sum / (float) number_iter;
+    printf("Average time for a system call: %f ns\n", avg);
     
     return 0;
 }
