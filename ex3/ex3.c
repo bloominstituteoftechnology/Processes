@@ -27,7 +27,7 @@ int main(void)
 
     else
     {
-        int wc = wait(NULL);
+        int wc = waitpid(rc, NULL, 0);
         // This is the parent process
         printf("Parent process: 'Goodbye!'\n");
     }

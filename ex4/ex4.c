@@ -29,21 +29,21 @@ int main(int argc, char* argv[])
         // more than 1 parameter to be passed into the child process
 
         // Option 1
-        // char *args[] = {"ls", "-l", NULL};
-        // execvp("ls", args);
-        // printf("This should not be seen.\n");
-
-        // Option 2
         char *args[] = {"ls", "-l", NULL};
-        execv("/bin/ls", args);
+        execvp("ls", args);
         printf("This should not be seen.\n");
 
-        // execl("/bin/ls", "ls", "-l", (char *) NULL);
+        // Option 2
+        // char *args[] = {"ls", "-l", NULL};
+        // execv("/bin/ls", args);
+        // printf("This should not be seen.\n");
 
         // char *args[] = {"ls", "-1", NULL};
         // execv("/bin/ls", args);
 
         // execlp("ls", "ls", "-l", (char *) NULL);        
+        // execl("/bin/ls", "ls", "-l", (char *) NULL);
+
     }
 
     else
