@@ -6,9 +6,27 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int main(void)
+int main(int argc, char *argv[])
 {
-    // Your code here
+    int x = 100;
+
+    int rc = fork();
+    // child process starts executing here
+    if (rc < 0)
+    {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    }
+    else if (rc == 0)
+    {
+        printf("hello, child here, X: %d \n", &x);
+    }
+    else
+    {
+        printf("hello, parent here, X: %d \n", &x);
+    }
+
+    printf(x);
 
     return 0;
 }
