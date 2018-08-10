@@ -36,7 +36,7 @@ int main(void)
 
     else if (rc == 0)
     {
-        printf("Child process writing pipe.\n");
+        printf("Child process writing to pipe.\n");
 
         write(p[1], msg1, MSGSIZE);
         write(p[1], msg2, MSGSIZE);
@@ -45,8 +45,7 @@ int main(void)
 
     else
     {
-        wait(NULL);
-
+        int wc = waitpid(rc, NULL, 0);
         close(p[1]);
         printf("Parent process reading from pipe.\n");
 
