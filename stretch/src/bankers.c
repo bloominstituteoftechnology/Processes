@@ -10,6 +10,7 @@
 
 // This is the file where we store the balance
 #define BALANCE_FILE "balance.txt"
+#define RAND_MAX = 1000;
 
 /**
  * Open the file containing the balance
@@ -91,6 +92,9 @@ int get_random_amount(void)
 
 	// Return a random number between 0 and 999 inclusive using rand()
 
+	int rand_num = rand();
+	return rand_num;
+
 	// ^^^^^^^^^^^^^^^^^^
 }
 
@@ -103,7 +107,7 @@ int main(int argc, char **argv)
 	
 	// vvvvvvvvvvvvvvvvvv
 	// !!!! IMPLEMENT ME:
-
+	
 	// We expect the user to add the number of simulataneous processes
 	// after the command name on the command line.
 	//
@@ -119,60 +123,62 @@ int main(int argc, char **argv)
 	
 	// Store the number of processes in this variable:
 	// How many processes to fork at once
-	int num_processes = IMPLEMENT ME
+	printf("Prompt>");
+	int num_processes = scanf("%s %d", &argv, &argc);
 
-	// Make sure the number of processes the user specified is more than
-	// 0 and print an error to stderr if not, then exit with status 2:
-	//
-	// "bankers: num processes must be greater than 0\n"
+	if (argc == 0 || NULL) {
+		fprintf(stderr, "bankers: num processes must be greater than 0\n");
+		exit(2);
+	}
+	else{
+		int fd = open_balance_file(BALANCE_FILE);
+			write_balance(fd, 10000);
+			close_balance_file(fd);
 
-	// ^^^^^^^^^^^^^^^^^^
+			// Rabbits, rabbits, rabbits!
+			for (int i = 0; i < num_processes; i++) {
+				if (fork() == 0) {
+					// "Seed" the random number generator with the current
+					// process ID. This makes sure all processes get different
+					// random numbers:
+					srand(getpid());
+					printf(getpid());
+					// Get a random amount of cash to withdraw. YOLO.
+					int amount = get_random_amount();
 
-	// Start with $10K in the bank. Easy peasy.
-	int fd = open_balance_file(BALANCE_FILE);
-	write_balance(fd, 10000);
-	close_balance_file(fd);
+					int balance;
 
-	// Rabbits, rabbits, rabbits!
-	for (int i = 0; i < num_processes; i++) {
-		if (fork() == 0) {
-			// "Seed" the random number generator with the current
-			// process ID. This makes sure all processes get different
-			// random numbers:
-			srand(getpid());
+					// vvvvvvvvvvvvvvvvvvvvvvvvv
+					// !!!! IMPLEMENT ME
 
-			// Get a random amount of cash to withdraw. YOLO.
-			int amount = get_random_amount();
+					// Open the balance file (feel free to call the helper
+					// functions, above).
+						open_balance_file(BALANCE_FILE);
+					// Read the current balance
+						read_balance(fd, balance);
+					// Try to withdraw money
+						printf("Test print to see if func gets here");
+					// Sample messages to print:
+					//
+					// "Withdrew $%d, new balance $%d\n"
+					// "Only have $%d, can't withdraw $%d\n"
 
-			int balance;
+					// Close the balance file
+					//^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-			// vvvvvvvvvvvvvvvvvvvvvvvvv
-			// !!!! IMPLEMENT ME
+					// Child process exits
+					exit(0);
+				}
+			}
 
-			// Open the balance file (feel free to call the helper
-			// functions, above).
+			// Parent process: wait for all forked processes to complete
+			for (int i = 0; i < num_processes; i++) {
+				wait(NULL);
+			}
 
-			// Read the current balance
-
-			// Try to withdraw money
-			//
-			// Sample messages to print:
-			//
-			// "Withdrew $%d, new balance $%d\n"
-			// "Only have $%d, can't withdraw $%d\n"
-
-			// Close the balance file
-			//^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-			// Child process exits
-			exit(0);
+			return 0;
 		}
-	}
 
-	// Parent process: wait for all forked processes to complete
-	for (int i = 0; i < num_processes; i++) {
-		wait(NULL);
 	}
-
-	return 0;
-}
+	
+	

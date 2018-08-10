@@ -14,13 +14,41 @@ and `clock_gettime()` should work just fine.
 #include <stdio.h>
 #include <unistd.h>
 #include <time.h>
+#include <string.h>
+#include <stdint.h>
 
 #define number_iter 1000000
 #define BILLION 1000000000L
 
-int main()
+
+
+int main(void)
 {
-    // Your code here
-    
+long sum = 0;
+double average;
+struct timespec start, end;
+
+    for(int i = 0; i < number_iter; i++){
+
+        clock_gettime(CLOCK_MONOTONIC, &start);
+        //do stuff
+        FILE *fp;
+            // char data[140];
+            fp = fopen("text.txt", "r+");
+            if (fp == NULL){
+                return 1;
+            }
+            char *fileStr1 = "";
+            fwrite(fileStr1, 1, strlen(fileStr1), fp);
+            fclose(fp);
+        //end do stuff
+        clock_gettime(CLOCK_MONOTONIC, &end);
+        float diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+        sum += diff;
+
+    }
+
+    average = sum/number_iter;
+    printf("average elapsed time = %lf nanoseconds\n", average);
     return 0;
 }
