@@ -25,5 +25,7 @@ int main(void)
         fprintf(fp, "Hello, parent here (pid:%d) of child %d\n", (int) getpid(), rc);
     }
 
+    fclose(fp);
+
     return 0;
 }

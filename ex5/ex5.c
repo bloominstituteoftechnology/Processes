@@ -20,7 +20,7 @@ int main(void)
     int p[2];
 
     if (pipe(p) < 0) {
-        printf("pipe failed\n");
+        printf("Pipe failed\n");
         exit(1);
     }
 
@@ -28,7 +28,7 @@ int main(void)
 
     if (rc < 0) {
         printf("Fork failed\n");
-        exit(1);
+        exit(2);
     }
     else if (rc == 0) {
         printf("Hello, child here (pid:%d) – writing messages to a pipe\n", (int) getpid());

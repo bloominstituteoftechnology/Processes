@@ -20,18 +20,17 @@ and `clock_gettime()` should work just fine.
 
 int main()
 {
-    uint64_t diff;
+    uint64_t total = 0;
     struct timespec start, end;
 
-    clock_gettime(CLOCK_MONOTONIC, &start);
     for (int i = 0; i < number_iter; i++) {
+        clock_gettime(CLOCK_MONOTONIC, &start);
         printf("");
+        clock_gettime(CLOCK_MONOTONIC, &end);
+        total += (long long unsigned int) BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
     }
-    clock_gettime(CLOCK_MONOTONIC, &end);
 
-    diff = (long long unsigned int) BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
-
-    printf("Average time taken: %llu nanoseconds\n", diff/number_iter);
+    printf("Average time taken: %f nanoseconds\n", total/(float)number_iter);
 
     return 0;
 }
