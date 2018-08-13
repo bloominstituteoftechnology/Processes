@@ -8,7 +8,24 @@
 
 int main(void)
 {
-    // Your code here
+    int x = 100;
+
+    // both child and parent will get their own copies of `x` after fork
+    // and hence both can change the value of their corresponding `x` without affecting each other
+    int rc = fork();
+
+    if (rc < 0) {
+        printf("Fork failed\n");
+        exit(1);
+    }
+    else if (rc == 0) {
+        x = 10;
+        printf("Hello, child here (pid:%d), x = %d\n", (int) getpid(), x);
+    }
+    else {
+        x = 50;
+        printf("Hello, parent here (pid:%d) of child %d, x = %d\n", (int) getpid(), rc, x);
+    }
 
     return 0;
 }
