@@ -1,5 +1,5 @@
 /*
-Write a program that will find the average time it takes for your computer to make a system call an empty write to stdout. 
+Write a program that will find the average time it takes for your computer to make a system call, an empty write to stdout. 
 Your program should use the `clock_gettime` procedure to time how long a single system call takes. 
 It'll do this for one million iterations, and then find the average of all of those iterations in nanoseconds.
 For some helpful documentation and examples of using time-related system calls,
@@ -25,8 +25,9 @@ int main()
     for (int i = 0; i < number_iter; i++)
     {
         clock_gettime(CLOCK_MONOTONIC, &startTime);
-        printf("");
-        //write(fileno(stdout), NULL, 0);
+        // printf is much faster than write as there's a buffer
+        //printf("");
+        write(fileno(stdout), NULL, 0);
         clock_gettime(CLOCK_MONOTONIC, &endTime);
         long difference = BILLION * (endTime.tv_sec - startTime.tv_sec) + endTime.tv_nsec - startTime.tv_nsec;
         sum += difference;

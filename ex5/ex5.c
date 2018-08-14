@@ -21,9 +21,11 @@ int main(void)
     int p[2];
     int nbytes;
 
-    if (pipe(p) < 0)
+    int result = pipe(p);
+
+    if (result < 0)
     {
-        fprintf(stderr, "pip failed\n");
+        fprintf(stderr, "pipe failed\n");
         exit(2);
     }
     int rc = fork();

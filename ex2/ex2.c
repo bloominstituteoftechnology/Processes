@@ -1,7 +1,7 @@
-// Write a program that opens the text.txt  file (with the `fopen()` system call) located in this directory
-// and then calls `fork()` to create a new process. 
-//Can both the child and parent access the file descriptor returned by `fopen()`?  -> yes
-//What happens when they are written to the file concurrently? -> the ordering of the children and parent can be switched over time
+/* Write a program that opens the text.txt  file (with the `fopen()` system call) located in this directory
+and then calls `fork()` to create a new process. 
+Can both the child and parent access the file descriptor returned by `fopen()`?  -> yes
+What happens when they are written to the file concurrently? -> the ordering of the children and parent can be switched over time */
 
 #include <stdio.h>
 #include <unistd.h>
