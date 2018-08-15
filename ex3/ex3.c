@@ -9,21 +9,26 @@
 
 int main(void)
 {
+    // assign the fork to rc
     int rc = fork();
 
     if (rc < 0) 
     {
+        // format print a standard error
         fprintf(stderr, "fork failed\n");
+        // exit the block
         exit(1);
     }
     else if (rc == 0)
     {
-        printf("hello, child here (pid: %d) \n", (int) getpid());
+        // if it's the child process, print Hello!
+        printf("Hello!\n");
     }
     else
     {
+        // if it is the parent, it uses waitpid, then prints Goodbye
         int wc = waitpid(rc, NULL, 0);    // `waitpid` call added here
-        printf("hello, parent here (pid: %d) of child %d\n", (int) getpid(), rc);
+        printf("Goodbye!\n");
     }
     return 0;
 }
