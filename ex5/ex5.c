@@ -19,14 +19,14 @@ int main(void)
     int pipefd[2]; 
     char buf[MSGSIZE]; 
 
-  // create pipe
+  // Create pipe
   if (pipe(pipefd) < 0)
   {
     fprintf(stderr, "pipe failure alert!\n");
     exit(1);
   }
 
-  // fork me
+  // Fork me
   int rc = fork();
   if (rc < 0)
   {
