@@ -20,25 +20,28 @@ and `clock_gettime()` should work just fine.
 
 int main()
 {
+    // init variables that will be used throughout program
     struct timespec start, end;
     long sum = 0;
     long difference;
     double avg;
 
+    // loop number over the number of iterations defined above
     for (int i = 0; i < number_iter; i++)
     {
+        // get the time from time.h built-in func
         clock_gettime(CLOCK_MONOTONIC, &start);
-
+        // write it as a standard output
         write(fileno(stdout), NULL, 0);
-
+        // end the clock loop
         clock_gettime(CLOCK_MONOTONIC, &end);
-
+        // 
         difference = BILLION * (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec);
         sum += difference;
     }
-
+    // get the average time it takes to make a system call
     avg = sum / (float) number_iter;
-    
+    // let the user know
     printf("Average time it takes to make a system call is %f ns.\n", avg);
 
     return 0;
