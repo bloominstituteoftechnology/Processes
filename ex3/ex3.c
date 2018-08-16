@@ -24,7 +24,7 @@ int main(void)
     } else {
         // wait for process to end function
         int wc = waitpid(rc, NULL, 0);
-        printf("Goodbye!\n")
+        printf("Goodbye!\n");
     }
     // program completion
     return 0;
