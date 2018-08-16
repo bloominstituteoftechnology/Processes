@@ -10,7 +10,20 @@
 
 int main(void)
 {
-    // Your code here    
+    printf("parent process here\n");
+    int rc = fork();
+
+    if(rc < 0){
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    }  else if (rc == 0){
+        printf("Child process here\n");
+
+        //exel("/bin/ls"), "ls", "-l" (char*) NULL);
+        // char * args[] = {"ls", "-1", NULL};
+        //execv("/bin/ls" args);
+        //execlp("ls",
+    }  
 
     return 0;
 }
