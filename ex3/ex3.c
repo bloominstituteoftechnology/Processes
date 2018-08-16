@@ -19,12 +19,12 @@ int main(void)
         printf("Hello!\n");
 
     }else {
-      int wc = wait(rc, NULL, 0);
+      int wc = waitpid(rc, NULL, 0);
         //wait(NULL);
       printf("Goodbye!\n");
     }
     return 0;
 }
 
-    return 0;
-}
+
+

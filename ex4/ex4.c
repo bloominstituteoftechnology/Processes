@@ -14,7 +14,7 @@ int main(void)
     int rc = fork();
 
     if(rc < 0){
-        fprintf(stderr, "fork failed\n");
+        fprintf(stderr, "fork failed\n");//fprint means it going into file
         exit(1);
     }  else if (rc == 0){
         printf("Child process here\n");
@@ -22,8 +22,13 @@ int main(void)
         //exel("/bin/ls"), "ls", "-l" (char*) NULL);
         // char * args[] = {"ls", "-1", NULL};
         //execv("/bin/ls" args);
-        //execlp("ls",
-    }  
+        //execlp("ls", "ls", "-1" (char *) NULL);
+
+        char *args[] = {"ls", "-1",  NULL};
+        execvp("ls", args);
+    } else {
+        int wc = waitpid(rc, NULL, 0);
+    } 
 
     return 0;
 }
