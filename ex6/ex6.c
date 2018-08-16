@@ -11,9 +11,9 @@ turns out to only be the case for OSX versions < 10.12. Anything later than that
 and `clock_gettime()` should work just fine. 
 */
 
-#include <stdio.h>
+#include <stdio.h>  // install the needed libraries
 #include <unistd.h>
-#include <time.h>
+#include <time.h>   // for calling the timespec functions
 
 #define number_iter 1000000
 #define BILLION 1000000000L
@@ -21,6 +21,24 @@ and `clock_gettime()` should work just fine.
 int main()
 {
     // Your code here
-    
+    struct timespec start, end;  // initialize start and end
+    long sum = 0;   // initialize the following variables
+    long difference; 
+    double avg;
+
+    for (int i = 0; i < number_iter; i++); {  // loop over number_iter value
+        clock_gettime(CLOCK_MONOTONIC, &start);  // log current time for start
+        write(fileno(stdout), NULL, 0); // write to standard out
+        // printf(""); // testing the time to write an empty string 
+        clock_gettime(CLOCK_MONOTONIC, &end);   // log time for end
+
+        difference = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec; // get the time difference & convert to nanosecs then add the additional nanosec
+        sum += difference;  // add to our sum
+    }
+
+    avg = sum / (float) number_iter; // get average and use float to the get decimal values for more precision timing 
+
+    printf("Average time it takes to write to stdout is %f ns.\n", avg); // print time result
+
     return 0;
 }
