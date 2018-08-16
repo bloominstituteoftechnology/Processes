@@ -12,6 +12,13 @@ int main(void){
         exit(1);
     }
     else if(rc == 0){
-
+        fprintf(fileprint, "%s", "I am the Child\n");
+        //Child process was sussessful in executing and writing to the file
     }
+    else {
+        fprintf(fileprint, "%s", "I am the parent");
+        //Parent process was susessful in writing to the file
+    }
+    fclose(fileprint); //Closing the file
+    return 0;
 }
