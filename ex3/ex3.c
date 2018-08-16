@@ -9,7 +9,23 @@
 
 int main(void)
 {
-    // Your code here
+    // system call to create new child process
+    int rc = fork();
 
+    // checking if less than
+    if (rc < 0) {
+        // printing error results
+        fprintf(stderr, "fork failed\n");
+        // exit status of failure
+        exit(1);
+        // checking if equal to
+    } else if (rc == 0) {
+        printf("Hello!\n");
+    } else {
+        // wait for process to end function
+        int wc = waitpid(rc, NULL, 0);
+        printf("Goodbye!\n")
+    }
+    // program completion
     return 0;
 }
