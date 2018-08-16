@@ -10,17 +10,22 @@
 
 int main(void)
 {
-    printf("Parent process here\n");
+    // create the child process
     int rc = fork();
 
     if (rc < 0)
     {
+        // send a standard error for if the fork fails
         fprintf(stderr, "fork failed\n");
+        // break
         exit(1);
     }
     else if (rc == 0)
     {
+        // let the user know about the child process
         printf("Child process here\n");
+
+        // /*Commented out below are 3 alrtnate exec() methods*/
 
         // execl("/bin/ls", "ls", "-l" (char *) NULL);
         
@@ -29,12 +34,18 @@ int main(void)
 
         //execlp("ls", "ls", "-l", (char *) NULL);
 
+        // transform the child process into ls
         char *args[] = {"ls", "-l", NULL};
+        // call exec()
         execvp("ls", args);
+        // proof the code doesn't reach this line
+        printf("This should not be seen\n");
     }
     else
     {
+        // have the parent wait, then print
         int wc = waitpid(rc, NULL, 0);
+        printf("Parent process here\n");
     }
 
     return 0;
