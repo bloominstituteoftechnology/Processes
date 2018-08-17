@@ -1,6 +1,6 @@
-#include <stdio.h>
-#include <unistd.h>
-#include <time.h>
+#include <stdio.h> //Enables the use of input and output functions
+#include <unistd.h>//Enables the use of a ton of different fuctions but the ones I could find that we have used are folk and Null pointer
+#include <time.h>// TODO Lookup what this library contains
 
 #define number_iter 1000000
 #define BILLION 1000000000L
