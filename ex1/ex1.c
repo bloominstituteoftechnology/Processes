@@ -8,6 +8,8 @@
 
 int main(void)
 {
+    char string = "This is just a test";
+    printf("%c\n", string);
     // Your code here
 
     return 0;

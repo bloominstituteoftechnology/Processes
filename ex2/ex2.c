@@ -8,7 +8,24 @@
 
 int main(void)
 {
-    // Your code here 
-    
     return 0;
 }
+
+    // FILE *fptr;
+    // char c;
+    // // Open file 
+    // fptr = fopen("text.txt", "r"); 
+    // if (fptr == NULL) 
+    // { 
+    //     printf("Cannot open file \n"); 
+    //     exit(0); 
+    // } 
+  
+    // // Read contents from file 
+    // while ((c = fgetc(fptr)) != EOF) 
+    // { 
+    //     printf ("%c", c); 
+    // } 
+  
+    // fclose(fptr); 
+    
