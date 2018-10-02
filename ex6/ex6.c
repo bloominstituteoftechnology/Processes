@@ -21,6 +21,18 @@ and `clock_gettime()` should work just fine.
 int main()
 {
     // Your code here
-    
+    struct timespec startTime, endTime;
+    int avgRuntime;
+
+    for(int i = 1; i <= number_iter; i++){
+        clock_gettime(CLOCK_MONOTONIC, &startTime);
+        fprintf(stdout, "This is my message #%d.\n", i);
+        clock_gettime(CLOCK_MONOTONIC, &endTime);
+        diff = BILLION * (endTime.tv_sec - startTime.tv_sec) + endTime.tv_nsec - startTime.tv_nsec;
+        runtime += diff;
+    }
+    avgRuntime = runtime/number_iter;
+
+    printf("Average runtime calculated as %d nsec.\nTotal runtime was %llu nsec.\n", avgRuntime, (long long unsigned int)runtime);
     return 0;
 }
