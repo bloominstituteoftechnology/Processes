@@ -8,7 +8,26 @@
 
 int main(void)
 {
-    // Your code here 
+    FILE *file = fopen("/text.txt", "r");
+    char c; 
+    while((c=fgetc(file))!=EOF) 
+    { 
+        printf ("%c", c); 
+        // c = fgetc(file); 
+    } 
+  
+    // int rc = fork();
+    // if (rc < 0) {
+    //     fprintf(stderr, "fork failed\n");
+    // } else if (rc == 0) {
+    //     printf("CHILD\n");
+    //     printf("%c\n", file);
+    // } else {
+    //     printf("PARENT\n");
+    //     printf("%c\n", file);
     
+    // }
     return 0;
 }
+
+// If concurrent, the parent call will run first, but they will be two separate processes.
