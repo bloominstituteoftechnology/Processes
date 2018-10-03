@@ -8,7 +8,19 @@
 
 int main(void)
 {
-    // Your code here
+    Your code here
+    int x = 100;
+    printf("Hello! I am the parent and my pid is %d\n", getpid());
+
+    int rc = fork();
+    if (rc < 0) {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {
+        printf("I am the child; my pid is %d, and x = %d", getpid(), x);
+    } else {
+        printf("I am the parent and I say that x = %d", x);
+    }
 
     return 0;
 }
