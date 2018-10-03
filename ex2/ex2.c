@@ -11,7 +11,7 @@ int main(void)
     FILE *fp;
     char file[] = "text.txt";
 
-    fp = fopen(file, "r");
+    fp = fopen(file, "w+");
 
     int descriptor = fileno(fp);
 
@@ -24,10 +24,16 @@ int main(void)
         exit(1);
     }else if (rc == 0){
        printf("File descriptor in child: %d\n", descriptor);
+       printf("PID: %d\n", (int) getpid());
+       fprintf(fp, "hello, child here \n(pid: %d) \n", (int) getpid());
     }else{
        printf("File descriptor in parent: %d\n", descriptor);
+       printf("PID: %d\n", (int) getpid());
+       fprintf(fp, "hello, Parent here \n(pid: %d) \n", (int) getpid());
     }
 
+    fclose(fp);
+    
 
     return 0;
 }

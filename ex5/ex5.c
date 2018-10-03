@@ -16,7 +16,27 @@ char* msg3 = "hello world #3";
 
 int main(void)
 {
-    // Your code here
+    #define MSGSIZE = 16;
+    int fd[2];
+    pipe(fd);
+
+    int rc = fork();
+
+    if(rc < 0){
+        printf("fork failed\n");
+        exit(1);
+    }else if (rc == 0){
+        char* msg1 = "hello world #1";
+        char* msg2 = "hello world #2";
+        char* msg3 = "hello world #3";
+
+        write(p[1], msg1, MSGSIZE);
+        write(p[1], msg2, MSGSIZE);
+        write(p[1], msg3, MSGSIZE);
+ 
+    }else{
+        
+    }
     
     return 0;
 }
