@@ -8,8 +8,7 @@
 
 int main(void)
 {
-    FILE * file;
-    file = fopen("text.txt", "r+");
+    FILE *file = fopen("text.txt", "r+");
 
     int rv = fork();
     if (rv == 0) {
