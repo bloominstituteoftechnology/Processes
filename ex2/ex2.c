@@ -7,8 +7,18 @@
 #include <stdlib.h>
 
 int main(void)
-{
-    // Your code here 
-    
+{ 
+    FILE *fp = fopen("text.txt", "r+");
+    fprintf(fp, "%s %s %s %s", "Text", "file", "is", "open\n");
+    int rc = fork();
+    fprintf(fp, "%s %s %s %s", "Child", "has", "accessed", "file\n");
+
+    while(1){
+        int c = fgetc(fp);
+        if(feof(fp)){
+            break;
+        }
+        printf("%c", c);
+    }
     return 0;
 }
