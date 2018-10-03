@@ -9,6 +9,26 @@
 int main(void)
 {
     // Your code here
+    int x = 100;
+    //printf("From parent %d\n", x);
+    int rc = fork();
+    if (rc < 0)
+    {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    }
+    else if (rc == 0)
+    {
+        printf("From child x =  %d\n", x);
+        printf("From child fork() return =  %d\n", rc);
+    } else
+    {
+        printf("From Parent fork() return =  %d\n", rc);
+        printf("From Parent x =  %d\n", x);
+    } 
+
+    
+    
 
     return 0;
 }
