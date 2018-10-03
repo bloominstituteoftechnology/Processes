@@ -20,11 +20,15 @@ int main(void)
     else if (rc == 0)
     {
         printf("From child x =  %d\n", x);
+        x++;
+        printf("From child again x = %d\n", x);
         printf("From child fork() return =  %d\n", rc);
     } else
     {
         printf("From Parent fork() return =  %d\n", rc);
         printf("From Parent x =  %d\n", x);
+        x--;
+        printf("From Parent again x = %d\n", x);
     } 
 
     
