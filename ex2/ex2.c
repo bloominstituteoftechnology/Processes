@@ -8,7 +8,26 @@
 
 int main(void)
 {
-    // Your code here 
-    
+    FILE *fp;
+    char file[] = "text.txt";
+
+    fp = fopen(file, "r");
+
+    int descriptor = fileno(fp);
+
+    printf("File descriptor: %d\n", descriptor);
+
+    int rc = fork();
+
+    if(rc < 0){
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    }else if (rc == 0){
+       printf("File descriptor in child: %d\n", descriptor);
+    }else{
+       printf("File descriptor in parent: %d\n", descriptor);
+    }
+
+
     return 0;
 }
