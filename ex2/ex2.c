@@ -20,7 +20,6 @@ int main(void)
         fprintf(fp, "This is from child process.\n");
     } else {
         fprintf(fp, "This is from parent process.\n");
-        wait(NULL);
     }
     fclose(fp);
     return 0;
