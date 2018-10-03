@@ -9,6 +9,26 @@
 int main(void)
 {
     // Your code here
+    int x = 100;
+    int rc = fork();
+
+    if (rc < 0)
+    {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    }
+    else if (rc == 0)
+    { // If there is a child, the rc of the child would be 0. X is still 100.
+        x = 120;
+        printf("child was here, x is: %d\n", x);
+    }
+    else
+    { // still the parent process.
+        x = 105;
+        printf("parent process still, x is: %d\n", x);
+    }
+    printf("final x is: %d\n", x);
+    // x is changed by the child if both parent and child change it, because child goes last.
 
     return 0;
 }
