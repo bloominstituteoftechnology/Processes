@@ -16,7 +16,20 @@ char* msg3 = "hello world #3";
 
 int main(void)
 {
-    // Your code here
-    
+    char inbuf[MSGSIZE];
+    int fd[2];
+
+    pipe(fd);
+    int rv = fork();
+    if (rv == 0) {
+        write(fd[1], msg1, MSGSIZE);
+        write(fd[1], msg2, MSGSIZE);
+        write(fd[1], msg3, MSGSIZE);
+    } else {
+        for (int i=0; i<3; i++) {
+            read(fd[0], inbuf, MSGSIZE);
+            printf("%s\n", inbuf);
+        }
+    }
     return 0;
 }
