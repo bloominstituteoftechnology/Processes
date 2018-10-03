@@ -8,7 +8,25 @@
 
 int main(void)
 {
-    // Your code here 
+    FILE *fp;
     
+    fp = fopen("text.txt", "r");
+
+    int rc = fork();
+    // ------------------------------------------------ child process starts executing here
+    if (rc < 0) {    // fork failed; exit
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {    // child process satisfies this branch
+        printf("\nhello, child here (pid: %d) \n", (int) getpid());
+        fp = fopen("text.txt", "w+");
+        //memory location seems to change when the file is opened in the child process
+        printf("this is the file descriptor in the child scope: %p\n", fp);
+        
+    } else {
+        printf("hello, parent here (pid: %d) of child %d\n", (int) getpid(), rc);
+        printf("this is the file descriptor in the parent scope: %p\n", fp);
+    }
+
     return 0;
 }
