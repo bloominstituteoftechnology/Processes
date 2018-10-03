@@ -3,6 +3,9 @@
 // `execl()`, `execle()`, `execv()`, and others. Why do you think there 
 // are so many variants of the same basic call?
 
+// a. How is this any different from a glorified if statement? If statement fork code and execute it
+// just like fork() -> exec().
+
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
