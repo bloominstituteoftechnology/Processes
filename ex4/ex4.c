@@ -7,10 +7,38 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <sys/wait.h>
+#include <strings.h>
 
 int main(void)
 {
-    // Your code here    
+    // Your code here
+    int rc = fork();
+
+    if (rc < 0)
+    {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    }
+    else if (rc == 0)
+    {
+        printf("Child process: %d\n", (int) getpid());
+
+        //execl("/bin/ls", "ls", "-a", (char *) NULL);
+
+        //char *args[] = {"ls", "-l", NULL};
+        //execv("/bin/ls", args);
+
+        //execlp("ls", "ls", "-l", (char *) NULL);
+
+        char *args[] = {"ls", "-l", NULL};
+        execvp("ls", args);
+
+    }
+    else
+    {
+        int wc = waitpid(rc, NULL, 0);
+        printf("From parent wc = %d\n", wc);
+    }
 
     return 0;
 }
