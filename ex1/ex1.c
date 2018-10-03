@@ -8,7 +8,28 @@
 
 int main(void)
 {
-    // Your code here
+    int n = 5;
+    printf("Hello, world! (pid: %d)\n", (int) getpid());
+
+    int rc = fork();
+
+    if (rc < 0)
+    {
+      fprintf(stderr, "fork failed\n");
+      exit(1);
+    }
+    else if (rc == 0)
+    {
+      printf("I am child (pid: %d) and x is: %d\n", (int) getpid(), n);
+      n++;
+      printf("Child process, n is now: %d\n", n);
+    }
+    else
+    {
+      printf("I am parent of %d (pid: %d) and n is: %d\n", rc, (int) getpid(), n);
+      n--;
+      printf("Parent process, n is now: %d\n", n);
+    }
 
     return 0;
 }
