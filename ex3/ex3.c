@@ -11,7 +11,7 @@ int main(void)
 {
     char hello[] = "hello";
     char goodbye[] = "goodbye";
-    int status;
+    int status = 1;
 
     int rc = fork();
 
@@ -23,6 +23,8 @@ int main(void)
     }else{
         waitpid(rc, &status, 0);
         printf("%s\n", goodbye);
+        printf("status: %d\n", status);
+        
     }
 
 
