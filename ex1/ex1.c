@@ -9,6 +9,18 @@
 int main(void)
 {
     // Your code here
+    int x=10;
+    pid_t pid = fork();
+    if (pid == 0){ 
+        x = 50;
+        printf("This is child process (%d). x is %d\n", getpid(), x);
+        // exit(0);
+    } else {
+        x = 100;
+        printf("This is parent process (%d). My child is process %d, x is %d\n",  getpid(), pid, x);
+        // exit(0);
+    }
 
+    printf("%d\n",x);
     return 0;
 }
