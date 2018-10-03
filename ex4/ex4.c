@@ -10,7 +10,18 @@
 
 int main(void)
 {
-    // Your code here    
+    int rc = fork();
+    if (rc < 0) {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {
+        printf("child process\n");
+        char *arg[] = {"/bin/ls", NULL};
+        execvp("ls", arg);
+        printf("Ninja code");
+    } else {
+        printf("parent process\n");
+    }
 
     return 0;
 }
