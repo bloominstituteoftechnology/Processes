@@ -8,7 +8,22 @@
 
 int main(void)
 {
-    // Your code here
+    int x = 10;
+
+    int pid = fork();
+
+    if (pid == 0)
+    {
+        printf("Child: x is '%d'\n", x);
+        x++;
+        printf("Child: x after incrementing is '%d'\n", x);
+    }
+    else
+    {
+        printf("Parent: x is '%d'\n", x);
+        x = 20;
+        printf("Parent: x after changing value to 20 is '%d'\n", x);
+    }
 
     return 0;
 }
