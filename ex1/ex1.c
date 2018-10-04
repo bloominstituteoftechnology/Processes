@@ -8,7 +8,19 @@
 
 int main(void)
 {
-    // Your code here
+    int x = 100;
+    printf("What is the value of x: x=%d\n", x);
+    int val = fork();
 
+    if (val == 0)
+    {
+        x = 50;
+        printf("The value of the child is: x=%d\n", x);
+    }
+    else
+    {
+        x = 25;
+        printf("The value of the parent is: x=%d\n", x);
+    }
     return 0;
 }
