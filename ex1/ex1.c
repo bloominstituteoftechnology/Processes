@@ -20,8 +20,7 @@ int main(void)
     printf("parent process: %d\n", getpid());
     int x = 100;
     int pid = fork();
-
-    printf("Process run: %d\n", x);
+    printf("X variable: %d - for process: %d\n", x, getpid());
     if(pid == 0) {
         printf("I'm a child process: %d\n", getpid());
         x = 50;
