@@ -141,8 +141,7 @@ int main(int argc, char **argv)
 
 	// Start with $10K in the bank. Easy peasy.
 	int fd = open_balance_file(BALANCE_FILE);
-	write_balance(fd, 10000);
-	close_balance_file(fd);
+	flock(fd, LOCK_EX);
 
 	// Rabbits, rabbits, rabbits!
 	for (int i = 0; i < num_processes; i++) {
@@ -185,7 +184,7 @@ int main(int argc, char **argv)
 			// "Only have $%d, can't withdraw $%d\n"
 
 			// Close the balance file
-
+			flock(fd, LOCK_UN);
 			close_balance_file(fd);
 			//^^^^^^^^^^^^^^^^^^^^^^^^^^
 
