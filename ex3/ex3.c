@@ -3,13 +3,20 @@
 // process always prints first.
 
 #include <stdio.h>
-#include <stdlib.h>
 #include <unistd.h>
-#include <sys/wait.h>
+#include <stdlib.h>
 
 int main(void)
 {
-    // Your code here
-
-    return 0;
+  int rc = fork();
+  if (rc < 0) {
+    fprintf(stderr, "Fork failed!\n");
+    exit(1);
+  } else if (rc == 0) {
+    printf("This is the child.\n");
+  } else {
+    wait(NULL);
+    printf("This is the parent.\n");
+  }
+  return 0;
 }
