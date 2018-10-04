@@ -38,7 +38,7 @@ int main(void)
         for (int i = 0; i < 3; i++)
         {
             read(p[0], buffer, MSGSIZE);
-            printf("% s\n", buffer);
+            printf("%s\n", buffer);
         }
     }
 

@@ -17,7 +17,7 @@ int main(void)
     }
     else if (ptr > 0)
     {
-        waitpid(ptr, NULL, 0);
+        int wc = waitpid(ptr, NULL, 0);
         printf("goodbye\n");
     }
 

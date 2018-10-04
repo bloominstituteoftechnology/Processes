@@ -14,6 +14,7 @@ and `clock_gettime()` should work just fine.
 #include <stdio.h>
 #include <unistd.h>
 #include <time.h>
+#include <string.h>
 
 #define number_iter 1000000
 #define BILLION 1000000000L
@@ -25,8 +26,11 @@ int main()
 
     // Start
     clock_gettime(CLOCK_MONOTONIC, &start);
-    char *s = "Hello World";
+    char *s = "Hello Worlds\n";
     write(1, s, strlen(s));
+
+    char *new_s = "Hi there how are you?\n";
+    printf("%s", new_s);
 
     // End
     clock_gettime(CLOCK_MONOTONIC, &end);
