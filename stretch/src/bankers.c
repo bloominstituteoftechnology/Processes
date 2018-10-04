@@ -19,7 +19,7 @@ int open_balance_file(char *filename)
 	// This line returns an open "file descriptor" (a number, how Unix
 	// tracks open files) for both reading and writing. If the file does
 	// not exist, it is created with 0644 permissions.
-	return open(filename, O_CREAT|O_RDWR, 0644);
+	return open(filename, O_CREAT | O_RDWR, 0644);
 }
 
 /**
@@ -50,7 +50,8 @@ void write_balance(int fd, int balance)
 	int bytes_written = write(fd, buffer, size);
 
 	// Make sure nothing went wrong
-	if (bytes_written < 0) {
+	if (bytes_written < 0)
+	{
 		// What does perror do? man 3 perror
 		perror("write");
 	}
@@ -72,7 +73,8 @@ void read_balance(int fd, int *balance)
 	buffer[bytes_read] = '\0';
 
 	// Error check
-	if (bytes_read < 0) {
+	if (bytes_read < 0)
+	{
 		perror("read");
 		return;
 	}
@@ -92,6 +94,8 @@ int get_random_amount(void)
 	// Return a random number between 0 and 999 inclusive using rand()
 
 	// ^^^^^^^^^^^^^^^^^^
+
+	return rand() % 1000;
 }
 
 /**
@@ -100,7 +104,7 @@ int get_random_amount(void)
 int main(int argc, char **argv)
 {
 	// Parse the command line
-	
+
 	// vvvvvvvvvvvvvvvvvv
 	// !!!! IMPLEMENT ME:
 
@@ -116,10 +120,22 @@ int main(int argc, char **argv)
 	// message to stderr, and exit with status 1:
 	//
 	// "usage: bankers numprocesses\n"
-	
+
 	// Store the number of processes in this variable:
 	// How many processes to fork at once
-	int num_processes = IMPLEMENT ME
+	if (argc == 1)
+	{
+		fprintf(stderr, "usage: bankers numprocesses\n");
+		exit(1);
+	}
+
+	long num_processes = strtol(argv[1], NULL, 10);
+
+	if (num_processes < 1)
+	{
+		fprintf(stderr, "bankers: num processes must be greater than 0\n");
+		exit(2);
+	}
 
 	// Make sure the number of processes the user specified is more than
 	// 0 and print an error to stderr if not, then exit with status 2:
@@ -134,8 +150,10 @@ int main(int argc, char **argv)
 	close_balance_file(fd);
 
 	// Rabbits, rabbits, rabbits!
-	for (int i = 0; i < num_processes; i++) {
-		if (fork() == 0) {
+	for (int i = 0; i < num_processes; i++)
+	{
+		if (fork() == 0)
+		{
 			// "Seed" the random number generator with the current
 			// process ID. This makes sure all processes get different
 			// random numbers:
@@ -151,6 +169,22 @@ int main(int argc, char **argv)
 
 			// Open the balance file (feel free to call the helper
 			// functions, above).
+			int file = open_balance_file(BALANCE_FILE);
+			read_balance(file, &balance);
+
+			if (balance >= amount)
+			{
+				write_balance(fd, balance - amount);
+				read_balance(file, &balance);
+				printf("Withdrew $%d, new balance: $%d\n", amount, balance);
+			}
+			else
+			{
+				read_balance(file, &balance);
+				printf("Only have $%d, can't withdraw $%d\n", balance, amount);
+			}
+
+			close(file);
 
 			// Read the current balance
 
@@ -170,7 +204,8 @@ int main(int argc, char **argv)
 	}
 
 	// Parent process: wait for all forked processes to complete
-	for (int i = 0; i < num_processes; i++) {
+	for (int i = 0; i < num_processes; i++)
+	{
 		wait(NULL);
 	}
 
