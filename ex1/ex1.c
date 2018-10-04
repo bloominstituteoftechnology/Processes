@@ -9,6 +9,32 @@
 int main(void)
 {
     // Your code here
+    int x = 100;
+    int rc = fork();
 
+    printf("generate pid (pid: %d)\n", (int)getpid());
+//there is no fork if < 0
+    if (rc < 0)
+    {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    }
+    else if (rc == 0)
+    {
+        printf("child (pid: %d) and x is: %d\n", (int)getpid(), x);
+        //change in the variable(child)
+        x++;
+        printf("child, x is now: %d\n", x);
+    }
+    else
+    {
+        //change in the variable(parent)
+        x = x - 2;
+        printf("parent (pid: %d) of this child %d (x:%d)\n",(int)getpid(),x);
+        
+        
+    }
+
+    
     return 0;
 }
