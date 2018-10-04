@@ -20,10 +20,15 @@ int main(void)
     char inbuf[MSGSIZE];
     int p[2];
 
-    pid_t pid = fork();
 
     if(pipe(p) < 0) {
         fprintf(stderr, "pipe failed\n");
+        exit(1);
+    }
+    pid_t pid = fork();
+
+    if(pid < 0) {
+        printf("forking has failed\n");
         exit(1);
     }
     else if (pid == 0) {
@@ -35,6 +40,7 @@ int main(void)
     else {
         waitpid(pid, NULL, 0);
         puts("parent");
+        close(p[1]);
         for (int i = 0; i < 3; i++) {
             read(p[0], inbuf, MSGSIZE);
             printf("%s\n", inbuf);
