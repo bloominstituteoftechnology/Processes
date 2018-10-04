@@ -16,7 +16,7 @@ int main(void)
     }
     if (fork()== 0) {
         char *args[] ={"./bin/ls", NULL};
-        execvp(args[0], args);
+        execlp(args[0], NULL);
         printf("exec ran (pid: %d)\n", getpid()); 
         }
     else
