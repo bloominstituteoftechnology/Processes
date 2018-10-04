@@ -10,7 +10,15 @@
 
 int main(void)
 {
-  
+	pid_t pid = fork();
+	int ret;
+	char *cmd[] = { "ls", "-l", (char *)0 };
+	if (pid == 0) {
+		ret = execl("/bin/ls", "ls", "-l", (char *)0);
+	}
+	else {
+		ret = execv("/bin/ls", cmd);
+	}
 
-    return 0;
+	return 0;
 }
