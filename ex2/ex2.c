@@ -8,7 +8,20 @@
 
 int main(void)
 {
-    // Your code here 
+    FILE* fp;
+    fp = fopen("text.txt", "w");
+
+    int rc = fork();
+    if (rc == 0) {
+        printf("child process\n");
+        char *child = "This is the child\n";
+        fwrite(child, sizeof(char), strlen(child), fp);
+    } else {
+        printf("parent process\n");
+        char *parent = "This is the parent\n";
+        fwrite(parent, sizeof(char), strlen(parent),fp);
+    }
+    fclose(fp);
     
     return 0;
 }

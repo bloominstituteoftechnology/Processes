@@ -23,7 +23,7 @@ int main(void)
     } else {
         printf("hello, parent here (pid: %d) of child %d, x is %d\n", (int) getpid(), rc, x);
         x--;
-        printf("parent here, x is %d", x);
+        printf("parent here, x is %d\n", x);
     }
 
 
