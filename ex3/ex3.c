@@ -17,7 +17,7 @@ int main(void)
     } else if (rc == 0) {
         printf("Hello!\n");
     } else {
-        int wc = wait(rc, NULL, 0); //wait for the process with PID = rc to complete
+        int wc = waitpid(rc, NULL, 0); //wait for the process with PID = rc to complete
         // or we can do this, simpler version of essentially the same thing as above: wait(NULL);
         printf("Goodbye!\n");
     }

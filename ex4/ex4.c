@@ -8,9 +8,22 @@
 #include <stdlib.h>
 #include <sys/wait.h>
 
-int main(void)
+int main(int argc, char* argv[])
 {
-    // Your code here    
+    printf("Parent process here\n");
+    int rc = fork();
+
+    if (rc < 0) {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {
+        printf("Child process here\n");
+
+        execl("/bin/ls", "ls", "-l" (char *) NULL);
+        
+    } else {
+        int wc = waitpid(rc, NULL, 0);
+    }
 
     return 0;
 }
