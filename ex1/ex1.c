@@ -21,7 +21,7 @@ int main(void)
     } else
     {
       x = x * 3;
-      printf("%d is the parent and %d is the pid of %d.\n", x, (int) getpid(), rc);
+      printf("%d is the parent, %d is its child, and %d is the pid of that child.\n", x, rc, (int) getpid());
     }
 
     return 0;
