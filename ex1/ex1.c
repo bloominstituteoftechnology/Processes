@@ -33,11 +33,10 @@ int main(void)
     else
     {
         //change in the variable(parent)
+        printf("parent of %d (pid: %d) of x: %d\n",rc, (int)getpid(), x);
         x = x - 2;
-        printf("parent (pid: %d) of this child %d (x:%d)\n",(int)getpid(),x);
-        
-        
-    }
+        printf("parent now: %d\n", x);
+        }
 
     
     return 0;
