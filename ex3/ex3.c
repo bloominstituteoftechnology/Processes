@@ -10,6 +10,15 @@
 int main(void)
 {
     // Your code here
-
+  int child = fork();
+  if (child < 0) {
+    perror("process failed.");
+    exit(-1);
+  } else if (child == 0) {
+    printf("hello\n");
+    } else {
+    waitpid(child, NULL, 0);
+    printf("goodbye\n");
+  }
     return 0;
 }
