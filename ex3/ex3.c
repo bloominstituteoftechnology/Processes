@@ -16,7 +16,7 @@ int main(void)
     } else if (rc == 0) {
         printf("I don't know why you say 'Goodbye', I say 'Hello, hello, hello'.\n");
     } else {
-        int wait = waitpid(rc, NULL, 0); // https://stackoverflow.com/questions/282176/waitpid-equivalent-with-timeout
+        waitpid(rc, NULL, 0); // https://stackoverflow.com/questions/282176/waitpid-equivalent-with-timeout
         printf("(Hello, goodbye, hello, goodbye. Hello, goodbye.)\n");
     }
     return 0;

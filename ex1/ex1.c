@@ -15,10 +15,10 @@ int main(void)
         exit(1); // exit 
     } else if (rc == 0) {
         x = x/2;
-        printf("hello, child here (x: %d) and (pid: %d) \n", x, (int) getpid());
+        printf("hello, child here (x: %d) and (pid: %d) \n", x, getpid());
     } else {
         x = x*2;
-        printf("hello, parent here (x: %d) and (pid: %d) of child %d\n", x, (int) getpid(), rc);
+        printf("hello, parent here (x: %d) and (pid: %d) of child %d\n", x, getpid(), rc);
     }
     return 0;
 }

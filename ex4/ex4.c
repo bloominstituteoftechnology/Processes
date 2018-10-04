@@ -11,6 +11,24 @@
 int main(void)
 {
     // Your code here    
+        int rv = fork();
+     if(rv < 0)
+    {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    }
+    else if(rv == 0)
+    {
+        char *myargsl[] = {"ls", (char *) 0};
+        char *myargsv[] =  {"/bin/ls", NULL};
+        //execl("/bin/ls", "ls", myargsl[1]);
+        // execv("/bin/ls", myargsv);
+        execle("/bin/ls", "/bin/ls", myargsl[1]);
+    }
+    else
+    {
+        int wc = waitpid(rv, NULL, 0);
+    } 
 
     return 0;
 }

@@ -1,4 +1,4 @@
-/* Write a program that opens the text.txt  file (with the `fopen()` system call) located in this directory and then calls `fork()` to create a new process. Can both the child and parent access the file descriptor returned by `fopen()`? What happens when they are written to the file concurrently? */
+/* Write a program that opens the text.txt file (with the `fopen()` system call) located in this directory and then calls `fork()` to create a new process. Can both the child and parent access the file descriptor returned by `fopen()`? What happens when they are written to the file concurrently? */
 
 #include <stdio.h>
 #include <unistd.h>
@@ -15,9 +15,11 @@ int main(void)
         fprintf(stderr, "fork failed\n"); // error message
         exit(1); // exit 
     } else if (rc == 0) {
+        printf("hello, child here and (pid: %d) \n", (int) getpid());
         char *childptr = "hello, child here \n";
         fwrite(childptr, sizeof(char), strlen(childptr), fp); // arguments(pointer to the string to be written, sizeof bytes in each char, strlen of pointer string, initialized file pointer)
-    } else {        
+    } else {      
+        printf("hello, parent here and (pid: %d) of child %d\n", (int) getpid(), rc);  
         char *parentptr = "hello, parent here \n";
         fwrite(parentptr, sizeof(char), strlen(parentptr), fp);
     }
