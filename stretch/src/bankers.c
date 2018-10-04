@@ -134,7 +134,6 @@ int main(int argc, char **argv)
 
 	// Start with $10K in the bank. Easy peasy.
 	int fd = open_balance_file(BALANCE_FILE);
-	flock(fd, LOCK_EX);
 	write_balance(fd, 10000);
 	close_balance_file(fd);
 
@@ -157,6 +156,7 @@ int main(int argc, char **argv)
 			// Open the balance file (feel free to call the helper
 			// functions, above).
 			int fd = open_balance_file(BALANCE_FILE);
+			flock(fd, LOCK_EX);
 			// Read the current balance
 			read_balance(fd, &balance);
 			// Try to withdraw money
