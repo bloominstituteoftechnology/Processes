@@ -12,6 +12,8 @@ and `clock_gettime()` should work just fine.
 */
 
 #include <stdio.h>
+#include <stdint.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <time.h>
 
@@ -20,7 +22,38 @@ and `clock_gettime()` should work just fine.
 
 int main()
 {
-    // Your code here
+    uint64_t diff, total;
+    struct timespec start, end;
+    int fd[2];
+    char buf[16], times[number_iter];
+
+    for(int i = 0; i < number_iter; i++)
+    {
+	close(fd[0]);
+	clock_gettime(CLOCK_MONOTONIC, &start);
+	write(fd[1], buf, 16);
+	clock_gettime(CLOCK_MONOTONIC, &end);
+
+	diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+	times[i] = diff;
+	total += diff;
+    }
+    printf("average elapsed time = %llu ns\n", (long long unsigned int) total / number_iter);
+
+    total = 0;
+
+    for(int i = 0; i < number_iter; i++)
+    {
+        close(fd[0]);
+	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &start);
+	write(fd[1], buf, 16);
+	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end);
+
+	diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+	times[i] = diff;
+	total += diff;
+    }
+    printf("average process CPU time = %llu ns\n", (long long unsigned int) total / number_iter);
     
     return 0;
 }
