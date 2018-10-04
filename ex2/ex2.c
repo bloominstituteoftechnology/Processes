@@ -5,10 +5,25 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <string.h>
 
 int main(void)
 {
-    // Your code here 
-    
+    FILE* myfile;
+    myfile = fopen("text.txt", "w");
+    fprintf(myfile, "Writing before fork... Parent pid: %d\n", (int) getpid());
+
+    int childProcess = fork();
+    if (childProcess < 0) {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (childProcess == 0) {
+        printf("child called\n");
+        fprintf(myfile, "Writing from Child...pid: %d\n", (int) getpid());
+    } else {
+        printf("parent called\n");
+        fprintf(myfile, "Writing from Parent...pid: %d\n", (int) getpid());
+    }
+    fclose(myfile);
     return 0;
 }
