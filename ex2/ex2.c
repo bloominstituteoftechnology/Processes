@@ -27,7 +27,9 @@ int main(void)
     fp = fopen ("text.txt", "w+");
     printf("Before forking pid: %d\n", (int) getpid());
 
-    fprintf(fp, "%s %s %s %s %d\n", "File", "write", "before", "fork", (int) getpid());
+    // fprintf(fp, "%s %s %s %s %d\n", "File", "write", "before", "fork", (int) getpid());
+    fprintf(fp, "File write before fork %d\n", (int) getpid());
+    printf("Another console print hello test\n");
 
     pid_t pid = fork();
 
