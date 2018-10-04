@@ -18,7 +18,7 @@ int main(void)
     } else if (rc == 0) {
         printf("hello child\n");
         char *args[] = {"/bin/ls", NULL};
-        execvp(args[0], args);
+        execv(args[0], args);
     } else {
         waitpid(rc, NULL, 0);
         printf("goodbye parent\n");
