@@ -1,2 +1,2 @@
-child process here.
 from parent process.
+child process here.

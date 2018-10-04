@@ -9,10 +9,12 @@
 
 int main(void)
 {
+    
     // Your code here
     //file pointer declared to file open with (filename and mode set to "w")
     //start fork with int variable rc
     FILE* fp;
+
     fp = fopen("text.txt", "w");
     int rc = fork();
 
@@ -28,14 +30,14 @@ int main(void)
 
     }
     //parent process w arguments to the parent pointer, size of the bytes per char (sizeof(char)), string length of parent pointer and start fp process
-    //wait added to allow child process to be printed first
-    else
-    {
+    //wait added to allow child process to be printed first(removed as well to test)
+    else {
         char *parptr = ("from parent process.\n");
         fwrite(parptr, sizeof(char), strlen(parptr), fp);
+    }
 
         
-    }
+    
 
     fclose(fp);
     return 0;
