@@ -8,7 +8,19 @@
 
 int main(void)
 {
-    // Your code here
+    int x = 100;
+    printf("x is equal to %d\n", x);
+    int rc = fork();
 
+    if (rc < 0) {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {
+        x = x / 2;
+        printf("child x is equal to %d\n", x);
+    } else {
+        x = x / 10;
+        printf("parent x is equal to %d\n", x);
+    }
     return 0;
 }
