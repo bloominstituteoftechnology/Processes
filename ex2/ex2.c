@@ -17,15 +17,14 @@ int main(void)
         fprintf(stderr, "fork failed\n");
         exit(1);
     } else if (rc == 0) {
-        printf("Child: pid %d\n", getpid());
         char str[] = "The child hays hi.\n";
-        fwrite(str, 4, sizeof(str), fp);
+        fwrite(str, sizeof(char), strlen(str), fp);
     } else {
-        printf("Parent: pid %d\n", getpid());
         char str[] = "The parent hays hi.\n";
-        fwrite(str, 4, sizeof(str), fp);
+        fwrite(str, sizeof(char), strlen(str), fp);
     }
 
     fclose(fp);
     return 0;
 }
+
