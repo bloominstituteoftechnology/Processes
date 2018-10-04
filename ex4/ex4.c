@@ -10,11 +10,15 @@
 
 int main(void)
 {   
-    printf("parent process");
+    printf("parent process\n");
     int rc = fork();
     if (rc == 0) {
-        prinftf("child proces");
-    } 
+        printf("child proces\n");
+        char *args[] = {"ls", "-l", NULL};
+        execvp("ls", args);
+    } else {
+        int wc = waitpid(rc, NULL, 0);
+    }
 
     return 0;
 }
