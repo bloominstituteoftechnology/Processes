@@ -14,7 +14,7 @@ int main(void)
 
     if(rv < 0)
     {
-        printf(stderr, "fork failed\n");
+        fprintf(stderr, "fork failed\n");
         exit(1);
     }
     else if(rv == 0)

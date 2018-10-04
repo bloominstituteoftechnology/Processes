@@ -10,7 +10,24 @@
 
 int main(void)
 {
-    // Your code here    
+    int rv = fork();
+
+    if(rv < 0)
+    {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    }
+    else if(rv == 0)
+    {
+        char *myargs[] = {"/bin/ls",NULL};
+        // execl(myargs[0], myargs);
+        // execle(myargs[0], myargs, char * const envp[] */);
+        execv(myargs[0], myargs);
+    }
+    else
+    {
+        int wc = waitpid(rv, NULL, 0);
+    } 
 
     return 0;
 }
