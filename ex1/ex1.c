@@ -8,7 +8,23 @@
 
 int main(void)
 {
-    // Your code here
+    int x = 100;
+    printf("hello world (pid: %d)\n", (int) getpid()); // Set initial X value, print PID
+
+    int rc = fork();  // Set rc to fork()
+
+    if (rc < 0) {
+        fprintf(stderr, "fork failed\n"); // If fork returns negative #, error
+        exit(1);
+    } else if (rc == 0) {
+        printf("hello, I am child (pid: %d) and x is: %d\n", (int) getpid(), x); // If fork returns 0, we are inside the child function, print current status 
+        x++; // Then increment X by 1
+        printf("child again, x is now: %d\n", x); // Then print new status/X value
+    } else {
+        printf("hello, I am parent of %d (pid: %d) and x is: %d\n", rc, (int) getpid(), x); // If fork returns a positive value, we are in a parent function, print current status
+        x--; // Decrement X by 1
+        printf("parent again, x is now: %d\n", x); // Print new status/X value
+    }
 
     return 0;
 }

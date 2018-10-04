@@ -9,7 +9,17 @@
 
 int main(void)
 {
-    // Your code here
+    int rc = fork();
 
+    if (rc < 0) {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {
+        printf("Hello!\n");
+    } else {
+        int wc = waitpid(rc, NULL, 0); //wait for the process with PID = rc to complete
+        // or we can do this, simpler version of essentially the same thing as above: wait(NULL);
+        printf("Goodbye!\n");
+    }
     return 0;
 }
