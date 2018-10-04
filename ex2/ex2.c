@@ -6,7 +6,6 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h> //need string.h for strlen
-#include <sys/wait.h>// added to parent to allow child to be printed first
 
 int main(void)
 {
@@ -35,7 +34,7 @@ int main(void)
         char *parptr = ("from parent process.\n");
         fwrite(parptr, sizeof(char), strlen(parptr), fp);
 
-        wait(NULL);
+        
     }
 
     fclose(fp);
