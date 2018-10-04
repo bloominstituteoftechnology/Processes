@@ -9,8 +9,12 @@
 #include <sys/wait.h>
 
 int main(void)
-{
-    // Your code here    
+{   
+    printf("parent process");
+    int rc = fork();
+    if (rc == 0) {
+        prinftf("child proces");
+    } 
 
     return 0;
 }
