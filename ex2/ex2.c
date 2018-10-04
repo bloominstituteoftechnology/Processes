@@ -8,7 +8,21 @@
 
 int main(void)
 {
-    // Your code here 
-    
+    FILE *fp;
+    fp = fopen("text.txt","w");
+
+    int rc = fork();
+
+    if (rc < 0) {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {
+        char child[] = "This is the child string!";
+        fwrite(child, 1, sizeof(child), fp);
+    } else {
+        char parent[] = "This is the parent string!";
+        fwrite(parent, 1, sizeof(parent), fp);
+    }
+    fclose(fp);
     return 0;
 }
