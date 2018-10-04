@@ -1,6 +1,6 @@
 /*
 Write a program that will find the average time it takes for your computer
-to make a system call an empty write to stdout. Your program should use the 
+to make a system call to make an empty write to stdout. Your program should use the 
 `clock_gettime` procedure to time how long a single system call takes. It'll 
 do this for one million iterations, and then find the average of all of those 
 iterations in nanoseconds.
@@ -20,7 +20,21 @@ and `clock_gettime()` should work just fine.
 
 int main()
 {
-    // Your code here
+    struct timespec start, end;
+    float avg;
+    float total = 0;
+    float difference;
     
+    for (int i = 0; i < number_iter; i++) {
+        clock_gettime(CLOCK_MONOTONIC, &start);
+        write(fileno(stdout), NULL, 0);
+        clock_gettime(CLOCK_MONOTONIC, &end);
+
+        difference = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+        total += difference;
+    }
+
+    avg = total / number_iter;
+    printf("The average time it takes in nanoseconds for a system call: %f\n", avg);
     return 0;
 }
