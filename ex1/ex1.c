@@ -9,6 +9,8 @@
 int main(void)
 {
     // Your code here
+    //main process has access to (x=100)
+    //set variable rc equal to our fork
     int x = 100;
     int rc = fork();
 
@@ -19,6 +21,7 @@ int main(void)
         fprintf(stderr, "fork failed\n");
         exit(1);
     }
+    //child process
     else if (rc == 0)
     {
         printf("child (pid: %d) and x is: %d\n", (int)getpid(), x);
@@ -26,6 +29,7 @@ int main(void)
         x++;
         printf("child, x is now: %d\n", x);
     }
+    //parent process
     else
     {
         //change in the variable(parent)
