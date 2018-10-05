@@ -30,7 +30,8 @@ int main(void)
     } else if (rc == 0) {
         write(channel[1], msg1, MSGSIZE); 
         write(channel[1], msg2, MSGSIZE); 
-        write(channel[1], msg3, MSGSIZE); 
+        write(channel[1], msg1, MSGSIZE); 
+    
 
     } else {
         for (int i = 0; i < 3; i++){

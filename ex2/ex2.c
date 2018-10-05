@@ -22,14 +22,16 @@ int main(void)
 
     } else if (rc == 0) {
         // printf("because something needs to happen here\n");
-        fputs("\n Child testing \n", file);
-            // while ((c = fgetc(file)) != EOF) { 
-            // printf ("%c", c); 
-            // } 
+        // fputs("\n Child testing \n", file);
+        fprintf(file, "\n child testing \n" );
+            while ((c = fgetc(file)) != EOF) { 
+            printf ("%c", c); 
+            } 
     } else {
         // fputs("\n Parent testing \n", file);
+        fprintf(file, "\n Parent testing \n" );
         // fputs("\n Parent 2\n", file);
-        printf("Am I getting here?\n");
+        // printf("Am I getting here?\n");
         while ((c = fgetc(file)) != EOF) { 
         printf ("%c", c); 
         } 
