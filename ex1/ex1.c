@@ -9,6 +9,18 @@
 int main(void)
 {
     // Your code here
+    int x = 100;
+    int rc = fork();
 
+    if (rc < 0) {    // fork failed; exit
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {    // child process satisfies this branch
+        x = x - 5;
+        printf("child (pid: %d) (x:%d) \n", (int) getpid(), x);
+    } else {
+        x = x - 1;
+        printf("parent (pid: %d) of child %d (x:%d)\n", (int) getpid(), rc, x);
+    }
     return 0;
 }

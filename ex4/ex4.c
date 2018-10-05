@@ -11,6 +11,20 @@
 int main(void)
 {
     // Your code here    
+    int rc = fork();
+    char* envp[] = {"/usr/lib", 0};
+    char* arr[] = {"ls", "-l", "-R", "-a", NULL};
 
+
+    if (rc < 0) {    // fork failed; exit
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {    // child process satisfies this branch
+        printf("Child");
+        execv("/bin/ls", arr);
+    } else {
+        printf("Parent");
+        execle("/bin/ls", "ls", "-l", "-a", 0, envp);
+    }
     return 0;
 }
