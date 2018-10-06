@@ -22,7 +22,7 @@ int main(void)
     } else {
         printf("Parent value of x: %d\n", x);
         x = 42;
-        printf("Parent value of x change to: %d\n", x);
+        printf("Parent value of x changed to: %d\n", x);
     }
     return 0;
 }
