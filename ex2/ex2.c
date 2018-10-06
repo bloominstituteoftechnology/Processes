@@ -18,12 +18,12 @@ int main(void)
         exit(1);
     } else if(f == 0){
         printf("Child fork\n");
-        fclose(f);
+        fclose(file);
     } else {
         printf("Parent fork\n");
         char *parent_text = "This is the parent text.\n";
-        fwrite(parent_text, sizeof(char), strlen(parent_text), f);
+        fwrite(parent_text, sizeof(char), strlen(parent_text), file);
     }
-    fclose(f);
+    fclose(file);
     return 0;
 }

@@ -1,1 +1,1 @@
-Parent.txt
+This is the parent text.
