@@ -11,6 +11,18 @@
 int main(void)
 {
     // Your code here    
-
+    int f = fork();
+    if (f < 0){
+        printf("Fork failed!");
+        exit(1);
+    } else if(f == 0){
+        printf("Child fork");
+        char *args[] = {"ls", "-1", NULL};
+        execvp("ls", args);
+        printf("You really shouldn't see this...");
+    } else {
+        wait(NULL);
+        printf("Parent fork");
+    }
     return 0;
 }
