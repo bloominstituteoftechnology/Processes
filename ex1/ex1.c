@@ -10,6 +10,19 @@
 int main(void)
 {
     // Your code here
+    int x = 100;
+    int f = fork();
 
+    if(f < 0){
+        printf("Fork failed!\n");
+        exit(1);
+    } else if(f == 0){
+        x = 19;
+        printf("Child value of x: %d\n", x);
+    } else {
+        printf("Parent value of x: %d\n", x);
+        x = 42;
+        printf("Parent value of x change to: %d\n", x);
+    }
     return 0;
 }
