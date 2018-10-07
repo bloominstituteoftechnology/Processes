@@ -10,6 +10,18 @@
 int main(void)
 {
     // Your code here
+    int pid = fork();
 
+    if (pid < 0) {
+        printf("Error\n");
+        exit(1);
+    } else if (pid == 0) {
+        printf("Inside child process\n");
+        exit(0);
+    } else {
+        wait(NULL);
+        printf("Inside parent process\n");
+        exit(0);
+    }
     return 0;
 }
