@@ -28,3 +28,21 @@ int main(void)
 
     return 0;
 }
+
+// solution
+// int main(void)
+// {
+//     int rc = fork();
+
+//     if (rc < 0) {
+//         fprintf(stderr, "fork failed\n");
+//         exit(1);
+//     } else if (rc == 0) {
+//         printf("hello\n");
+//     } else {
+//         int wait = waitpid(rc, NULL, 0);
+//         printf("Goodbye\n");
+//     }
+
+//     return 0;
+// }
