@@ -10,6 +10,21 @@
 int main(void)
 {
     // Your code here
+    int dip = fork();
+    if (dip < 0)
+    {
+        fprintf(stderr, "Fork failed\n");
+        exit(1);
+    }
+    else if (dip == 0)
+    {
+        printf("hello\n");
+    }
+    else
+    {
+        wait(NULL);
+        printf("Goodbye!\n");
+    }
 
     return 0;
 }
