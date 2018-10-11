@@ -6,6 +6,42 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+// solution
+// printf() - prints to standard output (main output of your terminal)
+// fprintf() - give you a choice where you want to direct output
+// fprintf(stdout, "hi") same as printf("hi")
+// fisrt arg to pass to fprintf is the handle of where to direct the output
+// stderr is a file pointer
+
+int main(void)
+{
+    int x = 100;
+    printf("hello (pid: %d)\n", (int)getpid());
+
+    int rc = fork();
+
+    if (rc < 0)
+    {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    }
+    else if (rc == 0) // child process
+    {
+        printf("hello child (pid: %d) and x is: %d\n", (int)getpid(), x);
+        x++;
+        printf("child again x is now: %d\n", x);
+    }
+    else // parent process
+    {
+        // wait(NULL);
+        printf("hello, parent of child %d is (pid: %d) and x is: %d\n", rc, getpid(), x);
+        x--;
+        printf("parent again, x is now: %d\n", x);
+    }
+
+    return 0;
+}
+
 // int main(void)
 // {
 //     int x = 100;
@@ -33,39 +69,3 @@
 
 //     return 0;
 // }
-
-// solution
-
-// printf() - prints to standard output (main output of your terminal)
-// fprintf() - give you a choice where you want to direct output
-// fprintf(stdout, "hi") same as printf("hi")
-// fisrt arg to pass to fprintf is the handle of where to direct the output
-// stderr is a file pointer
-
-int main(void)
-{
-    int x = 100;
-    printf("hello (pid: %d)\n", (int)getpid());
-
-    int rc = fork();
-
-    if (rc < 0)
-    {
-        fprintf(stderr, "fork failed\n");
-        exit(1);
-    }
-    else if (rc == 0)
-    {
-        printf("hello child (pid: %d) and x is: %d\n", (int)getpid(), x);
-        x++;
-        printf("child again x is now: %d\n", x);
-    }
-    else
-    {
-        printf("hello, parent of child %d is (pid: %d) and x is: %d\n", rc, getpid(), x);
-        x--;
-        printf("parent again, x is now: %d\n", x);
-    }
-
-    return 0;
-}

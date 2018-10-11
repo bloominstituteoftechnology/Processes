@@ -21,10 +21,10 @@ int main(void)
     else if (rc == 0)
     {
         printf("Child process\n");
-        // execl("/bin/ls", "ls", "-l", NULL); // doesn't take any array, you need to specify as a sting the actual path to a file
+        // execl("/bin/ls", "ls", "-s", NULL); // doesn't take any array, you need to specify as a string the actual path to a file
         // "/bin/ls" - location, "ls" - the name of the program, -l - is a long-form flag, NULL - terminator
-        // -o - seach for all hidden files
-        char *args[] = {"ls", "-l", NULL}; // transform child into ls
+        // -a - seach for all files
+        char *args[] = {"ls", "-s", NULL}; // transform child into ls
         // execvp("ls", args);                // same path as execl("/bin/ls", "ls", "-l", NULL)
         execv("/bin/ls", args); // absolute path
         // difference between -v and -vp, p stands for path. so with just a -v, we need to give absolute path to the file you want to execute

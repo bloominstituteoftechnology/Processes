@@ -16,13 +16,15 @@ int main(void)
         fprintf(stderr, "Fork failed\n");
         exit(1);
     }
-    else if (dip == 0)
+    else if (dip == 0) // child process
     {
+        int x = 1;
         printf("hello\n");
+        return x;
     }
     else
     {
-        wait(NULL);
+        wait(NULL); // ensure that the parent process only runs after the child process has finished its execution
         printf("Goodbye!\n");
     }
 
