@@ -39,7 +39,7 @@
 int main(void)
 {
     // Your code here
-    FILE *fp;
+    FILE *fp; // initialize a file pointer. This is how to write to files in C
 
     fp = fopen("text.txt", "r+");
     int rc = fork();
@@ -51,9 +51,13 @@ int main(void)
     }
     else if (rc == 0)
     {
-        printf("child here\n");
-        char *child_str = "This is child string. \n";
+        printf("child process here\n");
+        char *child_str = "This is child string. \n"; // initialize a char string
         fwrite(child_str, sizeof(char), strlen(child_str), fp);
+        // takes in string,
+        // sizeof(char) - the size of each single type that's getting written,
+        // strlen - total length of how many things we're going to write,
+        // fp - where we're going to write it
     }
     else
     {
@@ -62,7 +66,9 @@ int main(void)
         fwrite(parent_str, sizeof(char), strlen(parent_str), fp);
     }
 
-    fclose(fp);
+    fclose(fp); // close filepointer
 
     return (0);
 }
+
+// vim text.txt

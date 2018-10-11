@@ -36,8 +36,11 @@
 
 // solution
 
-// printf() - prints to standard output
+// printf() - prints to standard output (main output of your terminal)
 // fprintf() - give you a choice where you want to direct output
+// fprintf(stdout, "hi") same as printf("hi")
+// fisrt arg to pass to fprintf is the handle of where to direct the output
+// stderr is a file pointer
 
 int main(void)
 {

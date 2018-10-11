@@ -25,16 +25,18 @@ int main()
     // long sum = 0;
     // long difference;
     // double avg;
+
     // for (int i = 0; i < number_iter; i++)
     // {
     //     clock_gettime(CLOCK_MONOTONIC, &start);
     //     write(fileno(stdout), NULL, 0);
-    //     printf("");
+    //     //     printf("");
+    //     getpid();
     //     clock_gettime(CLOCK_MONOTONIC, &end);
-    //     difference = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start;
+    //     difference = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
     //     sum += difference;
     // }
-    // avg = sum / (float)number_iter;
-    // printf("Average time per write is %f ns\n", avg);
+    // avg = sum / (float)number_iter; // precise time
+    // printf("Average time per write is %f ns.\n", avg);
     // return 0;
 }
