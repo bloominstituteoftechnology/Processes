@@ -1,1 +1,4 @@
-Testing the write with pid: 7997
+Testing the write with pid: 8606
+PARENT: write with pid: 8606
+Testing the write with pid: 8606
+CHILD: write with pid: 8607

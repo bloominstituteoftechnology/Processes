@@ -12,11 +12,28 @@ int main(void)
 
     FILE *fPointer;
 
-    fPointer = fopen("text.txt", "w+");
+    fPointer = fopen("text.txt", "w+"); // Deletes whats present and then writes
 
-    fprintf(fPointer, "Testing the write with pid: %d", getpid());
+    fprintf(fPointer, "Testing the write with pid: %d\n", getpid());
 
-    fclose(fPointer);
+    pid_t pid = fork();
+
+    if (pid == 0) // Child Process
+    {
+        fprintf(fPointer, "CHILD: write with pid: %d\n", getpid());
+    }
+    else // Parent Process
+    {
+        fprintf(fPointer, "PARENT: write with pid: %d\n", getpid());
+    }
+
+    fclose(fPointer); // Closes the file when done
 
     return 0;
 }
+
+// Can both the child and parent access the file descriptor returned by `fopen()`?
+// YES
+
+// What happens when they are written to the file concurrently?
+// They both get written
