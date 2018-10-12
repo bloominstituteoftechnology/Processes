@@ -1,0 +1,8 @@
+Before the fork
+ 328
+The file opened parent
+ 328
+Before the fork
+ 328
+The file opened child
+ 329
