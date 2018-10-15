@@ -14,8 +14,8 @@ and `clock_gettime()` should work just fine.
 #include <stdio.h>  // for printf
 #include <stdint.h> // for unit64 definition
 // #include <stdlib.h> // for exit() definition
-#include <unistd.h>
-#include <time.h> // for clock_gettime
+#include <unistd.h> // system calls
+#include <time.h>   // for clock_gettime
 
 #define number_iter 1000000
 #define BILLION 1000000000L
