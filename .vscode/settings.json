@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "*.js": "javascriptreact",
+        "unistd.h": "c"
+    }
+}
