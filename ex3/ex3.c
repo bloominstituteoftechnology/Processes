@@ -17,7 +17,7 @@ int main(void)
     } else if (rc == 0) {
         printf("Child says hello first!\n");
     } else {
-        int wc = waitpid(rc, NULL, 0);
+        waitpid(rc, NULL, 0);
         printf("Parent says goodbye last!\n");
     }
 
