@@ -8,7 +8,19 @@
 
 int main(void)
 {
-    // Your code here
+    int x = 100;
+    printf("x should be equal to 100: %d\n", x);
+    int rc = fork();
+
+    if(rc < 0) {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {
+        x = 50;
+        printf("This is child. x should be equal to 50: %d\n", x);
+    } else {
+        printf("This is parent and x needs to be 100: %d\n", x);
+    }
 
     return 0;
 }
