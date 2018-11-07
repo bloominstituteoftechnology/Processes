@@ -4,13 +4,33 @@
 // are so many variants of the same basic call?
 
 #include <stdio.h>
-#include <unistd.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <sys/wait.h>
+#include <string.h>
 
 int main(void)
 {
-    // Your code here    
+    int rc = fork();
+    
+    if (rc < 0) {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {
+        // char *args[]={"/bin/ls",NULL}; 
+        // execvp(args[0],args);
+
+        // char *args[]={"/bin/ls",NULL};
+        // execv(args[0],args);
+
+        //execl("/bin/ls", "/bin/ls", NULL);
+
+        execle("/bin/ls", "/bin/ls", NULL);
+
+        printf("everything after exec() is ignored as this process is replaced with another process\n");
+    } else {
+        int wc = waitpid(rc, NULL, 0);
+    }
 
     return 0;
 }
