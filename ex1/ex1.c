@@ -8,7 +8,17 @@
 
 int main(void)
 {
-    // Your code here
+    int x = 10;
+    pid_t pid = fork();
 
-    return 0;
+    if (pid == 0)
+    {
+        x = 50;
+        printf("child = %d\n", x);
+    }
+    else
+    {
+        x = 100;
+        printf("parent = %d\n", x);
+    }
 }
