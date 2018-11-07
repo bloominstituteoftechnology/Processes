@@ -12,14 +12,16 @@
 int main(void)
 {
     int x = 100;
-    x = fork();
-    if(x < 0) {
-        fprint(stderr, "Fork Failed\n");
+    int rc = fork();
+    if(rc < 0) {
+        fprintf(stderr, "Fork Failed\n");
         exit(1);
-    } else if (x == 0) {
-        printf("Child process (pid: %d", (int) getpid());
+    } else if (rc == 0) {
+        x ++;
+        printf("Child process (pid: %d) and x: %d\n", (int) getpid(), x);
     } else {
-        printf("Parent process (pid: %d of child process %d\n", (int) getpid(), x);
+        x--;
+        printf("Parent process (pid: %d) of child process %d and x: %d\n", (int) getpid(), rc, x);
     }
 
     return 0;
