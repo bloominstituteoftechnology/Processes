@@ -15,6 +15,8 @@ x is : 100
 x is : 122
 
 so this is the before the change and after   722 is the parent 122 is the child.    intially it will be 100 but for the child it is also intially set at 100 even after the parent change.  the child doesn't recongize this change at all. 
+
+https://repl.it/@codejoncode/Lambda-Excercise-1-Fork
 */
 
 #include <stdio.h>
@@ -35,8 +37,6 @@ int main(void)
       x = 722; 
       printf("x is : %d\n", x);  
     }
-
-
 
 
     return 0;
