@@ -9,6 +9,9 @@
 int main(void)
 {
     // Your code here
+    int x = 100;
+    fork();
+    printf("this is the print of x %d. at pid %d. \n", x, (int) getpid());
 
     return 0;
 }
