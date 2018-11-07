@@ -8,7 +8,21 @@
 
 int main(void)
 {
-    // Your code here
+   int x = 100; 
 
-    return 0;
+   int spoon = fork(); 
+
+   if(spoon < 0){
+       printf("forked failed\n");
+
+   }else if (spoon == 0){
+       printf("Child (pid: %d) \n", (int) getpid());
+       x++;
+       printf("Child - x now: %d\n", x);
+
+   } else{
+       printf("Parent (pid: %d) of Child %d\n", (int) getpid(), spoon);
+       x--;
+       printf("Parent - x now: %d\n", x);
+   }
 }
