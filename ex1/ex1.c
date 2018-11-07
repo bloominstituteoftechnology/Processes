@@ -17,10 +17,10 @@ int main(void)
         printf("Fork failed\n");
     } else if (pid == 0) {
         x = 200;
-        printf("Child process, pid is %d, x is %d.\n", pid, x);
+        printf("Child process, process is %d, x is %d.\n", (int) getpid(), x);
     } else {
         x = 300;
-        printf("Parent process, pid is %d, x is %d.\n", pid, x);
+        printf("Parent process, process is %d, x is %d.\n", (int) getpid(), x);
     }
 
     printf("At the end, x is %d.\n", x);
