@@ -10,6 +10,13 @@
 int main(void)
 {
     // Your code here
-
+    int caller = fork();
+    if(caller < 0){
+        printf("fork failed");
+    }else if(caller == 0){
+        printf("This is the Parent: Goodbye\n");
+    }else{
+        printf("This is the Child: Hello\n"); 
+    }
     return 0;
 }
