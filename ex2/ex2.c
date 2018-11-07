@@ -8,7 +8,12 @@
 
 int main(void)
 {
-    // Your code here 
+    FILE *file;
+    file = fopen("text.txt", "r");
+    char hold[100];
+     while (fscanf(file,"%s ", hold)==1) 
+        printf("%s ", hold); 
+    fork();
     
     return 0;
 }

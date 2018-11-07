@@ -11,15 +11,13 @@ int main(void)
     int x = 5;
     printf("cool x = %d\n", x);
     int child = fork();
-    if (child < 0){
-        printf("one heckin failure");
+    if (fork() == 0){
+    x = 6;
+    printf("child wants x to = %d\n", x);
+    } else {
+    x = 7;
+    printf("parent wants x to = %d\n", x);
     }
-    else if (child == 0){
-        x = 6;
-        printf("cool x child = %d\n", x);
-    }
-    else {
-        printf("cool x parent = %d\n", x);
-    }
+    printf("so now x = %d\n\n", x);
     return 0;
 }
