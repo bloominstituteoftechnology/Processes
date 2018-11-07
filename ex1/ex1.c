@@ -10,5 +10,7 @@ int main(void)
 {
     // Your code here
 
+    int x = 100;
+
     return 0;
 }
