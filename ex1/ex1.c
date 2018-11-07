@@ -10,6 +10,20 @@ int main(void)
 {
     // Your code here
     int x = 100;
+    printf("Before the fork, x is %d.\n", x);
+    pid_t pid;
+    pid = fork();
 
+    if (pid < 0) {
+        printf("Fork failed\n");
+    } else if (pid == 0) {
+        x = 200;
+        printf("Parent process, pid is %d, x is %d.\n", pid, x);
+    } else {
+        x = 300;
+        printf("Child process, pid is %d, x is%d.\n", pid, x);
+    }
+   
+    printf("At the end, x is %d.\n", x);
     return 0;
 }
