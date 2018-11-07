@@ -9,6 +9,35 @@
 int main(void)
 {
     // Your code here 
-    
+    FILE *fp=fopen("./text.txt","w+");
+    int c;
+    int forked=fork();
+    if (forked==0){
+        char str[] = "This is Lambda!\n";
+        fwrite(str , 1 , sizeof(str) , fp );
+        fclose(fp);
+        FILE *child_fp=fopen("./text.txt","r");
+        do {
+            c = fgetc(fp);
+            if ( feof(fp) ) {
+                break ;
+            }
+        printf("%c", c);
+        } while(1);
+        fclose(child_fp);
+    } else{
+        char str[] = "This is Sparta!\n";
+        fwrite(str , 1 , sizeof(str) , fp );
+        fclose(fp);
+        FILE *parent_fp=fopen("./text.txt","r");
+        do {
+            c = fgetc(fp);
+            if ( feof(fp) ) {
+                break ;
+            }
+        printf("%c", c);
+        } while(1);
+        fclose(parent_fp);
+    }
     return 0;
 }
