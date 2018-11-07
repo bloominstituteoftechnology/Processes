@@ -9,30 +9,33 @@
 
 int main(void)
 {
-    // Your code here
     int x = 100;
 
     int rc = fork();
 
     if (rc == 0) // Child
     {
+        printf("-------------\n");
         printf("Child Process\n");
-        printf("Value of x is: %d\n", x);
+        printf("-------------\n");
+        printf("Value of x is %d\n", x);
         x = 200;
-        printf("New Value of x is: %d\n", x);
+        printf("New Value of x is %d\n", x);
     }
 
     else if (rc > 0) // Parent
     {
         wait(NULL);
+        printf("-------------\n");
         printf("Parent Process\n");
-        printf("Value of x is: %d\n", x);
-        x = 300;
-        printf("New Value of x is: %d\n", x);
+        printf("-------------\n");
+        printf("Value of x is %d\n", x);
+        x = 400;
+        printf("New Value of x is %d\n", x);
     }
 
     else // Error
     {
-        fprintf(stderr, "Error Creating Process");
+        fprintf(stderr, "Error In Creating Process");
     }
 }
