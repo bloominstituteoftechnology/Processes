@@ -10,23 +10,15 @@ int main(void)
 {
     // Your code here
     int x = 100;
-    printf("hello world (pid: %d)\n", (int)getpid());
-    int rc = fork();
-    // ------------------------------------------------ child process starts executing here
-    if (rc < 0)
-    { // fork failed; exit
-        fprintf(stderr, "fork failed\n");
-        exit(1);
-    }
-    else if (rc == 0)
-    { // child process satisfies this branch
-        x = 200;
-        printf("hello, child here (pid: %d) \n", (int)getpid());
+    if (fork() == 0)
+    {
+        x = 50;
+        printf("Hello from Child!\n", x);
     }
     else
     {
         x = 500;
-        printf("hello, parent here (pid: %d) of child %d\n", (int)getpid(), rc);
+        printf("Hello from Parent!\n", x);
     }
 
     return 0;
