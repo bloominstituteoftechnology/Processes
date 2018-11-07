@@ -9,6 +9,21 @@
 int main(void)
 {
     // Your code here 
-    
-    return 0;
+	FILE *fp;
+
+	fp=fopen("text.txt", "w+");   //w is write mode
+
+	pid_t pid;
+    	pid = fork();	
+
+	if(pid==0){
+    		fprintf(fp, "This is child process\n"); //this sentence is written to the text.txt file by accessing the file descriptor returned by fopen
+	}
+    	else{
+		fprintf(fp, "This is parent process\n"); ////this sentence is written to the text.txt file by accessing the file descriptor returned by fopen
+    	}
+
+	fclose(fp);  //closes the stream which is a pointer to the File object.
+    	return 0;
 }
+
