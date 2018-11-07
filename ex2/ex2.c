@@ -8,7 +8,17 @@
 
 int main(void)
 {
-    // Your code here 
-    
+    FILE *file = fopen("text.txt", "r+");
+    int rv = fork();
+    if (rv == 0)
+    {
+        fprintf(file, "%s\n", "child");
+        printf("FILE-C: %p\n", file);
+    }
+    else
+    {
+        fprintf(file, "%s\n", "parent");
+        printf("FILE-P: %p\n", file);
+    }
     return 0;
 }
