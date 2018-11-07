@@ -9,6 +9,20 @@
 int main(void)
 {
     // Your code here
+    printf("parent process: %d\n", getpid());
+    int x = 100;
+    int pid = fork();
+    printf("X variable: %d - for process: %d\n", x, getpid());
+
+    if(pid == 0) {
+        printf("I'm a CHILD PROCESS: %d\n", getpid());
+        x = 10;
+    }
+    else {
+        printf("I'm a PARENT PROCESS: %d\n", getpid());
+    }
+
+    printf("I'm a process: %d, x is %d\n", getpid(), x);
 
     return 0;
 }
