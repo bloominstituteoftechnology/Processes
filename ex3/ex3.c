@@ -10,6 +10,17 @@
 int main(void)
 {
     // Your code here
+    int child = fork();
+    if (child == 0){
+        
+        printf("hello\n");
 
+    }
+    else{
+        int wc = wait( NULL);
+       
+        printf("goodbye\n");
+
+    }
     return 0;
 }
