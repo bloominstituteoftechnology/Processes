@@ -12,7 +12,7 @@ int main(void)
 pid_t pid;
 int x;
 x = 12;
-printf("parent is %d value of x in the parent %d", pid, x);
+printf("parent is %d value of x in the parent %d\n", pid, x);
 
 pid = fork();
 
