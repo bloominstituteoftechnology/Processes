@@ -8,7 +8,21 @@
 
 int main(void)
 {
-    // Your code here 
+    FILE *fp;
+    fp = fopen("./text.txt", "w");
+
+    int rc = fork();
+
+    if (rc < 0) { 
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {
+        fputs("Hello from child.\n", fp);
+    } else {
+        fputs("Hello from parent.\n", fp);
+    } 
     
     return 0;
 }
+
+// Both parent and child can access the file.
