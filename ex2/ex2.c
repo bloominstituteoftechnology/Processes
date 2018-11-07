@@ -9,6 +9,11 @@
 int main(void)
 {
     // Your code here 
+    FILE * fp;
+    fp = fopen("./text.txt", "w");
+    fork();
     
+    fprintf( fp, "this is written to the file by %d. \n", (int) getpid());
+
     return 0;
 }
