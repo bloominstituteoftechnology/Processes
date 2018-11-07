@@ -6,9 +6,13 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+
 int main(void)
 {
-    // Your code here
-
-    return 0;
+  // Your code here
+  int x = 100;
+  int rc = fork();
+  printf("hello world (pid: %d)\n", (int) getpid());
+  printf("value of x >> %d\n", x);
+  return 0;
 }
