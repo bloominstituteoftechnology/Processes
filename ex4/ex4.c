@@ -16,7 +16,9 @@ int main(void)
         char *myprograms[1];
         myprograms[0]="/bin/ls";
         execvp(myprograms[0],myprograms);
-        printf("Thou shalt not see.");
+    } else {
+        wait(0);
+        printf("Child is done running.");
     }
     return 0;
 }
