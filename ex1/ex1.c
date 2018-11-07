@@ -9,6 +9,22 @@
 int main(void)
 {
     // Your code here
+int x = 42;
 
-    return 0;
+pid_t pid;
+pid = fork();
+if (pid < 0) {
+
+} else if (pid == 0) {
+  int *ptr_child = &x;
+  *ptr_child = 55;
+  printf("X Child: %d\n", x);
+} else {
+  wait(NULL);
+  int *ptr_parent = &x;
+  *ptr_parent = 77;
+  printf("X Parent: %d\n", x);
+}
+  printf("X Main: %d\n", x);
+  return 0;
 }
