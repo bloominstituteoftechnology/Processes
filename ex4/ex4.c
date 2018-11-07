@@ -11,6 +11,12 @@
 int main(void)
 {
     // Your code here    
-
+    int forked=fork();
+    if (forked==0){
+        char *myprograms[1];
+        myprograms[0]="/bin/ls";
+        execvp(myprograms[0],myprograms);
+        printf("Thou shalt not see.");
+    }
     return 0;
 }
