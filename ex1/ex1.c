@@ -9,6 +9,5 @@
 int main(void)
 {
     // Your code here
-
-    return 0;
+    zzz return 0;
 }
