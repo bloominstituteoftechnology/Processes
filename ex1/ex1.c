@@ -8,7 +8,5 @@
 
 int main(void)
 {
-    // Your code here
-
-    return 0;
+  return 0;
 }
