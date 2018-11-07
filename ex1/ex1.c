@@ -9,6 +9,22 @@
 int main(void)
 {
     // Your code here
+    int x;
+    pid_t pid;
+
+    x = 25;
+
+    pid = fork();
+
+    if(pid < 0){
+      printf("Fork failed.\n");
+      exit(1);
+    } else if(pid == 0) {
+      printf("\nThe value of x in the child is: %d.\n\n", x);
+    }else{
+      x = 100;
+      printf("\nThe parent has changed the value to %d.\n\n", x);
+    }
 
     return 0;
 }
