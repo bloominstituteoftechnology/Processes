@@ -1,5 +1,5 @@
 // Write a program that opens the text.txt  file (with the `fopen()` system call) located in this directory 
-// and then calls `fork()` to create a new process. Can both the child and parent access the file descriptor returned by `fopen()`? \
+// and then calls `fork()` to create a new process. Can both the child and parent access the file descriptor returned by `fopen()`?
     // It appears they can, as they are returning the same handle of "3" from both the Parent and the Child processes. 
 // What happens when they are written to the file concurrently? 
     // It prints twice to the file. Seems too easy of an answer though, and I remain suspicious of my understanding. 
@@ -11,10 +11,7 @@
 int main(void)
 {
     FILE * file;
-    char string[81];
     file = fopen("./text.txt", "w");
-
-
 
     char forked = fork();
 
