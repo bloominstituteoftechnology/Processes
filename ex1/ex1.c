@@ -8,15 +8,9 @@
 
 int main(void)
 {
-    pid_t pid;
-    pid = fork();
+   int x = 100; 
+
+   int caller = fork(); 
     
-    if(pid == 0){
-        printf("Child\n");
-    }else{
-        printf("Parent is waiting\n");
-        wait(NULL);
-        printf("Parent\n");
-    }
     return 0;
 }
