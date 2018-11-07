@@ -25,7 +25,7 @@ int main(void)
 
         //execl("/bin/ls", "/bin/ls", NULL);
 
-        execle("/bin/ls", "/bin/ls", NULL);
+        execle("./exec", "./exec", NULL);
 
         printf("everything after exec() is ignored as this process is replaced with another process\n");
     } else {

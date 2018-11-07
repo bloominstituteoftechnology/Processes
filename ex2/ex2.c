@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <sys/wait.h>
 
 int main(void)
 {
@@ -18,9 +19,14 @@ int main(void)
         exit(1);
     } else if (rc == 0) {
         fputs("Hello from child.\n", fp);
+        wait(NULL);
+        fclose(fp);
     } else {
         fputs("Hello from parent.\n", fp);
     } 
+
+
+        
     
     return 0;
 }
