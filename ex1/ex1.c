@@ -8,7 +8,18 @@
 
 int main(void)
 {
-    // Your code here
-
+    int x = 5;
+    printf("cool x = %d\n", x);
+    int child = fork();
+    if (child < 0){
+        printf("one heckin failure");
+    }
+    else if (child == 0){
+        x = 6;
+        printf("cool x child = %d\n", x);
+    }
+    else {
+        printf("cool x parent = %d\n", x);
+    }
     return 0;
 }
