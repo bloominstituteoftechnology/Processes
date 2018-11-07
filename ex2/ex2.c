@@ -5,10 +5,21 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <sys/wait.h>
 
 int main(void)
 {
-    // Your code here 
-    
+    FILE * fp;
+    fp = fopen("text.txt", "w");
+    int rc = fork();
+
+    if (rc == 0){
+        fprintf(fp, "%s", "This is the Child\n");
+    } else {
+        wait(NULL);
+        fprintf(fp, "%s", "This is the Parent\n");
+    }
+
+    fclose(fp);
     return 0;
 }
