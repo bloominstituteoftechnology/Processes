@@ -10,7 +10,22 @@
 
 int main(void)
 {
-    // Your code here    
+    int rc = fork();   
+    char *myargs[1];
+    myargs[0] = "/bin/ls";
+    myargs[1] = NULL;
+
+    if (rc < 0){
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if ( rc == 0 ){
+        printf("Accessing child...\n");
+        execv(myargs[0], myargs);
+        printf("test run failed\n");
+    } else {
+        wait(NULL);
+        printf("Accessing parent...\n");
+    }
 
     return 0;
 }
