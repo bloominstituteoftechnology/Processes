@@ -8,5 +8,29 @@
 
 int main(void)
 {
+  // printf("hello world (pid: %d)\n", (int) getpid());
+  // int rc = fork();
+  // // ------------------------------------------------ child process starts executing here
+  // if (rc < 0) {    // fork failed; exit
+  //     fprintf(stderr, "fork failed\n");
+  //     exit(1);
+  // } else if (rc == 0) {    // child process satisfies this branch
+  //     printf("hello, child here (pid: %d) \n", (int) getpid());
+  // } else {
+  //     printf("hello, parent here (pid: %d) of child %d\n", (int) getpid(), rc);
+  // }
+
+  int x = 100;
+  printf("Parent x is %d, (pid: %d)\n", x, (int) getpid());
+  x = fork();
+  if (x < 0) {    // fork failed; exit
+      fprintf(stderr, "fork failed\n");
+      exit(1);
+  } else if (x == 0) {    // child process satisfies this branch
+      printf("child x is %d, (pid: %d) \n", x, (int) getpid());
+  } else {
+      printf("hello, parent here (pid: %d) of child %d\n", (int) getpid(), x);
+  }
+
   return 0;
 }
