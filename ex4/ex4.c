@@ -10,7 +10,24 @@
 
 int main(void)
 {
-    // Your code here    
+    // Your code here
+    int rc = fork();
+    if (rc == 0) {
+        printf("Child running.. \n");
+        char *myargs[2];
+        myargs[0] = strdup("/bin/ls");
+        myargs[1] = NULL;
+
+        execvp(myargs[0], myargs);
+    } else {
+        waitpid(rc, NULL, 0);
+        printf("Child done running \n");
+        char *myargs[2];
+        myargs[0] = strdup("/bin/ls");
+        myargs[1] = NULL;
+
+        execv(myargs[0], myargs);
+    }
 
     return 0;
 }
