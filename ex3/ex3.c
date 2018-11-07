@@ -14,10 +14,10 @@ int main(void)
     if (pid < 0) {
         printf("Forking failed!");
     } else if (pid == 0) {
-        printf("Hello from child process (pid: %d).\n", (int) getpid());
+        printf("Hello from child process. (pid: %d).\n", (int) getpid());
     } else {
         int wc = waitpid(pid, NULL, 0);
-        printf("Hello from parent process. (pid: %d) (child: %d).\n", (int) getpid(), pid);
+        printf("Goodbye from parent process. (pid: %d) (child: %d).\n", (int) getpid(), pid);
     }
 
     return 0;
