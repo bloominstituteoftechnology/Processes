@@ -9,6 +9,6 @@
 int main(void)
 {
     // Your code here
-
+    // nothing
     return 0;
 }
