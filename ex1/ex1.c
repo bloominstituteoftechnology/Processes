@@ -5,10 +5,26 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <sys/wait.h>
 
 int main(void)
 {
     // Your code here
+    int x = 100;
+    int rc = fork();
+    if (rc == 0)
+    {
+        printf("Child: ");
+        printf("%d\n", x);
+        x = 20;
+        printf("%d\n", x);
+    }
+    else
+    {
+        wait(NULL);
+        printf("Parent: ");
+        printf("%d\n", x);
+    }
 
     return 0;
 }
