@@ -15,6 +15,7 @@ int main(void)
    int forking = fork();
    if (rc < 0) {    // fork failed; exit
       printf(stderr, "fork failed\n");
+      exit(1);
       
    if (forking == 0)
    {

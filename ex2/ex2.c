@@ -8,7 +8,26 @@
 
 int main(void)
 {
-    // Your code here 
+    // Your code here
+   FILE *fp = fopen("text.txt", "w");
+   int r = fork();
+   iif (rc < 0) {    // fork failed; exit
+      printf(stderr, "fork failed\n");
+      exit(1);
+   }
+
+   else if (r == 0)
+   {
+       printf("child (pid: %d); x = %d \n", (int) getpid(), x);
+   }
+
+   else 
+   {
+       printf("parent (pid: %d); x = %d \n", (int) getpid(), x);
+   }
+   
+   fclose(fp);
+    
     
     return 0;
 }
