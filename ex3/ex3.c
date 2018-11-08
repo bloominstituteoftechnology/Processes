@@ -9,7 +9,13 @@
 
 int main(void)
 {
-    // Your code here
+    int count = fork();
+    if(count == 0) {
+        printf("goodbye\n");
+    }
+    else {
+        printf("hello\n");
+    }
 
     return 0;
 }
