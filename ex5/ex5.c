@@ -7,6 +7,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <sys/wait.h>
+#include <string.h>
 
 #define MSGSIZE 16
 
@@ -16,7 +17,24 @@ char* msg3 = "hello world #3";
 
 int main(void)
 {
-    // Your code here
-    
+    int pip[4];
+    pipe(pip);
+    int heckinfork = fork();
+    if (heckinfork == 0) {
+        close(pip[0]);
+        write(pip[0], msg1, MSGSIZE);
+        write(pip[1], msg1, MSGSIZE);
+        write(pip[2], msg1, MSGSIZE);
+        close(pip[2]);
+    } else {
+        char str[100];
+        close(pip[2]);
+        read(pip[0], str, 100);
+        read(pip[1], str, 100);
+        read(pip[2], str, 100);
+        close(pip[0]);
+        printf("%s", str);
+    }
     return 0;
 }
+

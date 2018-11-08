@@ -9,7 +9,6 @@
 
 int main(void)
 {
-    fork();
     if (fork() == 0){
         printf("hello\n");
     } else {
