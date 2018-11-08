@@ -19,10 +19,11 @@ int main(void)
         fprintf(fp, "%s %s %s %s", "I", "can", "go", "anywhere\n");
         printf("child printed\n");
         fclose(fp);
+        printf("child closed\n");
     }
     else
     {
-        fprintf(fp, "%f %f %s %s", 0.03, 5.57, "do", "anything\n");
+        fprintf(fp, "%f %f %s %s", 8.03, 67.57, "do", "anything\n");
         printf("parent printed\n");
         
     }
