@@ -9,6 +9,29 @@
 int main(void)
 {
     // Your code here
+    int x = 100;
+    printf("x value is: %d\n", x);
+    int child = fork();
+
+    if (child < 0)
+    {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    }
+    else if (child == 0)
+    {
+        printf("This is the child. Initial x value is %d\n", x);
+        printf("Changing x value...\n");
+        x = 20;
+        printf("x value is now: %d\n", x);
+    }
+    else
+    {
+        printf("This is the parent. Initial x value is %d\n", x);
+        printf("Changing x value...\n");
+        x = 99;
+        printf("x value is now: %d\n", x);
+    }
 
     return 0;
 }
