@@ -110,6 +110,7 @@ int main(int argc, char *argv[])
         exit(1);
     } else if (rc == 0) {    // child process satisfies this branch
         printf("hello, child here (pid: %d) \n", (int) getpid());
+        // char *myargs[3] = { "wc", "p3.c", NULL };
         char *myargs[3];    // allocate an array of chars to hold 3 bytes
         // `strdup` duplicates the given input string 
         myargs[0] = strdup("wc");      // pass the name of the program we want to run as the first array element 
