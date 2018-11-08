@@ -10,7 +10,22 @@
 
 int main(void)
 {
-    // Your code here    
+    int spoon = fork();
+    
+    if (spoon < 0) { 
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (spoon == 0) { 
+        printf("this is the child(pid: %d)\n", (int) getpid());
+        char *argv[2];
+        argv[0] = "/bin/ls";
+        argv[1] = NULL;
+        execv(argv[0], argv);
+        printf("print\n");
+     } else {
+        wait(NULL);
+        printf("exec complete\n");
+     }
 
     return 0;
 }
