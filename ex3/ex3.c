@@ -9,7 +9,17 @@
 
 int main(void)
 {
-    // Your code here
+    int rc = fork();
+
+    if(rc < 0) {
+        fprintf(stderr, "Fork Failed\n");
+        exit(1);
+    } else if (rc == 0) {
+        printf("Child says hello first!\n");
+    } else {
+        waitpid(rc, NULL, 0);
+        printf("Parent says goodbye last!\n");
+    }
 
     return 0;
 }

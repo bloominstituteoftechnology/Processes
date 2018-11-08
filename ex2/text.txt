@@ -1,0 +1,2 @@
+I am the parent (pid:96) of child (pid:97)
+I am the child (pid:97)
