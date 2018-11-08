@@ -10,6 +10,15 @@
 int main(void)
 {
     // Your code here
+    if (fork() == 0)
+    {
+        printf("This is the child. Hello!\n");
+    }
+    else
+    {
+        wait(NULL);
+        printf("This is the parent. Goodbye!\n");
+    }
 
     return 0;
 }
