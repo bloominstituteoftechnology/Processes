@@ -20,7 +20,17 @@ and `clock_gettime()` should work just fine.
 
 int main()
 {
-    // Your code here
-    
+    int i, avg;
+    struct timespec start, end;
+    char *msg = "";
+
+    clock_gettime(CLOCK_MONOTONIC, &start);
+    for ( i = 0; i<number_iter; i++){
+        write(1, msg, sizeof(msg)-1);
+    }
+    clock_gettime(CLOCK_MONOTONIC, &end);
+    avg = end.tv_nsec/number_iter;
+    printf("Average runtime per system call is %dns\n", avg);
     return 0;
+    //672, 981, 89, 524ns
 }
