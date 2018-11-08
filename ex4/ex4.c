@@ -30,7 +30,7 @@ printf("Getpid %d\n", (int) getpid());
 printf("About to run ls\n");
 execlp("ls", "ls", "-aF", ".", (char*)0);
 printf("Child PID printing ==> Hello\n");
-
+usleep(200*1000);
 exit(0);
 
   }
