@@ -20,7 +20,14 @@ and `clock_gettime()` should work just fine.
 
 int main()
 {
-    // Your code here
+    uint64_t diff;
+    struct timespec start, end;
+    int i;
+    clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &start);
+        write(0, NULL, 0);
+    clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end);
+    diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+	printf("dat CPU time 2 write nothing = %llu nanoseconds\n", (long long unsigned int) diff);
     
     return 0;
 }
