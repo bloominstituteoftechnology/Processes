@@ -21,14 +21,13 @@ int main(void)
   //execl("/bin/ls", "ls", NULL);
 
   if (process == 0) {
-    printf("Hello from the child!\n");
+    printf("Hello from the child, (pid: %d) \n", (int) getpid());
     execl("/bin/ls", "ls", NULL);
   } else {
-    printf("Parent is about to wait!\n");
+    printf("Parent is about to wait, (pid: %d) \n", (int) getpid());
     wait(NULL);
-    printf("Goodbye from the parent!\n");
+    printf("Goodbye from the parent, (pid: %d) \n", (int) getpid());
     execl("/bin/ls", "ls", NULL);
   }
-
   return 0;
 }
