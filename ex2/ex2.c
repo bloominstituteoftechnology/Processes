@@ -13,7 +13,7 @@ int main(void)
     fp = fopen("./text.txt", "w");
 
     int rc = fork();
-    
+
     if (rc < 0) { 
         fprintf(stderr, "fork failed\n");
         exit(1);
