@@ -4,19 +4,37 @@
 // the messages. 
 
 #include <stdio.h>
-#include <unistd.h>
 #include <stdlib.h>
-#include <sys/wait.h>
+#include <unistd.h>
 
-#define MSGSIZE 16
+#define MSGSIZE 16    
 
 char* msg1 = "hello world #1";
 char* msg2 = "hello world #2";
 char* msg3 = "hello world #3";
 
-int main(void)
+int main()
 {
-    // Your code here
+    char inbuf[MSGSIZE];
+    int p[2];             
+
+    if (pipe(p) < 0) {
+        fprintf(stderr, "pipe failed\n");
+        exit(1);
+    }
+    
+    int forked = fork();
+
+    if(forked == 0) {
+      write(p[1], msg1, MSGSIZE);
+      write(p[1], msg2, MSGSIZE);
+      write(p[1], msg3, MSGSIZE);
+    } else {
+        for (int i = 0; i < 3; i++) {
+            read(p[0], inbuf, MSGSIZE);
+            printf("Parent is reading and printing: %s with ppid of %d\n", inbuf, (int) getppid());
+        }
+      }
     
     return 0;
 }
