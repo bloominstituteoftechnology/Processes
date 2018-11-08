@@ -18,9 +18,39 @@ and `clock_gettime()` should work just fine.
 #define number_iter 1000000
 #define BILLION 1000000000L
 
-int main()
+int main(void)
 {
     // Your code here
-    
+    struct timespec start, stop;
+    // long == larger numbers
+    //double == 15 decimal places
+    long total = 0; 
+    long difference; 
+    double average;
+    //loop through, i is less than 1000000, i increment.
+    for(int i = 0; i < number_iter; i++){
+        //CLOCK_MONOTONIC: Represents monotonic time since some 
+        //unspecified starting point. This clock cannot be set.
+        clock_gettime(CLOCK_MONOTONIC, &start);
+        //fileno: returns the integer value of the file descriptor.
+        //number of the indicated file. works with stdout.
+        //stdout: basically leaving it up to the user to decide
+        //where that output should go.
+        write(fileno(stdout), NULL, 0); 
+
+        clock_gettime(CLOCK_MONOTONIC, &stop);
+        //timespec allows use of tv_sec
+        //tv_sec: represents the number of whole seconds of 
+        //elapsed time.
+        //tv_nsec: this is the rest of the elapsed time,
+        //represented as the number of nanoseconds. always les than one billion.
+        //differnce is BILLION * the sum of (stop - start) + (stop -start).
+        //add the difference to the total.
+        difference = BILLION * (stop.tv_sec - start.tv_sec) + (stop.tv_nsec - start.tv_nsec);
+        total += difference;
+    }
+    average = total / (float) number_iter;
+
+    printf("Average time %f\n", average); 
     return 0;
 }
