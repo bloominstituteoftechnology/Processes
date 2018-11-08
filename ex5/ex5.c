@@ -23,7 +23,7 @@ int main(void)
         printf("pipe failed");
         exit(1); //dont know why I need this yet. 
     }
-    
+
     int isChild = fork();
 
     if (isChild < 0){
