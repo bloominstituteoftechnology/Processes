@@ -10,13 +10,8 @@ To introduce and familiarize yourself with some basic system calls pertaining to
 creation, to spawn some new processes, and to practice writing more C!
 
 ## `fork()`
-The `fork()` system call is used by a parent process to create a new child process. Its 
-actual implementation isn't as intuitive as it could be, though. When a parent process 
-executes `fork()`, the new child process that is created is an almost exact copy of the 
-calling process from the operating system's perspective. We say _almost_ an exact copy 
-to delineate the fact that while the new child process has the same instruction set 
-(i.e. code) as its parent process, the child process starts executing at the point right 
-after `fork()` is called in the parent process. 
+The `fork()` system call is used by a parent process to create a new child process. Its actual implementation isn't as intuitive as it could be, though. When a parent process executes `fork()`, the new child process that is created is an almost exact copy of the calling process from the operating system's perspective. We say _almost_ an exact copy 
+to delineate the fact that while the new child process has the same instruction set (i.e. code) as its parent process, the child process starts executing at the point right after `fork()` is called in the parent process. 
 
 Let's look at a program that calls `fork()` to try to give an example of what this means:
 ```c
