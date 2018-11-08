@@ -22,5 +22,17 @@ int main()
 {
     // Your code here
     
+    uint64_t diff;
+	struct timespec start, end;
+    long long unsigned int elapsed_time=0;
+    for (int i=0; i<number_iter;i++) {
+        clock_gettime(CLOCK_MONOTONIC, &start);	
+	    write(0,"",0);
+	    clock_gettime(CLOCK_MONOTONIC, &end);
+	    diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+        elapsed_time+=diff;
+    }
+    elapsed_time=elapsed_time/number_iter;
+    printf("Average time=%llu nanoseconds\n",elapsed_time);
     return 0;
 }
