@@ -37,6 +37,6 @@ int main()
         av = ((av * (count - 1)) + diff ) / count;
             
     }
-    printf("%d \n", av);
+    printf("%lld \n", av);
     return 0;
 }
