@@ -13,8 +13,12 @@ int main(void)
     pid_t pid;
 	
     pid=fork();
-
-    if(pid==0){
+	
+    if(pid<0){
+    	fprintf(stderr, "fork failed\n");
+        exit(1);
+    }
+    else if(pid==0){
 	x=80;    
     	printf("I'm the child! and x = %d\n", x);  //child changes the value of x and prints it out
     }
