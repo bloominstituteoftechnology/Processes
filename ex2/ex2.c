@@ -13,22 +13,20 @@ int main(void)
     fp = fopen("./text.txt", "w");
 
     int rc = fork();
-
+    
     if (rc < 0) { 
         fprintf(stderr, "fork failed\n");
         exit(1);
     } else if (rc == 0) {
         fputs("Hello from child.\n", fp);
-        wait(NULL);
-        fclose(fp);
     } else {
         fputs("Hello from parent.\n", fp);
     } 
-
-
         
-    
+    fclose(fp);
+
     return 0;
 }
 
-// Both parent and child can access the file.
+// if fopen() first, open file persists for both parent and child
+// if fork() first, one file overwrites the other

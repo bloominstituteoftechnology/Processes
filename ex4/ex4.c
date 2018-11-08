@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/wait.h>
-#include <string.h>
+//#include <string.h>
 
 int main(void)
 {
@@ -27,7 +27,7 @@ int main(void)
 
         execle("./exec", "./exec", NULL);
 
-        printf("everything after exec() is ignored as this process is replaced with another process\n");
+        printf("everything after exec() is ignored as the current process is replaced with another process\n");
     } else {
         int wc = waitpid(rc, NULL, 0);
     }
