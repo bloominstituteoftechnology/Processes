@@ -10,7 +10,12 @@ int main(void)
 {
     // Your code here
     int x = 100;
-    if (fork() == 0)
+    if (fork() < 0)
+    {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    }
+    else if (fork() == 0)
     {
         x = 50;
         printf("Hello from Child! x is %d\n", x);
