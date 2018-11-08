@@ -13,14 +13,14 @@ int main(void)
     if (fork() == 0)
     {
         x = 50;
-        printf("Hello from Child!\n", x);
+        printf("Hello from Child! x is %d\n", x);
     }
     else
     {
         x = 500;
-        printf("Hello from Parent!\n", x);
+        printf("Hello from Parent! x is %d\n", x);
     }
 
+    printf("%d\n",x);
     return 0;
 }
-test 3
