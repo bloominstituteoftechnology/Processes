@@ -2,6 +2,10 @@
 // (e.g., x) and set its value to something (e.g., 100). What value is the variable in the child process?
 // What happens to the variable when both the child and parent change the value of x?
 
+// forks return 0 if you are the child
+// forks return non 0 if you are the parent
+// forks return -1 for errors
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>

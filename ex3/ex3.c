@@ -15,11 +15,11 @@ int main(void)
     process = fork();
 
     if (process == 0) {
-      printf("I'm the child!\n");
+      printf("Hello from the child!\n");
     } else {
       printf("Parent is about to wait!\n");
       wait(NULL);
-      printf("I'm the parent!\n");
+      printf("Goodbye from the parent!\n");
     }
 
 	return 0;

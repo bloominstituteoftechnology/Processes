@@ -10,7 +10,25 @@
 
 int main(void)
 {
-    // Your code here    
+  // Your code here
+  printf("Before Fork!\n");
+  //execl("/bin/ls", "ls", NULL);
 
-    return 0;
+  pid_t process;
+  process = fork();
+  
+  printf("Parent Then Child Print After Fork, (pid: %d) \n", (int) getpid());
+  //execl("/bin/ls", "ls", NULL);
+
+  if (process == 0) {
+    printf("Hello from the child!\n");
+    execl("/bin/ls", "ls", NULL);
+  } else {
+    printf("Parent is about to wait!\n");
+    wait(NULL);
+    printf("Goodbye from the parent!\n");
+    execl("/bin/ls", "ls", NULL);
+  }
+
+  return 0;
 }
