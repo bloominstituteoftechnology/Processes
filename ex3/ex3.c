@@ -10,6 +10,23 @@
 int main(void)
 {
     // Your code here
+    pid_t pid;
+    pid = fork();
+    // ------------------------------------------------ child process starts executing here
+    if (pid < 0)
+    { // fork failed; exit
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    }
+    else if (pid == 0)
+    { // child process satisfies this branch
+        printf("Hello\n");
+    }
+    else
+    {
+        int wc = waitpid(pid, NULL, 0);
+        printf("Goodbye\n");
+    }
 
     return 0;
 }
