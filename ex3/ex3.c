@@ -9,7 +9,13 @@
 
 int main(void)
 {
-    // Your code here
+    fork();
+     if (fork() == 0){
+        printf("Hello\n");
+    } else {
+        wait(NULL);
+        printf("Goodbye\n");
+    }
 
     return 0;
 }
