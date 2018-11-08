@@ -29,5 +29,6 @@ int main(void)
       c = fgetc(fp);
       printf("PARENT: %c\n", c);
     }
+    fclose(fp);
     return 0;
 }
