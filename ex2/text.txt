@@ -1,4 +1,3 @@
-Prime: 2
 Prime: 3
 Prime: 5
 Prime: 7
@@ -166,4 +165,4 @@ Prime: 977
 Prime: 983
 Prime: 991
 Prime: 997
-The parent added this...
+Parent wrote this.

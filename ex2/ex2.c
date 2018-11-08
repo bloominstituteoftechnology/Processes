@@ -23,9 +23,9 @@ int main(void)
       for(i = 2; i < 100; i += 2){
         fprintf(fp, "Even: %d\n", i);
       }
-
+      fprintf(fp, "Child wrote this.");
       fclose(fp);
-    }else{
+    }else{      
       fp = fopen("text.txt", "w");
       for(i = 3; i < 1000; i++){
         for(j=2; j<i; j++){
@@ -37,6 +37,7 @@ int main(void)
           fprintf(fp, "Prime: %d\n", i);
         }
       }
+      fprintf(fp, "Parent wrote this.");
       fclose(fp);
   }
 
