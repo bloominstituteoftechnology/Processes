@@ -13,7 +13,9 @@ int main(void)
     // Your code here
    int x = 100;
    int forking = fork();
-
+   if (rc < 0) {    // fork failed; exit
+      printf(stderr, "fork failed\n");
+      
    if (forking == 0)
    {
        x = 70;
