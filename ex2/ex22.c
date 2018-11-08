@@ -11,28 +11,36 @@ int main(void)
   FILE *fp;
   int c;
 
-  fp = fopen("file.txt","r");
-  while(1) {
-    c = fgetc(fp);
-    if( feof(fp) ) { 
-      break ;
-    }
-    printf("%c", c);
-  }
-  printf("\n");
+  printf("Before Fork \n");
+  int new;
+  new = fork();
+  printf("Parent Then Child Print After Fork, (pid: %d) \n", (int) getpid());
 
-  c = fork();
-
-  if (c < 0) {    // fork failed; exit
+  if (new < 0) {    // fork failed; exit
     fprintf(stderr, "fork failed\n");
     exit(1);
-  } else if (c == 0) {    // child process satisfies this branch
-      printf("child x is %c, (pid: %d) \n", c, (int) getpid());
+  } else if (new == 0) {    // child process satisfies this branch
+    fp = fopen("file.txt","r");
+    while(1) {
+      c = fgetc(fp);
+      if( feof(fp) ) { 
+        break ;
+      }
+      printf("%c", c);
+    }
+    printf(" - Child Printed This, (pid: %d) \n", (int) getpid());
+    fclose(fp);
   } else {
-      printf("hello, parent here (pid: %d) of child %c\n", (int) getpid(), c);
+    fp = fopen("file.txt","r");
+    while(1) {
+      c = fgetc(fp);
+      if( feof(fp) ) { 
+        break ;
+      }
+      printf("%c", c);
+    }
+    printf(" - Parent Printed This, (pid: %d)\n", (int) getpid());
+    fclose(fp);
   }
-
-  fclose(fp);
-
   return(0);
 }
