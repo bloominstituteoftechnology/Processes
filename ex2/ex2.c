@@ -15,7 +15,7 @@
 int main(void)
 {
     FILE *fileptr;
-    fileptr = fopen("text.txt", "w"); // means open for writing
+    fileptr = fopen("text.txt", "w+"); // means open for writing
 
     int rc = fork();
 
@@ -23,16 +23,20 @@ int main(void)
         fprintf(stderr, "fork failed\n");
         exit(1);
     } else if (rc == 0) {
-        printf("child\n");
-        char *child = "test for child process\n";
-        fwrite(child, sizeof(char), strlen(child), fileptr); // fwrite(address_data,size_data,numbers_data,pointer_to_file)
+        fprintf(fileptr, "child text\n");
+        // char *child = "test for child process\n";
+        // write(child, sizeof(char), strlen(child), fileptr); // fwrite(address_data,size_data,numbers_data,pointer_to_file)
     } else {
-        printf("parent\n");
-        char *parent = "test for parent process\n";
-        fwrite(parent, sizeof(char), strlen(parent), fileptr);
+        fprintf(fileptr, "parent text\n");
+        // char *parent = "test for parent process\n";
+        // write(parent, sizeof(char), strlen(parent), fileptr);
     }
 
     fclose(fileptr);
 
     return 0;
 }
+
+
+
+//gcc -Wall -Wextra -o ex2 ex2.c
