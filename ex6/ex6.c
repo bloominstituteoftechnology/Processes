@@ -29,11 +29,14 @@ int main()
       clock_gettime(CLOCK_MONOTONIC, &start); //start time
       write(1, NULL, 0); //empty write call
       clock_gettime(CLOCK_MONOTONIC, &end); //end time
-      // increase total by
+      // increase total by difference of end and start in nanoseconds
       total += BILLION * (end.tv_sec-start.tv_sec) + (end.tv_nsec - start.tv_nsec);
     }
 
+    //get average by dividing iterations from total
     avg = total / number_iter;
+
+    //results
     printf("The average time for a system call is: %ld nanoseconds\n", avg);
     printf("This is equal to %.06f milliseconds.\n", (float)avg/1000000);
     return 0;
