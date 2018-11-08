@@ -29,7 +29,7 @@ int main(void)
     int child = fork();
     if (child == 0){
         FILE *test = fopen("text.txt","a+");
-        fprintf(test, "%s %s %s \n", "Child", "was", "here", 2012);
+        fprintf(test, "%s %s %s \n", "Child", "was", "here");
 
         printf("Child read:\n");
         fseek(test,0,SEEK_SET);
@@ -39,7 +39,7 @@ int main(void)
     else{
         int wc = wait( NULL);
         FILE *test = fopen("text.txt","a+");
-        fprintf(test, "%s %s %s \n\n", "Parent", "was", "here", 2012);
+        fprintf(test, "%s %s %s \n\n", "Parent", "was", "here");
 
         printf("Parent read:\n");
         fseek(test,0,SEEK_SET);

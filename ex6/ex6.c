@@ -28,14 +28,14 @@ int main()
     __uint64_t diff;
     printf("Running\n");
     while( count != number_iter){
-    clock_gettime(CLOCK_MONOTONIC, &start);
-        fprintf( stdout, "" );
-    clock_gettime(CLOCK_MONOTONIC, &end);
-    
-    diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
-    count++;
-    av = ((av * (count - 1)) + diff ) / count;
+        clock_gettime(CLOCK_MONOTONIC, &start);
+            fprintf( stdout, "" );
+        clock_gettime(CLOCK_MONOTONIC, &end);
         
+        diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+        count++;
+        av = ((av * (count - 1)) + diff ) / count;
+            
     }
     printf("%d \n", av);
     return 0;
