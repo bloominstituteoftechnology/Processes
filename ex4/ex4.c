@@ -10,7 +10,24 @@
 
 int main(void)
 {
-    // Your code here    
+    int rc = fork();
+    
+    if (rc < 0) {    // fork failed; exit
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {    // child process satisfies this branch
+        printf("hello, child here (pid: %d)\n", (int) getpid());
+        char *argv[2];
+        argv[0] = "/bin/ls";
+        argv[1] = NULL;
+        execv(argv[0], argv);
+        printf("Will this print?\n");
 
+
+    } else {
+        wait(NULL);
+        printf("exec complete\n");
+
+    }
     return 0;
 }
