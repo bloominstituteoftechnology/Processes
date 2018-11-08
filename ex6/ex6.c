@@ -26,7 +26,7 @@ int main()
     double Average;
     struct timespec start, end;
     float Difference;
-    long i;
+    int i;
 
     for (i = 1; i < number_iter; i++) {
         clock_gettime(CLOCK_MONOTONIC, &start);
