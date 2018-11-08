@@ -180,13 +180,14 @@ int main(int argc, char **argv)
       flock(fd2, LOCK_EX);
       read_balance(fd2, &balance);
 
+      amount = (rand() % 3 == 1) ? amount : (amount * -1);
       newBalance = balance - amount;
 
       if(newBalance < 0){
         printf("Only have $%d, can't withdraw $%d\n", balance, amount);
       }else{
         write_balance(fd2, newBalance);
-        printf("Withdrew $%d, new balance $%d\n", amount, newBalance);
+        printf("%s $%d, new balance $%d\n", (amount < 0 ? "Deposited" : "Withdrew"), abs(amount), newBalance);
       }
       flock(fd2, LOCK_UN);
       close_balance_file(fd2);
