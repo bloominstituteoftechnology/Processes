@@ -117,6 +117,10 @@ int main(int argc, char **argv)
 	// message to stderr, and exit with status 1:
 	//
 	// "usage: bankers numprocesses\n"
+  if(argc < 2 || argc > 2){
+    fprintf(stderr, "usage: bankers numprocesses\n");
+    exit(1);
+  }
 
 	// Store the number of processes in this variable:
 	// How many processes to fork at once
@@ -173,6 +177,7 @@ int main(int argc, char **argv)
 			// Child process exits
 
       int fd2 = open_balance_file(BALANCE_FILE);
+      flock(fd2, LOCK_EX);
       read_balance(fd2, &balance);
 
       newBalance = balance - amount;
@@ -183,6 +188,7 @@ int main(int argc, char **argv)
         write_balance(fd2, newBalance);
         printf("Withdrew $%d, new balance $%d\n", amount, newBalance);
       }
+      flock(fd2, LOCK_UN);
       close_balance_file(fd2);
 			exit(0);
 		}
