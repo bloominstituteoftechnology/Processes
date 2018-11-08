@@ -11,7 +11,7 @@
 int main(void)
 {
     pid_t pid = fork();
-    char *myargs[] = {"ls", "-l", 0};
+    char *myargs[] = {"/bin/ls", "-l", 0};
 
     printf("Hello, process! (pid: %d).\n", (int) getpid());
     if (pid < 0) {
