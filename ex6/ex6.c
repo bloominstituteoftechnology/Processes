@@ -20,7 +20,18 @@ and `clock_gettime()` should work just fine.
 
 int main()
 {
-    // Your code here
-    
+    long total = 0;
+    long avg = 0;
+    struct timespec start, end;
+
+    for (int i = 0; i < number_iter; i++) {
+        clock_gettime(CLOCK_MONOTONIC, &start);
+        fprintf(stdout, "");
+        clock_gettime(CLOCK_MONOTONIC, &end);
+        long accum = ( end.tv_nsec - start.tv_nsec ) + ( end.tv_sec - start.tv_sec ) * BILLION;
+        total += accum;
+    }
+    avg = total / number_iter;
+    printf("Average time to run a system call: %ld nanoseconds\n", avg);
     return 0;
 }
