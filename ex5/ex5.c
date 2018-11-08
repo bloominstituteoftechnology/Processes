@@ -35,7 +35,7 @@ int main(void)
         for (int i = 0; i < 3; i++) {
         // read 16 bytes of data from the read file descriptor 
         read(pipearr[0], inbuf, MSGSIZE);
-        printf("% s\n", inbuf);
+        printf("%s \n", inbuf);
         }
         close(pipearr[0]); 
 
