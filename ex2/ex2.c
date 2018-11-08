@@ -11,7 +11,7 @@ int main(void)
     // Your code here
    FILE *fp = fopen("text.txt", "w");
    int r = fork();
-   iif (rc < 0) {    // fork failed; exit
+   if (rc < 0) {    // fork failed; exit
       printf(stderr, "fork failed\n");
       exit(1);
    }
