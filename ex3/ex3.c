@@ -17,8 +17,8 @@ int main(void)
     } else if (rc == 0) {
         printf("Hello!\n");
     } else {
-        int wc = wait(rc, NULL, 0);
-         wait(NULL);
+        int wc = waitpid(rc, NULL, 0);
+      //   wait(NULL);
         printf("Goodbye!\n");
     }
     return 0;
