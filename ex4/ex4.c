@@ -10,6 +10,7 @@
 
 int main(void)
 {
+    int f = fork();
     // Your code here    
 
     return 0;
