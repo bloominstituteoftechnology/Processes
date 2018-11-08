@@ -23,13 +23,12 @@ int main(void)
         fprintf(stderr,"pipe failed\n");
         exit(1);
     } else {
-        int child=fork();
+        int child=fork(); 
         if (child==0){
             write(p[1], msg1, MSGSIZE);
             write(p[1], msg2, MSGSIZE);
             write(p[1], msg3, MSGSIZE);
         } else {
-            wait(0);
             for (int i=0; i<3; i++){
                 read(p[0], inbuf, MSGSIZE);
                 printf("%s\n", inbuf);
