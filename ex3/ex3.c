@@ -10,6 +10,18 @@
 int main(void)
 {
     // Your code here
+    pid_t pid;
 
+    pid = fork();
+
+    if(pid < 0){
+      printf("Fork failed.");
+      exit(1);
+    }else if(pid == 0){
+      printf("Hello!\n");
+    }else{
+      int wc = waitpid(pid, NULL, 0);
+      printf("Goodbye!\n");
+    }
     return 0;
 }
