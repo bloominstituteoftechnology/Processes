@@ -11,16 +11,17 @@ int main(void)
     FILE *fp = fopen("text.txt", "w");
     int rc = fork();
     char par_str[] = "This is from the parent.\n";
-    char chi_str[] = "this is from the child.\n";
+    char chi_str[] = "This is from the child.\n";
     
     if (rc < 0) {    // fork failed; exit
         fprintf(stderr, "fork failed\n");
         exit(1);
     } else if (rc == 0) {    // child process satisfies this branch
-        fwrite(chi_str, 1, sizeof(chi_str), fp);
+        fprintf(fp, "%s", chi_str);
     } else {
-        fwrite(par_str, 1, sizeof(par_str), fp);
+        fprintf(fp, "%s", par_str);
     }
     
+    fclose(fp);
     return 0;
 }
