@@ -25,7 +25,7 @@ int main(void)
     } else if (rc == 0) {
         printf("This is child\n");
         char *child_text = "Is this working? mmmmm\n";
-        fwrite (child_text, 1, strlen(child_text), file_to_read);
+        fwrite (child_text, 1, strlen(child_text), file_to_read); // fprintf can also write to files
     } else {
         printf("This is parent\n");
         char *parent_text = "I don't really know! what?!\n";
