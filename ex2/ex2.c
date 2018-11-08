@@ -10,9 +10,16 @@ int main(void)
 {
     FILE *file = fopen("text.txt", "r");
     int f = fork();
-    if (file != NULL)
+    if (f == 0)
     {
+        fprintf(file, "%s", "Child");
     }
+
+    else
+    {
+        fprintf(file, "%s", "Parent");
+    }
+    fclose(file);
 
     return 0;
 }
