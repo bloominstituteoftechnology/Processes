@@ -9,7 +9,7 @@
 
 int main(void)
 {
-   // Your code here
+    // Your code here
     int child = fork();
     if (child < 0)
     {
