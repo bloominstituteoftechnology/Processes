@@ -8,7 +8,22 @@
 
 int main(void)
 {
-    // Your code here
-
+    int x;
+    int f = fork();
+    if (f < 0) // if fork less than 0, print error
+    {
+        printf("something is not right.");
+    }
+    else if (f == 0) // if fork equals 0, set variable and print child
+    {
+        x = 200;
+        printf("child: value of x is %d\n", x); // 200
+    }
+    else // set variable and print parent
+    {
+        x = 100;
+        printf("Parent: value of x is %d\n", x); // 100
+    }
+    // separate scopes from the parent
     return 0;
 }
