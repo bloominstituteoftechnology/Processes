@@ -26,13 +26,26 @@ int main(void)
         exit(1);
     }
 
-    write(f[1], msg1, MSGSIZE);
-    write(f[1], msg2, MSGSIZE);
-    write(f[1], msg2, MSGSIZE);
+    int forking = fork();
 
-    for (i = 0; i < 3; i ++) {
-        read(f[0], buffer, MSGSIZE);
-        printf("%s\n", buffer);
+    if (forking < 0) {
+        fprintf(stderr, "Forking error.\n");
+    } else if (forking == 0) {
+
+        printf("Child activity.\n");
+        write(f[1], msg1, MSGSIZE);
+        write(f[1], msg2, MSGSIZE);
+        write(f[1], msg3, MSGSIZE);
+        
+    } else {
+
+        printf("Parent activity.\n");
+        for (i = 0; i < 3; i ++) {
+            
+            read(f[0], buffer, MSGSIZE);
+            printf("%s\n", buffer);
+        
+        }
     }
     
     return 0;
