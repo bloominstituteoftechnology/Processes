@@ -14,6 +14,6 @@ int main(void)
     fork();
     
     fprintf( fp, "this is written to the file by %d. \n", (int) getpid());
-
+    //did it print sequentially because of the easy computation? 
     return 0;
 }

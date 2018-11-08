@@ -12,6 +12,6 @@ int main(void)
     int x = 100;
     fork();
     printf("this is the print of x %d. at pid %d. \n", x, (int) getpid());
-
+    //could put a fork to delineate further from parent and child.
     return 0;
 }

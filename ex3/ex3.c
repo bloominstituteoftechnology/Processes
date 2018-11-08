@@ -15,7 +15,8 @@ int main(void)
     int parent = getppid();
     printf("parent %d\n", parent);
     char * hello = "hello";
-    int rc = fork();
+    int rc = fork(); //this return is a function that return 0 or 1 if parent of child
+
     int wc = waitpid(rc, NULL, 0); //waits for fork on line 15
     if(rc < 0){
         printf("fork failed\n");
