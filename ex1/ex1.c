@@ -8,7 +8,22 @@
 
 int main(void)
 {
-    // Your code here
-
+    int x = 100;
+    int rc = fork(); // fork initialized 
+    if(rc < 0){
+        fprintf(stderr, "fork failed\n"); //stderr is standard error stream, default destination for error messages
+        exit(1);
+    }else if(rc == 0){ // child process
+        printf("Child fork (pid: %d) X: %d \n", (int) getpid(), x); 
+        x = 20;
+        printf("X Child fork reassigned: %d", x);
+    }else{
+        printf("Parent fork (pid: %d) of child \n", (int) getpid());
+        x = 101; 
+        printf("X Parent fork reassigned: %d", x); 
+    }
     return 0;
 }
+
+// The value of the variable in the child process is the same to the value in the parent variable. 
+// When the child changes the value of x it does not reflect on the parent fork. The variables no longer point to the same value. 
