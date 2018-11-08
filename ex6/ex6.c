@@ -24,21 +24,12 @@ char* msg1 = "hello world #1";
 
 int main()
 {
-    char inbuf[MSGSIZE]; 
-    int p[2];
-    if (pipe(p) < 0){
-        printf("pipe failed");
-        exit(1); //dont know why I need this yet. 
-    }
-
     struct timespec start, finish; 
     
     clock_gettime(CLOCK_REALTIME, &start); 
     // int i,j; for (i=0,j=0; i<100000000; i++) { j+=i*i; }     
     printf("how long does this take to print?\n");
-    sleep(2);
-    
-
+    // sleep(2);
     clock_gettime(CLOCK_REALTIME, &finish); 
     
     long seconds = finish.tv_sec - start.tv_sec; 
@@ -48,9 +39,8 @@ int main()
         --seconds; 
         ns += 1000000000; 
     } 
-    
+
     printf("seconds without ns: %ld\n", seconds); 
     printf("nanoseconds: %ld\n", ns); 
     printf("total seconds: %e\n", (double)seconds + (double)ns/(double)1000000000); 
-
 }
