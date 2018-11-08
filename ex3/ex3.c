@@ -10,6 +10,17 @@
 int main(void)
 {
     // Your code here
+    pid_t process;
 
-    return 0;
+    process = fork();
+
+    if (process == 0) {
+      printf("Hello from the child!\n");
+    } else {
+      printf("Parent is about to wait!\n");
+      wait(NULL);
+      printf("Goodbye from the parent!\n");
+    }
+
+	return 0;
 }

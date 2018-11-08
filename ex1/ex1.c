@@ -2,13 +2,32 @@
 // (e.g., x) and set its value to something (e.g., 100). What value is the variable in the child process?
 // What happens to the variable when both the child and parent change the value of x?
 
+// forks return 0 if you are the child
+// forks return non 0 if you are the parent
+// forks return -1 for errors
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 
 int main(void)
 {
-    // Your code here
+  int x = 100;
+  printf("Parent x is %d before fork, (pid: %d)\n", x, (int) getpid());
+  
+  int new;
+  new = fork();
 
-    return 0;
+  printf("Logging after fork, (pid: %d)\n", (int) getpid());
+
+  if (new < 0) {    // fork failed; exit
+      fprintf(stderr, "fork failed\n");
+      exit(1);
+  } else if (new == 0) {    // child process satisfies this branch
+      printf("child x is %d, (pid: %d) \n", x, (int) getpid());
+  } else {
+      printf("hello, parent here (pid: %d) of child\n", (int) getpid());
+  }
+
+  return 0;
 }
