@@ -10,7 +10,14 @@
 
 int main(void)
 {
-    // Your code here    
+  // Your code here 
+  int rc = fork();
+  char *program = "/bin/ls";
 
-    return 0;
+  if(rc == 0){
+    char *arrrrrgs = {"./bin", "ls", NULL};
+    execvp(arrrrrgs[0], arrrrrgs);
+  } 
+
+  return 0;
 }
