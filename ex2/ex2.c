@@ -31,7 +31,7 @@ int main(void)
     }
     else {
         printf("\nparent process...\n");
-        char *fileStr2 = "whatever again, c...\n";
+        char *fileStr2 = "whatever again, hey hey hey, c...\n";
         fwrite(fileStr2, 1, strlen(fileStr2), fp);
     }
     
