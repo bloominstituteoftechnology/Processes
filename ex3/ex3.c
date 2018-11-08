@@ -11,7 +11,10 @@ int main(void)
 {
     // Your code here
     int rc = fork();
-    if (rc == 0) {
+    if (rc < 0) {    // fork failed; exit
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {
         printf("hello\n");
     } else {
         wait(NULL);

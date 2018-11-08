@@ -13,7 +13,10 @@ int main(void)
 
     fp = fopen("text.txt", "w");
     int rc = fork();
-    if (rc == 0) {
+    if (rc < 0) {    // fork failed; exit
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {
         fprintf(fp, "%s", "Hello from the Child\n");
     } else {
         wait(NULL);
