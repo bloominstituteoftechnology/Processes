@@ -16,7 +16,6 @@ int main(void)
     if (rc == 0){
         fprintf(fp, "%s", "This is the Child\n");
     } else {
-        wait(NULL);
         fprintf(fp, "%s", "This is the Parent\n");
     }
 
