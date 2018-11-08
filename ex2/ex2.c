@@ -8,16 +8,34 @@
 
 int main(void)
 {
-    FILE *file = fopen("text.txt", "r");
+    FILE *file = fopen("text.txt", "r+");
     int f = fork();
+    int c;
+    if (f < 0)
+    {
+        printf("Could not fork\n");
+        exit(1);
+    }
     if (f == 0)
     {
-        fprintf(file, "%s", "Child");
+        fprintf(file, "\n%s %s", "Forked", "text");
+        printf("Child fork created\n");
     }
-
     else
     {
-        fprintf(file, "%s", "Parent");
+        int wait = waitpid(f, NULL, 0);
+        fprintf(file, "\n%s %s", "Parent", "section");
+        printf("I'm the parent\n");
+    }
+    while (1)
+    {
+        c = fgetc(file);
+        if (feof(file))
+        {
+            printf("\n");
+            break;
+        }
+        printf("%c", c);
     }
     fclose(file);
 
