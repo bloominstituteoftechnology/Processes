@@ -27,7 +27,7 @@ int main(void)
       fclose(fp);
     }else{
       fp = fopen("text.txt", "w");
-      for(i = 2; i < 1000; i++){
+      for(i = 3; i < 1000; i++){
         for(j=2; j<i; j++){
           if(i % j == 0){
             break;
