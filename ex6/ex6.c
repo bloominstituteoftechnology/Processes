@@ -29,24 +29,29 @@ int main(int argc, char **argv)
 	__uint64_t diff;
 	struct timespec start, end;
 	int i;
-
+    int sum;
 	/* measure monotonic time */
-	clock_gettime(CLOCK_MONOTONIC, &start);	/* mark start time */
-	sleep(1);	/* do stuff */
-	clock_gettime(CLOCK_MONOTONIC, &end);	/* mark the end time */
+    for (i = 0; i < number_iter; i++){
+	    clock_gettime(CLOCK_MONOTONIC, &start);	/* mark start time */
+	    write(1, NULL , 0);	/* do stuff */
 
-	diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
-	printf("elapsed time = %llu nanoseconds\n", (long long unsigned int) diff);
+	    clock_gettime(CLOCK_MONOTONIC, &end);	/* mark the end time */
 
-	/* now re-do this and measure CPU time */
-	/* the time spent sleeping will not count (but there is a bit of overhead */
-	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &start);	/* mark start time */
-	sleep(1);	/* do stuff */
-	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end);		/* mark the end time */
+        diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+        sum += diff;
+        // printf("elapsed time = %llu nanoseconds\n", (long long unsigned int) diff);
+        
 
-	diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
-	printf("elapsed process CPU time = %llu nanoseconds\n", (long long unsigned int) diff);
+        /* now re-do this and measure CPU time */
+        /* the time spent sleeping will not count (but there is a bit of overhead */
+        // clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &start);	/* mark start time */
+        // write(1, NULL , 0);	/* do stuff */
+        // clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end);		/* mark the end time */
 
+        // diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+        // printf("elapsed process CPU time = %llu nanoseconds\n", (long long unsigned int) diff);
+    }
+        int average = sum / number_iter;
 	return 0;
 
     // int clockid_t clock_gettime(CLOCK_REALTIME, struct timespec *tp);
