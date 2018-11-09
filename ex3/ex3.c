@@ -33,6 +33,7 @@ int main(void)
         printf("hello, pid = %d\n", getpid());
     }else {
         wait(NULL);
+        // int wc = waitpit(rc, NULL, 0);
         printf("goodbye, pid = %d\n", getpid());
     }
     return 0;
