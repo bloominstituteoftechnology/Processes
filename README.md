@@ -1,5 +1,8 @@
 # Processes and System Calls
 
+setting up the PR
+
+
 Now that we've talked a bit about how processes and system calls work at a high level, it's time to apply these concepts by doing some exercises related to process creation and making system calls. We'll be utilizing the `fork()`, `exec()`, `wait()`, and `pipe()` system calls in order to create processes and even have them pass messages to each other.
 
 ## Objective
@@ -7,13 +10,8 @@ To introduce and familiarize yourself with some basic system calls pertaining to
 creation, to spawn some new processes, and to practice writing more C!
 
 ## `fork()`
-The `fork()` system call is used by a parent process to create a new child process. Its 
-actual implementation isn't as intuitive as it could be, though. When a parent process 
-executes `fork()`, the new child process that is created is an almost exact copy of the 
-calling process from the operating system's perspective. We say _almost_ an exact copy 
-to delineate the fact that while the new child process has the same instruction set 
-(i.e. code) as its parent process, the child process starts executing at the point right 
-after `fork()` is called in the parent process. 
+The `fork()` system call is used by a parent process to create a new child process. Its actual implementation isn't as intuitive as it could be, though. When a parent process executes `fork()`, the new child process that is created is an almost exact copy of the calling process from the operating system's perspective. We say _almost_ an exact copy 
+to delineate the fact that while the new child process has the same instruction set (i.e. code) as its parent process, the child process starts executing at the point right after `fork()` is called in the parent process. 
 
 Let's look at a program that calls `fork()` to try to give an example of what this means:
 ```c
@@ -112,6 +110,7 @@ int main(int argc, char *argv[])
         exit(1);
     } else if (rc == 0) {    // child process satisfies this branch
         printf("hello, child here (pid: %d) \n", (int) getpid());
+        // char *myargs[3] = { "wc", "p3.c", NULL };
         char *myargs[3];    // allocate an array of chars to hold 3 bytes
         // `strdup` duplicates the given input string 
         myargs[0] = strdup("wc");      // pass the name of the program we want to run as the first array element 
