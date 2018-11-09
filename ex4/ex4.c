@@ -10,7 +10,11 @@
 
 int main(void)
 {
-    // Your code here    
-
+    // Your code here
+    fork();
+    exec("/bin/ls");
+    execl("/bin/ls");   
+    execle("/bin/ls");
+    execv("/bin/ls");
     return 0;
 }
