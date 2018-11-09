@@ -19,23 +19,29 @@ int main(void)
     // Your code here
     char inbuf[MSGSIZE];
     int p[2];
-    int pid = fork();
 
-    printf("Pipe id: %d \n", pipe(pid));
-    
-    if (pipe(pid) < 0 ){
+    // printf("Pipe id: %d \n", pipe(p));
+
+    if (pipe(p) < 0 ){
         fprintf(stderr, "pipe failed\n");
         exit(1);
-    }else if (pid == 0) {
+    }
+    
+    int pid = fork();
+    if (pid == 0) {
+        // close(p[0]);
         write(p[1], msg1, MSGSIZE);
         write(p[1], msg2, MSGSIZE);
         write(p[1], msg3, MSGSIZE);
+        close(p[1]);
     }else {
-        wait(NULL);
-        for ( int i = 0; i < sizeof(p); i++){
+        // wait(NULL);
+        // close(p[1]);
+        for ( int i = 0; i < 3; i++){
             read(p[0], inbuf,MSGSIZE);
             printf("%s \n", inbuf);
         }
+        close(p[0]);
     }
     return 0;
 }
