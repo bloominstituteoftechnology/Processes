@@ -15,8 +15,8 @@ int main(void)
   char *program = "/bin/ls";
 
   if(rc == 0){
-    char *arrrrrgs = {"./bin", "ls", NULL};
-    execvp(arrrrrgs[0], arrrrrgs);
+    char *arrrrrgs = {"./bin", "/ls", NULL};
+    execvp(&arrrrrgs[0], &arrrrrgs);
   } 
 
   return 0;
