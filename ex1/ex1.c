@@ -9,6 +9,25 @@
 int main(void)
 {
     // Your code here
-
+    pid_t pid;
+    int x = 100;
+    pid = fork();
+    // ------------------------------------------------ child process starts executing here
+    if (pid < 0)
+    { // fork failed; exit
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    }
+    else if (pid == 0)
+    { // child process satisfies this branch
+        x = 25;
+        printf("Hello,children (%d) \n", x);
+    }
+    else
+    {
+        x = 50;
+        printf("PARENTALS (%d) \n", x);
+    }
+    printf("final value: (%d) \n", x);
     return 0;
 }
