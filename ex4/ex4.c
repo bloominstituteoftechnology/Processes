@@ -21,7 +21,7 @@ int main(void)
     }
     else if (pid == 0)
     { // child process satisfies this branch
-        exec1("/bin/ls", "ls", NULL);
+        execl("/bin/ls", "ls", NULL);
         printf("Hello\n");
     }
     else
