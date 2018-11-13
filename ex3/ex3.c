@@ -9,7 +9,14 @@
 
 int main(void)
 {
-    // Your code here
+    int rc = fork();
+    if (rc == 0){
+      printf("hello\n");
+    } else{
+      //wait to make parent go last in case of C weirdness (need to figure out why)
+      wait(NULL);
+      printf("goodbye\n");
+    }
 
     return 0;
 }
