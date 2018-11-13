@@ -10,6 +10,7 @@
 
 int main(void)
 {
+    // process id data type (holy shit c has so much hardcoded nonsense)
 
     pid_t child = fork();
     //error handling:
@@ -17,16 +18,21 @@ int main(void)
       exit(1);
     }
     else if(child == 0){
-      printf("the child's proceses id is %d\n", (int), getpid());
+      //get pid returns the  process id of the parent of the process.
+      printf("the child's proceses id is %d\n", (int) getpid());
       // allocate memory for string array:
       char *argv[2];
       argv[0] = strdup("/bin/ls"); //using an array to run the bin/ls program duplicating with strdup
       argv[1] = strdup("ex4.c"); //pass this FILE
       //execs replace the current RUNNING process with a new proccess
       // again processes are the things within which programs (written sets of instructions) execute under the UNIX OS.
-      execvp
+      // execvp provides an array of pointers that
+      execvp(argv[0]);
     }
-    else
+    else{
+      // in this case the child is RUNNING so wait for that to stop
+      printf("PID after forking partent %d\n", (int) getpid());
+    }
     exec();
 
 
