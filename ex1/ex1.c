@@ -19,7 +19,7 @@ int main(void)
     } else if (rc == 0) {
         printf("me child (pid: %d) and x is %d\n", (int) getpid(), x);
         x++;
-        printf("child again, x iw now %d\n", x);
+        printf("child again, x is now %d\n", x);
     } else {
         printf("me parent of %d (pid: %d) and x is: %d\n", rc, (int) getpid(), x);
         x--;
@@ -27,3 +27,8 @@ int main(void)
     }
     return 0;
 }
+
+// The value of the variable in the child process is
+// the same as the value in the parent variable. 
+// When the child changes the value of x it does not reflect on the parent fork
+// The variables no longer point to the same value. 
