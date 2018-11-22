@@ -5,12 +5,13 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <string.h>
 
 int main(void)
 {
     // Your code here 
-    FILE *fp;
-    fp = fopen("text.txt", "w");
+    FILE *fp; //declares pointer to type file to communicate between file and program
+    fp = fopen("text.txt", "w"); //open the text.txt file, can start writing with "w"
     int rc = fork();
 
     if (rc < 0) {

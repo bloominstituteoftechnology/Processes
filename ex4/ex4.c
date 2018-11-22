@@ -27,3 +27,6 @@ int main(void)
     }
     return 0;
 }
+// v will take an array parameter to specify the argv[] array of the new program.
+// l will take the arguments of the new program as a variable-length argument list to the function itself.
+// e will take an extra argument to provide the environment of the new program; otherwise, the program inherits the current process's environment.
