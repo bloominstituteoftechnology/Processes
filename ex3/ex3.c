@@ -9,7 +9,21 @@
 
 int main(void)
 {
-    // Your code here
+    // char hello = "hello";
+    int f = fork();
+    if (f < 0) {
+        fprintf(stderr, "fork failed\n");
+    }
+    else if (f == 0) {
+        // hello = "goodbye";
+        // printf("child: %s\n", hello);
+        printf("hello\n");
+    }
+    else {
+        // printf("parent: %s\n", hello);
+        int wc = wait(0);
+        printf("goodbye\n");
+    }
 
     return 0;
 }
