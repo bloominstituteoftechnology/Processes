@@ -8,7 +8,26 @@
 
 int main(void)
 {
-    // Your code here
+  // Your code here
+  int x;
+  pid_t pid;
 
-    return 0;
+  x = 25;
+  pid = fork();
+
+  if(pid < 0)
+  {
+    printf("Fork failed.\n");
+    exit(1);
+  }
+  else if(pid == 0)
+  {
+    printf("The value of x in the child is: %d.\n", x);
+  }
+  else
+  {
+    printf("The parent has changed the value to %d.\n", x);
+  }
+
+  return 0;
 }
