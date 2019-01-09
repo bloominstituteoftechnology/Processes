@@ -18,11 +18,11 @@ int main(void)
     else if (rc == 0)
     {
         x = 101;
-        printf("Child is %d\n", x);
+        printf("Child is %d. \n", x);
     }
     else
     {
-        printf("Parent is %d\n", x);
+        printf("Parent is %d. \n", x);
     }
     
         
