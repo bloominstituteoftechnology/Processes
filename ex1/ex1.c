@@ -8,7 +8,21 @@
 
 int main(void)
 {
-    // Your code here
+    int x = 100;
+    printf("x before fork=%d \n", x);
 
+    int pid = fork();
+
+    if(pid==0){
+        x=35;
+        printf("In the child x= %d\n", x);
+    }
+    else {
+    x=50;
+    printf("In the parent x= %d \n", x);
+    }
+    return 0;
     return 0;
 }
+
+// watching videos
