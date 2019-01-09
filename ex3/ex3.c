@@ -10,11 +10,11 @@
 int main(void)
 {
     int count = fork();
-    if(count == 0) {
-        printf("goodbye\n");
+    if(count != 0) {
+        printf("goodbye %d\n", count);
     }
     else {
-        printf("hello\n");
+        printf("hello %d\n", count);
     }
 
     return 0;

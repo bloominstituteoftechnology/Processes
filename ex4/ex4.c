@@ -7,21 +7,33 @@
 // warning: not enough variable arguments to fit a sentinel on execl,
 // warning: passing argument 2 of ‘execl’ from incompatible pointer type on execl,
 // warning: passing argument 2 of ‘execle’ from incompatible pointer type on execle,
-// 
+// with execv, 
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <string.h>
 
-/* int main(void)
+ int main(void)
 {
-    // Your code here    
+    int rc = fork();   
+    if (rc < 0) {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {
+        printf("Child branch\n");
+        char *args[3];
 
-    return 0;
-} */
+        args[0] = "/bin/ls";
+        args[1] = "/bin/ls";
+        args[2] = NULL;
+        execv(args[0], args);
+    } else {
+        printf("Parent branch\n");
+    }
+} 
 
-
+/*
 int main(int argc, char *argv[])
 {
     printf("hello world (pid: %d)\n", (int) getpid());
@@ -46,3 +58,4 @@ int main(int argc, char *argv[])
 
     return 0;
 }
+*/
