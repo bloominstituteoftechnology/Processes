@@ -8,7 +8,20 @@
 
 int main(void)
 {
-    // Your code here 
+    FILE *fptr;
+    fptr = fopen("text.txt", "w");
+
+    int rc = fork();
+    if(rc < 0) {
+        fprintf(stderr, "fork failed \n");
+        exit(1);
+    } else if(rc == 0) {
+        fprintf(fptr, "This is the written content from child fork\n");
+    } else {
+        fprintf(fptr, "This is the written content from the parent fork\n");
+    }
+
+    fclose(fptr);
     
     return 0;
 }
