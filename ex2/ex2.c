@@ -7,6 +7,9 @@
 // 2. What happens when they are written to the file concurrently?
 // They both get saved.
 
+// - [Dig Deeper: SO's file descriptor](https://stackoverflow.com/questions/2423628/whats-the-difference-between-a-file-descriptor-and-file-pointer)
+// - [Dig Deeper: fresh2refresh's functions in C](https://fresh2refresh.com/c-programming/c-file-handling/fopen-fclose-gets-fputs-functions-c/)
+
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
