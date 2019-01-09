@@ -30,7 +30,7 @@ int main()
     for(int i=0; i<number_iter; i++)
     {
         clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &start);
-        execvp(args[0], args);
+        write(1, "", 0);
         clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end);
         diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
         total += (long long unsigned int) diff;
