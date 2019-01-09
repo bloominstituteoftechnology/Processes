@@ -10,6 +10,12 @@
 int main(void)
 {
     // Your code here
-
+    int forked=fork();
+    if (forked==0) {
+        printf("hello\n");
+    } else {
+        wait(0);
+        printf("goodbye\n");
+    }
     return 0;
 }

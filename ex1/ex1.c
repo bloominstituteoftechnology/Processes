@@ -9,6 +9,18 @@
 int main(void)
 {
     // Your code here
-
+    int x=100;
+    int forked=fork();
+    if (forked==0){
+        printf("child x is \n");
+        printf("%d\n",x);
+        x=20;
+        printf("Now child x is:\n");
+        printf("%d\n",x);
+    } else {
+        wait(NULL);
+        printf("Parent x is:\n");
+        printf("%d\n",x);
+    }
     return 0;
 }

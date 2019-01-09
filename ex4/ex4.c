@@ -11,6 +11,15 @@
 int main(void)
 {
     // Your code here    
-
+    int forked=fork();
+    if (forked==0){
+        char *myprograms[2];
+        myprograms[0]="/bin/ls";
+        myprograms[1]=NULL;
+        execvp(myprograms[0],myprograms);
+    } else {
+        wait(0);
+        printf("Child is done running.\n");
+    }
     return 0;
 }
