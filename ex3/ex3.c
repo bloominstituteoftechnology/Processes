@@ -10,6 +10,17 @@
 int main(void)
 {
     // Your code here
+    int forked = fork();
+
+    if(forked < 0){
+        fprintf(stderr, "Fork attempt failed.\n");
+        exit(1);
+    } else if(forked == 0){
+        printf("hello from child pid: %d\n", (int)getpid());
+    } else {
+        waitpid(forked, NULL, 0);
+        printf("hello from parent pid: %d\n", (int) getpid());
+    }
 
     return 0;
 }

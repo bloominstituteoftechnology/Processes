@@ -11,6 +11,20 @@
 int main(void)
 {
     // Your code here    
+    int forked = fork();
+
+    if(forked < 0){
+        fprintf(stderr, "Fork attempt failed.\n");
+        exit(1);
+    } else if (forked == 0){
+        char *user_program[2];
+        user_program[0] = "/bin/ls";
+        user_program[1] = NULL;
+        execvp(user_program[0], user_program);
+    } else {
+        wait(NULL);
+        printf("Child process is complete.\n");
+    }
 
     return 0;
 }
