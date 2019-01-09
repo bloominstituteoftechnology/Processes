@@ -21,6 +21,21 @@ and `clock_gettime()` should work just fine.
 int main()
 {
     // Your code here
+    struct timespec start, end;
+    uint64_t diff;
+    long long unsigned int total;
+    char *args[2];
+    args[0] = "";
+    args[1] = NULL;
+    for(int i=0; i<number_iter; i++)
+    {
+        clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &start);
+        execvp(args[0], args);
+        clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end);
+        diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+        total += (long long unsigned int) diff;
+    }
+    printf("Average time for system call: %llu nanoseconds.\n", total/number_iter);
     
     return 0;
 }

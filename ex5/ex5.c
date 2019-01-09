@@ -17,6 +17,27 @@ char* msg3 = "hello world #3";
 int main(void)
 {
     // Your code here
+    int p[2];
+    char inbuf[MSGSIZE];
+    pipe(p);
+    int rc = fork();
+    if(rc == 0)
+    {
+        printf("Child going to write to buffer.\n");
+        write(p[1], msg1, MSGSIZE);
+        write(p[1], msg2, MSGSIZE);
+        write(p[1], msg3, MSGSIZE);
+        printf("Child done.\n");
+    }
+    else
+    {
+        waitpid(rc, NULL, 0);
+        for(int i=0; i<3; i++)
+        {
+            read(p[0], inbuf, MSGSIZE);
+            printf("%s\n", inbuf);
+        }
+    }
     
     return 0;
 }
