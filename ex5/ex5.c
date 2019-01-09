@@ -1,7 +1,7 @@
 // Write a program that forks a child and creates a shared pipe
-// between the parent and child processes. Have the child write 
-// the three messages to the parent and have the parent print out 
-// the messages. 
+// between the parent and child processes. Have the child write
+// the three messages to the parent and have the parent print out
+// the messages.
 
 #include <stdio.h>
 #include <unistd.h>
@@ -17,6 +17,38 @@ char* msg3 = "hello world #3";
 int main(void)
 {
     // Your code here
-    
+
+    char inbuf[MSGSIZE];
+    int p[2];
+
+    if (pipe(p) < 0) {
+      fprintf(stderr, "pipe failed\n");
+      exit(1);
+    }
+
+    int childid = fork();
+
+    if (childid == 0) {
+
+      write(p[1], msg1, MSGSIZE);
+      write(p[1], msg2, MSGSIZE);
+      write(p[1], msg3, MSGSIZE);
+
+      printf("child finished writing! (pid: %d)\n", (int) getpid());
+
+    } else {
+
+      waitpid(childid, NULL, 0);
+
+      printf("parent ready to read~ (pid: %d)\n", (int) getpid());
+
+      for (int i = 0; i < 3; i++) {
+        read(p[0], inbuf, MSGSIZE);
+        printf("%s\n", inbuf);
+      }
+
+    }
+
+
     return 0;
 }
