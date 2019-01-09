@@ -10,7 +10,20 @@
 
 int main(void)
 {
-    // Your code here    
+    int rc = fork();
+
+    if (rc < 0) {
+        fprintf(stderr, "Fork failed.\n");
+        exit(1);
+    } else if (rc == 0) {
+        printf("I am the child.\n");
+    } else {
+        waitpid(rc, NULL, 0); // wait for child
+        printf("I am the parent.\n");
+    }
+
+    char* args[] = { "", NULL };
+    execvp("/bin/ls", args);
 
     return 0;
 }
