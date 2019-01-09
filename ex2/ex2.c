@@ -7,8 +7,19 @@
 #include <stdlib.h>
 
 int main(void)
-{
-    // Your code here 
-    
+{ 
+    FILE *fp ;
+    fp=fopen("./text.txt", "r");
+    if(fp == NULL){
+        fprintf(stderr, "Can't open the file \n");
+        exit(1);
+    }
+     
+    fscanf(fp, "r");
+    printf(
+        
+"hi"
+    );
+    fclose(fp);
     return 0;
 }
