@@ -11,7 +11,14 @@
 
 int main(void)
 {
-    // Your code here
+    int x = 100;
+    int y = fork();
+
+    if (y == 0){
+        printf("Child is x = %d\n", ++x);
+    } else {
+        printf("Parent is x = %d\n", --x);
+    }
 
     return 0;
 }
