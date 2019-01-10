@@ -9,6 +9,19 @@
 int main(void)
 {
     // Your code here 
+
+	FILE * fp;
+
+	fp = fopen ("text.txt", "w+");
+	int y = fork();
+
+	if (y == 0){
+		fprintf(fp, "%s %s %s %d", "We", "are", "in", 2019);
+	} else{
+		fprintf(fp, "%s %s %s %d", "We", "are", "in", 2020);
+	}
+
+	fclose(fp);
     
-    return 0;
+  return 0;
 }

@@ -6,9 +6,19 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+//when we call fork it sets its own copy so if I change the value of x in the child
+//it will not effect the value of x in the parent.
+
 int main(void)
 {
-    // Your code here
+   int x = 100;
+   int y = fork();
 
-    return 0;
+   if (y == 0){
+       printf("Child is x = %d\n", ++x);
+   } else{
+       printf("Parent is x = %d\n", --x);
+   }
+
+   return 0;
 }
