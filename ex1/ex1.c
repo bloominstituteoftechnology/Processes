@@ -9,7 +9,7 @@
 int main(void)
 {
   // Your code here
-  int x = 100;
+  // int x = 100;
   printf("hello world (pid: %d)\n", (int) getpid());
   int rc = fork();
   // ------------------------------------------------ child process starts executing here
@@ -20,13 +20,13 @@ int main(void)
   }
   else if(rc == 0)    // child process satisfies this branch
   {
-    x = 99;
-    printf("hello, child here (pid: %d), x = %d\n", (int) getpid(), x);
+    // x = 99;
+    printf("hello, child here (pid: %d)\n", (int) getpid());
   }
   else
   {
-    x = 101;
-    printf("hello, parent here (pid: %d) of child %d, x = %d\n", (int) getpid(), rc, x);
+    // x = 101;
+    printf("hello, parent here (pid: %d) of child %d\n", (int) getpid(), rc);
   }
 
   return 0;
