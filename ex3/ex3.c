@@ -9,7 +9,17 @@
 
 int main(void)
 {
-    // Your code here
-
-    return 0;
+  // Your code here
+  int x = fork();
+  if (x < 0) {
+    fprintf(stderr, "err\n");
+    exit(1);
+  }
+  else if (x == 0) {
+    printf("hello");
+  }
+  else {
+    printf("goodbye");
+  }
+  return 0;
 }

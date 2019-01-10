@@ -8,7 +8,25 @@
 
 int main(void)
 {
-    // Your code here 
-    
-    return 0;
+  // Your code here
+  FILE *fp;
+  fp = fopen("text.txt", "w");
+  int x = fork();
+
+  if (x < 0) {
+    fprintf(stderr, "err\n");
+    exit(1);
+  }
+  else if (x == 0) {
+    /* char *child = "the child string\n"; */
+    /* fwrite(child, 1, strlen(child), fp); */
+    fprintf(fp, "%s", "child");
+  }
+  else {
+    /* char *parent = "the parent string\n"; */
+    /* fwrite(parent, 1, strlen(parent), fp); */
+    fprintf(fp, "%s", "parent");
+  }
+  fclose(fp);
+  return 0;
 }
