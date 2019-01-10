@@ -9,7 +9,18 @@
 
 int main(void)
 {
-    // Your code here
+    char * c_says = "hello";
+    char * p_says = "goodbye";
+
+    int y = fork();
+
+    if (y != 0){
+        int wc = waitpid(y, NULL, 0);
+        printf("Parent says, %s\n", p_says);
+        
+    } else{
+        printf("Child says, %s\n", c_says);
+    }
 
     return 0;
 }
