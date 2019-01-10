@@ -22,11 +22,11 @@ int main(void)
   else if(rc == 0)    // child process satisfies this branch
   {
     printf("hello child here (pid: %d)\n", (int) getpid());
-    char *args[3];    // allocate an array of chars to hold 3 bytes
+    char *args[2];    // allocate an array of chars to hold 2 bytes
     // `strdup` duplicates the given input string 
-    args[0] = "ls";           
-    args[1] = "-la";        
-    args[2] = NULL;           // marks the end of the array
+    args[0] = "/bin/ls";           // lists files and directories within a directory
+    // args[1] = "/bin/ls -la";       // lists detailed directory content, including hidden files
+    args[1] = NULL;           // marks the end of the array
     execvp(args[0], args);    // runs the word count program, passing in the `myargs` array to the word count program as arguments
     printf("this should not been seen");
   }
