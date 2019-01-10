@@ -3,6 +3,15 @@
 // `execl()`, `execle()`, `execv()`, and others. Why do you think there 
 // are so many variants of the same basic call?
 
+// The exec() family of functions replaces the current process with a new process unlike fork where a copy of the parent(current) process is created.
+//execve() executes the program pointed to by the filename. The filename must be either a binary executable or a script starting with a line of the form:
+
+#! interpreter [optional-arg].
+
+//source-https://linux.die.net/man/3/execv
+
+
+
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -23,8 +32,9 @@ int main(void)
 	}
 	else if(pid==0){
 		printf("This is child process pid %d\n", getpid());
-        	execl("/bin/ls", "ls", NULL);   
-		printf("Return not expected. Must be an execl() error");
+        	execv("/bin/ls", (char*) NULL);
+	        //execl("/bin/ls", (char*)NULL);	
+		printf("Return not expected. Must be an execl() error\n");
 
 	}
 	else{
