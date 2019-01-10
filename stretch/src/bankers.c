@@ -168,17 +168,26 @@ int main(int argc, char **argv)
 			// Read the current balance
 			read_balance(bf, &balance);
 
-			printf("Balance: %d\n", balance);
-
 			// Try to withdraw money
 			//
 			// Sample messages to print:
 			//
 			// "Withdrew $%d, new balance $%d\n"
 			// "Only have $%d, can't withdraw $%d\n"
+			int new_balance = balance - amount;
+			if (new_balance < 0)
+			{
+				printf("Only have $%d, can't withdraw $%d\n", balance, amount);
+			}
+			else
+			{
+				write_balance(bf, new_balance);
+				printf("Withdrew $%d, new balance $%d\n", amount, new_balance);
+			}
 
 			// Close the balance file
 			//^^^^^^^^^^^^^^^^^^^^^^^^^^
+			close_balance_file(bf);
 
 			// Child process exits
 			exit(0);
