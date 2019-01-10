@@ -90,6 +90,7 @@ int get_random_amount(void)
 	// !!!! IMPLEMENT ME:
 
 	// Return a random number between 0 and 999 inclusive using rand()
+	return rand() % 1000;
 
 	// ^^^^^^^^^^^^^^^^^^
 }
