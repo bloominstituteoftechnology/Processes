@@ -84,14 +84,16 @@ void read_balance(int fd, int *balance)
 /**
  * Returns a random amount between 0 and 999.
  */
+#define RAND_MAX = 999;
 int get_random_amount(void)
 {
 	// vvvvvvvvvvvvvvvvvv
 	// !!!! IMPLEMENT ME:
-
+	srand((unsigned) time(&t));
+	int amount = rand()
 	// Return a random number between 0 and 999 inclusive using rand()
-
 	// ^^^^^^^^^^^^^^^^^^
+	return amount;
 }
 
 /**
@@ -110,7 +112,7 @@ int main(int argc, char **argv)
 	// For example, to fork 12 processes:
 	//
 	//  ./bankers 12
-
+	
 	// Check to make sure they've added one paramter to the command line
 	// with argc. If they didn't specify anything, print an error
 	// message to stderr, and exit with status 1:
