@@ -8,7 +8,21 @@
 
 int main(void)
 {
-    // Your code here
+    char *str = "Gotta find a way, a better way\n";
+    printf("%s", str);
+    int rc = fork();
+    if(rc < 1)
+    {
+        char *str2 = "when I'm there.\n";
+        printf("%s", str2);
+        printf("PID: %d\n", getpid());
+        rc = 1;
+    } else
+    {
+        sleep(1);
+        printf("\"Nirvana - Territorial Pissings\"\n");
+        printf("PID: %d\n", getpid());
+    }
 
     return 0;
 }
