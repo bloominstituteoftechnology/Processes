@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <fcntl.h>
 
 int main(void)
 {
@@ -19,7 +20,7 @@ int main(void)
 
     pid_t pid = fork();
 
-    // Check if file exists, otherwise, output error
+    Check if file exists, otherwise, output error
   if (fp == NULL) {
 		printf("Failed To Open File\n");
 		return 0;
