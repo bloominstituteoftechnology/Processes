@@ -66,16 +66,24 @@ simulated bank account, that is. Don't get your hopes up.)
 1. **Short answer**: How can things go wrong if two processes attempt the
    above plan at the same time? Is there more than one way things can go
    wrong?
+   * There are definitely more than one way things can go wrong. Changes can be overwritten, one process can try to update the data while another process simultaneously tries to read the data while its being updated, etc. Since the process scheduling will be determined ultimately by the OS, the end result cannot be predicted. You might get different results every time.
 
 2. Study and understand the skeleton code in the `src/` directory.
 
    **Short answer**: what do each of the arguments to `open()` mean?
+   * The code referenced is: `open(filename, O_CREAT|O_RDWR, 0644)`.
+   * `filename` is the file which will be opened.
+   * `O_CREAT|O_RDWR` are the options.
+     * `O_CREAT` means to create the file if it does not exist.
+     * `O_RDWR` means to allow the user to read/write to it.
+   * `0644` determines the permissions of the file if it is created.
 
 3. Take the skeleton code in the `src/` directory and implement the
    pieces marked. Run it.
    
    **Short answer**: What happens? Do things go as planned and look
    sensible? What do you speculate is happening?
+   * For me, every time it withdrew money, the balance was always the starting $10K. It did not take into account the previous withdrawals. I'm guessing the other processes had not had time to write their new balances to the file before others read it.
 
 4. Add calls to [`flock()`](https://linux.die.net/man/2/flock) to
    capture and release an exclusive lock on the file before reading and
@@ -86,6 +94,7 @@ simulated bank account, that is. Don't get your hopes up.)
 5. **Short answer**: Why is it working? How has adding locks fixed the
    problems you noted in question 1? How is overall performance of the
    application affected?
+   * Flock fixed the problem by giving exclusive access to a file to one process at a time, and only allowing other processes access to it once it has been released. The performance would take a hit because instead of the processes running more or less at the same time, now they find themselves on a queue waiting for the other processes to finish their handling of the file.
 
 
 ## Stretch Goals
