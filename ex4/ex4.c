@@ -7,10 +7,23 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <sys/wait.h>
+#include <string.h>
 
 int main(void)
 {
-    // Your code here    
+   	int rc = fork();
+   	if (rc < 0){
+   		exit(1);
+   	} else if (rc == 0){
+   		char *myargs[2];
+   		myargs[0] = strdup("ls");
+   		myargs[1] = NULL;
+   		execvp(myargs[0],myargs);
+   		// execlp("ls","ls",NULL);
+   	} else {
+   		waitpid(rc,NULL,0);
+   		printf("complete");
+   	}
 
     return 0;
 }
