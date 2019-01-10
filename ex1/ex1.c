@@ -9,24 +9,24 @@
 int main(void)
 {
   // Your code here
-  int x;
-  pid_t pid;
-
-  x = 25;
-  pid = fork();
-
-  if(pid < 0)
+  int x = 100;
+  printf("hello world (pid: %d)\n", (int) getpid());
+  int rc = fork();
+  // ------------------------------------------------ child process starts executing here
+  if(rc < 0)    // fork failed; exit
   {
-    printf("Fork failed.\n");
+    fprintf(stderr, "fork failed\n");
     exit(1);
   }
-  else if(pid == 0)
+  else if(rc == 0)    // child process satisfies this branch
   {
-    printf("The value of x in the child is: %d.\n", x);
+    x = 99;
+    printf("hello, child here (pid: %d), x = %d\n", (int) getpid(), x);
   }
   else
   {
-    printf("The parent has changed the value to %d.\n", x);
+    x = 101;
+    printf("hello, parent here (pid: %d) of child %d, x = %d\n", (int) getpid(), rc, x);
   }
 
   return 0;
