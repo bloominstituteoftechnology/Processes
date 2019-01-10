@@ -104,3 +104,4 @@ simulated bank account, that is. Don't get your hopes up.)
 * Have some processes simply check the balance without changing it. Do
   you need to lock? If so, do you need to use `LOCK_EX`? If not, what
   are the advantages of your approach?
+  * You would need to lock the file in order to read it. Luckily a reader lock exists in the form of `LOCK_SH`. If the file has been locked with LOCK_SH in one process, it will allow another to use LOCK_EX on it at the same time. Furthermore, LOCK_EX will block all other access to the file until all reader locks on the file have been released. One advantage to this would be to allow better performance by letting another process use the file while a previous process has a reader lock on it.
