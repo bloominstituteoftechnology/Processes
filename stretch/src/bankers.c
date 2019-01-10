@@ -157,6 +157,11 @@ int main(int argc, char **argv)
 			// Get a random amount of cash to withdraw. YOLO.
 			int amount = get_random_amount();
 
+			// if the amount is even, deposit the money instead of withdrawing
+			if (amount % 2 == 0){
+				amount = amount * -1;
+			}
+
 			int balance;
 
 			// vvvvvvvvvvvvvvvvvvvvvvvvv
@@ -192,7 +197,15 @@ int main(int argc, char **argv)
 
 				int new_balance;
 				read_balance(bf, &new_balance);
-				printf("Withdrew $%d, new balance $%d\n", amount, new_balance);
+
+				// if the amount was negative, it was deposted. Else, it was withdrawn.
+				if (amount < 0){
+					printf("Deposited $%d, new balance $%d\n", amount * -1, new_balance);
+				}
+				else
+				{
+					printf("Withdrew $%d, new balance $%d\n", amount, new_balance);
+				}
 			}
 
 			flock(bf, LOCK_UN);
