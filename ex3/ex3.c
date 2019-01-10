@@ -9,9 +9,9 @@
 
 int main(void)
 {
-    int pcp = fork();
+    int pid = fork();
 
-    if (pcp != 0) {
+    if (pid != 0) {
         printf("Hello from the Child\n");
     } else {
         printf("Goodbye from the Parent\n");

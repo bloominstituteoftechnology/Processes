@@ -8,20 +8,18 @@
 
 int main(void)
 {
-    FILE *fptr;
-    fptr = fopen("text.txt", "w");
+    FILE *fp = fopen("text.txt", "r+");
 
-    int rc = fork();
-    if(rc < 0) {
-        fprintf(stderr, "fork failed \n");
-        exit(1);
-    } else if(rc == 0) {
-        fprintf(fptr, "This is the written content from child fork\n");
+    int y = fork();
+    if (y == 0) {
+        fprintf(fp, "Child response %s %s\n", "Child", "Here");
+        printf("Child pid is %d\n", (int)getpid());
     } else {
-        fprintf(fptr, "This is the written content from the parent fork\n");
+        fprintf(fp, "Parent response %s %s\n", "Parent", "Here");
+        printf("Parent pid is %d\n", (int)getpid());
     }
 
-    fclose(fptr);
+    fclose(fp);
     
     return 0;
 }
