@@ -18,21 +18,23 @@ int main(void)
     pid_t pid = fork();
     char text_content[100];
     if (pid ==0){
-        fgets(text_content, 100, fptr);
+        fseek(fptr, 0, SEEK_SET);
+        fgets(text_content, 1000, fptr);
         printf("Before child write: %s\n", text_content);
         char child_input[] = "child here";
         fwrite(&child_input, 10, 1, fptr); 
         fseek(fptr, 0, SEEK_SET);
-        fgets(text_content, 100, fptr);
+        fgets(text_content, 1000, fptr);
         printf("After child write: %s\n", text_content);
     }
     else{
-        fgets(text_content, 100, fptr);
+        fseek(fptr, 0, SEEK_SET);
+        fgets(text_content, 1000, fptr);
         printf("Before parent write: %s\n", text_content);
         char parent_input[] = "parent here";
         fwrite(&parent_input, 11, 1, fptr); 
         fseek(fptr, 0, SEEK_SET);
-        fgets(text_content, 100, fptr);
+        fgets(text_content, 1000, fptr);
         printf("After parent write: %s\n", text_content);
     }
     fclose(fptr);
