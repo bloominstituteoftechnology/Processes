@@ -31,7 +31,7 @@ int main(void)
       exit(1);
     }
     else if (rc == 0) { // child
-      printf("From child, PID: %d, PPDI: %d \n\n", getpid(), getppid());
+      printf("From child, PID: %d, PPID: %d \n\n", getpid(), getppid());
       wait(NULL); // wait for child process to join with the parent
 
       // execl 
