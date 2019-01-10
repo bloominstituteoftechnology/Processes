@@ -9,7 +9,24 @@
 int main(void)
 {
     // Your code here
-    int x = 
+    
+    //parent and child seem to return the same value when the main process accesses a variable. 
+    int x = 100;
+    int letsfork = fork();
+    if (letsfork == 0){
+        printf("Child is here and %d\n", x ); 
+    } else {
+        printf("Parent is here here and %d\n", x);
+    }
+    return 0;	   
+}	
 
-    return 0;
-}
+
+
+    // int letsfork = fork();
+    // if (letsfork == 0){
+    //     printf("Child is here" );
+    // } else {
+    //     printf("Parent is here");
+    // }
+    // return 0;	  
