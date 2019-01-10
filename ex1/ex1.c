@@ -6,9 +6,17 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int main(void)
-{
+int main(void){
 
+     int x = 2;
 
+    pid_t pid = fork();
+
+    if (pid == 0) {
+        printf("I'm the child! x = %d\n", ++x);
+    } else {
+        printf("I'm the parent!x = %d\n", --x);
+        printf("Exiting with x = %d\n", x);
+    }
     return 0;
 }
