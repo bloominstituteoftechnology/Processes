@@ -136,6 +136,7 @@ int main(int argc, char **argv)
 	if (num_processes <= 0)
 	{
 		fprintf(stderr, "bankers: numprocesses must be greater than 0\n");
+		exit(2);
 	}
 
 	// ^^^^^^^^^^^^^^^^^^
@@ -165,6 +166,8 @@ int main(int argc, char **argv)
 			// functions, above).
 			int bf = open_balance_file(BALANCE_FILE);
 
+			flock(bf, LOCK_EX);
+
 			// Read the current balance
 			read_balance(bf, &balance);
 
@@ -174,16 +177,25 @@ int main(int argc, char **argv)
 			//
 			// "Withdrew $%d, new balance $%d\n"
 			// "Only have $%d, can't withdraw $%d\n"
-			int new_balance = balance - amount;
-			if (new_balance < 0)
+
+			int would_be_new_balance = balance - amount;
+			if (would_be_new_balance < 0)
 			{
 				printf("Only have $%d, can't withdraw $%d\n", balance, amount);
 			}
 			else
 			{
-				write_balance(bf, new_balance);
+				// sleep so Windows does not automatically schedule them all in order
+				sleep(1);
+
+				write_balance(bf, would_be_new_balance);
+
+				int new_balance;
+				read_balance(bf, &new_balance);
 				printf("Withdrew $%d, new balance $%d\n", amount, new_balance);
 			}
+
+			flock(bf, LOCK_UN);
 
 			// Close the balance file
 			//^^^^^^^^^^^^^^^^^^^^^^^^^^
