@@ -12,21 +12,18 @@ int main(void)
   FILE *fp = fopen("text.txt", "w");
   int rc = fork();
   
-  char par_str[] = "This is from the parent.\n";
-  char chi_str[] = "This is from the child.\n";
-
-  if(rc < 0) 
+  if(rc < 0)
   {
     fprintf(stderr, "fork failed\n");
-    exit(1); 
+    exit(1);
   }
   else if(rc == 0)
   {
-    fprintf(fp, "%s", chi_str);
+    fputs("Hello from child.\n", fp);
   }
-  else 
+  else
   {
-    fprintf(fp, "%s", par_str);
+    fputs("Hello from parent.\n", fp);
   }
   fclose(fp);
   
