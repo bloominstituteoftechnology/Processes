@@ -12,10 +12,10 @@ int main(void)
     char * c_says = "hello";
     char * p_says = "goodbye";
 
-    int y = fork();
+    pid_t pid = fork();
 
-    if (y != 0){
-        int wc = waitpid(y, NULL, 0);
+    if (pid != 0){
+        int wc = waitpid(pid, NULL, 0);
         printf("Parent says, %s\n", p_says);
         
     } else{
