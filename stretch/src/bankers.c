@@ -171,7 +171,16 @@ int main(int argc, char **argv)
 			// functions, above).
 			int bf = open_balance_file(BALANCE_FILE);
 
-			flock(bf, LOCK_EX);
+			// if amount if divisible by 5, it will simply check the balance and not
+			// make any changes to it. Therefore, place a shared lock on it.
+			if (amount % 5 == 0)
+			{
+				flock(bf, LOCK_SH);
+			}
+			else
+			{
+				flock(bf, LOCK_EX);
+			}
 
 			// Read the current balance
 			read_balance(bf, &balance);
