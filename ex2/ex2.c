@@ -27,10 +27,16 @@ int main(void)
     	    int fd = fileno(fp);
     	printf("Child:\nFile Descriptor: %d\n", fd);
     	fprintf(fp, "Child PID:%d\n", (int)getpid);
+    	for(int i = 0; i<10000; i++){
+    		fprintf(fp,"c");
+    	}
     } else {
     	    int fd = fileno(fp);
     	printf("Parent:\nFile Descriptor: %d\n", fd);
     	fprintf(fp, "Parent PID:%d\n", rc );
+    	for(int i = 0; i<10000; i++){
+    		fprintf(fp,"p");
+    	}
     }
 
     printf("closed = %d\n", fclose(fp));
