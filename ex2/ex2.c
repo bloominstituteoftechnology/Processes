@@ -5,21 +5,30 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <string.h>
+#include <sys/wait.h>
 
 int main(void)
 { 
     FILE *fp ;
-    fp=fopen("./text.txt", "r");
-    if(fp == NULL){
-        fprintf(stderr, "Can't open the file \n");
+    fp=fopen("./text.txt", "w");
+
+
+    int fk = fork();
+    if(fk < 0){
+        fprintf(stderr, "Fork failed\n");
         exit(1);
-    }
-     
-    fscanf(fp, "r");
-    printf(
+    } else if(fk == 0){
+        printf("Child pid is %d\n", (int)getpid());
+        char *child_str = "Child string aaaaaaaaaaaa\n";
+        fwrite(child_str, sizeof(char), strlen(child_str), fp);
+    } else {
+        // wait(NULL);
+        printf("Parent pid is %d\n", (int)getpid());
+        char *parent_str = "Parent string bbbbbbbbbbbb\n";
+        fwrite(parent_str, sizeof(char), strlen(parent_str), fp);
         
-"hi"
-    );
+    };
     fclose(fp);
     return 0;
 }
