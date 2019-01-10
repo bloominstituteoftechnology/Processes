@@ -117,17 +117,36 @@ int main(int argc, char **argv)
 	// message to stderr, and exit with status 1:
 	//
 	// "usage: bankers numprocesses\n"
-	
+	if (argc < 2)
+	{
+		fprintf(stderr, "usage: bankers numprocesses\n");
+        exit(1);
+	}
+
 	// Store the number of processes in this variable:
 	// How many processes to fork at once
-	int num_processes = IMPLEMENT ME
+	int num_processes;
+	const char *str_processes = argv[1];
+	sscanf(str_processes, "%d", &num_processes);
 
 	// Make sure the number of processes the user specified is more than
 	// 0 and print an error to stderr if not, then exit with status 2:
 	//
 	// "bankers: num processes must be greater than 0\n"
+	if (num_processes <= 0)
+	{
+		fprintf(stderr, "bankers: numprocesses must be greater than 0\n");
+	}
 
 	// ^^^^^^^^^^^^^^^^^^
+
+
+	return 0;
+
+
+/*
+
+
 
 	// Start with $10K in the bank. Easy peasy.
 	int fd = open_balance_file(BALANCE_FILE);
@@ -176,4 +195,8 @@ int main(int argc, char **argv)
 	}
 
 	return 0;
+
+
+
+	*/
 }
