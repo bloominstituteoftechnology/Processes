@@ -17,7 +17,7 @@
 int main(void)
 {
   // Your code here 
-  FILE *fp;
+  FILE *fp; // FILE is a type and we using it as a file pointer, fp
   // char str[50];
   fp = fopen("text.txt", "w");
   printf( "===Opening the file in write mode===\n");

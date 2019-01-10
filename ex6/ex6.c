@@ -18,7 +18,7 @@ and `clock_gettime()` should work just fine.
 #define number_iter 1000000 // 1 million iterations
 #define BILLION 1000000000L
 
-// AVERAGE OF 1 MILLION ITERATIONS - CLOCK_MONOTONIC (~99k-102k nanosecs)
+// AVERAGE OF 1 MILLION ITERATIONS - CLOCK_MONOTONIC (~99k-105k nanosecs)
 int main()
 {
     // Your code here
@@ -42,7 +42,7 @@ int main()
     return 0;
 }
 
-// SINGLE RUN - CLOCK_PROCESS_CPUTIME_ID (4k-5k nanosecs)
+// SINGLE RUN - CLOCK_MONOTONIC (4k-5k nanosecs)
 // int main()
 // {
 //     // Your code here
