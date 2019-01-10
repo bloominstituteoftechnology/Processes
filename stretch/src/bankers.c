@@ -193,18 +193,28 @@ int main(int argc, char **argv)
 				// sleep so Windows does not automatically schedule them all in order
 				sleep(1);
 
-				write_balance(bf, would_be_new_balance);
-
-				int new_balance;
-				read_balance(bf, &new_balance);
-
-				// if the amount was negative, it was deposted. Else, it was withdrawn.
-				if (amount < 0){
-					printf("Deposited $%d, new balance $%d\n", amount * -1, new_balance);
+				// if amount is divisible by zero, simply check the balance without changing it
+				if (amount % 5 == 0)
+				{
+					int check_balance;
+					read_balance(bf, &check_balance);
+					printf("Checked balance, it is $%d\n", check_balance);
 				}
 				else
 				{
-					printf("Withdrew $%d, new balance $%d\n", amount, new_balance);
+					write_balance(bf, would_be_new_balance);
+
+					int new_balance;
+					read_balance(bf, &new_balance);
+
+					// if the amount was negative, it was deposted. Else, it was withdrawn.
+					if (amount < 0){
+						printf("Deposited $%d, new balance $%d\n", amount * -1, new_balance);
+					}
+					else
+					{
+						printf("Withdrew $%d, new balance $%d\n", amount, new_balance);
+					}
 				}
 			}
 
