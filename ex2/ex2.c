@@ -5,11 +5,12 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <sys/wait.h>
 
 int main(void)
 {
     // Your code here 
-    FILE * woah;
+    FILE *woah;
 
     woah = fopen("text.txt", "a");
     int opened = fork();
