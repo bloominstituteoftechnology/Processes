@@ -140,14 +140,6 @@ int main(int argc, char **argv)
 
 	// ^^^^^^^^^^^^^^^^^^
 
-
-	return 0;
-
-
-/*
-
-
-
 	// Start with $10K in the bank. Easy peasy.
 	int fd = open_balance_file(BALANCE_FILE);
 	write_balance(fd, 10000);
@@ -171,8 +163,12 @@ int main(int argc, char **argv)
 
 			// Open the balance file (feel free to call the helper
 			// functions, above).
+			int bf = open_balance_file(BALANCE_FILE);
 
 			// Read the current balance
+			read_balance(bf, &balance);
+
+			printf("Balance: %d\n", balance);
 
 			// Try to withdraw money
 			//
@@ -195,8 +191,4 @@ int main(int argc, char **argv)
 	}
 
 	return 0;
-
-
-
-	*/
 }
