@@ -17,7 +17,8 @@ char* msg3 = "hello world #3";
 int main(void)
 {
     // Your code here
-    char buffer[MSGSIZE];    
+    // solution1
+    /*char buffer[MSGSIZE];    
     int p[2]; 
     int pipe_var = pipe(p);
 
@@ -44,5 +45,37 @@ int main(void)
         	printf("%s\n", buffer);
     	}	    
     }
+    return 0;*/
+
+    //solution2
+    int fd[2];
+    char buffer[16];
+    int p = pipe(fd);
+
+    int pid = fork(); 
+     
+    if(p == -1) {
+        perror("pipe");
+        exit(EXIT_FAILURE);
+    }
+
+    if(pid == -1){
+      perror("fork");
+      exit(EXIT_FAILURE);
+    }
+    else if(pid == 0){
+      printf("Child writing messages to parent\n");
+      write(fd[1], msg1, MSGSIZE);
+      write(fd[1], msg2, MSGSIZE);
+      write(fd[1], msg3, MSGSIZE);
+    }
+    else{
+
+      for(int i=0; i<3; i++){
+        read(fd[0], buffer, MSGSIZE);
+        printf("%s\n", buffer);
+      }
+
+    }
     return 0;
-}
+}	
