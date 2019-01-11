@@ -25,6 +25,8 @@ int main()
 	uint64_t diff, sum;
 	struct timespec start, end;
 
+	//here I loop through and  write three NULL calls
+	//I log the time needed to take the calls and add them together
 	for (int i = 0; i < number_iter; i++){
 		clock_gettime(CLOCK_MONOTONIC, &start);
 
@@ -35,6 +37,7 @@ int main()
 		sum += diff;
 	}
 
+	
 	printf("Elapsed time = %llu nanoseconds\n", (long long unsigned int) sum / number_iter);
 
 

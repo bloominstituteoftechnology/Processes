@@ -17,6 +17,9 @@ int main(void)
    if (rc == 0){
        printf("Child says hello\n");
    } else {
+       // the wait command right here will make sure that
+       // the program will not print until the child process has executed
+       // normaly however the child will go after the parent
        int wc = waitpid(rc, NULL, 0);
        printf("Parent says goodbuy\n");
    }
