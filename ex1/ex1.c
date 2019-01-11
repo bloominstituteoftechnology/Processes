@@ -22,7 +22,6 @@ int main(void)
     printf("In the parent x= %d \n", x);
     }
     return 0;
-    return 0;
 }
 
 // watching videos
