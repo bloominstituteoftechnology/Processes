@@ -10,7 +10,10 @@
 
 int main(void)
 {
-    // Your code here    
-
-    return 0;
+  // Your code here
+  int x = fork();
+  if (x == 0) {
+    execlp("ls", "ls", NULL);
+  }
+  return 0;
 }

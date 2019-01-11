@@ -19,6 +19,7 @@ int main(void)
     printf("hello");
   }
   else {
+    wait(NULL);
     printf("goodbye");
   }
   return 0;
