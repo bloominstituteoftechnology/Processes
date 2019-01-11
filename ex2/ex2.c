@@ -19,11 +19,13 @@ int main(void)
   }
   else if(rc == 0)
   {
-    fputs("Hello from child.\n", fp);
+    fprintf(fp, "Hello from child.\n");
+    printf("Hello from child.\n");
   }
   else
   {
-    fputs("Hello from parent.\n", fp);
+    fprintf(fp, "Hello from parent.\n");
+    printf("Hello from parent\n");
   }
   fclose(fp);
   
