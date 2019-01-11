@@ -189,4 +189,4 @@ Additionally, it's always a good idea to read the man pages for any system calls
  - The man page for the `pipe` system call: [https://linux.die.net/man/2/pipe](https://linux.die.net/man/2/pipe)
 
 ## Stretch Goal
-Open up the `/stretch` directory. In there, you'll find an involved exercise pertaining to file locking and concurrency. Read the README included in that directory for instructions on what to do. 
+Open up the `/stretch` directory. In there, you'll find an involved exercise pertaining to file locking and concurrency. Read the README included in that directory for instructions on what to do.  
