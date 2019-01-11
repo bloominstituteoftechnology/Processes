@@ -20,7 +20,21 @@ and `clock_gettime()` should work just fine.
 
 int main()
 {
-    // Your code here
+		struct timespec start, end;
+
+    long total = 0;
+
+    for (int i = 0; i < number_iter; i++){
+    	clock_gettime(CLOCK_MONOTONIC, &start);	
+    	printf("");
+    	clock_gettime(CLOCK_MONOTONIC, &end);
+
+    	long diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+			total += diff;
+	// printf("elapsed time = %llu nanoseconds\n", (long long unsigned int) diff);
+    }
+
+    printf("Average Time in nanoseconds:%lu\n", total/number_iter);
     
     return 0;
 }
