@@ -9,8 +9,17 @@
 #include <sys/wait.h>
 
 int main(void)
-{
-    // Your code here    
+{pid_t pid;
 
+ pid = fork();
+  
+  if (pid == 0){
+    printf("I am the child, about to start process using execlp.\n");
+    execlp("ls","ls", NULL);
+    printf("The call to execlp() was not successful.\n");
+   }else{
+    wait(0);              
+    printf("I am the parent.  The child just ended.  I will now exit.\n");
+   }
     return 0;
 }
