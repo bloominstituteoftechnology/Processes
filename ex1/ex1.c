@@ -14,10 +14,14 @@ int main(void)
    int x = 100;
    int y = fork();
 
+   //if y = 0 then I'm in the child process
    if (y == 0){
-       printf("Child is x = %d\n", ++x);
+		//notice that changes x in the child does not effect the parents
+		//value of x, because they both have thier own copy
+   	printf("Child is x = %d\n", ++x);
+    //if y != 0 I'm in the parent process
    } else{
-       printf("Parent is x = %d\n", --x);
+      printf("Parent is x = %d\n", --x);
    }
 
    return 0;

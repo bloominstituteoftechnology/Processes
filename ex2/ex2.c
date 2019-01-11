@@ -16,6 +16,8 @@ int main(void)
 	int y = fork();
 
 	if (y == 0){
+		//both the child and parent can write to the file,
+		// however the parent will write first
 		fprintf(fp, "%s %s %s %d", "We", "are", "in", 2019);
 	} else{
 		fprintf(fp, "%s %s %s %d", "We", "are", "in", 2020);

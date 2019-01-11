@@ -26,7 +26,15 @@ int main(void)
 //it appears there is different function call types to give you more flexability. For example the execle functions allow the caller to specify the environment of the executed program while execv provides an array of pointers to null-terminated strings that represent the argument list available to the new program
 
   if (y == 0) {
+    //this takes an array of arguments and build it into a string that is used for the command
+    //it will stop when it reaches a NULL terminator
     execv(args[0], args);
+
+    //these two options both work fine as is but execle 
+    // will copy the enviornment as well which might be something you need
+    // do you want all your enviorment variable copyed to the new process or not?
+    // do you want your path copied to the process or not?
+
     // execl("/bin/ls", "ls", NULL);
     // execle("/bin/ls", "ls", NULL);
   } else {
