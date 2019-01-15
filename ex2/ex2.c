@@ -30,12 +30,17 @@ int main(int argc, char *argv[])
         // char child_str[] = "this is the child string...\n";
         // fwrite(child_str, 1, sizeof(child_str) - 1, fp);
     } else {
+        // as a side not, best practice we would specify the order that we want these to print
+        // to the file: prent first or child first?
+        // if we wanted to have the parent print afer the child
+        // int wc = waitpid(rc);  //with out this it would switch about 50-50 who's frst.
+        // but we don't care about the order for this assignment so...w/e
         printf("Parent process\n");
         char *parent_str = "this is the parent string...\n";
         fwrite(parent_str, 1, strlen(parent_str), fp);
     }
     // close file pointer = resource leak.
     fclose(fp);
-    
+
     return 0;
 }
