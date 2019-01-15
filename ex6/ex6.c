@@ -19,7 +19,7 @@ and `clock_gettime()` should work just fine.
 #define number_iter 1000000
 #define BILLION 1000000000L
 
-int main()
+int main(void)
 {
     // Your code here
     struct timespec startTime, endTime;
@@ -29,15 +29,15 @@ int main()
     for (int i = 0; i < number_iter; i++) {
         clock_gettime(CLOCK_MONOTONIC, &startTime);
 
-        printf("\n");
+        write(fileno(stdout), NULL, 0);
 
         clock_gettime(CLOCK_MONOTONIC, &endTime);
 
-        long difference = BILLION * (endTime.tv_sec - startTime.tv_sec) + endTime.tv_nsec - startTime.tv_nsec;
+        long difference = BILLION * (endTime.tv_sec - startTime.tv_sec) + (endTime.tv_nsec - startTime.tv_nsec);
         sum += difference;
     }
 
-    avg = sum / number_iter;
+    avg = sum / (float) number_iter;
     printf("avg time it takes to make a printf call is %f ns.\n", avg);
 
     return 0;
