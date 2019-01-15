@@ -9,6 +9,18 @@
 int main(void)
 {
     // Your code here
+    int x = 12;
+    int y = fork();
 
+    if (y < 0) {
+        printf("Fork Failed\n");
+    } else {
+        if (y == 0) {
+            printf("I am the child process and the value of x is: %d\n", x);
+        }
+        else {
+            printf("I am the parent process and the value of x is: %d\n", x);
+        }
+    }
     return 0;
 }
