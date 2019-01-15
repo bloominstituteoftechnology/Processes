@@ -6,9 +6,26 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int main(void)
+int main(int argc, char *argv[])
 {
-    // Your code here
+    int x = 100;
+    int rc = fork();
+    // the parent and the child will have their own copy. the parent going down, the child going up.
+    if (rc < 0) {
+        // stderr = standard error (like error response specified in server calls (.catch))
+        // fprinf is common with stderr, since printf is defualted to stdout = standard output
+        fprintf(stderr, "fork failed...\n");
+        exit(1);
+    } else if (rc == 0) {
+        // pid = process id number..(int) is to be explicit about getting an integ. (look up: pid_t)
+        printf("I'm the child! (pid: %d) and x is : %d.\n", (int) getpid(), x);
+        x++;
+        printf("Child again... x is now: %d\n", x);
+    } else {
+        printf("I'm the parent! (pid: %d) and x is : %d.\n", (int) getpid(), x);
+        x--;
+        printf("Parent again... x is now: %d\n", x);
+    }
 
     return 0;
 }
