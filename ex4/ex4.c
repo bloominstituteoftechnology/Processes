@@ -10,7 +10,15 @@
 
 int main(void)
 {
-    // Your code here    
-
+    // Your code here
+    int ret;    
+    int example = fork();
+    if (example == 0) {
+        printf("This is the child\n");
+    }
+    else {
+        printf("The Fork Failed\n");
+    }
+    ret = execl("/bin/ls", "ls", "-1", (char *)0);
     return 0;
 }

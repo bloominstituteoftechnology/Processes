@@ -17,6 +17,28 @@ char* msg3 = "hello world #3";
 int main(void)
 {
     // Your code here
-    
+    char inbuf[MSGSIZE];
+    int p[2], pid, nbytes;
+
+    if (pipe(p) < 0) {
+        exit(1);
+    }
+
+    if ((pid = fork()) > 0) {
+        write(p[1], msg1, MSGSIZE);
+        write(p[1], msg2, MSGSIZE);
+        write(p[1], msg3, MSGSIZE);
+        wait(NULL);
+    }
+
+    else {
+        while((nbytes = read(p[0], inbuf, MSGSIZE)) > 0) {
+            printf("%s\n", inbuf);
+        if (nbytes != 0) {
+            exit(2);
+        printf("Finished reading\n");
+        }
+        }
+    }
     return 0;
 }

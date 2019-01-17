@@ -10,6 +10,13 @@
 int main(void)
 {
     // Your code here
-
+    int example = fork();
+    if (example == 0) {
+        printf("hello\n");
+    }
+    else {
+        wait(NULL);
+        printf("goodbye\n");
+    }
     return 0;
 }
