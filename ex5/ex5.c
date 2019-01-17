@@ -48,7 +48,7 @@ int main(void)
         // close the "right" end of the pipe, parent is not going to be writing to it.
         close(p[1]);
         printf("parent is reading from pipe\n");
-        // because we don't know, usually how amny messages will be passed, we use
+        // because we don't know, usually how many messages will be passed, we use
         // a while loop, and base it off the number of bytes that get read by the read
         // function.
         while ((nbytes = read(p[0], inbuf, MSGSIZE)) > 0) {
