@@ -1,1 +1,1 @@
-Asdfasdfasdf hello
+Some text: Writing to file test - written by pid - 2739

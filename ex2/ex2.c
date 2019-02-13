@@ -14,12 +14,14 @@ int main(void)
 {
     // Your code here 
     int rc = fork();
-    
+
     FILE *fp;
     char *fileName = "text.txt";
     char str[MAXCHAR];
 
-    fp = fopen(fileName, "r");
+    const char *txt = "Writing to file test";
+
+    fp = fopen(fileName, "w");
     
 
     if (rc < 0) {    // fork failed; exit
@@ -36,10 +38,9 @@ int main(void)
         return 1;
     }
 
-    while (fgets(str, MAXCHAR, fp) != NULL) {
-        printf("%s \n", str);
+    fprintf(fp, "Some text: %s - written by pid - %d\n", txt, (int) getpid());
     
     fclose(fp);
     return 0;
-    }
+    
 }
