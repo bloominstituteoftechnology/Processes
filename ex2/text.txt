@@ -1,0 +1,11 @@
+Hello, world!
+ello from the parent process
+Hello, world!Hello from the child process
+Hello from the parent process
+Hello, world!Hello from the child process
+Hello from the parent process
+Hello, world!
+Hello from the child process
+Hello from the parent process
+Hello, world!
+Hello from the child process

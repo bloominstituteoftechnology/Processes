@@ -12,20 +12,20 @@ int main(void)
 {
     int x = 100;
 
-    int rv = fork();
+    int rc = fork();
 
-    if (rv < 0)
+    if (rc < 0)
     {
         printf("Fork failed\n");
         exit(1);
     }
-    if (rv == 0)
+    if (rc == 0)
     {
         printf("x is %d in the child process\n", x);
         x = 300;
         printf("x was changed to %d in the child process\n", x);
     }
-    if (rv > 0)
+    if (rc > 0)
     {
         printf("x is %d in the parent process\n", x);
         x = 500;
