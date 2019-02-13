@@ -21,7 +21,7 @@ int main(void)
 
     const char *txt = "Writing to file test";
 
-    fp = fopen(fileName, "w");
+    fp = fopen(fileName, "ab");
     
 
     if (rc < 0) {    // fork failed; exit
