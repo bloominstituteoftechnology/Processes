@@ -10,6 +10,27 @@ int main(void)
 
 {
     // Your code here
+    int x = 100;
+    int rc = fork();
+
+    if (rc < 0) {
+        printf("%d", x);
+
+    } else if (rc == 0) {
+        x = 10;
+        printf("Child Process (pid: %d) X = %d \n", (int) getpid(), x);
+    } else {
+        x = 11;
+        printf("Parent Process (pid: %d) of child %d. X = %d \n",  (int) getpid(), rc, x);
+    }
+
+    printf("X = %d \n", x);
 
     return 0;
 }
+
+
+//Fork - To create a clone of the calling process. 
+// The clone of the process starts executing right after the fork call
+//If fork returns 0 it is in a child process
+//
