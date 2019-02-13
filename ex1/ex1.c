@@ -9,6 +9,20 @@
 int main(void)
 {
     // Your code here
+    int hunter = 100;
+    int child = fork();
+    if (child == 0){
+        hunter +=1;
+        printf("Hunter the Child is: %d\n", hunter);
+    }
+    else {
+        hunter +=2;
+        printf("Hunter the Parent is: %d\n", hunter);
+    }
 
     return 0;
 }
+// returns:
+
+//Hunter the Parent is: 102
+//Hunter the Child is: 101
