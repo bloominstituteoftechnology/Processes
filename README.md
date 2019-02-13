@@ -38,6 +38,7 @@ int main(int argc, char *argv[])
 
     return 0;
 }
+
 ```
 Running this program, one of the possible outputs could be something like this:
 ```
