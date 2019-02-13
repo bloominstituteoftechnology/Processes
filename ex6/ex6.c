@@ -20,7 +20,18 @@ and `clock_gettime()` should work just fine.
 
 int main()
 {
+    struct timespec start, end;
+
+    long double accum;
+
+    clock_gettime(CLOCK_MONOTONIC, &start);
+    fprintf(stdout, " ");
+    clock_gettime(CLOCK_MONOTONIC, &end);
     // Your code here
     
+    accum = ( end.tv_sec - start.tv_sec )
+          + ( end.tv_nsec - start.tv_nsec )
+            / BILLION;
+    printf( "%Lf\n", accum );
     return 0;
 }

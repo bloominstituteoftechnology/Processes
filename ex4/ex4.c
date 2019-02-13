@@ -10,6 +10,19 @@
 
 int main(void)
 {
+    int test = fork();
+
+    int test2;
+    char *env[] = { "HOME=/usr/home", "LOGNAME=home", (char *)0 };
+    //char *cmd[] = { "ls", "-l", (char *)0 };
+    
+    //test2 = execl ("/bin/ls", "ls", "-1", (char *)0);
+
+    test2 = execle ("/bin/ls", "ls", "-1", (char *)0, env);
+    
+    
+
+    //test2 = execv("/bin/ls", cmd);
     // Your code here    
 
     return 0;

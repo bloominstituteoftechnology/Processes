@@ -9,7 +9,15 @@
 
 int main(void)
 {
-    // Your code here
+    int test = fork();
+    wait(NULL);
+    if(test == 0) {
+        printf("Hello");
+    } else {
+        
+        printf("Goodbye");
+    }
+    
 
     return 0;
 }
