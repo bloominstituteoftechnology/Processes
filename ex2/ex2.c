@@ -9,7 +9,17 @@
 int main(void)
 {
     // Your code here
-    fopen(text.txt, r);
-    fork();
+    FILE = *f;
+    f = fopen("text.txt", "r");
+    int n = fork();
+
+    if (n == 0)
+    {
+        printf("child");
+    }
+    else if (n > 0)
+    {
+        printf("parent");
+    }
     return 0;
 }

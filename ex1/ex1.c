@@ -7,10 +7,19 @@
 #include <unistd.h>
 int main()
 {
-    int x = 0;
+    int x = 50;
+    int n = fork();
+    if (n == 0)
+    {
+        x = 20;
 
-    fork();
+        printf("%i\n", x);
+    }
+    else if (n > 0)
+    {
+        x = 100;
+        printf("%i\n", x);
+    }
 
-    printf("%i", x);
     return 0;
 }
