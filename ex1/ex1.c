@@ -23,6 +23,7 @@ int main(void)
         printf("hello, child here (pid: %d) \n", (int) getpid());
     } else {
         x = 75 // What happens to the variable when both the child and parent change the value of x?
+                //A: it changes in it's own memory space 
         printf("hello, parent here (pid: %d) of child %d\n", (int) getpid(), rc);
     }
 

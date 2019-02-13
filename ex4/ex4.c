@@ -10,7 +10,24 @@
 
 int main(void)
 {
-    // Your code here    
 
+    int rc = fork(); // rc: return code
+
+    // ------------------------------------------------ child process starts executing here
+     if (rc < 0) {    // fork failed; exit
+        fprintf(stderr, "fork failed\n");//prints to standard error 
+        exit(1);
+
+    } else if (rc == 0) {    // child process satisfies this branch
+      
+        printf("hello, child here (pid: %d) \n", (int) getpid());
+
+    } else {
+     
+        printf("hello, parent here (pid: %d) of child %d\n", (int) getpid(), rc);
+    }
+
+    
     return 0;
 }
+
