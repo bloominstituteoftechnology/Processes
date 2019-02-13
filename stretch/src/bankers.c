@@ -162,6 +162,7 @@ int main(int argc, char **argv)
 			// functions, above).
             int balance_file = open_balance_file(BALANCE_FILE);
 
+            flock(balance_file, LOCK_EX);
 			// Read the current balance
             read_balance(balance_file, &balance);
 
@@ -171,10 +172,12 @@ int main(int argc, char **argv)
             {
                 int new_balance = balance - amount;
                 write_balance(balance_file, new_balance);
+                flock(balance_file, LOCK_UN);
                 printf("Withdrew $%d, new balance $%d (pid: %d)\n", amount, new_balance, (int) getpid());
             }
             else
             {
+                flock(balance_file, LOCK_EX);
                 printf("Only have $%d, can't withdraw $%d (pid: %d)\n", balance, amount, (int) getpid());
             }
 
