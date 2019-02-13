@@ -30,6 +30,9 @@ int main(void)
         printf("Childs x: %i\n", x);
         printf("Childs pointer to x: %p\n", xp);
         printf("Childs pointer to x value: %i\n", *xp);
+        int *npx = &x;
+        printf("Childs NEW pointer to x: %p\n", npx);
+        printf("%s\n", "---END CHILD---\n\n");
     }
     else
     {
@@ -43,6 +46,9 @@ int main(void)
         printf("Parents x: %i\n", x);
         printf("Parents pointer to x: %p\n", xp);
         printf("Parents pointer to x value: %i\n", *xp);
+        int *npx = &x;
+        printf("Childs NEW pointer to x: %p\n", npx);
+        printf("%s\n", "---END PARENT---\n\n");
     }
 
     return 0;
