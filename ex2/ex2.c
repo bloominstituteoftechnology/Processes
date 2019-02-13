@@ -9,6 +9,18 @@
 int main(void)
 {
     // Your code here 
-    
+    // FILE *fopen(const char *filename, const char *mode);
+    FILE *fp = fopen("text.txt", "r+");
+    int s = fork(); 
+
+    if(s == 0){
+        fprintf(fp, "%s\n", "Inside child process....");
+        printf("Inside child process\n");
+    } else{
+        fprintf(fp, "%s\n", "Inside parent process....");
+        printf("Inside parent process....\n");
+    }
+    fclose(fp);
+        
     return 0;
 }
