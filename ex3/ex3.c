@@ -9,7 +9,15 @@
 
 int main(void)
 {
-    // Your code here
-
+    int rc = fork();
+    if (rc < 0) {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {
+        printf("Goodbye\n");//this is the parent because response of fork is 0
+    } else {
+        printf("Hello\n"); // this is the child because response of fork is > 0
+    }
+    
     return 0;
 }
