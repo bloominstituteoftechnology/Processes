@@ -1,6 +1,7 @@
 # Processes and System Calls
 
-Now that we've talked a bit about how processes and system calls work at a high level, it's time to apply these concepts by doing some exercises related to process creation and making system calls. We'll be utilizing the `fork()`, `exec()`, `wait()`, and `pipe()` system calls in order to create processes and even have them pass messages to each other.
+Now that we've talked a bit about how processes and system calls work at a high level, it's time to apply these concepts by doing some exercises related to process creation and making system calls.
+We'll be utilizing the `fork()`, `exec()`, `wait()`, and `pipe()` system calls in order to create processes and even have them pass messages to each other.
 
 ## Objective
 To introduce and familiarize yourself with some basic system calls pertaining to process 
