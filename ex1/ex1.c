@@ -8,7 +8,25 @@
 
 int main(void)
 {
-    // Your code here
+    int x = 100;
+    printf("X is %i in the parent \n", x);
 
+    int child_process = fork();
+    // Begin execution of fork
+    if (child_process < 0)
+    {
+        // Fork failed
+        fprintf(stderr, "Fork Failed!");
+        exit(1);
+    } else if (child_process == 0)
+    {
+        // Fork succeeded
+        x = 25;
+        printf("X is %i in the child \n", x);
+    }  else
+    {
+        printf("Back in the parent, X is: %i\n", x);
+    }
+    
     return 0;
 }
