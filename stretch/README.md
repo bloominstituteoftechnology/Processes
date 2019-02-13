@@ -66,16 +66,19 @@ simulated bank account, that is. Don't get your hopes up.)
 1. **Short answer**: How can things go wrong if two processes attempt the
    above plan at the same time? Is there more than one way things can go
    wrong?
+    - Without locking the file before reading and writing, one process could read the file right when another process deletes everything before rewriting. There could also be two process that read the file before either have the chance to change the balance, resulting in the wrong calculations of the balance being written to the file.
 
 2. Study and understand the skeleton code in the `src/` directory.
 
    **Short answer**: what do each of the arguments to `open()` mean?
+    - The first one is the path to the desired file, the second one is the flags, and the last argument is the mode the file is opened with (read/write capabilites).
 
 3. Take the skeleton code in the `src/` directory and implement the
    pieces marked. Run it.
    
    **Short answer**: What happens? Do things go as planned and look
    sensible? What do you speculate is happening?
+    - Without locking the file, sometimes a process will read that the balance is $0 even though it is not. It is probably reading the file in the middle of when another process is rewriting it.
 
 4. Add calls to [`flock()`](https://linux.die.net/man/2/flock) to
    capture and release an exclusive lock on the file before reading and
@@ -86,7 +89,7 @@ simulated bank account, that is. Don't get your hopes up.)
 5. **Short answer**: Why is it working? How has adding locks fixed the
    problems you noted in question 1? How is overall performance of the
    application affected?
-
+    - By locking the file when reading and writing, only the respective process can edit the file. That way the file can't be overwritten before the first process gets the chance to update it. The performance will slow down since it essentially turns it into a queue but it also reduces the risk of mistakes happening.
 
 ## Stretch Goals
 
