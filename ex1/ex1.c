@@ -8,7 +8,24 @@
 
 int main(void)
 {
-    // Your code here
+    int x = 100;
+    printf("%d\n", x);
+    int rc = fork();
+
+    if (rc < 0)
+    {
+        printf("Fork failed\n");
+    }
+    else if (rc == 0)
+    {
+        x += 2;
+        printf("After child change: %d\n", x);
+    }
+    else
+    {
+        x += 10;
+        printf("After parent change: %d\n", x);
+    }
 
     return 0;
 }
