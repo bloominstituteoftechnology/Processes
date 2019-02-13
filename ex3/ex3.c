@@ -9,4 +9,21 @@
 
 int main(void)
 {
+    int fp = fork();
+    if (fp < 0)
+    { // fork failed; exit
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    }
+    else if (fp == 0)
+    { // child process satisfies this branch
+        printf("hello\n");
+    }
+    else
+    {
+        int wc = waitpid(fp, NULL, 0);
+        printf("goodbye\n");
+    }
+
+    return 0;
 }
