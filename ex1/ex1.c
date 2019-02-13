@@ -8,7 +8,18 @@
 
 int main(void)
 {
-    // Your code here
+    int x = 50;
+    int child = fork();
+
+    if (child == 0) // fork failed
+    {
+        printf("\n x = %d", x);
+    }
+    else
+    {
+        x = 60;
+        printf("\n x = %d", x);
+    }
 
     return 0;
 }
