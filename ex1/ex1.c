@@ -9,6 +9,10 @@
 int main(void)
 {
     // Your code here
+    int x = 100;
+    printf("Parent x : %d", x);
+    fork();
+    
 
     return 0;
 }
