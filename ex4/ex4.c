@@ -10,7 +10,22 @@
 
 int main(void)
 {
-    // Your code here    
+    // Your code here   
+    int status;
+    // 2 strings, one is /bin/ls and the other is to finish with a NULL
+    char *args[2];
+
+    args[0] = "/bin/ls";
+    args[1] = NULL;
+    int y = fork(); 
+
+    if (y == 0) {
+    execv(args[0], args);
+
+  } else {
+    
+    wait(&status);
+  }
 
     return 0;
 }
