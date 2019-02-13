@@ -10,15 +10,18 @@ int main(void)
 {
     // Your code here
     FILE *fp;
-    fp = fopen("text.txt", "r");
+    fp = fopen("text.txt", "r+");
     int child = fork();
     if (child == 0)
     {
         printf("Pointer Child: %d\n", *fp);
+        fprintf(fp, "Testing child\n");
     }
     else
     {
         printf("Pointer Parent: %d\n", *fp);
+        fprintf(fp, "Testing parent\n");
     }
+    fclose(fp);
     return 0;
 }

@@ -27,6 +27,7 @@ int main(void)
         write(p[1], msg2, MSGSIZE);
         write(p[1], msg3, MSGSIZE);
         printf("messages written...\n");
+        return 0;
     }
     else
     {
