@@ -8,7 +8,34 @@
 
 int main(void)
 {
-    // Your code here 
+    int c;
+    FILE *file;
+    
+    int rc = fork();
+    
+    if (rc < 0) {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {    // child process satisfies this branch
+        printf("hello, child here (pid: %d) \n", (int) getpid());
+        file = fopen("text.txt", "w");
+        fprintf(file, "Child was here");
+        fclose(file);
+    } else {
+        printf("hello, parent here (pid: %d) of child %d\n", (int) getpid(), rc);
+        file = fopen("text.txt", "w");
+        fprintf(file, "Parent was here");
+        fclose(file);
+    }
+    
+    file = fopen("text.txt", "r");
+    
+    if (file) {
+        while ((c = getc(file)) != EOF)
+            putchar(c);
+        fclose(file);
+        printf("\n");
+    }
     
     return 0;
 }
