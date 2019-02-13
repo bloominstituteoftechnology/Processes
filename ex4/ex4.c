@@ -7,10 +7,21 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <sys/wait.h>
+#include <string.h>
 
 int main(void)
 {
     // Your code here    
-
+    int child = fork();
+    if(child == 0) {
+        char *myargs[2];
+        myargs[0] = strdup("/bin/ls");;
+        myargs[1] = NULL;
+        execv(myargs[0], myargs);
+        printf("this should not be seen");
+    } else {
+        waitpid(child, NULL, 0);
+        printf("This is where the parent does something\n");
+    }
     return 0;
 }
