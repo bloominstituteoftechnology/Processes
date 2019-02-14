@@ -3,12 +3,23 @@
 // What happens to the variable when both the child and parent change the value of x?
 
 #include <stdio.h>
-#include <stdlib.h>
+#include <sys/types.h>
 #include <unistd.h>
-
-int main(void)
+int main()
 {
-    // Your code here
+    int x = 50;
+    int n = fork();
+    if (n == 0)
+    {
+        x = 20;
+
+        printf("%i\n", x);
+    }
+    else if (n > 0)
+    {
+        x = 100;
+        printf("%i\n", x);
+    }
 
     return 0;
 }
