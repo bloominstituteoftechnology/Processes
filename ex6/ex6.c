@@ -20,7 +20,29 @@ and `clock_gettime()` should work just fine.
 
 int main()
 {
-    // Your code here
+    int diff;
+
+    for (int i = 0; i < number_iter; i++) {
+
+        struct timespec start, end;
+
+        // For measuring elapsed time, CLOCK_MONOTONIC is recommended
+
+        clock_gettime(CLOCK_MONOTONIC, &start); /* mark the start time*/
+
+        //Write is a system call that is used to write data out of a buffer.
+        write(fileno(stdout), NULL, 0); 
+
+        clock_gettime(CLOCK_MONOTONIC, &end); /* mark the end time*/
+
+
+        diff += BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+
+    }
+
+    diff /= number_iter;
+    printf("Average time for 1000000 loops is - %d \n", diff);
+
     
     return 0;
 }
