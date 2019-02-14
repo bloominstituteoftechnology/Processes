@@ -20,7 +20,7 @@ int main(void)
     else if (child == 0)
     {
         char *args[2];
-        args[0] = "/bin/ls"; // list files and dirs
+        args[0] = "/bin/ls";
         args[1] = NULL;
 
         execvp(args[0], args);

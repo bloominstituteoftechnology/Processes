@@ -17,6 +17,23 @@ char* msg3 = "hello world #3";
 int main(void)
 {
     // Your code here
-    
+    char s[MSGSIZE];
+    int p[2];
+
+    if (pipe(p) < 0)
+    {
+        fprintf(stderr, "\npipe error\n");
+        exit(1);
+    }
+
+    write(p[1], msg1, MSGSIZE);
+    write(p[1], msg2, MSGSIZE);
+    write(p[1], msg3, MSGSIZE);
+
+    for (int i = 0; i < 3; i++)
+    {
+        read(p[0], s, MSGSIZE);
+        printf("%s\n", s);
+    }
     return 0;
 }
