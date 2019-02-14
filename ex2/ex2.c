@@ -15,9 +15,10 @@ int main(void)
 	int y = fork();
 
 	if (y == 0){
-		// Parent should write first
+		
 		fprintf(fp, "%s %s %s %d", "We", "are", "in", 2019);
 	} else{
+		// Parent should write first
 		fprintf(fp, "%s %s %s %d", "We", "are", "in", 2020);
 	}
 

@@ -21,6 +21,26 @@ and `clock_gettime()` should work just fine.
 int main()
 {
     // Your code here
+    // uint64_t is a unsigned integer and can hold a value from 0 to 9,223,372,036,854,775,807
+
+    __uint64_t diff, sum;
+    // Structure holding an interval broken down into seconds and nanoseconds.
+    struct timespec start, end;
+
+    for (int i = 0; i < number_iter; i++){
+		clock_gettime(CLOCK_MONOTONIC, &start);
+
+		write(1, NULL, 0);
+		clock_gettime(CLOCK_MONOTONIC, &end);
+		diff = BILLION * (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec);
+
+		sum += diff;
+	}
+
+	
+	printf("Elapsed time = %llu nanoseconds\n", (long long unsigned int) sum / number_iter);
+
+
     
     return 0;
 }
