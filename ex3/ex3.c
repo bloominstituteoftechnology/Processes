@@ -9,7 +9,20 @@
 
 int main(void)
 {
-    // Your code here
+    int child = fork();
+    if (child < 0)
+    {
+        printf("\nFork failed\n");
+    }
+    else if (child == 0)
+    {
+        printf("\nhello\n");
+    }
+    else
+    {
+        int wc = waitpid(child, NULL, 0);
+        printf("\ngoodbye\n");
+    }
 
     return 0;
 }
