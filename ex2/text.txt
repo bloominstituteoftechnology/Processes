@@ -1,1 +1,2 @@
-(null)
+Hello from parent: 23112
+Hello from child: 23113

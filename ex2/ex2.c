@@ -20,10 +20,13 @@ int main(void)
     else if (fp == 0)
     { // child process satisfies this branch
         //fprintf(file, "%s");
+        fprintf(file, "Hello from child: %d\n", (int)getpid());
     }
     else
     {
-        fprintf(file, "%s");
+        fprintf(file, "Hello from parent: %d\n", (int)getpid());
     }
+
+    fclose(file);
     return 0;
 }
