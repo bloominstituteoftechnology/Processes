@@ -16,7 +16,7 @@ char* msg3 = "hello world #3";
 
 int main(void)
 {
-    printf("Parent %d\n", (int) getpid());
+//    printf("Parent %d\n", (int) getpid());
     
     char inbuffer[MSGSIZE];
     int p[2];
@@ -28,10 +28,22 @@ int main(void)
         exit(1);
     }
     
-    int rc = fork();
+    pid_t rc = fork();
     
-    
-    
+    if (rc < 0) {
+        fprintf(stderr, "Fork failed!\n");
+        exit(1);
+    } else if (rc == 0) {
+        write(p[1], msg1, MSGSIZE);
+        write(p[2], msg2, MSGSIZE);
+        write(p[3], msg3, MSGSIZE);
+    } else {
+//        int wc = waitpid(rc, NULL, 0);
         
+        for (int index = 0; index < 3; index++) {
+            read(p[0], inbuffer, MSGSIZE);
+            printf("%s\n", inbuffer);
+        }
+    } 
     return 0;
 }
