@@ -121,19 +121,28 @@ int main(int argc, char **argv)
 	//
 	// "usage: bankers numprocesses\n"
 
+	if (argc < 2)
+	{
+		fprintf(stderr, "usage: bandkers numprocessess\n");
+		exit(1);
+	}
+
 	// Store the number of processes in this variable:
 	// How many processes to fork at once
-	int num_processes = IMPLEMENT ME
+	int num_processes = strtol(argv[1], NULL, 10);
+	// Make sure the number of processes the user specified is more than
+	// 0 and print an error to stderr if not, then exit with status 2:
+	//
+	// "bankers: num processes must be greater than 0\n"
 
-		// Make sure the number of processes the user specified is more than
-		// 0 and print an error to stderr if not, then exit with status 2:
-		//
-		// "bankers: num processes must be greater than 0\n"
+	// ^^^^^^^^^^^^^^^^^^
+	if (num_processes < 1)
+	{
+		fprintf(stderr, "bankers: num processes must be greater than 0\n");
+	}
 
-		// ^^^^^^^^^^^^^^^^^^
-
-		// Start with $10K in the bank. Easy peasy.
-		int fd = open_balance_file(BALANCE_FILE);
+	// Start with $10K in the bank. Easy peasy.
+	int fd = open_balance_file(BALANCE_FILE);
 	write_balance(fd, 10000);
 	close_balance_file(fd);
 
@@ -154,22 +163,32 @@ int main(int argc, char **argv)
 
 			// vvvvvvvvvvvvvvvvvvvvvvvvv
 			// !!!! IMPLEMENT ME
-
 			// Open the balance file (feel free to call the helper
 			// functions, above).
+			fd = open_balance_file(BALANCE_FILE);
 
 			// Read the current balance
-
+			read_balance(fd, &balance);
 			// Try to withdraw money
 			//
 			// Sample messages to print:
 			//
 			// "Withdrew $%d, new balance $%d\n"
 			// "Only have $%d, can't withdraw $%d\n"
+			if (amount > balance)
+			{
+				printf("Only have %d, can't withdraw %d\n", balance, amount);
+			}
+			else
+			{
+				write_balance(fd, (balance - amount));
+				read_balance(fd, &balance);
+				printf("Withdrew $%d, new balance $%d\n", amount, balance);
+			}
 
 			// Close the balance file
 			//^^^^^^^^^^^^^^^^^^^^^^^^^^
-
+			close_balance_file(fd);
 			// Child process exits
 			exit(0);
 		}
