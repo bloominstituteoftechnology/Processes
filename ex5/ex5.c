@@ -17,17 +17,22 @@ char *msg3 = "hello world #3";
 int main(void)
 {
     // Your code here
-    int child = fork();
+
     char inbuf[MSGSIZE];
     int p[2];
-    pipe(p);
+    if (pipe(p) < 0)
+    {
+        fprintf(stderr, "pipe failed\n");
+        exit(1);
+    }
+    int child = fork();
     if (child == 0)
     {
+        close(p[0]);
         write(p[1], msg1, MSGSIZE);
         write(p[1], msg2, MSGSIZE);
         write(p[1], msg3, MSGSIZE);
         printf("messages written...\n");
-        return 0;
     }
     else
     {
@@ -35,6 +40,7 @@ int main(void)
         for (int i = 0; i < 3; i++)
         {
             // read 16 bytes of data from the read file descriptor
+            close(p[1]);
             read(p[0], inbuf, MSGSIZE);
             printf("%s\n", inbuf);
         }
