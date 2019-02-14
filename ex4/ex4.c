@@ -18,12 +18,15 @@ int main(void)
     }
     else if (fp == 0)
     { // child process satisfies this branch
-        // do nothing?
+        char *args[] = {"ls", "-a", NULL};
+        // execvp(args[0], args);
+        execvp(args[0], args);
     }
     else
     {
         //call exec on '/bin/ls
-        exec("/bin/ls");
+        int wc = waitpid(fp, NULL, 0);
+        printf("Child process is complete");
     }
 
     return 0;
