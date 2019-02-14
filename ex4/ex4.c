@@ -11,6 +11,26 @@
 int main(void)
 {
     // Your code here    
+    int child = fork();
+
+    if (child < 0)
+    {
+        printf("\nFork failed\n");
+    }
+    else if (child == 0)
+    {
+        char *args[2];
+        args[0] = "/bin/ls"; // list files and dirs
+        args[1] = NULL;
+
+        execvp(args[0], args);
+        printf("\nNot found\n");
+    }
+    else
+    {
+        int wc = waitpid(child, NULL, 0);
+        printf("\nParent\n");
+    }
 
     return 0;
 }
