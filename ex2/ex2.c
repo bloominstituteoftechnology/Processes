@@ -10,7 +10,7 @@ int main(void)
 {
     // Your code here 
     // FILE *fopen(const char *filename, const char *mode);
-    FILE *fp = fopen("text.txt", "r+");
+    FILE *fp = fopen("text.txt", "w+");
     int s = fork(); 
 
     if(s == 0){
