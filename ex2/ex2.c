@@ -10,16 +10,24 @@ int main(void)
 {
     // Your code here 
     FILE *fp;
-    fp = fopen("text.txt", "r");
+    fp = fopen("text.txt", "r+");
     int child = fork();
     if (child == 0) {
         printf("Pointer Child: %d\n", *fp);
+        fprintf(fp, "Inside the child\n");
     } else {
         printf("Pointer Parent %d\n", *fp);
+        fprintf(fp, "Inside the Parent\n");
     }
+    fclose(fp);
     return 0;
 }
 //returns:
 
-// Pointer PArent: 0
+// Pointer Parent: 0
 // Pointer Child: 0
+
+
+// Both can access the file descriptor by fopen().
+
+//They both seem to be able to write to the file from my testing

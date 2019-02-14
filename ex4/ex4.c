@@ -3,6 +3,8 @@
 // `execl()`, `execle()`, `execv()`, and others. Why do you think there 
 // are so many variants of the same basic call?
 
+// They allow for including certain arguments  or determining the environment in which to execute the desired program
+
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
