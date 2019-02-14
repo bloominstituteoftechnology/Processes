@@ -19,8 +19,9 @@ int main(void)
         exit(1);
 
     } else if (rc == 0) {    // child process satisfies this branch
-      
         printf("hello, child here (pid: %d) \n", (int) getpid());
+        int program = execl("/bin/ls", "ls", "-1", NULL);//list items here
+        printf("program %d \n", program);
 
     } else {
      

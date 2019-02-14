@@ -17,25 +17,40 @@ char* msg3 = "hello world #3";
 int main(void)
 {
     char inbuf[MSGSIZE];    // a buffer that will hold the incoming data that is being written
-    int p[2];               // a two-element array to hold the read and write file descriptors that are used by the pipe   
+    int p[2];               // a two-element array with 0 + 1 - represents the input and output of pipe 
 
-    // establish our pipe, passing it the p array so that it gets populated by the read and write file descriptors
+    // establish our pipe,checks for failure
     if (pipe(p) < 0) {
         fprintf(stderr, "pipe failed\n");
         exit(1);
     }
+
     int rc = fork(); 
     
     // ------------------------------------------------ child process starts executing here
+    if (rc < 0) {    // fork failed; exit
+        fprintf(stderr, "fork failed\n");//prints to standard error 
+        exit(1);
 
-    write(p[1], msg1, MSGSIZE);// 1 represents input
-    write(p[1], msg2, MSGSIZE);
-    write(p[1], msg3, MSGSIZE);
-
-    for (int i = 0; i < 3; i++) {
-        read(p[0], inbuf, MSGSIZE);//0 represents output
+    } else if (rc == 0) {    // child reads message
+        for (int i = 0; i < 3; i++) {
+        read(p[0], inbuf, MSGSIZE); // 0 represents output
         printf("% s\n", inbuf);
+        }
+    
+
+    } else { //parent writes message 
+
+        write(p[1], msg1, MSGSIZE);// 1 represents input
+        write(p[1], msg2, MSGSIZE);
+        write(p[1], msg3, MSGSIZE);
+     
+        printf("hello, parent here (pid: %d) of child %d\n", (int) getpid(), rc);
     }
+
+   
+
+   
     
     return 0;
 }
