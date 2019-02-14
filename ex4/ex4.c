@@ -7,10 +7,22 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <sys/wait.h>
+#include <string.h>
 
 int main(void)
 {
     // Your code here    
+    int rc = fork();
+    if(rc < 0 ){
+        printf("Process broke");
+    } else if (rc == 0){
+        char *cmds[2];
+        cmds[0] = strdup("/bin/ls");
+        cmds[1] = NULL;
+        execv(cmds[0], cmds);
+    } else {
+        printf("This is the parent");
+    }
 
     return 0;
 }
