@@ -14,7 +14,7 @@ int main(void)
     if (f > 0) {
         //waitpid() makes the process go second
         //since parent has waitpid() it should go after child
-        int w = waitpid(f, NULL, 0);
+        int wc = waitpid(f, NULL, 0);
         printf("Parent says goodbye.\n");
     }
     else if (f == 0)

@@ -10,8 +10,9 @@ int main(void)
 {
     int x = 100;
     //if this printf is below fork then it prints/runs before parent and child
-    printf("The initial value of x is %d.\n", x); 
+    printf("Initial value of x before fork() is %d.\n", x); 
     int y = fork();
+    printf("The initial value of x after fork() is %d.\n", x); 
 
     if (y == 0) //this executes child
     {   
