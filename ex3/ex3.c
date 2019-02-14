@@ -9,7 +9,26 @@
 
 int main(void)
 {
-    // Your code here
+    printf("pre-fork: pid %d\n", (int)getpid());
+
+    int rc = fork();
+
+    if (rc < 0)
+    {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    }
+    else if (rc == 0)
+    {
+        printf("post-fork: child pid %d\n", (int)getpid());
+        printf("hello\n");
+    }
+    else
+    {
+        int wc = waitpid(rc, NULL, 0);
+        printf("post-fork: parent pid %d of child %d\n", (int)getpid(), rc);
+        printf("goodbye\n");
+    }
 
     return 0;
 }
