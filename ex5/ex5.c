@@ -33,19 +33,23 @@ int main(void)
     else if (f == 0)
     {
         // we are in the child branch
+        close(p[0]); // close the read branch
         write(p[1], msg1, MSGSIZE);
         write(p[1], msg2, MSGSIZE);
         write(p[1], msg3, MSGSIZE);
+        close(p[1]); // close the write branch
     }
     else
     {
         // we are in the parent branch
+        close(p[1]); // close the write branch
+        wait(NULL);
         for (int i = 0; i < 3; i++)
         {
-            wait(NULL);
             read(p[0], inbuf, MSGSIZE);
-            printf("% s\n", inbuf);
+            printf("%s\n", inbuf);
         }
+        close(p[0]); // close the read branch
     }
     return 0;
 }
