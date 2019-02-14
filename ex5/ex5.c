@@ -35,8 +35,8 @@ int main(void)
         exit(1);
     } else if (rc == 0) {
         write(p[1], msg1, MSGSIZE);
-        write(p[2], msg2, MSGSIZE);
-        write(p[3], msg3, MSGSIZE);
+        write(p[1], msg2, MSGSIZE);
+        write(p[1], msg3, MSGSIZE);
     } else {
 //        int wc = waitpid(rc, NULL, 0);
         
