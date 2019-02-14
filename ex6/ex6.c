@@ -12,6 +12,7 @@ and `clock_gettime()` should work just fine.
 */
 
 #include <stdio.h>
+#include <stdint.h>
 #include <unistd.h>
 #include <time.h>
 
@@ -20,7 +21,20 @@ and `clock_gettime()` should work just fine.
 
 int main()
 {
-    // Your code here
+    uint64_t diff;
+    struct timespec start, end;
+
+    clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &start);
     
+    for (int i = 0; i < number_iter * 10; i++)
+    {
+        write(fileno(stdout), NULL, 0);
+    }
+
+    clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end);
+
+    diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+
+    printf("Elapsed CPU time = %llu nanoseconds\n", (long long unsigned int) diff);
     return 0;
 }
