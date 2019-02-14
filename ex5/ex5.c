@@ -16,7 +16,22 @@ char* msg3 = "hello world #3";
 
 int main(void)
 {
-    // Your code here
+    printf("Parent %d\n", (int) getpid());
     
+    char inbuffer[MSGSIZE];
+    int p[2];
+    
+    pipe(p);
+    
+    if (pipe(p) < 0) {
+        fprintf(stderr, "pipe failed\n");
+        exit(1);
+    }
+    
+    int rc = fork();
+    
+    
+    
+        
     return 0;
 }
