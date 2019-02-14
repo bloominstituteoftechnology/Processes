@@ -17,7 +17,6 @@ char *msg3 = "hello world #3";
 int main(void)
 {
     // Your code here
-    int f = fork();
     char inbuf[MSGSIZE];
     int p[2];
     if (pipe(p) < 0)
@@ -25,6 +24,7 @@ int main(void)
         fprintf(stderr, "pipe failde\n");
         exit(1);
     }
+    int f = fork();
     if (f < 0)
     {
         printf("%s\n", "Fork faliled");
