@@ -10,6 +10,24 @@
 
 int main(void)
 {
+
+    printf("hello world (pid: %d)\n", (int) getpid());
+    int rc = fork();
+    char *argv[] = { "/bin/ls", "-l", 0 };
+
+    // ------------------------------------------------ child process starts executing here
+    if (rc < 0) {    // fork failed; exit
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {    // child process satisfies this branch
+        printf("hello, child here (pid: %d) \n", (int) getpid());
+        execv(argv[0], argv);
+        execvp(argv[0], argv);
+        printf("this should not be seen");
+    } else {
+        int wc = waitpid(rc, NULL, 0);    // `waitpid` call added here
+        printf("hello, parent here (pid: %d) of child %d\n", (int) getpid(), rc);
+    }
     // Your code here    
 
     return 0;
