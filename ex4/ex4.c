@@ -20,6 +20,7 @@ int main(void)
         arg[0] = strdup("/bin/ls");
         arg[1] = NULL;
         execv(arg[0], arg);
+        execl("/bin/ls", "ls", NULL);
     } else {
         waitpid(child, NULL, 0);
         printf("PArent running here\n");
