@@ -90,7 +90,6 @@ int get_random_amount(void)
 {
 	// vvvvvvvvvvvvvvvvvv
 	// !!!! IMPLEMENT ME:
-	srand(time(0));
 	// Return a random number between 0 and 999 inclusive using rand()
 	int r = rand() % 1000;
 
