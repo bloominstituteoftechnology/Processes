@@ -19,6 +19,11 @@ int main(void)
     }
     else if (rc == 0)
     {
+        // Lecture examples
+        // char *args[] = {"ls", "-l", NULL};
+        // execvp(args[0], args);
+        // execl("/bin/ls", "-ls", "-l", (char *)NULL);
+
         char *parmList[] = {"/bin/ls", "-1", "./", NULL};
         execv(parmList[0], parmList);
         // execl("/bin/ls", "ls", (char *)NULL);
