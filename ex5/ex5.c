@@ -41,11 +41,19 @@ int main(void)
     else
     {
         wait(NULL);
-        for (int i = 0; i < 3; i++)
+
+        // Perfered way
+        close(p[1]);
+        while (read(p[0], buffer, MSGSIZE) > 0)
         {
-            read(p[0], buffer, MSGSIZE);
             printf("%s\n", buffer);
         }
+
+        // for (int i = 0; i < 3; i++)
+        // {
+        //     read(p[0], buffer, MSGSIZE);
+        //     printf("%s\n", buffer);
+        // }
     }
 
     return 0;
