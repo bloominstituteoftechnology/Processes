@@ -9,7 +9,23 @@
 
 int main(void)
 {
-    // Your code here
+    int f = fork();
+
+    if (f > 0) {
+        //waitpid() makes the process go second
+        //since parent has waitpid() it should go after child
+        int wc = waitpid(f, NULL, 0);
+        printf("Parent says goodbye.\n");
+    }
+    else if (f == 0)
+    {
+        printf("Child says hello!\n");
+    }
+    else
+    {
+        fprintf(stderr, "Fork Failed!\n");
+        exit(1);
+    }
 
     return 0;
 }

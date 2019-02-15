@@ -8,7 +8,26 @@
 
 int main(void)
 {
-    // Your code here 
-    
+    FILE * fp;
+    fp = fopen ("text.txt", "w+");
+
+    int f = fork();
+
+    if (f > 0)
+    {
+        fprintf(fp, "Parent goes first! :D\n");
+    }
+    else if (f == 0)
+    {
+        fprintf(fp, "Child goes after parent :(\n");
+    }
+    else
+    {
+        fprintf(stderr, "Fork Failed!\n");
+        exit(1);
+    }
+
+    fclose(fp);
+
     return 0;
 }
