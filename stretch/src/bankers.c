@@ -138,6 +138,7 @@ int main(int argc, char **argv)
 	if (num_processes < 1)
 	{
 		fprintf(stderr, "bankers: num processes must be greater than 0\n");
+		exit(2);
 	}
 
 	// Start with $10K in the bank. Easy peasy.
