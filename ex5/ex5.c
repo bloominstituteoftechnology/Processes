@@ -26,7 +26,12 @@ int main(void)
         exit(1);
     }
     int child = fork();
-    if (child == 0)
+    if (child < 0)
+    {
+        fprintf(stderr, "fork failed.");
+        exit(2);
+    }
+    else if (child == 0)
     {
         close(p[0]);
         write(p[1], msg1, MSGSIZE);
@@ -44,6 +49,10 @@ int main(void)
             read(p[0], inbuf, MSGSIZE);
             printf("%s\n", inbuf);
         }
+
+        // while (read(p[0], inbuf, MSGSIZE) > 0) {
+        //     printf("%s\n", inbuf);
+        // }
     }
 
     return 0;

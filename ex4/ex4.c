@@ -13,14 +13,21 @@ int main(void)
 {
     // Your code here
     int child = fork();
-
-    if (child == 0)
+    if (child < 0)
+    {
+        fprintf(stderr, "fork failed.");
+        exit(1);
+    }
+    else if (child == 0)
     {
         // do something with exec
         char *myargs[2];
         myargs[0] = strdup("/bin/ls");
         myargs[1] = NULL;
         execv(myargs[0], myargs);
+
+        // char *args[] = {"ls", "-l", NULL};
+        // execvp(args[0], args);
     }
     else
     {
