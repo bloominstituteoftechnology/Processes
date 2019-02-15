@@ -18,9 +18,44 @@ and `clock_gettime()` should work just fine.
 #define number_iter 1000000
 #define BILLION 1000000000L
 
-int main()
+int main() 
 {
-    // Your code here
-    
+    struct timespec start, end;
+    double diff = 0;
+
+    for (int i = 0; i < number_iter; i++)
+    {    
+        clock_gettime(CLOCK_MONOTONIC, &start);    //run start time
+        write(fileno(stdout), NULL, 0);            //system call to an empty write to stdout
+        clock_gettime(CLOCK_MONOTONIC, &end);      //run end time
+
+        diff += BILLION * (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec);
+    }
+
+    diff = diff / ((float) number_iter);
+    printf("The average of all of those iterations is %f nanoseconds.\n", diff);
     return 0;
 }
+
+// // Instructor's Solution:
+// int main()
+// {
+//     struct timespec start, end;
+//     long sum = 0;
+//     long diff;
+//     double avg;
+
+//     for (int i = 0; i < number_iter; i++)
+//     {    
+//         clock_gettime(CLOCK_MONOTONIC, &start);    //run start time
+//         write(fileno(stdout), NULL, 0);            //system call to an empty write to stdout
+//         clock_gettime(CLOCK_MONOTONIC, &end);      //run end time
+
+//         diff = BILLION * (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec);
+//         sum += diff;
+//     }
+
+//     avg = sum / ((float) number_iter);
+//     printf("The average of all of those iterations is %f nanoseconds.\n", avg);
+//     return 0;
+// }

@@ -25,10 +25,12 @@ int main(void)
     if (child > 0) //parent
     {
         int wc = waitpid(child, NULL, 0);    // `waitpid` call added here
+
+        while (read(p[0], buffer, MSGSIZE) > 0)
+        {
         printf("Parent is reading 16 bytes of data from child.");
-        read(p[0], buffer, MSGSIZE);
-        printf("\nParent reads that child recently wrote, %s\n", buffer);   
-        
+        printf("\nParent reads that child recently wrote, %s\n", buffer);  
+        }
     }
     else if (child == 0) //child
     {
@@ -48,7 +50,7 @@ int main(void)
     if (pipe(p) < 0)
     {
         fprintf(stderr, "Pipe Failed!\n");
-        exit(1);
+        exit(2);
     }
     
     return 0;
