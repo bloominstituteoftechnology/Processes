@@ -25,25 +25,39 @@ int main(void)
     
     if (pipe(p) < 0) {
         fprintf(stderr, "pipe failed\n");
-        exit(1);
+        exit(1);    // doesn't matter what value is, just for us to know which error it is
     }
     
     pid_t rc = fork();
     
     if (rc < 0) {
         fprintf(stderr, "Fork failed!\n");
-        exit(1);
+        exit(2);
     } else if (rc == 0) {
+        printf("Child writing to pipe\n");
         write(p[1], msg1, MSGSIZE);
         write(p[1], msg2, MSGSIZE);
         write(p[1], msg3, MSGSIZE);
     } else {
 //        int wc = waitpid(rc, NULL, 0);
+        wait(NULL);
         
-        for (int index = 0; index < 3; index++) {
-            read(p[0], inbuffer, MSGSIZE);
+        // Don't need to close the pipe here because we know we just loop up to 3
+//        for (int index = 0; index < 3; index++) {
+//            read(p[0], inbuffer, MSGSIZE);
+//            printf("%s\n", inbuffer);
+//        }
+        
+        // Close the write end of the pipe
+        // If this close is in the child, then the pipe will close before the parent get to the pipe
+        close(p[1]);
+        
+        // This loop will run forever, so we need to close the pipe
+        while (read(p[0], inbuffer, MSGSIZE) > 0) {
             printf("%s\n", inbuffer);
         }
+        
+        printf("Finished reading\n");
     } 
     return 0;
 }
