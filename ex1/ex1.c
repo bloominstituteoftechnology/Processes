@@ -2,10 +2,10 @@
 // (e.g., x) and set its value to something (e.g., 100).
 
 /* 
- What value is the variable in the child process?
-  1. The value of the variable (x) in the child process is copied from the parent process.
- What happens to the variable when both the child and parent change the value of x?
-  2. Both values change accordingly. The child process does not effect the parent process.
+1. What value is the variable in the child process?
+  The value of the variable (x) in the child process is copied from the parent process.
+2. What happens to the variable when both the child and parent change the value of x?
+  Both values change accordingly. The child process does not effect the parent process.
 */
 
 #include <stdio.h>
