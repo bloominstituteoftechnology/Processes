@@ -9,7 +9,24 @@
 
 int main(void)
 {
-    // Your code here
+  // Your code here
+  printf("Before forking pid: %d\n", (int)getpid());
 
-    return 0;
+  pid_t pid = fork();
+
+  if (pid < 0)
+  {
+    exit(1);
+  }
+  else if (pid == 0)
+  {
+    printf("AFTER forking CHILD says Hello pid: %d\n", (int)getpid());
+  }
+  else
+  {
+    waitpid(pid, NULL, 0);
+    printf("AFTER forking PARENT says Goodbye pid: %d\n", (int)getpid());
+  }
+
+  return 0;
 }
