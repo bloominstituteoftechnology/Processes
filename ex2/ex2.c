@@ -22,5 +22,11 @@ int main(void)
         printf("hello, parent here (pid: %d) of child %d\n", (int) getpid(), rc);
     }
 
+    if (fptr == NULL) 
+    {
+    printf("Error opening text file!");
+    exit(1);
+    }
+
     return 0;
 }

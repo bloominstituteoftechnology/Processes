@@ -9,7 +9,22 @@
 
 int main(void)
 {
-    // Your code here
+    int rc = fork();
 
+    if (rc < 0) 
+    {
+        fprintf(stderr, "Fork failed");
+        exit(1);
+    }
+    else if (rc == 0)
+    {
+        printf("Hello from Child %d", (int) getpid());
+    }
+    else
+    {
+        int wc = waitpid(rc, NULL, 0);  //wait or child to terminate, dont care about status, no flags
+        printf("Goodbye from Parent %d of Child %d", (int) getpid(), rc);
+    }
+    
     return 0;
 }
