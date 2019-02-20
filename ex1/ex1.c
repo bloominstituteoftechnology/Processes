@@ -8,7 +8,9 @@
 
 int main(void)
 {
-    // Your code here
+    int x = 50;
+    int fork = fork();
+    printf("before fork: %i, after fork: %i", x, fork)
 
-    return 0;
+        return 0;
 }
