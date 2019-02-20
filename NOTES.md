@@ -1,29 +1,39 @@
 # Processes
 
 ## Requirements to Execute a Program
-- CPU
+- CPU     number of cores
 - Memory
 
+### Example of an Address Space (P1 RAM between P2 RAM and P3 RAM)
 
-high address                  Command-line Args & Environment Variable
-
-    stack
-      |
-      |
-    heap                      malloc data
-
-    uninitialized data (bss)  initialized to zero by exec
-
-    initialized data           \         
-                                } read from program file by exec
-    text                       /
-
-low address
+low address                                                            |
+_______________________________________________________________________|
+high address                  Command-line Args & Environment Variable |
+                                                                       |
+    stack                     Static Memory                            |
+                                                                       |
+    int main                                                           |
+      func1                                                            |
+      func2                                                            |                                                                                     |
+                                                                       |
+    heap                      Dynamically-allocated memory malloc data | 
+                                                                       |
+                                                                       |
+    uninitialized data (bss)  initialized to zero by exec              |
+                                                                       |
+    initialized data           \                                       |
+                                } read from program file by exec       |
+    text                       /                                       |
+                                                                       |
+low address                                                            |
+_______________________________________________________________________|
+high address                                                           |
+                                                                       |
 
 
 Process are isolated by default (unaware of each other by default)
 
-# Initializing a Process
+## Initializing a Process
 
 - Allocation of working memory.
 - Entry is added to the operating system's processing list.
