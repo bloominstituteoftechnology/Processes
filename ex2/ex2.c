@@ -14,7 +14,11 @@ int main(void)
     file_pointer = fopen("text.txt", "r+");
     int pid = fork();
 
-    if(pid == 0) {
+    if(pid < 0) {
+        fprintf(stderr, "Fork failed!\n");
+        exit(1);
+    }
+    else if(pid == 0) {
         fprintf(file_pointer, "%s %s", "Child", "text.\n");
         fclose(file_pointer);
     }
