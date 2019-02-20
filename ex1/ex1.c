@@ -8,7 +8,16 @@
 
 int main(void)
 {
-    // Your code here
+    int x = 100;
+    int pid = fork();
+
+    if (pid == 0) {
+        x++;
+    }
+    else {
+        x--;
+    }
+    printf("%d, %s, %d\n", pid, "hello", x);
 
     return 0;
 }
