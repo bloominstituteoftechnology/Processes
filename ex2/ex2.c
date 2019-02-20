@@ -9,18 +9,18 @@
 int main(void)
 {
     // Your code here 
-    FILE * file_pointer;
+    FILE *file_pointer;
 
     file_pointer = fopen("text.txt", "r+");
     int pid = fork();
 
     if(pid == 0) {
-        fprintf(fp, "%s %s", "Child", "text.");
-        fclose(fp);
+        fprintf(file_pointer, "%s %s", "Child", "text.");
+        fclose(file_pointer);
     }
     else {
-        fprintf(fp, "%s %s", "Parent", "test.");
-        fclose(fp);
+        fprintf(file_pointer, "%s %s", "Parent", "text.");
+        fclose(file_pointer);
     }
 
     return 0;
