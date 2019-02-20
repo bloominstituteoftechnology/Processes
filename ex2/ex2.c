@@ -9,6 +9,7 @@
 int main(void)
 {
     // Your code here 
-    
+    fp = fopen("text.txt", "w");
+
     return 0;
 }
