@@ -12,7 +12,11 @@ int main(void)
     int x = 100;
     int pid = fork();
 
-    if(pid == 0) {
+    if(pid < 0) {
+        fprintf(stderr, "Fork failed!\n");
+        exit(1);
+    }
+    else if(pid == 0) {
         printf("Hello, I'm a child process!\n");
     }
     else {
