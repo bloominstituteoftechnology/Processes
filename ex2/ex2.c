@@ -8,7 +8,20 @@
 
 int main(void)
 {
-    // Your code here 
+
+    FILE * fp;
+
+    fp = fopen("text.txt", "w+");
+
+    int child = fork();
+
+    fprintf(fp, "Testing the parent process.");
+
+    if(child) {
+        fprintf(fp, "Testing the child process.");
+    }
     
+    fclose(fp);
+
     return 0;
 }

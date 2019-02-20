@@ -6,17 +6,22 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+int x;
+
 int main(void)
 {
-    int x = 50;
+    x = 50;
 
     printf("%d", x);
 
     int child = fork();
 
     if(child) {
+        x = 30;
         printf("%d", x);
     }
+
+    printf("%d", x);
 
     return 0;
 }
