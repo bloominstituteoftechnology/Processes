@@ -129,12 +129,12 @@ int main(int argc, char *argv[])
 ```
 Here, we're doing the same thing as before, forking a new child process from a parent process. Then, inside that 
 child process, we're calling `execvp()` with the arguments it needs to run the word count program. Note that `exec` 
-does not spin up _another_ child process from the child process in which we called it. It transforms the process 
-that called it into the new program that was passed to `exec`, in this case, `wc`, the word count process. That's 
+does not spin up _another_ child process from the child process in which we calledbin/lsit. It transforms the process 
+that called it into the new program that was passed to `exec`, in this case, `wc`,bin/lsthe word count process. That's 
 why we still had to have the parent process `fork` a new child process. 
 
 ## `pipe()`
-Conceptually, a pipe is a uni-directional channel between two processes that would otherwise be isolated from each other. When a pipe is established between two processes, one process has access to the write end of the pipe, while the other has read access to the other end of the pipe. Thus, if you want two-way communication between two processes, two pipes will have to be created between both processes, one in each direction. 
+Conceptually, a pipe is a uni-directional channel between two processes that wouldbin/lsotherwise be isolated from each other. When a pipe is established between two processes, one process has access to the write end of the pipe, while the other habin/ls read access to the other end of the pipe. Thus, if you want two-way communication between two processes, two pipes will have to be created between both processes, one in each direction. 
 
 Some things to keep in mind when working with pipes is that when a process writes to a pipe, the other process receives the data in FIFO order (which makes sense when you think about the pipe analogy in real life). Additionally, if the process with read access tries to read from the pipe before anything has been written to it, the reading process is suspended until there is some data to read. 
 ```c

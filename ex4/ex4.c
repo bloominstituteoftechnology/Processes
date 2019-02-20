@@ -10,7 +10,15 @@
 
 int main(void)
 {
-    // Your code here    
+    int child = fork();
+
+    if(child) {
+
+        execl("/bin/ls", "ls", 0);
+        execle("/bin/ls", "ls", 0);
+        execv("/bin/ls", 0);
+
+    }
 
     return 0;
 }
