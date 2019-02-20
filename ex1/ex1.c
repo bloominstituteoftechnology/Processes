@@ -8,7 +8,15 @@
 
 int main(void)
 {
-    // Your code here
+    int x = 50;
+
+    printf("%d", x);
+
+    int child = fork();
+
+    if(child) {
+        printf("%d", x);
+    }
 
     return 0;
 }
