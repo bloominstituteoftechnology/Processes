@@ -32,15 +32,6 @@ int main(void)
         // execl
         int proc1 = execl("/bin/ls", "ls", "-ls", NULL); // returns list direction with long form and file size
         printf("proc1 %d \n", proc1);
-
-        // execvp
-        // char *myargs[4];
-        // myargs[0] = "/bin/echo"; // "echo" also works since execv p flag also initiates search
-        // myargs[1] = "echo";
-        // myargs[2] = "web development";
-        // myargs[3] = NULL;
-        // int proc2 = execvp(myargs[0], myargs); // 1st argument always is program to run, echos array arguments
-        // printf("proc2 %d \n", proc2);
     }
     else
     { // parent
