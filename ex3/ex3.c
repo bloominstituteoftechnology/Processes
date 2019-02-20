@@ -13,7 +13,11 @@ int main(void)
     pid_t pid = fork();
     // waitpid(pid, NULL, 0);
 
-    if(pid == 0) {
+    if(pid < 0) {
+        fprintf(stderr, "Fork failed!\n");
+        exit(1);
+    }
+    else if(pid == 0) {
         printf("%s", "hello\n");
         // waitpid(pid, NULL, 0);
     }
