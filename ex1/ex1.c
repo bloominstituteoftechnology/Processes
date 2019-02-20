@@ -19,15 +19,13 @@ int main(void)
 
   if (x == 100)
   {
-    printf("Within the child process, the value of x is: %d\n", x);
-    printf("new_fork equates to %d\n", new_fork);
     x = 99;
+    return printf("Within the child process, the value of x is: %d\nnew_fork equates to %d\n", x, new_fork);
   }
 
   x = 91;
 
-  printf("Within the child process, the value of x is: %d\n", x);
-  printf("new_fork equates to %d\n", new_fork);
+  printf("Within the parent process, the value of x is: %d\nnew_fork equates to %d\n", x, new_fork);
 
   return 0;
 }
