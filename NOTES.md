@@ -147,10 +147,10 @@ int main(void) {
 /* 
 size_t write(int fd, void* buf, size_t cnt);
 fd: fild descripter
-buf buffer to write data to
+buf: buffer to write data to
 cnt: length of buffer
 
-size_t is typedef howevers it's going to return how many bytese were actually written
+size_t is typedef howevers it's going to return how many bytes were actually written
 
 return Number of bytes written on success
 return 0 on reaching end of file

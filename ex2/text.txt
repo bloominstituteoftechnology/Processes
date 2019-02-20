@@ -1,0 +1,6 @@
+Parent wrote in text fileChild wrote in text fileParent wrote in text file
+Child wrote in text file
+Parent wrote in text file
+Child wrote in text file
+Parent wrote in text file
+Child wrote in text file
