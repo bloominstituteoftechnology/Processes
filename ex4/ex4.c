@@ -19,7 +19,9 @@ int main(void)
     }
     else 
     {
-        execl("/bin/ls", "ls", NULL);
+        //execl("/bin/ls", "ls", NULL);
+        char *args[] = {"ls", "-l", NULL};
+        execvp(args[0], args);
     }
 
     return 0;
