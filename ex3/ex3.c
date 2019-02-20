@@ -10,15 +10,16 @@
 int main(void)
 {
     // Your code here
-    int pid = fork();
-    waitpid(pid, NULL, 0); /* if I'm understanding this right, the wait(NULL) here ensures the child is printed first */
+    pid_t pid = fork();
 
     if(pid == 0) {
         printf("%s", "hello\n");
+        wait(NULL);
     }
     else {
         printf("%s", "goodbye\n");
+        waitpid(pid, NULL, 1);
     }
-    
+
     return 0;
 }
