@@ -13,6 +13,15 @@ int main(void)
 
     file_pointer = fopen("text.txt", "r");
     int pid = fork();
+
+    if(pid == 0) {
+        fprintf(fp, "%s %s", "Child", "text.");
+        fclose(fp);
+    }
+    else {
+        fprintf(fp, "%s %s", "Parent", "test.");
+        fclose(fp);
+    }
     
     return 0;
 }
