@@ -11,6 +11,10 @@
 int main(void)
 {
     int new_process = fork();
+
+    // Return value of fork()
+    // On success, the PID of the child process is returned in the parent, and 0 is returned in the child. 
+
     if (new_process){
         printf("hello from child\n");
     } else {
