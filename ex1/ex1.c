@@ -20,3 +20,5 @@ int main(void)
 
     return 0;
 }
+
+//A: the variable will be unique to each instance when the variable value is changed
