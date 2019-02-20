@@ -8,8 +8,21 @@
 
 int main(void)
 {
-    // Your code here 
+    // Your code here
+    int x = 100;
+    FILE * fp;
     fp = fopen("text.txt", "w");
+    int my_fork = fork();
+    if (my_fork == 0) {
+        fprintf(fp, "%s", "Child\n");
+        printf("Child\n");
+        fclose(fp);
+    }
+    else if (my_fork > 0) {
+        fprintf(fp, "%s", "Parent\n");
+        printf("Parent\n");
+        fclose(fp);
+    }
 
     return 0;
 }

@@ -11,5 +11,19 @@ int main(void)
 {
     // Your code here
 
+    int my_fork = fork();
+    if(my_fork == 0) {
+        printf("hello\n");
+
+    }
+    else if(my_fork > 0 ) {
+        wait(NULL);
+        printf("goodbye\n");
+        
+    } else {
+        printf("Error!");
+        exit(1);
+    }
+
     return 0;
 }

@@ -13,14 +13,14 @@ int main(void)
     int my_fork = fork();
 
     if (my_fork == 0) {
-        printf("x is %d\n", x);
+        printf("x child is %d\n", x);
         x = 111;
-        printf("x is now %d\n", x);
+        printf("x child is now %d\n", x);
     }
     if (my_fork > 0 ) {
-        printf("x is %d\n", x);
+        printf("x parent is %d\n", x);
         x = 222;
-        printf("x is now %d\n", x);
+        printf("x parent is now %d\n", x);
     }
     if (my_fork < 0) {
         printf("Error!");
