@@ -8,7 +8,8 @@
 
 int main(void)
 {
-    // Your code here
-
-    return 0;
+  // Your code here
+  int x = 100;
+  fork();
+  return 0;
 }
