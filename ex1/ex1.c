@@ -2,9 +2,9 @@
 // (e.g., x) and set its value to something (e.g., 100).
 
 /* 
-What value is the variable in the child process?
+ What value is the variable in the child process?
   1. The value of the variable (x) in the child process is copied from the parent process.
-What happens to the variable when both the child and parent change the value of x?
+ What happens to the variable when both the child and parent change the value of x?
   2. Both values change accordingly. The child process does not effect the parent process.
 */
 
