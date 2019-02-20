@@ -24,7 +24,7 @@ int main(void)
 
   if (file_fork)
   {
-    fprintf(file, "\nI'm writing from within the fork!");
+    return fprintf(file, "\nI'm writing from within the fork!");
   }
 
   fclose(file);
