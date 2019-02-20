@@ -11,7 +11,7 @@ int main(void)
     // Your code here 
     FILE * file_pointer;
 
-    file_pointer = fopen("text.txt", "r");
+    file_pointer = fopen("text.txt", "r+");
     int pid = fork();
 
     if(pid == 0) {
@@ -22,6 +22,6 @@ int main(void)
         fprintf(fp, "%s %s", "Parent", "test.");
         fclose(fp);
     }
-    
+
     return 0;
 }
