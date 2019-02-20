@@ -8,9 +8,19 @@
 
 int main(void)
 {
-    int x = 50;
-    int fork = fork();
-    printf("before fork: %i, after fork: %i", x, fork)
 
-        return 0;
+    int x = 50;
+    int pid = fork();
+
+    if (pid == 0)
+    {
+        printf("Child value: %i\n", x);
+    }
+    else
+    {
+
+        printf("Parent value: %i\n", pid);
+    }
+
+    return 0;
 }
