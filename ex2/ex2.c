@@ -9,6 +9,10 @@
 int main(void)
 {
     // Your code here 
+    FILE * file_pointer;
+
+    file_pointer = fopen("text.txt", "r");
+    int pid = fork();
     
     return 0;
 }
