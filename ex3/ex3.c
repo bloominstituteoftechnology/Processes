@@ -9,7 +9,14 @@
 
 int main(void)
 {
-    // Your code here
+    int pid = fork();
+    waitpid(pid, NULL, 0); 
+    if (pid == 0) {
+        printf("%s\n", "hello");
+    }
+    else {
+        printf("%s\n", "goodbye");
+    }
 
     return 0;
 }
