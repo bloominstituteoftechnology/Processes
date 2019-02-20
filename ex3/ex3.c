@@ -6,10 +6,16 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <strings.h>
 
 int main(void)
 {
-    // Your code here
-
+    int new_process = fork();
+    if (new_process){
+        printf("hello from child\n");
+    } else {
+        printf("goodbye from main\n");
+    }
+    
     return 0;
 }
