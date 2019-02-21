@@ -22,8 +22,28 @@ int main(void)
 
     if(pipe(p) < 0) {
         fprintf(stderr, "Pipe failure!\n");
-        exit(1); // yesterday's error handling example
+        exit(1); /* yesterday's error handling example applied to the pipe */
     }
+    
     pid_t pid = fork();
+
+    if(pid < 0) {
+        fprintf(stderr, "Fork failure!\n");
+        exit(1); /* fork error handling */
+    }
+    else if(pid == 0) {
+        /* write the msg entries to the pipe */
+        write(p[1], msg1, MSGSIZE);
+        write(p[1], msg2, MSGSIZE);
+        write(p[1], msg3, MSGSIZE);
+    }
+    else {
+        for(int i = 0; i < 3; i++) {
+            /* reads the data from the pipe and outputs it */
+            read(p[0], inbuf, MSGSIZE);
+            printf("%s\n", inbuf);
+        }
+    }
+
     return 0;
 }
