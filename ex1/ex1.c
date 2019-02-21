@@ -10,22 +10,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>             // required for fork()
-// #include <sys.wait.h>           // required for wait()
+// #include <sys/wait.h>           // required for wait()
                                 // when sys.wait wasn't added it could run in different orders
 int main(void) {
 
     int x  = 100;
     pid_t pid;        // _t means type delcaration pid under the hood it is an int.
     pid = fork(); // doesn't take paramters
-
-    if (pid == 0) {
+    if (pid < 0) {
+        printf("Can't fork; error occured\n");
+        exit(EXIT_FAILURE);
+    } else if (pid == 0) {
         x = 7;
-        printf("%d\n", x);      // x = 7
+        printf("From child (pid %d): x is %d\n", (int) getpid(), x);      // x = 7
     } else {
-        printf("%d\n", x);      // x = 100
+        printf("From parent (pid %d): x is %d\n", (int) getpid(), x);      // x = 100
         x = 10;
         // wait(NULL); // if this is commentted result will be different.
-        printf("%d\n", x);      // x = 10
+        int wc = waitpid(pid, NULL, 0);
+        printf("From parent (pid %d) of child (pid %d): x is %d\n", (int) getpid(), pid, x);      // x = 10
     }
 /*
 Order run:

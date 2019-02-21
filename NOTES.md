@@ -31,7 +31,7 @@ high address                                                           |
                                                                        |
 
 
-Process are isolated by default (unaware of each other by default)
+Processes are isolated by default (unaware of each other by default)
 
 ## Initializing a Process
 
@@ -74,17 +74,65 @@ System calls with requests and responses is:
 
 MS-DOS allowed Processes to perform a privileged operations, which is why games are more prevelant on Windows than Mac.
 
+          Request
+        -------->         ---------->
+Processes     OS (Gatekeeper)     Hardware
+        <--------         <---------
+          Response
+
+- Most languages rely on C to do the actual requests and responses.
+
+Example of Request System Call:
+- malloc()
+- fork()
+
+
+
+      P1                                    P2
+x (executed)                          x  (value carried over)
+y (executed)                          y  (value carried over)
+z (executed)                          z  (value carried over)
+fork()  =>  creates a forked copy     fork () (carried over)
+
+Parent code                           Child Code
+
+
+if P2 also executes the fork it is a problem referred to as a fork bomb.
+
 ## Commonly-Used System Calls
 - fork()  create copy of existing process
-- exec()  execute a spedified file
+- exec()  execute a specified file
 - chdir() change working directory
-- pipe() create a prip for interprocess communication.
+- pipe() creates a way for interprocess communication.
 
 fork() 
   - creates a child process, which is a copy from the parent process
   - returns twice:
       - one result in the parent
       - another result in the child
+
+pipe()
+  - uni-directional: one write end & one read end;
+  - initalize pipe first then fork
+
+   P1          P2
+|     |     |     |
+|     |_____|     |
+  w -> _____ -> r
+|     |     |     |
+|     |     |     |
+|     |_____|     |
+  r <- _____ <- w |  
+|     |     |     |
+|     |     |     |
+
+
+
+
+
+
+
+
 
 ```c
 # include 
@@ -146,7 +194,7 @@ int main(void) {
 
 /* 
 size_t write(int fd, void* buf, size_t cnt);
-fd: fild descripter
+fd: file descripter: a pointer to a file
 buf: buffer to write data to
 cnt: length of buffer
 
