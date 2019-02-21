@@ -13,6 +13,10 @@ int main(void)
 {
     int x = 100;
     int pid = fork();
+    if (pid < 0) {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    }
 
     if (pid == 0) {
         x++;
