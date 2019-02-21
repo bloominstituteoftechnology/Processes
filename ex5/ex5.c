@@ -16,7 +16,22 @@ char* msg3 = "hello world #3";
 
 int main(void)
 {
-    // Your code here
-    
+    char inbuf [MSGSIZE]; // buffer that will hold incoming data being written
+    int p[2]; // two element array to hold and read write file descriptors
+
+    if (pipe(p) < 0) {
+        fprintf(stderr, "pipe failed\n");
+        exit(1);
+    }
+
+    write(p[1], msg1, MSGSIZE);
+    write(p[1], msg2, MSGSIZE);
+    write(p[1], msg3, MSGSIZE);
+
+    for (int i = 0; i<3; i++){
+        //read 16 bytes of data from file descriptor
+        read(p[0], inbuf, MSGSIZE);
+        printf("%s\n", inbuf);
+    }
     return 0;
 }
