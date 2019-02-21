@@ -126,12 +126,12 @@ int main(int argc, char **argv)
 	//
 	// "usage: bankers numprocesses\n"
 	if(argc == 0) {
-		fprintf(stderr, "Usage: bankers numprocesses\n")
+		fprintf(stderr, "Usage: bankers numprocesses\n");
 		exit(1);
 	}
 	// Store the number of processes in this variable:
 	// How many processes to fork at once
-	int num_processes = IMPLEMENT ME
+	int num_processes = argc;
 
 	/* learning about getopt() right now to try and parse arguments */
 
