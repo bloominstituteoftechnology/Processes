@@ -32,13 +32,13 @@ int main()
 	struct timespec start, end;
 
 	/* measure monotonic time */
-	clock_gettime(CLOCK_MONOTONIC, &start);	/* mark start time */
+	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &start);	/* mark start time */
 	
     for (int i= 0; i < number_iter; i++) {
         write(1, "", 0);	/* do stuff */
     }
         
-	clock_gettime(CLOCK_MONOTONIC, &end);	/* mark the end time */
+	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end);	/* mark the end time */
 
 	diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
 	diff /= number_iter;
