@@ -165,17 +165,29 @@ int main(int argc, char **argv)
 
 			// Open the balance file (feel free to call the helper
 			// functions, above).
+			
+			int fp = open_balance_file(BALANCE_FILE);
 
 			// Read the current balance
+			int read = read_balance();
 
 			// Try to withdraw money
-			//
+			
+			int withdrawal = get_random_amount();
+
 			// Sample messages to print:
-			//
+			if(withdrawal >= balance) {
+				printf("Withdrew $%d, new balance $%d\n", withdrawal, balance);
+			}
+			else {
+				printf("Only have $%d, can't withdraw $%d\n", balance, withdrawal);
+			}
 			// "Withdrew $%d, new balance $%d\n"
 			// "Only have $%d, can't withdraw $%d\n"
 
 			// Close the balance file
+
+			int fp_close = close_balance_file(BALANCE_FILE);
 			//^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 			// Child process exits
