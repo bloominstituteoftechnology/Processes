@@ -65,11 +65,12 @@ add 3 + 7                   |
 
 <!-- ===================================================================== -->
 
-<p><details><summary><b>Do compilers make system calls under the hood?</b></summary><p>
+<p><details><summary><b>Does compiled code make system calls under the hood?</b></summary><p>
 
 Yes.
 
-Here's an example of a function that runs partly in user space, but then makes a syscall under the hood:
+Here's an example of a function that runs partly in user space, but then makes a
+syscall to complete the work:
 
 ```c
 printf("%d\n", x);
