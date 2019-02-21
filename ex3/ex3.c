@@ -15,7 +15,7 @@ int main(void)
   {
     return printf("hello");
   }
-
+  wait(NULL);
   printf("goodbye");
   return 0;
 }

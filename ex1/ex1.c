@@ -11,21 +11,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <sys/wait.h>
 
 int main(void)
 {
   int x = 100;
   int new_fork = fork();
 
-  if (x == 100)
+  if (new_fork)
   {
     x = 99;
     return printf("Within the child process, the value of x is: %d\nnew_fork equates to %d\n", x, new_fork);
   }
-
-  x = 91;
-
-  printf("Within the parent process, the value of x is: %d\nnew_fork equates to %d\n", x, new_fork);
+  else
+  {
+    printf("Within the parent process, the value of x is: %d\nnew_fork equates to %d\n", x, new_fork);
+    wait(NULL);
+    x = 91;
+    printf("Within the parent process, the x value is now: %d\nnew_fork equates to %d\n", x, new_fork);
+  };
 
   return 0;
 }
