@@ -10,7 +10,21 @@
 
 int main(void)
 {
-    // Your code here    
+    // Your code here
+    if(fork() == 0){
+        char *args[2];
+        args[0] = "bin/ls";
+        args[1] = NULL;
+        execvp(args[0], args);
+        printf("Child process\n");
 
+    }else if(fork() < 0){
+        printf("fork failed\n");
+    }
+    else
+    {
+        int wc = waitpid(fork(), NULL, 0);
+        printf("Completed child process\n");
+    }
     return 0;
 }
