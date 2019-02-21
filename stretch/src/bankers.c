@@ -91,6 +91,10 @@ int get_random_amount(void)
 
 	// Return a random number between 0 and 999 inclusive using rand()
 
+	int randomAmount = rand() % 999;
+
+	return randomAmount;
+
 	// ^^^^^^^^^^^^^^^^^^
 }
 
@@ -152,7 +156,11 @@ int main(int argc, char **argv)
 			// Open the balance file (feel free to call the helper
 			// functions, above).
 
+			int balFile = open_balance_file(BALANCE_FILE);
+
 			// Read the current balance
+
+			read_balance(balFile, balance);
 
 			// Try to withdraw money
 			//
@@ -161,8 +169,16 @@ int main(int argc, char **argv)
 			// "Withdrew $%d, new balance $%d\n"
 			// "Only have $%d, can't withdraw $%d\n"
 
+			if(amount <= balance) {
+				balance = balance - amount;
+				write_balance(balFile, balance);
+			} else {
+				printf("Insufficient Funds - Current Available Balance: %d.", balance);
+			}
+
 			// Close the balance file
 			//^^^^^^^^^^^^^^^^^^^^^^^^^^
+			close_balance_file(balFile);
 
 			// Child process exits
 			exit(0);
