@@ -253,6 +253,92 @@ immediately if there are no child zombies to reap.
 
 </p></details></p>
 
+<!-- ===================================================================== -->
+
+<p><details><summary><b>Does a return value of <tt>-1</tt> usually indicate an error?</b></summary><p>
+
+It's common in general, and really common with syscalls.
+
+The usual pattern to:
+
+1. Make a syscall.
+2. See if the return value is `-1`.
+3. Use `perror()` to print an error, or check `errno` to decide what to do.
+
+Example where we try to open a non-existent file for reading:
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <fcntl.h>
+
+int main(void)
+{
+    int fd = open("nosuchfile.txt", O_RDONLY);
+
+    if (fd == -1) {
+        perror("Error opening file");
+        exit(1);
+    }
+}
+```
+
+Output from the above:
+
+```shell
+$ ./foo
+Error opening file: No such file or directory
+```
+
+You can also check the exact value of the `errno` global variable (from
+`<errno.h>`) to see what specific error occurred and act on it.
+
+In this example, we try to write to (and maybe create) the `/etc/passwd` file.
+Normal users don't have permission to do this. (**NOTE**: don't run this as
+`root`!)
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <fcntl.h>
+#include <errno.h>
+
+int main(void)
+{
+    int fd = open("/etc/passwd", O_CREAT|O_WRONLY);
+
+    if (fd == -1) {
+        switch errno {
+            case EACCES:
+                printf("You don't have permission to open this file.\n");
+                break;
+            case ENOENT:
+                printf("No such file.\n");
+                break;
+            case ENOSPC:
+                printf("Disk full.\n");
+                break;
+            default:
+                perror("Error opening file");
+                break;
+        }
+        exit(1);
+    }
+}
+```
+
+When a normal user runs this, they see:
+
+```shell
+$ ./foo
+You don't have permission to open this file.
+```
+
+The values you can check for with `errno` are listed in the man page for the
+syscall in question.
+
+</p></details></p>
+
 <!--
 TODO:
 9)How do distributed systems work? 
