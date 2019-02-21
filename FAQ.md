@@ -209,6 +209,50 @@ child processes. The only way for a parent to know the PID of its children is to
 remember them from the return value from `fork()`.)
 
 </p></details></p>
+
+<!-- ===================================================================== -->
+
+<p><details><summary><b>Should I use <tt>wait()</tt> or <tt>waitpid()</tt>?</b></summary><p>
+
+`waitpid()` is just like wait, except it gives you more options. With
+`waitpid()`, you can wait for specific processes to exit, or for processes in a
+process group. You can also specify if you want the `waitpid()` call to block or
+not if there are no zombie children waiting to be reaped.
+
+Example where the calls to `wait()` are identical to `waitpid()`:
+
+```c
+wait(NULL);
+waitpid(-1, NULL, 0);
+```
+
+```c
+int status;
+
+wait(&status); // Get exit status from child zombie
+waitpid(-1, &status, 0);
+```
+
+And here's an example of using `waitpid()` to wait for all children that might
+have died, but then continuing to run if there are no zombies remaining.
+
+```c
+printf("Reaping zombies...\n");
+
+// WNOHANG causes waitpid() to return 0 if
+// there are no zombies remaining:
+
+while (waitpid(-1, NULL, WNOHANG) > 0);
+
+printf("Done reaping zombies.n");
+```
+
+Normally `wait()` and `waitpid()` will _block_ (sleep) until they have something
+to do. But if you specify `WNOHANG` to `waitpid()`, it will return `0`
+immediately if there are no child zombies to reap.
+
+</p></details></p>
+
 <!--
 TODO:
 9)How do distributed systems work? 
