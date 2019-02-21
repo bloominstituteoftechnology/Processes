@@ -91,11 +91,11 @@ int main(int argc, char *argv[])
 ```
 Here, the `waitpid()` function suspends the parent process until the child process pointed at by `rc` terminates. Thus, we ensure that the parent process only runs after the child process has finished its execution. 
 
-## `exec()`
-The `exec()` system call is used in order to run a program that is different from the calling program (since `fork` only executes copies of the program that called it). 
-Let's say we wanted to spin up a child process to execute a word count program. Here's how what a program that does that might look like:
+## `exehttps://stackoverflow.com/questions/19099352/get-stdout-content-from-system-call-in-c-without-printing-to-stdout
+The `exhttps://stackoverflow.com/questions/19099352/get-stdout-content-from-system-call-in-c-without-printing-to-stdout program that is different from the calling program (since `fork` only executes copies of the program that called https://stackoverflow.com/questions/19099352/get-stdout-content-from-system-call-in-c-without-printing-to-stdout
+Let's shttps://stackoverflow.com/questions/19099352/get-stdout-content-from-system-call-in-c-without-printing-to-stdoutexecute a word count program. Here's how what a program that does that might look like:
 ```c
-// p3.c
+// p3.chttps://stackoverflow.com/questions/19099352/get-stdout-content-from-system-call-in-c-without-printing-to-stdout
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>

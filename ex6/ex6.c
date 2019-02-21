@@ -18,9 +18,30 @@ and `clock_gettime()` should work just fine.
 #define number_iter 1000000
 #define BILLION 1000000000L
 
+int total = 0;
+int diff;
+int avg;
+int i;
+struct timespec start, end;
+
 int main()
 {
     // Your code here
+    for(i = 0; i < number_iter; i++) {
+
+        clock_gettime(_POSIX_MONOTONIC_CLOCK, &start);
+        write(STDOUT_FILENO, NULL, 0);
+        clock_gettime(_POSIX_MONOTONIC_CLOCK, &end);
+
+        diff = BILLION * (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec);
+
+        total = total + diff;
+
+    }
+
+    avg = (total / number_iter);
+
+    printf("%d\n", avg);
     
     return 0;
 }
