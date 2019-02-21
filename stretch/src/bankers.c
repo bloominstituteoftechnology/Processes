@@ -86,12 +86,7 @@ void read_balance(int fd, int *balance)
  */
 int get_random_amount(void)
 {
-	// vvvvvvvvvvvvvvvvvv
-	// !!!! IMPLEMENT ME:
-
-	// Return a random number between 0 and 999 inclusive using rand()
-
-	// ^^^^^^^^^^^^^^^^^^
+	return rand() % 1000;
 }
 
 /**
@@ -116,15 +111,26 @@ int main(int argc, char **argv)
 	// message to stderr, and exit with status 1:
 	//
 	// "usage: bankers numprocesses\n"
+	if (argc < 2)
+	{
+		fprintf(stderr, "usage: bankers numprocessess\n");
+		exit(1);
+	}
 	
 	// Store the number of processes in this variable:
 	// How many processes to fork at once
-	int num_processes = IMPLEMENT ME
+	int num_processes = strtol(argv[1], NULL, 10);
 
 	// Make sure the number of processes the user specified is more than
 	// 0 and print an error to stderr if not, then exit with status 2:
 	//
 	// "bankers: num processes must be greater than 0\n"
+
+	if (num_processes < 1)
+	{
+		fprintf(stderr, "bankers: num processes must be greater than 0\n");
+		exit(2);
+	}
 
 	// ^^^^^^^^^^^^^^^^^^
 
@@ -145,15 +151,36 @@ int main(int argc, char **argv)
 			int amount = get_random_amount();
 
 			int balance;
-
 			// vvvvvvvvvvvvvvvvvvvvvvvvv
 			// !!!! IMPLEMENT ME
-
+			fd = open_balance_file(BALANCE_FILE);
+			int lock = flock(fd, LOCK_EX);
+			if (lock < 0) 
+			{
+        		fprintf(stderr, "lock failed\n");
+        		exit(1);
+    		}
 			// Open the balance file (feel free to call the helper
 			// functions, above).
-
+			
+			read_balance(fd, &balance);
 			// Read the current balance
-
+			if (balance > amount)
+			{
+				int new_balance = balance - amount;
+				write_balance(fd, new_balance);
+				printf("Withdrew $%d, new balance $%d\n", amount, new_balance);
+			} 
+			else
+			{
+				printf("Only have $%d, can't withdraw $%d\n", balance, amount);
+			}
+			int unlock = flock(fd, LOCK_UN);
+			if (unlock < 0) {
+        		fprintf(stderr, "unlock failed\n");
+        		exit(1);
+    		}
+			
 			// Try to withdraw money
 			//
 			// Sample messages to print:
@@ -163,7 +190,7 @@ int main(int argc, char **argv)
 
 			// Close the balance file
 			//^^^^^^^^^^^^^^^^^^^^^^^^^^
-
+			close_balance_file(fd);
 			// Child process exits
 			exit(0);
 		}
