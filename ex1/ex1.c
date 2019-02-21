@@ -9,6 +9,19 @@
 int main(void)
 {
     // Your code here
-
+    int x = 100;
+    int rc = fork();
+    // if fork fails return value is -1
+    if(rc < 0){
+        // 'fprintf' is like 'printf' except you add (where, how, what)
+        fprintf(stderr, "failing forks\n");
+        exit(1);
+    } else if (rc == 0) {
+        // successful child fork will return a 0, so this would select the child process
+        printf("This is a child pid: %d\n", (int) getpid());
+    } else {
+        printf("This is the parent pid: %d parent to child pid: %d\n", (int) getpid(), rc);
+    }
+    // printf("%d", x);
     return 0;
 }
