@@ -94,7 +94,7 @@ int get_random_amount(void)
 	lower = 0;
 	upper = 999;
 	count = 1;
-	
+
 	for(i = 0; i < count; i++){
 		int rng = (rand() % (upper - lower + 1)) + lower;
 		printf("%d ", rng);
@@ -129,6 +129,8 @@ int main(int argc, char **argv)
 	// Store the number of processes in this variable:
 	// How many processes to fork at once
 	int num_processes = IMPLEMENT ME
+	
+	/* learning about getopt() right now to try and parse arguments */
 
 	// Make sure the number of processes the user specified is more than
 	// 0 and print an error to stderr if not, then exit with status 2:
