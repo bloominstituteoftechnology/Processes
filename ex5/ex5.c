@@ -16,7 +16,14 @@ char* msg3 = "hello world #3";
 
 int main(void)
 {
-    // Your code here
+    printf("parent %d\n", (int) getpid());
+    char inbuffer[MSGSIZE];
+    int p;
+
+    if (pipe(p) > 0) 
+    {
+
+    }
     
     return 0;
 }
