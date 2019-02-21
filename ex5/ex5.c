@@ -22,7 +22,8 @@ int main(void)
 
     if (pipe(p) > 0) 
     {
-
+        fprintf(stderr, "Pipe failure\n");
+        exit(1);
     }
     
     return 0;
