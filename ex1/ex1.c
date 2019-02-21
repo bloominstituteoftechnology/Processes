@@ -8,7 +8,25 @@
 
 int main(void)
 {
-    // Your code here
+    int x = 100;
+
+    printf("pre-fork: parent pid %d, x = %d \n", (int)getpid(), x);
+
+    int rc = fork();
+
+    if (rc < 0)
+    {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    }
+    else if (rc == 0)
+    {
+        printf("post-fork: child pid %d, x = %d \n", (int)getpid(), x);
+    }
+    else
+    {
+        printf("post-fork: parent pid %d of child %d, x = %d\n", (int)getpid(), rc, x);
+    }
 
     return 0;
 }
