@@ -3,7 +3,8 @@
 <p><details><summary><b>What is a syscall/system call?</b></summary><p>
 
 From a C programming perspective, you can think of a syscall as a function that
-you call to get the OS to do something for you. It looks just like a regular function, but the behavior is different.
+you call to get the OS to do something for you. It looks just like a regular
+function, but the behavior is different.
 
 This is not a syscall:
 
@@ -11,7 +12,8 @@ This is not a syscall:
 double x = sqrt(2);
 ```
 
-You don't need any special access to hardware to compute a square root, so that just happens in _user space_ without involving the OS.
+You don't need any special access to hardware to compute a square root, so that
+just happens in _user space_ without involving the OS.
 
 This _is_ a syscall:
 
