@@ -28,7 +28,11 @@ int main()
 
     /* basic structure */
     clock_gettime(CLOCK_MONOTONIC, &start);
-    sleep(3); /* this line will be replaced by the writing, just using sleep as a placeholder */
+    
+    for(i = 0; i < number_iter; i++) {
+        write(fileno(stdout), NULL, 0);
+    }
+
     clock_gettime(CLOCK_MONOTONIC, &end);
 
     diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
