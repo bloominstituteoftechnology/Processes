@@ -2,7 +2,7 @@
 // (e.g., x) and set its value to something (e.g., 100). What value is the variable in the child process?
 // What happens to the variable when both the child and parent change the value of x?
 
-// Answer: At the start the child process has the same value (100). 
+// Answer: At the start the child process has the same value (100).
 // When changed the variable has two values one on the main thread and one on the forked thread.
 
 #include <stdio.h>
