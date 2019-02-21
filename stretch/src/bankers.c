@@ -93,7 +93,8 @@ int get_random_amount(void)
 	int i, count, lower, upper; /* upper and lower will provide our rand() range */
 	lower = 0;
 	upper = 999;
-
+	count = 1;
+	
 	for(i = 0; i < count; i++){
 		int rng = (rand() % (upper - lower + 1)) + lower;
 		printf("%d ", rng);
