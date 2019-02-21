@@ -125,11 +125,14 @@ int main(int argc, char **argv)
 	// message to stderr, and exit with status 1:
 	//
 	// "usage: bankers numprocesses\n"
-	
+	if(argc == 0) {
+		fprintf(stderr, "Usage: bankers numprocesses\n")
+		exit(1);
+	}
 	// Store the number of processes in this variable:
 	// How many processes to fork at once
 	int num_processes = IMPLEMENT ME
-	
+
 	/* learning about getopt() right now to try and parse arguments */
 
 	// Make sure the number of processes the user specified is more than
