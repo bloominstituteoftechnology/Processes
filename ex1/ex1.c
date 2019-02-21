@@ -13,6 +13,7 @@ int main(void)
     int cp = fork();
     if (cp < 0) {
         printf("Fork failed.");
+        exit(1);
     } else if (cp == 0) {
         x += 100;
         printf("This is child: %d\n", x);

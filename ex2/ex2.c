@@ -8,7 +8,21 @@
 
 int main(void)
 {
-    // Your code here 
+    // Your code here
+    char str[7];
+    FILE * fp;
+    fp = fopen("text.txt", "r");
+    int cp = fork();
+    if (cp < 0) {
+        printf("Fork failed.");
+        exit(1);
+    } else if (cp == 0) {
+        fscanf(fp, "%s", str);
+        printf("File content in child: %s\n", str);
+    } else {
+        fscanf(fp, "%s", str);
+        printf("File content in parent: %s\n", str);
+    }
     
     return 0;
 }
