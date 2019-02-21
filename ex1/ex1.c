@@ -11,7 +11,7 @@
 #include <stdlib.h>
 #include <unistd.h>             // required for fork()
 // #include <sys/wait.h>           // required for wait()
-                                // when sys.wait wasn't added it could run in different orders
+                                // when sys/wait wasn't added it could run in different orders
 int main(void) {
 
     int x  = 100;

@@ -20,7 +20,27 @@ and `clock_gettime()` should work just fine.
 
 int main()
 {
-    // Your code here
+	uint64_t diff;
+	struct timespec start, end;
+	int i;
+
+	/* measure monotonic time */
+	clock_gettime(CLOCK_MONOTONIC, &start);	/* mark start time */
+	write(fileno(stdout), NULL, 0);
+	clock_gettime(CLOCK_MONOTONIC, &end);	/* mark the end time */
+
+	diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+	printf("elapsed time = %llu nanoseconds\n", (long long unsigned int) diff);
     
-    return 0;
+
+	/* now re-do this and measure CPU time */
+	/* the time spent sleeping will not count (but there is a bit of overhead */
+	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &start);	/* mark start time */
+	write(fileno(stdout), NULL, 0);
+	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end);		/* mark the end time */
+
+	diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+	printf("elapsed process CPU time = %llu nanoseconds\n", (long long unsigned int) diff);
+
+	exit(0);
 }
