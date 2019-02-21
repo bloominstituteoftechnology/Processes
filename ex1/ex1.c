@@ -8,7 +8,23 @@
 
 int main(void)
 {
-    // Your code here
+    int x = 100;
+    
+    printf("Parent process (pid: %d)\n", (int) getpid());
+    
+    int rc = fork();
 
+    if (rc < 0) {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {    // child process satisfies this branch
+        x = 1000;
+        printf("hello, child here (pid: %d) \n", (int) getpid());
+        printf("x is %d \n", x);
+    } else {
+        x = 1;
+        printf("hello, parent here (pid: %d) of child %d\n", (int) getpid(), rc);
+        printf("x is %d\n", x);
+    }
     return 0;
 }
