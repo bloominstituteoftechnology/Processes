@@ -17,6 +17,13 @@ char* msg3 = "hello world #3";
 int main(void)
 {
     // Your code here
-    
+    char inbuf[MSGSIZE];
+    int p[2];
+
+    if(pipe(p) < 0) {
+        fprintf(stderr, "Pipe failure!\n");
+        exit(1); // yesterday's error handling example
+    }
+    pid_t pid = fork();
     return 0;
 }
