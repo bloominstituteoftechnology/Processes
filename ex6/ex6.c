@@ -12,15 +12,37 @@ and `clock_gettime()` should work just fine.
 */
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
 #include <unistd.h>
 #include <time.h>
 
 #define number_iter 1000000
 #define BILLION 1000000000L
 
+// struct timespec {
+// 	time_t   tv_sec;        /* seconds */
+// 	long     tv_nsec;       /* nanoseconds */
+// };
+
 int main()
 {
     // Your code here
-    
+    uint64_t diff;
+	struct timespec start, end;
+
+	/* measure monotonic time */
+	clock_gettime(CLOCK_MONOTONIC, &start);	/* mark start time */
+	
+    for (int i= 0; i < number_iter; i++) {
+        write(1, "", 0);	/* do stuff */
+    }
+        
+	clock_gettime(CLOCK_MONOTONIC, &end);	/* mark the end time */
+
+	diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+	diff /= number_iter;
+    printf("elapsed time = %llu nanoseconds\n", (long long unsigned int) diff);
+
     return 0;
 }
