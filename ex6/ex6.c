@@ -20,7 +20,36 @@ and `clock_gettime()` should work just fine.
 
 int main()
 {
-    // Your code here
-    
-    return 0;
+  // Your code here
+  struct timespec start, end;
+  uint64_t diff;
+
+  uint64_t sum = 0;
+
+  int numiter = number_iter;
+  float avg = 0;
+  int count = 10
+
+              FILE *
+              fp;
+  fp = fopen("writes.csv", "w+");
+  while (count-- > 0)
+  {
+    while (--numiter > 0)
+    {
+      clock_gettime(CLOCK_MONOTONIC, &start);
+      printf("");
+      clock_gettime(CLOCK_MONOTONIC, &end);
+
+      diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+      sum += diff;
+    }
+    avg = sum / number_iter;
+    fprintf(fp, "%f\n", avg);
+    printf("%d: %f ns\n", count, avg);
+    sum = 0;
+    numiter = number_iter;
+  }
+
+  return 0;
 }
