@@ -9,7 +9,13 @@
 
 int main(void)
 {
-    // init on branch
+    int x = 100;
+
+    fork();
+
+    x = 50;
+
+    printf("%d\n", x);
 
     return 0;
 }
