@@ -14,13 +14,13 @@ int main(void)
 
     if (pid == 0)
     {
-        printf("Hello");
+        printf("\nHello\n");
         exit(1);
     }
     else
     {
         wait(NULL);
-        printf("Goodbye");
+        printf("\nGoodbye\n");
     }
 
     return 0;
