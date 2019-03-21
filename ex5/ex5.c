@@ -17,18 +17,30 @@ char* msg3 = "hello world #3\n";
 int main(void)
 {
     // Your code here
-    pid_t pid = fork();
-    char* messages[sizeof MSGSIZE * 3];
+    int fd[2]; // init pipe array
+    pipe(fd); // init the pipe
+
+    pid_t pid = fork(); // init the fork
+
+
+    char* messages[sizeof MSGSIZE];
+    int buf[128];
         messages[0] = msg1;
         messages[1] = msg2;
-        messages[2] = msg3;
+        messages[2] = msg3;        
     
-    if (pid == 0) {
-            for(int i = 0; i < 2; i++) {
-                write(STDOUT_FILENO, messages[i], 128 );
-            }
+    if (pid < 0) {
+        perror("fork failed\n");
+        exit(1);
+    } else if (pid == 0) {
+        write(fd[1], messages[0], sizeof messages[0]);
+        write(fd[1], messages[1], sizeof messages[1]);
+        write(fd[1], messages[2], sizeof messages[2]);
     } else {
-        printf("parent stuff");
+        wait(NULL);
+        read(fd[0], messages[0], sizeof buf);
+        read(fd[0], messages[1], sizeof buf);
+        read(fd[0], messages[2], sizeof buf);
     }
     
     return 0;
