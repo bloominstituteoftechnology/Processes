@@ -120,7 +120,7 @@ open the device file to make this work.
 
 <!-- ===================================================================== -->
 
-<p><details><summary><b>How does the scheduler work?</b></summary><p>
+<p><details><summary><b>How does the scheduler decide which process to run next?</b></summary><p>
 
 The _scheduler_ is a component inside the OS that decides which process needs to
 run next. Your CPU might only have 4 or 8 cores, so it can actually only do that
@@ -148,7 +148,8 @@ that can be delayed a bit.
 
 The [multilevel feedback
 queue](https://en.wikipedia.org/wiki/Multilevel_feedback_queue) is a popular
-scheduling algorithm.
+scheduling algorithm, but there are [many
+others](https://en.wikipedia.org/wiki/Scheduling_(computing)#Scheduling_disciplines).
 
 </p></details></p>
 
@@ -571,6 +572,220 @@ want all the gritty details.
 
 </p></details></p>
 
+<!-- ===================================================================== -->
+
+<p><details><summary><b>When doing a <tt>fork()</tt>, you only need the conditional if you want the parent and child to do different things?</b></summary><p>
+
+Yes.
+
+And it is probably 99.999% of the time you'll want the parent and child to do
+different things.
+
+</p></details></p>
+
+<!-- ===================================================================== -->
+
+<p><details><summary><b>How could you create a grandchild process?</b></summary><p>
+
+Call `fork()` from the would-be grandparent, then call `fork()` again from its
+child.
+
+</p></details></p>
+
+<!-- ===================================================================== -->
+
+<p><details><summary><b>How do I create sibling processes?</b></summary><p>
+
+Just call `fork()` multiple times from the parent.
+
+</p></details></p>
+
+<!-- ===================================================================== -->
+
+<p><details><summary><b>When writing to the same file from two processes, the writes both seem to occur just fine, even though the problem suggests it won't work. What's going on?</b></summary><p>
+
+It turns out that with such small writes, and especially on Windows, the writes
+come out sequentially even though they're running at the "same" time.
+
+The demo would work better if the writes were much larger, like 512 K per write.
+
+But the point is that any time you have multiple processes accessing _any_
+shared resource, there needs to be some kind of locking in place to prevent the
+processes from stepping on each other's toes.
+
+With files, that would be some kind of file locking.
+
+Other shared resources that you might already be familiar with, such as
+databases, do their own locking so you don't have to worry about it. But on
+Unix, files aren't locked automatically.
+
+See also: [`lockf()`](http://man7.org/linux/man-pages/man3/lockf.3.html).
+
+</p></details></p>
+
+<!-- ===================================================================== -->
+
+<p><details><summary><b>Can <tt>fork()</tt> return less than <tt>0</tt>?</b></summary><p>
+
+Yes, in the case of an error.
+
+It's best practice to check to see if it returned `-1` and react appropriately.
+
+Most Unix syscalls return `-1` in the case of an error, and set the global
+variable `errno` to reflect the error that occurred.
+
+</p></details></p>
+
+<!-- ===================================================================== -->
+
+<p><details><summary><b>How many bytes can a pipe hold?</b></summary><p>
+
+The size of the pipe is fixed by the operating system, and varies from system to
+system. It's likely at least 12 KB, but is probably more.
+
+Here's a small program that will sleep once the pipe fills up, telling you how
+many bytes fit in the pipe:
+
+```c
+#include <stdio.h>
+#include <unistd.h>
+
+int main(void)
+{
+    int count = 0;
+    int fd[2];
+
+    pipe(fd);
+
+    while (1) {
+        write(fd[1], "A", 1);
+        printf("byte count: %d\n", ++count);
+    }
+
+    return 0;
+}
+```
+
+On a Mac, this reported that the pipe held 64 KB (65536 bytes).
+
+</p></details></p>
+
+<!-- ===================================================================== -->
+
+<p><details><summary><b>What happens when you try to read from an empty pipe? Or when you try to write to a full pipe?</b></summary><p>
+
+The OS will put the process that called `read()` or `write()` to sleep if
+there's nothing to read or the pipe is full.
+
+The process will be woken up as soon as it's possible for it to do more work.
+
+</p></details></p>
+
+<!-- ===================================================================== -->
+
+<p><details><summary><b>Can a child process <tt>wait()</tt> on a parent?</b></summary><p>
+
+No.
+
+Parents can only wait on their children, not the other way around.
+
+</p></details></p>
+
+<!-- ===================================================================== -->
+
+<p><details><summary><b>How can a parent get the exit status from a child process?</b></summary><p>
+
+The `wait()` syscall accepts a pointer to an `int` that it fills with exit
+status information.
+
+Here's a rough example. Note that this example omits error checking for brevity.
+There are a number of reasons a program can exit (it might exit normally, or be
+killed, or a number of other things), and you should check with macros such as
+`WIFEXITED()` before assuming there's an exit status to be reported.
+
+See the [`wait()` man page](http://man7.org/linux/man-pages/man2/waitpid.2.html)
+for more.
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+
+int main(void)
+{
+    if (fork() == 0) {
+        printf("Child: exiting with status 3\n");
+        exit(3);
+
+    } else {
+        int status;
+
+        wait(&status);
+
+        printf("Parent: child exited with status %d\n", WEXITSTATUS(status));
+    }
+}
+```
+</p></details></p>
+
+<!-- ===================================================================== -->
+
+<p><details><summary><b>What are <tt>stdin</tt>, <tt>stdout</tt>, and <tt>stderr</tt>?</b></summary><p>
+
+These are the three files that are automatically opened for a process when it is first created.
+
+|Stream           | Short Name | File Descriptor | Symbolic File Descriptor |  Device  |
+|-----------------|:----------:|:---------------:|:------------------------:|:--------:|
+| Standard Input  |  `stdin`   |       `0`       |      `STDIN_FILENO`      | Keyboard |
+| Standard Output |  `stdout`  |       `1`       |      `STDOUT_FILENO`     |  Screen  |
+| Standard Error  |  `stderr`  |       `2`       |      `STDERR_FILENO`     |  Screen  |
+
+`stderr` is typically used specifically for error messages, even though it goes
+to the same place as `stdout`. (The idea is that you can redirect all normal
+output to one place, and all error output to another place. Or suppress normal
+output while allowing error output.)
+
+</p></details></p>
+
+<!-- ============================================================================= -->
+
+<p><details><summary><b>How do I know which header files to <tt>#include</tt> for any particular function?</b></summary><p>
+
+Check the man page for the function in question. It'll show it in the _Synopsis_
+section.
+
+Example for `printf()`:
+
+> **SYNOPSIS**
+> ```c
+>    #include <stdio.h>
+> ```
+> ```c
+>     int
+>     printf(const char * restrict format, ...);
+> ```
+
+Note that if you type `man` on the command line for a particular function, you
+might a manual page for another command that isn't the C function. In that case,
+you have to specify the proper _section_ of the manual for the function.
+
+Try section 3 for library functions, and section 2 for syscalls.
+
+Example looking for `printf()` in section 3:
+
+```shell
+man 3 printf
+```
+
+And section 2 for the `mkdir()` syscall:
+
+```shell
+man 2 mkdir
+```
+
+</p></details></p>
 <!--
 TODO:
 9)How do distributed systems work? 
