@@ -11,17 +11,16 @@ int main(void)
     // Your code here
     pid_t pid = fork();
     FILE *fp;
+    fp = fopen("text.txt", "w+");
 
     if (pid == 0)
     {
 
-        fp = fopen("text.txt", "w+");
         fprintf(fp, "\n I\'m printing from the child\n");
         exit(1);
     }
     else
     {
-        fp = fopen("text.txt", "w+");
         fprintf(fp, "\n I\'m printing from the parent\n");
     }
 
