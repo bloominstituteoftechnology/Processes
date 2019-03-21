@@ -9,19 +9,23 @@
 int main(void)
 {
     // Your code here
-    FILE *fp;
-    fp = fopen("text.txt", "w+");
     pid_t pid = fork();
+    FILE *fp;
 
     if (pid == 0)
     {
+
+        fp = fopen("text.txt", "w+");
         fprintf(fp, "\n I\'m printing from the child\n");
         exit(1);
     }
     else
     {
-        fprintf(fb, "\n I\m printing from the parent\n");
+        fp = fopen("text.txt", "w+");
+        fprintf(fp, "\n I\'m printing from the parent\n");
     }
 
     return 0;
 }
+
+// oddly enough only the child printed in my code.. did I do something wrong?
