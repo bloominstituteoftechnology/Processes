@@ -11,6 +11,20 @@
 int main(void)
 {
     // Your code here    
+    pid_t pid = fork();
+    
+    if (pid == 0) {
+        // execlp("ls", "ls", NULL);
+        char *cmd = "ls";
+        char *argv[3];
+        argv[0] = "ls";
+        argv[1] = "-la";
+        argv[2] = NULL;
 
+        execvp(cmd, argv); //This will run "ls -la" as if it were a command
+    } else {
+        wait(NULL);
+        printf("Child process has ended\n");
+    }
     return 0;
 }
