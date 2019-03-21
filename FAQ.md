@@ -342,6 +342,235 @@ syscall in question.
 
 </p></details></p>
 
+<!-- ===================================================================== -->
+
+<p><details><summary><b>Is the `fork()` syscall where the word "fork" on GitHub came from?</b></summary><p>
+
+Probably not.
+
+GitHub needed a name for when you branched off someone else's repo.
+Unfortunately for them, _branch_ already means something else to git. Seems
+likely they just used fork as a similar word.
+
+</p></details></p>
+
+<!-- ===================================================================== -->
+
+<p><details><summary><b>If old operating systems like MS-DOS didn't offer a privileged mode or memory protection, how did they offer features dependent on those to their users?</b></summary><p>
+
+In a nutshell, they didn't.
+
+You could write a program and run it in MS-DOS that could directly access
+hardware, modify or overwrite the OS, or do all manner of bad things.
+
+But those systems tended to be single-user (a family would just share with no
+privacy) and it wasn't that big of a deal. Crash the system? You'd just reboot.
+
+Rebooting happened a lot.
+
+</p></details></p>
+
+<!-- ===================================================================== -->
+
+<p><details><summary><b>What are some use cases for pipes?</b></summary><p>
+
+When you `fork()` a new process, it gets a copy of all the data. None of it is
+shared. But there might be times you want to communicate between a child and
+parent process.
+
+If you set up a pipe ahead of the `fork()`, copies of that pipe's descriptors
+get made for the child. But here's the magic: those descriptors still refer to
+the underlying shared pipe as they do in the parent. They're still connected.
+
+This means you can pass data across the pipe from one to the other.
+
+Another use case is used by the shell when you run a command like this:
+
+```shell
+ls -l | wc -l
+```
+
+That pipes the output from the `ls` program to the input of `wc` (a word
+counting program). The `pipe()` syscall is used to set up that communication
+path between the two completely separate processes. (It also makes use of the
+syscall `dup2()` to actually hook up the input and output to the pipe.)
+
+```c
+/**
+ * Pipe example
+ *
+ * Runs the command: ls -la / | wc
+ *
+ * Try running the above command on the command line to see if the
+ * output matches.
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <errno.h>
+
+int main(void)
+{
+    int fd[2];
+
+    // Make the pipe for communication
+    pipe(fd);
+
+    // Fork a child process
+    pid_t pid = fork();
+
+    if (pid == -1) {
+        perror("fork");
+        exit(1);
+    }
+
+    if (pid == 0) {
+        // Child process
+
+        // Hook up standard input to the "read" end of the pipe
+        dup2(fd[0], 0);
+
+        // Close the "write" end of the pipe for the child.
+        // Parent still has it open; child doesn't need it.
+        close(fd[1]);
+
+        // Run "wc"
+        execlp("wc", "wc", NULL);
+
+        // We only get here if exec() fails
+        perror("exec wc");
+        exit(1);
+    } else {
+        // Parent process
+
+        // Hook up standard output to the "write" end of the pipe
+        dup2(fd[1], 1);
+
+        // Close the "read" end of the pipe for the parent.
+        // Child still has it open; parent doesn't need it.
+        close(fd[0]);
+
+        // Run "ls -la /"
+        execlp("ls", "ls", "-la", "/", NULL);
+
+        // We only get here if exec() fails
+        perror("exec ls");
+        exit(1);
+    }
+
+    return 0;
+}
+```
+</p></details></p>
+
+<!-- ===================================================================== -->
+
+<p><details><summary><b>Isn't it expensive to copy all the data on a <tt>fork()</tt>?</b></summary><p>
+
+Seems like it would cost a lot to give the child a complete copy of all the
+process data.
+
+But modern operating systems implement something called [_copy on
+write_](https://en.wikipedia.org/wiki/Copy-on-write) so that the data isn't
+copied until the child process wants to modify it. _Then_ a copy is made.
+
+If you're 100% certain that you're just going to call `exec()` right after
+`fork()`, then there's no reason to copy anything at all. There's a historic
+syscall called `vfork()` that you could use if you were _only_ going call
+`exec()` after the fork.  On modern systems, `vfork()` might be marginally
+faster for that use case, or it might work exactly the same way as `fork()`.
+
+</p></details></p>
+
+<!-- ===================================================================== -->
+
+<p><details><summary><b>Where is the process control block stored?</b></summary><p>
+
+That's somewhere deep in kernel memory. It's not something you can directly
+access as a user. You have to use syscalls to ask the OS for information about
+the process.
+
+</p></details></p>
+
+<!-- ===================================================================== -->
+
+<p><details><summary><b>Is there a way to control how the OS schedules processes, to give them higher priority?</b></summary><p>
+
+As a normal user, you can request the OS give your program _lower_ priority in
+the scheduler with the `nice()` syscall.
+
+```c
+nice(10); // Be pretty nice to other processes on the system (lower priority)
+```
+
+```c
+nice(20); // Be as nice as possible (lowest priority)
+```
+
+The default priority level is `0`.
+
+If you're superuser (running as `root`), you can assign _negative nice_ levels
+(AKA _mean_ levels).
+
+```c
+nice(-20); // Be as mean as possible to other processes (highest priority)
+```
+
+Particular systems might have other methods of manipulating scheduling, but
+they're all going to involve making a request to the OS.
+
+</p></details></p>
+
+<!-- ===================================================================== -->
+
+<p><details><summary><b>Is the kernel "close to the metal"?</b></summary><p>
+
+Definitely. It's the arbiter of all access to all the hardware on the system.
+
+Not only that, but the boot-up sequence of an OS is almost always written in
+assembly language, as close to the metal as programmers typically go. (Although
+as much of the OS as possible is written in a higher-level language because it's
+so much easier.)
+
+The expression _close to the metal_ is also used to refer to programming
+languages. An example list with closer to the metal at the top would be,
+roughly:
+
+* Machine code
+* Assembly language
+* C
+* C++, Rust
+* Go, Swift
+* JavaScript, Python, Perl
+* TypeScript
+
+</p></details></p>
+
+<!-- ===================================================================== -->
+
+<p><details><summary><b>How does a process dynamically resize how much memory is has at its disposal?</b></summary><p>
+
+It asks the OS for more.
+
+On Unix-like systems, this is done with the `brk()` or `sbrk()` syscall.
+
+Normally, C developers don't call this. They call `malloc()` to get more memory,
+and `malloc()` calls `brk()` if it needs to get more for this process from the
+OS.
+
+</p></details></p>
+
+<!-- ===================================================================== -->
+
+<p><details><summary><b>How does the OS assign a particular memory space to a particular process?</b></summary><p>
+
+This is out of scope for the class, but is all about the crazy world of [virtual
+memory](https://en.wikipedia.org/wiki/Virtual_memory). Read up on that if you
+want all the gritty details.
+
+</p></details></p>
+
 <!--
 TODO:
 9)How do distributed systems work? 
@@ -354,4 +583,5 @@ Template:
 
 <p><details><summary><b></b></summary><p>
 </p></details></p>
+
 -->
