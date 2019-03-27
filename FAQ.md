@@ -932,6 +932,7 @@ pid_t fork(void)
 
     } else {
         // We're the child
+
         initialize u area timing fields;
 
         // The return value of fork() is 0 if we're the child:
