@@ -25,14 +25,14 @@ int main(void)
 
         (*x)++;
         printf("%d Child proccess 3 %d\n", *x, pid);
-        // exit(9);
+        // exit(1);
     }
     else
     {
         printf("%d Parent processes 1 %d\n", *x, pid);
         (*x)++;
         printf("%d Parent processes 2 %d\n", *x, pid);
-        wait(0);
+        waitpid(pid, 1, 1);
         (*x)++;
         printf("%d Parent processes 3 %d\n", *x, pid);
     }
