@@ -928,7 +928,7 @@ pid_t fork(void)
         // The return value of fork() is the new child's PID if we're
         // the parent:
 
-        return childID; // from kernel mode to user mode
+        return childPID; // from kernel mode to user mode
 
     } else {
         // We're the child
