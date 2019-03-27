@@ -861,6 +861,86 @@ And coupled with `exec()`, it's really all you need.
 
 </p></details></p>
 
+<!-- ===================================================================== -->
+
+<p><details><summary><b>How does <tt>fork()</tt> work under the hood?</b></summary><p>
+
+It's not required to know this to be an effective Unix systems developer, but it
+is useful information for the curious.
+
+This is adapted from Maurice J. Bach's fantastic book, [_The Design of the UNIX
+Operating
+System_](https://books.google.com/books/about/The_Design_of_the_UNIX_Operating_System.html?id=NrBQAAAAMAAJ).
+
+Note that this is _not_ how to use the `fork()` syscall; this is how the
+`fork()` syscall is implemented inside the OS. If you were writing your own
+Unix-like OS, you'd use an algorithm like this one.
+
+```pseudocode
+// This is pseudocode!
+
+// algorithm: fork
+//
+// input:  none
+//
+// output: to parent process, child PID number
+//         to child process, 0
+
+pid_t fork(void)
+{
+    // Do some initial checks to make sure the user can call fork()
+    // at this time. If any of these fail, fork() will return -1.
+
+    check for available kernel resources;
+    check that the user not running too many processes;
+
+    // Create a new process table entry for the child:
+
+    get free process table slot for child;
+    get unique PID number for child;
+    mark child state as "being created";
+    copy data from parent process table slot to new child slot;
+
+    // Bookkeeping on resources referenced by the child:
+
+    increment counts on current directory inode;
+    increment counts on changed root (if applicable);
+    increment open file counts in file table;
+
+    // This is what gives the child a copy of all the parent's variables and code:
+
+    make a copy of parent context (u area, text, data, stack) in memory;
+
+    // Finalize getting the child prepared:
+
+    push dummy system level context layer onto child system level context;
+
+    // The dummy context contains data allowing the child process to
+    // recognize itself, and start running from the following "if" statement
+    // when scheduled:
+
+    if (executing process is parent process) {
+        // We're the parent
+
+        set child state to "ready to run";
+
+        // The return value of fork() is the new child's PID if we're
+        // the parent:
+
+        return childID; // from kernel mode to user mode
+
+    } else {
+        // We're the child
+        initialize u area timing fields;
+
+        // The return value of fork() is 0 if we're the child:
+
+        return 0; // from kernel mode to user mode
+    }
+}
+```
+</p></details></p>
+
 <!--
 TODO:
 9)How do distributed systems work? 
