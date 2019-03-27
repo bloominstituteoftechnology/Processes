@@ -11,5 +11,18 @@ int main(void)
 {
     // Your code here
 
+    pid_t pid = fork();
+    if (pid == 0) // Child process
+    {
+        printf("Hello\n");
+    }
+    else          // Parrent process
+    {
+        wait(NULL);
+        printf("goodbye\n");
+        
+    }
+
+
     return 0;
 }
