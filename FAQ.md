@@ -911,7 +911,8 @@ pid_t fork(void)
 
     make a copy of parent context (u area, text, data, stack) in memory;
 
-    // Finalize getting the child prepared:
+    // We need to let the child know that it's supposed to begin its life here
+    // in kernel mode in the middle of this fork() call:
 
     push dummy system level context layer onto child system level context;
 
