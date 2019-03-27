@@ -157,6 +157,9 @@ others](https://en.wikipedia.org/wiki/Scheduling_(computing)#Scheduling_discipli
 
 <p><details><summary><b>Where does the OS keep the process list? How does it relate to the stack and heap?</b></summary><p>
 
+Since the process list exists _outside_ any processes that are running, it
+exists neither in a processes's stack nor in its heap.
+
 From an individual process's perspective on a modern OS, the process thinks it
 has all the memory on the entire system to itself. It's an illusion, though,
 brought about by the magic of [virtual
@@ -345,7 +348,7 @@ syscall in question.
 
 <!-- ===================================================================== -->
 
-<p><details><summary><b>Is the `fork()` syscall where the word "fork" on GitHub came from?</b></summary><p>
+<p><details><summary><b>Is the <tt>fork()</tt> syscall where the word "fork" on GitHub came from?</b></summary><p>
 
 Probably not.
 
@@ -786,6 +789,78 @@ man 2 mkdir
 ```
 
 </p></details></p>
+
+<!-- ===================================================================== -->
+
+<p><details><summary><b>Is a zombie like when you have to end a task with the Task Manager?</b></summary><p>
+
+Not quite.
+
+Normally, when you kill a process explicitly (with the task manager or the Unix
+kill command), that process is still alive, but is misbehaving in some way.
+(It's frozen, or eating CPU resources or something.)
+
+Zombie processes, by comparison, are no longer alive. They've already exited.
+They're no longer running. In Unix, you can't kill them because they're already
+dead.
+
+The only way to get rid of the zombie is:
+
+1. Have the parent `wait()` for it.
+2. If the parent is dead, then the zombie child is adopted by init (PID 1), and
+   init calls `wait()` for it.
+
+</p></details></p>
+
+<!-- ===================================================================== -->
+
+<p><details><summary><b>What happens if a parent dies before it <tt>wait()</tt>s on its children? Do they become zombies forever?</b></summary><p>
+
+Fortunately, no.
+
+It's true that a child process becomes a zombie until its parent waits for it.
+
+But if their parent dies, how can that parent wait on it?
+
+There's one more rule of processes in Unix: if a process's parent dies, that
+process is _adopted_ by the init process (PID 1). This means that a process will
+have a parent at all times, even if its original parent died.
+
+And init is really good at reaping zombies. It frequently calls `wait()` to make
+sure all its zombie children are taken care of.
+
+One path:
+
+1. Parent `fork()`s a child.
+2. Parent dies, becomes a zombie
+3. Child is adopted by init.
+4. Parent zombie is reaped by its parent calling `wait()`.
+5. Child dies, becomes a zombie.
+6. Child zombie is reaped by init calling `wait()`.
+
+Another possible path:
+
+1. Parent `fork()`s a child.
+2. Child dies, becomes a zombie.
+3. Parent dies, becomes a zombie
+4. Child zombie is adopted by init.
+5. Parent zombie is reaped by its parent calling `wait()`.
+6. Child zombie is reaped by init calling `wait()`.
+
+In any case, all zombies are reaped properly.
+
+</p></details></p>
+
+<!-- ===================================================================== -->
+
+<p><details><summary><b>Is there any other way to create processes other than using <tt>fork()</tt>?</b></summary><p>
+
+No. That's all you got.
+
+And coupled with `exec()`, it's really all you need.
+
+</p></details></p>
+
 <!--
 TODO:
 9)How do distributed systems work? 
