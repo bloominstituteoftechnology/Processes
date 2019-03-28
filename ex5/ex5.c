@@ -14,7 +14,7 @@ char* msg1 = "hello world #1";
 char* msg2 = "hello world #2";
 char* msg3 = "hello world #3";
 
-int main(void)
+int main(int argc, char * argv[])
 {
     // Your code here
 
