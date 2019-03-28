@@ -26,6 +26,13 @@ int main(void)
 
     pipe(fd);
 
+    if (!fork) { // child process
+        dup(fd[1]);
+    } else {     // parent process
+        dup(fd[0]);
+
+    }
+
     char inBuff[BUFF_SIZE];
     char aBuff[BUFF_SIZE];
     // fgets(aBuff, BUFF_SIZE, fd[0]);
