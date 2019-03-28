@@ -46,9 +46,10 @@ int main(void)
         
     }
  
-    char buff[128];
+    char buff[128] = {0};
 
-    fgets(buff, 128, fp);
+    // fgets(buff, 128, fp);
+    read(fp, buff, 100);
 
     printf("Buffer has: \"%s\n\"", buff);
 
