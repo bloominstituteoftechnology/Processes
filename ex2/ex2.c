@@ -37,11 +37,12 @@ int main(void)
     {
 
     fprintf(fp, "this came from the Child process\n");
-
+    // fwrite(fp, "some stuff from child\n");
     }
     else          // Parrent process
     {
     wait(NULL);
+    // fwrite(fp, "some stuff from parent\n");
     fprintf(fp, "this came from the Parent process\n");
         
     }

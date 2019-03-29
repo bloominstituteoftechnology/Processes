@@ -34,11 +34,13 @@ int main()
     // Your code here
     int start_time = clock_gettime(CLOCK_MONOTONIC, &start);
 
-    sleep(2);
+    // sleep(2);
+    char buf[128] = "wasup...\n";
+    write(1, buf, 9);
 
     int end_time = clock_gettime(CLOCK_MONOTONIC, &end);
     diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
-    printf("program ran for %d \n",(long long unsigned int) diff);
+    printf("program ran for %llu \n",(long long unsigned int) diff);
     
     return 0;
 }
