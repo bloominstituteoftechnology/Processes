@@ -8,7 +8,21 @@
 
 int main(void)
 {
-    // Your code here 
-    
+    // Your code here
+    pid_t pid = fork();
+    FILE *fp;
+    fp = fopen("text.txt", "w+");
+
+    if (pid == 0)
+    {
+
+        fprintf(fp, "\n I\'m printing from the child\n");
+        exit(1);
+    }
+    else
+    {
+        fprintf(fp, "\n I\'m printing from the parent\n");
+    }
+
     return 0;
 }
