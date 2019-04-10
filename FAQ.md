@@ -1,6 +1,71 @@
 # FAQ
 
-<p><details><summary><b>What is a syscall/system call?</b></summary><p>
+## Contents
+
+### Common Errors
+
+* [When writing to the same file from two processes, the writes both seem to occur just fine, even though the problem suggests it won't work. What's going on?](#q2300)
+* [Does a return value of `-1` usually indicate an error?](#q1000)
+
+### Operating Systems
+
+* [What is a syscall/system call?](#q100)
+* [What's a privileged vs non-privileged operation?](#q200)
+* [How does I/O with the keyboard and other peripherals work?](#q400)
+* [Where does the OS keep the process list? How does it relate to the stack and heap?](#q600)
+* [Where is the process control block stored?](#q1500)
+* [Does a return value of `-1` usually indicate an error?](#q1000)
+* [If old operating systems like MS-DOS didn't offer a privileged mode or memory protection, how did they offer features dependent on those to their users?](#q1200)
+* [Is there a way to control how the OS schedules processes, to give them higher priority?](#q1600)
+* [Is the kernel "close to the metal"?](#q1700)
+* [How does the OS assign a particular memory space to a particular process?](#q1900)
+* [What are `stdin`, `stdout`, and `stderr`?](#q2900)
+* [How do I know which header files to `#include` for any particular function?](#q3000)
+
+### Processes
+
+* [How does the scheduler decide which process to run next?](#q500)
+* [Where does the OS keep the process list? How does it relate to the stack and heap?](#q600)
+* [If processes are isolated from one another, what's the point of using `pipe()`?](#q700)
+* [Where is the process control block stored?](#q1500)
+* [Is there a way to control how the OS schedules processes, to give them higher priority?](#q1600)
+* [How does a process dynamically resize how much memory is has at its disposal?](#q1800)
+* [How does the OS assign a particular memory space to a particular process?](#q1900)
+
+### Syscalls
+
+* [What is a syscall/system call?](#q100)
+* [Does compiled code make system calls under the hood?](#q300)
+* [How do I know which header files to `#include` for any particular function?](#q3000)
+
+### Pipes
+
+* [If processes are isolated from one another, what's the point of using `pipe()`?](#q700)
+* [What are some use cases for pipes?](#q1300)
+* [How many bytes can a pipe hold?](#q2500)
+* [What happens when you try to read from an empty pipe? Or when you try to write to a full pipe?](#q2600)
+
+### Fork/Wait, Zombies
+
+* [When you `fork()`, is the parent's PID always greater than zero?](#q800)
+* [Should I use `wait()` or `waitpid()`?](#q900)
+* [Is the `fork()` syscall where the word "fork" on GitHub came from?](#q1100)
+* [Isn't it expensive to copy all the data on a `fork()`?](#q1400)
+* [When doing a `fork()`, you only need the conditional if you want the parent and child to do different things?](#q2000)
+* [How could you create a grandchild process?](#q2100)
+* [How do I create sibling processes?](#q2200)
+* [Can `fork()` return less than `0`?](#q2400)
+* [Can a child process `wait()` on a parent?](#q2700)
+* [How can a parent get the exit status from a child process?](#q2800)
+* [Is a zombie like when you have to end a task with the Task Manager?](#q3100)
+* [What happens if a parent dies before it `wait()`s on its children? Do they become zombies forever?](#q3200)
+* [Is there any other way to create processes other than using `fork()`?](#q3300)
+* [How does `fork()` work under the hood?](#q3400)
+
+## Questions
+
+<a name="q100"></a>
+### What is a syscall/system call?
 
 From a C programming perspective, you can think of a syscall as a function that
 you call to get the OS to do something for you. It looks just like a regular
@@ -26,11 +91,10 @@ direct access to the hard disk). The `open()` syscall asks the OS to open the
 file on the user's behalf. And the OS can agree or disagree to do that depending
 on the user's authority level.
 
-</p></details></p>
+------------------------------------------------------------------------
 
-<!-- ===================================================================== -->
-
-<p><details><summary><b>What's a privileged vs non-privileged operation?</b></summary><p>
+<a name="q200"></a>
+### What's a privileged vs non-privileged operation?
 
 Privileged operations need additional access to hardware or data that the user
 is not normally allowed to access.
@@ -63,11 +127,10 @@ write to file       <-------+------->    write syscall
 add 3 + 7                   |
 ```
 
-</p></details></p>
+------------------------------------------------------------------------
 
-<!-- ===================================================================== -->
-
-<p><details><summary><b>Does compiled code make system calls under the hood?</b></summary><p>
+<a name="q300"></a>
+### Does compiled code make system calls under the hood?
 
 Yes.
 
@@ -85,11 +148,10 @@ privileged operation.
 So under the hood, `printf()` calls the `write()` syscall to actually perform
 the final output.
 
-</p></details></p>
+------------------------------------------------------------------------
 
-<!-- ===================================================================== -->
-
-<p><details><summary><b>How does I/O with the keyboard and other peripherals work?</b></summary><p>
+<a name="q400"></a>
+### How does I/O with the keyboard and other peripherals work?
 
 From a programming standpoint, virtually all I/O in a Unix-like system takes
 place through the `read()` and `write()` syscalls. These send and receive arrays
@@ -116,11 +178,10 @@ involves `open()`ing the file, then interacting with it with `read()`,
 `write()`, `ioctl()`, and `fcntl()`. Of course, your user needs permission to
 open the device file to make this work.
 
-</p></details></p>
+------------------------------------------------------------------------
 
-<!-- ===================================================================== -->
-
-<p><details><summary><b>How does the scheduler decide which process to run next?</b></summary><p>
+<a name="q500"></a>
+### How does the scheduler decide which process to run next?
 
 The _scheduler_ is a component inside the OS that decides which process needs to
 run next. Your CPU might only have 4 or 8 cores, so it can actually only do that
@@ -151,11 +212,10 @@ queue](https://en.wikipedia.org/wiki/Multilevel_feedback_queue) is a popular
 scheduling algorithm, but there are [many
 others](https://en.wikipedia.org/wiki/Scheduling_(computing)#Scheduling_disciplines).
 
-</p></details></p>
+------------------------------------------------------------------------
 
-<!-- ===================================================================== -->
-
-<p><details><summary><b>Where does the OS keep the process list? How does it relate to the stack and heap?</b></summary><p>
+<a name="q600"></a>
+### Where does the OS keep the process list? How does it relate to the stack and heap?
 
 Since the process list exists _outside_ any processes that are running, it
 exists neither in a processes's stack nor in its heap.
@@ -175,11 +235,10 @@ internal data (process list, etc.) are kept there.
 Regular user processes have zero access to this data, except via syscalls or
 some other mechanism that the OS explicitly allows.
 
-</p></details></p>
+------------------------------------------------------------------------
 
-<!-- ===================================================================== -->
-
-<p><details><summary><b>If processes are isolated from one another, what's the point of using <tt>pipe()</tt>?</b></summary><p>
+<a name="q700"></a>
+### If processes are isolated from one another, what's the point of using `pipe()`?
 
 If you set up the `pipe()` _before_ the `fork()`, then both parent and child
 have access to the pipe's file descriptors and they remain connected.
@@ -192,11 +251,10 @@ _interprocess communication_.)
 If you mistakenly call `pipe()` _after_ `fork()`, then the parent and child will
 have their on separate, disconnected pipes, and there'd be no point in it.
 
-</p></details></p>
+------------------------------------------------------------------------
 
-<!-- ===================================================================== -->
-
-<p><details><summary><b>When you <tt>fork()</tt>, is the parent's PID always greater than zero?</b></summary><p>
+<a name="q800"></a>
+### When you `fork()`, is the parent's PID always greater than zero?
 
 Yes.
 
@@ -215,11 +273,10 @@ Any process can call `getpid()` to find out its PID. It can also call
 child processes. The only way for a parent to know the PID of its children is to
 remember them from the return value from `fork()`.)
 
-</p></details></p>
+------------------------------------------------------------------------
 
-<!-- ===================================================================== -->
-
-<p><details><summary><b>Should I use <tt>wait()</tt> or <tt>waitpid()</tt>?</b></summary><p>
+<a name="q900"></a>
+### Should I use `wait()` or `waitpid()`?
 
 `waitpid()` is just like wait, except it gives you more options. With
 `waitpid()`, you can wait for specific processes to exit, or for processes in a
@@ -258,11 +315,10 @@ Normally `wait()` and `waitpid()` will _block_ (sleep) until they have something
 to do. But if you specify `WNOHANG` to `waitpid()`, it will return `0`
 immediately if there are no child zombies to reap.
 
-</p></details></p>
+------------------------------------------------------------------------
 
-<!-- ===================================================================== -->
-
-<p><details><summary><b>Does a return value of <tt>-1</tt> usually indicate an error?</b></summary><p>
+<a name="q1000"></a>
+### Does a return value of `-1` usually indicate an error?
 
 It's common in general, and really common with syscalls.
 
@@ -344,11 +400,10 @@ You don't have permission to open this file.
 The values you can check for with `errno` are listed in the man page for the
 syscall in question.
 
-</p></details></p>
+------------------------------------------------------------------------
 
-<!-- ===================================================================== -->
-
-<p><details><summary><b>Is the <tt>fork()</tt> syscall where the word "fork" on GitHub came from?</b></summary><p>
+<a name="q1100"></a>
+### Is the `fork()` syscall where the word "fork" on GitHub came from?
 
 Probably not.
 
@@ -356,11 +411,10 @@ GitHub needed a name for when you branched off someone else's repo.
 Unfortunately for them, _branch_ already means something else to git. Seems
 likely they just used fork as a similar word.
 
-</p></details></p>
+------------------------------------------------------------------------
 
-<!-- ===================================================================== -->
-
-<p><details><summary><b>If old operating systems like MS-DOS didn't offer a privileged mode or memory protection, how did they offer features dependent on those to their users?</b></summary><p>
+<a name="q1200"></a>
+### If old operating systems like MS-DOS didn't offer a privileged mode or memory protection, how did they offer features dependent on those to their users?
 
 In a nutshell, they didn't.
 
@@ -372,11 +426,10 @@ privacy) and it wasn't that big of a deal. Crash the system? You'd just reboot.
 
 Rebooting happened a lot.
 
-</p></details></p>
+------------------------------------------------------------------------
 
-<!-- ===================================================================== -->
-
-<p><details><summary><b>What are some use cases for pipes?</b></summary><p>
+<a name="q1300"></a>
+### What are some use cases for pipes?
 
 When you `fork()` a new process, it gets a copy of all the data. None of it is
 shared. But there might be times you want to communicate between a child and
@@ -466,11 +519,11 @@ int main(void)
     return 0;
 }
 ```
-</p></details></p>
 
-<!-- ===================================================================== -->
+------------------------------------------------------------------------
 
-<p><details><summary><b>Isn't it expensive to copy all the data on a <tt>fork()</tt>?</b></summary><p>
+<a name="q1400"></a>
+### Isn't it expensive to copy all the data on a `fork()`?
 
 Seems like it would cost a lot to give the child a complete copy of all the
 process data.
@@ -485,21 +538,19 @@ syscall called `vfork()` that you could use if you were _only_ going call
 `exec()` after the fork.  On modern systems, `vfork()` might be marginally
 faster for that use case, or it might work exactly the same way as `fork()`.
 
-</p></details></p>
+------------------------------------------------------------------------
 
-<!-- ===================================================================== -->
-
-<p><details><summary><b>Where is the process control block stored?</b></summary><p>
+<a name="q1500"></a>
+### Where is the process control block stored?
 
 That's somewhere deep in kernel memory. It's not something you can directly
 access as a user. You have to use syscalls to ask the OS for information about
 the process.
 
-</p></details></p>
+------------------------------------------------------------------------
 
-<!-- ===================================================================== -->
-
-<p><details><summary><b>Is there a way to control how the OS schedules processes, to give them higher priority?</b></summary><p>
+<a name="q1600"></a>
+### Is there a way to control how the OS schedules processes, to give them higher priority?
 
 As a normal user, you can request the OS give your program _lower_ priority in
 the scheduler with the `nice()` syscall.
@@ -524,11 +575,10 @@ nice(-20); // Be as mean as possible to other processes (highest priority)
 Particular systems might have other methods of manipulating scheduling, but
 they're all going to involve making a request to the OS.
 
-</p></details></p>
+------------------------------------------------------------------------
 
-<!-- ===================================================================== -->
-
-<p><details><summary><b>Is the kernel "close to the metal"?</b></summary><p>
+<a name="q1700"></a>
+### Is the kernel "close to the metal"?
 
 Definitely. It's the arbiter of all access to all the hardware on the system.
 
@@ -549,11 +599,10 @@ roughly:
 * JavaScript, Python, Perl
 * TypeScript
 
-</p></details></p>
+------------------------------------------------------------------------
 
-<!-- ===================================================================== -->
-
-<p><details><summary><b>How does a process dynamically resize how much memory is has at its disposal?</b></summary><p>
+<a name="q1800"></a>
+### How does a process dynamically resize how much memory is has at its disposal?
 
 It asks the OS for more.
 
@@ -563,49 +612,44 @@ Normally, C developers don't call this. They call `malloc()` to get more memory,
 and `malloc()` calls `brk()` if it needs to get more for this process from the
 OS.
 
-</p></details></p>
+------------------------------------------------------------------------
 
-<!-- ===================================================================== -->
-
-<p><details><summary><b>How does the OS assign a particular memory space to a particular process?</b></summary><p>
+<a name="q1900"></a>
+### How does the OS assign a particular memory space to a particular process?
 
 This is out of scope for the class, but is all about the crazy world of [virtual
 memory](https://en.wikipedia.org/wiki/Virtual_memory). Read up on that if you
 want all the gritty details.
 
-</p></details></p>
+------------------------------------------------------------------------
 
-<!-- ===================================================================== -->
-
-<p><details><summary><b>When doing a <tt>fork()</tt>, you only need the conditional if you want the parent and child to do different things?</b></summary><p>
+<a name="q2000"></a>
+### When doing a `fork()`, you only need the conditional if you want the parent and child to do different things?
 
 Yes.
 
 And it is probably 99.999% of the time you'll want the parent and child to do
 different things.
 
-</p></details></p>
+------------------------------------------------------------------------
 
-<!-- ===================================================================== -->
-
-<p><details><summary><b>How could you create a grandchild process?</b></summary><p>
+<a name="q2100"></a>
+### How could you create a grandchild process?
 
 Call `fork()` from the would-be grandparent, then call `fork()` again from its
 child.
 
-</p></details></p>
+------------------------------------------------------------------------
 
-<!-- ===================================================================== -->
-
-<p><details><summary><b>How do I create sibling processes?</b></summary><p>
+<a name="q2200"></a>
+### How do I create sibling processes?
 
 Just call `fork()` multiple times from the parent.
 
-</p></details></p>
+------------------------------------------------------------------------
 
-<!-- ===================================================================== -->
-
-<p><details><summary><b>When writing to the same file from two processes, the writes both seem to occur just fine, even though the problem suggests it won't work. What's going on?</b></summary><p>
+<a name="q2300"></a>
+### When writing to the same file from two processes, the writes both seem to occur just fine, even though the problem suggests it won't work. What's going on?
 
 It turns out that with such small writes, and especially on Windows, the writes
 come out sequentially even though they're running at the "same" time.
@@ -624,11 +668,10 @@ Unix, files aren't locked automatically.
 
 See also: [`lockf()`](http://man7.org/linux/man-pages/man3/lockf.3.html).
 
-</p></details></p>
+------------------------------------------------------------------------
 
-<!-- ===================================================================== -->
-
-<p><details><summary><b>Can <tt>fork()</tt> return less than <tt>0</tt>?</b></summary><p>
+<a name="q2400"></a>
+### Can `fork()` return less than `0`?
 
 Yes, in the case of an error.
 
@@ -637,11 +680,10 @@ It's best practice to check to see if it returned `-1` and react appropriately.
 Most Unix syscalls return `-1` in the case of an error, and set the global
 variable `errno` to reflect the error that occurred.
 
-</p></details></p>
+------------------------------------------------------------------------
 
-<!-- ===================================================================== -->
-
-<p><details><summary><b>How many bytes can a pipe hold?</b></summary><p>
+<a name="q2500"></a>
+### How many bytes can a pipe hold?
 
 The size of the pipe is fixed by the operating system, and varies from system to
 system. It's likely at least 12 KB, but is probably more.
@@ -671,32 +713,29 @@ int main(void)
 
 On a Mac, this reported that the pipe held 64 KB (65536 bytes).
 
-</p></details></p>
+------------------------------------------------------------------------
 
-<!-- ===================================================================== -->
-
-<p><details><summary><b>What happens when you try to read from an empty pipe? Or when you try to write to a full pipe?</b></summary><p>
+<a name="q2600"></a>
+### What happens when you try to read from an empty pipe? Or when you try to write to a full pipe?
 
 The OS will put the process that called `read()` or `write()` to sleep if
 there's nothing to read or the pipe is full.
 
 The process will be woken up as soon as it's possible for it to do more work.
 
-</p></details></p>
+------------------------------------------------------------------------
 
-<!-- ===================================================================== -->
-
-<p><details><summary><b>Can a child process <tt>wait()</tt> on a parent?</b></summary><p>
+<a name="q2700"></a>
+### Can a child process `wait()` on a parent?
 
 No.
 
 Parents can only wait on their children, not the other way around.
 
-</p></details></p>
+------------------------------------------------------------------------
 
-<!-- ===================================================================== -->
-
-<p><details><summary><b>How can a parent get the exit status from a child process?</b></summary><p>
+<a name="q2800"></a>
+### How can a parent get the exit status from a child process?
 
 The `wait()` syscall accepts a pointer to an `int` that it fills with exit
 status information.
@@ -731,11 +770,11 @@ int main(void)
     }
 }
 ```
-</p></details></p>
 
-<!-- ===================================================================== -->
+------------------------------------------------------------------------
 
-<p><details><summary><b>What are <tt>stdin</tt>, <tt>stdout</tt>, and <tt>stderr</tt>?</b></summary><p>
+<a name="q2900"></a>
+### What are `stdin`, `stdout`, and `stderr`?
 
 These are the three files that are automatically opened for a process when it is first created.
 
@@ -750,11 +789,10 @@ to the same place as `stdout`. (The idea is that you can redirect all normal
 output to one place, and all error output to another place. Or suppress normal
 output while allowing error output.)
 
-</p></details></p>
+------------------------------------------------------------------------
 
-<!-- ============================================================================= -->
-
-<p><details><summary><b>How do I know which header files to <tt>#include</tt> for any particular function?</b></summary><p>
+<a name="q3000"></a>
+### How do I know which header files to `#include` for any particular function?
 
 Check the man page for the function in question. It'll show it in the _Synopsis_
 section.
@@ -788,11 +826,10 @@ And section 2 for the `mkdir()` syscall:
 man 2 mkdir
 ```
 
-</p></details></p>
+------------------------------------------------------------------------
 
-<!-- ===================================================================== -->
-
-<p><details><summary><b>Is a zombie like when you have to end a task with the Task Manager?</b></summary><p>
+<a name="q3100"></a>
+### Is a zombie like when you have to end a task with the Task Manager?
 
 Not quite.
 
@@ -810,11 +847,10 @@ The only way to get rid of the zombie is:
 2. If the parent is dead, then the zombie child is adopted by init (PID 1), and
    init calls `wait()` for it.
 
-</p></details></p>
+------------------------------------------------------------------------
 
-<!-- ===================================================================== -->
-
-<p><details><summary><b>What happens if a parent dies before it <tt>wait()</tt>s on its children? Do they become zombies forever?</b></summary><p>
+<a name="q3200"></a>
+### What happens if a parent dies before it `wait()`s on its children? Do they become zombies forever?
 
 Fortunately, no.
 
@@ -849,21 +885,19 @@ Another possible path:
 
 In any case, all zombies are reaped properly.
 
-</p></details></p>
+------------------------------------------------------------------------
 
-<!-- ===================================================================== -->
-
-<p><details><summary><b>Is there any other way to create processes other than using <tt>fork()</tt>?</b></summary><p>
+<a name="q3300"></a>
+### Is there any other way to create processes other than using `fork()`?
 
 No. That's all you got.
 
 And coupled with `exec()`, it's really all you need.
 
-</p></details></p>
+------------------------------------------------------------------------
 
-<!-- ===================================================================== -->
-
-<p><details><summary><b>How does <tt>fork()</tt> work under the hood?</b></summary><p>
+<a name="q3400"></a>
+### How does `fork()` work under the hood?
 
 It's not required to know this to be an effective Unix systems developer, but it
 is useful information for the curious.
@@ -941,19 +975,5 @@ pid_t fork(void)
     }
 }
 ```
-</p></details></p>
 
-<!--
-TODO:
-9)How do distributed systems work? 
--->
-
-<!-- ===================================================================== -->
-
-<!--
-Template:
-
-<p><details><summary><b></b></summary><p>
-</p></details></p>
-
--->
+------------------------------------------------------------------------
