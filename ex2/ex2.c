@@ -4,6 +4,8 @@
 
 // It doesnt seem that the both the child and parent can access the textfile.
 
+
+//https://stackoverflow.com/questions/3463426/in-c-how-should-i-read-a-text-file-and-print-all-strings
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
