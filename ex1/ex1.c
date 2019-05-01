@@ -8,7 +8,10 @@
 
 int main(void)
 {
-    // Your code here
+    //before calling fork have the main process access a variable
+    //an set its value to something.
+    int x = 100;
+    //call the fork
 
     return 0;
 }
