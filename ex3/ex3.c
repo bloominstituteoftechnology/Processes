@@ -7,9 +7,18 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
-int main(void)
-{
-    // Your code here
+int main(void) {
+    int child = fork();
+
+    if (child < 0) {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (child == 0)
+        printf("hello\n");
+    else {
+        wait(&child);
+        printf("goodbye\n");
+    }
 
     return 0;
 }
