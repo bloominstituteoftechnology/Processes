@@ -6,9 +6,18 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int main(void)
-{
-    // Your code here
+int main(void) {
+    int x = getpid();
+    printf("Before fork: %d\n", x);
 
+    int f = fork();
+    if (f < 0) {
+        fprintf(stderr, "Fork failed.\n");
+        exit(1);
+    }
+    x *= 10;
+
+    printf("After fork: %d\n", x);
+    
     return 0;
 }
