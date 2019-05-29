@@ -10,7 +10,17 @@
 
 int main(void)
 {
-    // Your code here    
+   int rc = fork(); 
+   if(rc < 0){
+       fprintf(stderr, "fork failed\n");
+        exit(1);
+   }else if(rc == 0){
+       execl("/bin/ls", "ls", "-l", (char *)0);
+   }
 
     return 0;
 }
+
+// The calls with v in the name take an array parameter to specify the argv[] array of the new program.
+// The calls with l in the name take the arguments of the new program as a variable-length argument list to the function itself.
+// The calls with e in the name take an extra argument to provide the environment of the new program; otherwise, the program inherits the current process's environment.
