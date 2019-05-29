@@ -8,7 +8,24 @@
 
 int main(void)
 {
-    // Your code here
+    int x = 100;
+
+    int rc = fork();
+
+    if (rc < 0) {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {
+        printf("value of x: %d from child process: %d\n", x, (int) getpid());
+        x = 50;
+        printf("after changing, value of x: %d from child process: %d\n", x, (int) getpid());
+    } else {
+        printf("value of x: %d from parent process: %d\n", x, (int) getpid());
+        x = 20;
+        printf("after changing, value of x: %d from parent process: %d\n", x, (int) getpid());
+    }
+
+    printf("final value of x: %d from parent process: %d\n", x, (int) getpid());
 
     return 0;
 }
