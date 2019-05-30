@@ -9,6 +9,18 @@
 int main(void)
 {
     // Your code here 
+    FILE *p = fopen("text.txt", "r+");
+    int rc = fork();
+
+    if(rc==0)
+    {
+        fprintf(p, "Child writes.\n");
+    }
+    else
+    {
+        fprintf(p, "Parent writes.\n");
+    }
+    fclose(p);
     
     return 0;
 }
