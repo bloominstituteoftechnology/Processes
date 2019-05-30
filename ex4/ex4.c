@@ -10,7 +10,9 @@
 
 int main(void)
 {
-    // Your code here    
+    char *args[]={"/bin/ls", NULL}; 
+    fork();
+    execv(args[0], args);    
 
     return 0;
 }
