@@ -10,7 +10,17 @@
 
 int main(void)
 {
-    // Your code here    
-
+    int rc = fork();
+    if (rc < 0) {  // fork failed; exit
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {
+        printf("child process\n");
+        char *args[] = {"/bin/ls", "-l", NULL};
+        execv("/bin/ls", args);
+    } else {
+        int wt = waitpid(rc, NULL, 0);
+        printf("parent process\n");
+    }
     return 0;
 }
