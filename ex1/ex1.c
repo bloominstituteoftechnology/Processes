@@ -10,5 +10,19 @@ int main(void)
 {
     // Your code here
 
+    pid_t pid = fork();
+
+    if (pid == 0)
+    {
+        int x = 200;
+        printf("\n This is the child, x = %d\n", x);
+        exit(1);
+    }
+    else
+    {
+        int x = 100;
+        printf("\n This is the parent, x = %d\n", x);
+    }
+
     return 0;
 }
