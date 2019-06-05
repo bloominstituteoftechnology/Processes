@@ -9,6 +9,18 @@
 int main(void)
 {
     // Your code here 
+
+    //open text.txt with fopen()
+    FILE *fp;
+    fp = fopen("text.txt", "w");
+
+    //call fork()
+    int fork = fork();
+    //attempt file descriptor access
+        //from parent
+            //fork() == pid
+        //and from child
+            //fork() == 0
     
     return 0;
 }
