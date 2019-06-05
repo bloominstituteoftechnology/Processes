@@ -10,7 +10,25 @@
 
 int main(void)
 {
-    // Your code here    
+    // Your code here
 
+    printf("starting program\n");
+    printf("%s", "hello");
+    exec("/bin/ls", "ls", NULL);
+    printf("ran ls\n");
+
+    execlp("/bin/ls", "ls", NULL);
+    pid_t  pid = fork();
+    if (pid == 0) // child process
+    {
+        execle("/bin/cd ex4", "cd", NULL);
+        execle("/bin/ls", "ls", NULL);
+        // exec("/bin/ls");
+    }
+    else         // parent process
+    {
+        execle("/bin/ls", "ls", NULL);
+
+    }
     return 0;
 }
