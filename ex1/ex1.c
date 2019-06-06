@@ -8,7 +8,22 @@
 
 int main(void)
 {
-    // Your code here
+    int x=100;
+    printf("Main process id is: %d, value of x is: %d", (int)getpid(), x);
+    int rc= fork();
+    if (rc < 0)
+    {
+        printf("Forking failed \n");
+    }
+    else if (rc == 0)
+    {
+    printf("Main process id is: %d, value of x is: %d", (int)getpid(), x);
+    }
+    else
+    {
+        int x = 200;
+        printf("Main process id is: %d, value of x is: %d", (int)getpid(), x);
 
+    }
     return 0;
 }
