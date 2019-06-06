@@ -10,6 +10,15 @@
 int main(void)
 {
     // Your code here
-
+    int cp = fork();
+    if (cp < 0) {
+        printf("Fork failed.");
+        exit(1);
+    } else if (cp == 0) {
+        printf("hello\n");
+    } else {
+        wait(NULL);
+        printf("goodbye\n");
+    }
     return 0;
 }
