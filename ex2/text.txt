@@ -1,0 +1,4 @@
+
+We are writing after the child process
+
+We are writing in the child process
