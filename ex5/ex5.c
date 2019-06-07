@@ -17,6 +17,31 @@ char* msg3 = "hello world #3";
 int main(void)
 {
     // Your code here
+    char inbuf[MSGSIZE];
+    int i;
+
+    int pipeEnds[2];
+    int pipe(pipeEnds);
+
+
+    int child = fork();
+
+    if(child) {
+
+        write(pipeEnds[1], msg1, MSGSIZE);
+        write(pipeEnds[1], msg2, MSGSIZE);
+        write(pipeEnds[1], msg3, MSGSIZE);
+
+    } else {
+
+        wait(NULL);
+        for(i = 0; i < 3; i++) {
+
+            read(pipeEnds[0], inbuf, MSGSIZE);
+
+        }
+
+    }
     
     return 0;
 }
