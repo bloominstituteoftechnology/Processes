@@ -9,6 +9,25 @@
 int main(void)
 {
     // Your code here 
-    
+    FILE * file_pointer;
+
+    file_pointer = fopen("text.txt", "r+");
+    int pid = fork();
+
+    if(pid < 0) {
+        fprintf(stderr, "Fork failed!\n");
+        exit(1);
+    }
+    else if(pid == 0) {
+        fprintf(file_pointer, "%s %s", "Child", "text.\n");
+        fclose(file_pointer);
+    }
+    else {
+        fprintf(file_pointer, "%s %s", "Parent", "text.");
+        fclose(file_pointer);
+    }
+
     return 0;
 }
+
+/* Yes, both child and parent can access the file returned by fopen(). In the case of concurrent attempts, they are saved together as in the example above. */

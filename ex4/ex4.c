@@ -11,6 +11,19 @@
 int main(void)
 {
     // Your code here    
+    pid_t pid = fork();
 
+    char *bin_ref = {"./bin/ls", NULL}; /* might try running another file from this project at some point too */
+    exec(bin_ref[0], bin_ref);
+    // execl(bin_ref[0], bin_ref);
+    // execle(bin_ref[0], bin_ref);
+    // execvp(bin_ref[0], bin_ref);
     return 0;
 }
+
+/* The different versions seem to mainly reference parameters.
+For example, -l includes individual parameters in the call, whereas -v is useful when
+variables are not known in advance because it allows you to pass in a char* array
+rather than a specific number of parameters. There is some additional functionality 
+with things like -e and -p and I'd be lying if I said I understand this fully yet, so
+I'm going to keep looking into these differences. */
