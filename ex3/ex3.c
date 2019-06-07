@@ -9,7 +9,18 @@
 
 int main(void)
 {
-    // Your code here
+    // printf("goodbye (pid: %d)\n", (int)getpid());
+    int rc = fork();
 
+    // child process starts executing here
+    if (rc == 0)
+    {
+        printf("Child: hello\n");
+    }
+    else
+    {
+        int wc = waitpid(rc, NULL, 0);
+        printf("Parent: goodbye\n");
+    }
     return 0;
 }

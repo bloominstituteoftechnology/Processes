@@ -20,7 +20,26 @@ and `clock_gettime()` should work just fine.
 
 int main()
 {
-    // Your code here
-    
+    const char msg[] = "Hello World!";
+    int time;
+
+    for (int i = 0; i < number_iter; i++)
+    {
+        struct timespec start, end;
+
+        clock_gettime(CLOCK_MONOTONIC, &start); /* mark start time */
+
+        write(STDOUT_FILENO, msg, sizeof(msg) - 1);
+
+        clock_gettime(CLOCK_MONOTONIC, &end); /* mark the end time */
+
+        time += BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+        ;
+    }
+
+    time /= number_iter;
+
+    printf("average elapsed time = %d nanoseconds\n", time);
+
     return 0;
 }
