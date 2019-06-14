@@ -5,10 +5,28 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <sys/wait.h>
+#include <sys/types.h>
 
 int main(void)
 {
     // Your code here
+    int x = 100;
+
+    pid_t pid = fork();
+
+    x = 12;
+
+    if (pid == 0)
+    {
+        x = 24;
+        printf("I'm the child's x!: %d\n", x);
+    }
+    else
+    {
+        wait(NULL);
+        printf("I'm the parent's x!: %d\n", x);
+    }
 
     return 0;
 }
