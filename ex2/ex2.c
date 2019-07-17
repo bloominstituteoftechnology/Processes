@@ -9,6 +9,33 @@
 int main(void)
 {
     // Your code here 
+	FILE *fp;
+	int c;
+
+    fp = fopen("text.txt", "r+");
     
+    int rc = fork();
+
+    if (rc < 0) {
+    	printf("Fork failed...\n");
+    } else if (rc == 0) {
+    	fprintf(fp, "This is the child.\n");
+    } else {
+    	fprintf(fp, "This is the parent.\n");
+    }
+
+    while(1) {
+
+    	c = fgetc(fp);
+
+    	if (feof(fp)) {
+    		break;
+    	}
+    	printf("%c", c);
+    }
+    printf("\n");
+
+    fclose(fp);
+
     return 0;
 }
