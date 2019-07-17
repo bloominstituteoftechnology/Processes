@@ -6,10 +6,20 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <strings.h>
 
 int main(void)
 {
-    // Your code here
+    int new_process = fork();
 
+    // Return value of fork()
+    // On success, the PID of the child process is returned in the parent, and 0 is returned in the child. 
+
+    if (new_process){
+        printf("hello from child\n");
+    } else {
+        printf("goodbye from main\n");
+    }
+    
     return 0;
 }
