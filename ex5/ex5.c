@@ -20,12 +20,12 @@ int main(void)
 	char inbuf[MSGSIZE];
 	int p[2];
 
-    int rc = fork();
-
-    if (pipe(p) < 0) {
+	if (pipe(p) < 0) {
     	fprintf(stderr, "pipe failed...\n");
     	exit(1);
     }
+
+    int rc = fork();
 
     if (rc < 0) {
     	printf("fork failed...\n");
@@ -37,6 +37,8 @@ int main(void)
     	close(p[1]);
     } else {
 
+    	waitpid(rc, NULL, 0);
+
     	close(p[1]);
 
     	for (int i = 0; i < 3; i++) {
@@ -46,8 +48,6 @@ int main(void)
     	}
 
     	close(p[0]);
-
-    	waitpid(rc, NULL, 0);
     }
     
     return 0;
