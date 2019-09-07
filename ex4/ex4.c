@@ -10,7 +10,19 @@
 
 int main(void)
 {
-    // Your code here    
+    printf("Hello Lambda (pid: %d)\n", (int) getpid());
+
+    int rc = fork();
+    if (rc < 0) {
+        fprintf(stderr, "Process Failed\n");
+        exit(1);
+    } else if (rc == 0) {
+        execl("/bin/ls", "ls", "-la", NULL);
+        printf("Accessing secret library.");
+    } else {
+        int tc = wait(NULL);
+        printf("Parent (pid: %d) of child %d\n", (int) getpid(), rc);
+    }
 
     return 0;
 }
