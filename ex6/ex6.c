@@ -21,6 +21,34 @@ and `clock_gettime()` should work just fine.
 int main()
 {
     // Your code here
-    
+
+    uint64_t diff;
+    struct timespec start, res, end;
+    long i;
+    long sum;
+
+    clock_getres(CLOCK_MONOTONIC, &res);
+    printf("%d %d\n", res.tv_sec, res.tv_nsec);
+    sleep(2);
+    for(i=0; i < number_iter; i++) {
+        clock_gettime(CLOCK_MONOTONIC, &start);
+        FILE * fp;
+        fp = fopen("./foo.txt", "a+");
+        // write(fileno(stdout), NULL, 0);
+        fprintf(fp, "");
+        fclose(fp);
+        // sleep(1);
+        clock_gettime(CLOCK_MONOTONIC, &end);
+        if (i % 500 == 0) {
+            printf("%d %d %d %d\n", end.tv_sec, start.tv_sec, end.tv_nsec, start.tv_nsec);
+        }
+            diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+            sum += diff;
+            printf("%llu\n", (long long unsigned int) diff);
+    }
+
+    long average;
+    average = sum / number_iter;
+    printf("Elapsed time = %llu nanoseconds\n", (long long unsigned int) average);
     return 0;
 }
