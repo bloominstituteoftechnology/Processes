@@ -8,7 +8,22 @@
 
 int main(void)
 {
-    // Your code here
-
+    int x = 100;
+    
+    printf("Parent %d\n", (int) getpid());
+    
+    int rc = fork();
+    
+    if (rc < 0) {
+        fprintf(stderr, "Fork failed!\n");
+        exit(1);
+    } else if (rc == 0) {
+        x += 1;
+        printf("Child %d, x equals %d\n", (int) getpid(), x);
+    } else {
+        x += 2;
+        printf("Parent %d of child %d, x equals %d\n", (int) getpid(), rc, x);
+    } 
+    
     return 0;
 }

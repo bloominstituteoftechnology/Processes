@@ -10,7 +10,27 @@
 
 int main(void)
 {
-    // Your code here    
+//    printf("Parent %d\n", (int) getpid());
+    
+    int rc = fork();
+    
+    if (rc < 0) {
+        fprintf(stderr, "Fork failed!\n");
+        exit(1);
+    } else if (rc == 0) {
+//        printf("Child process here\n");
+//        char *args[] = {"ls", "-l", NULL};
+//        execvp(args[0], args);
+        
+//        execl("/bin/ls", "ls", "-l", (char *) NULL);
+        
+//        execv("/bin/ls", args);
+        
+        execlp("ls", "ls", "-l", (char *) NULL);
+        
+    } else {
+        wait(NULL);
+    }    
 
     return 0;
 }
