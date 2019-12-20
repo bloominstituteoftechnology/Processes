@@ -17,6 +17,37 @@ char* msg3 = "hello world #3";
 int main(void)
 {
     // Your code here
+	printf("forking...\n");
+
+	// creates a shared pipe between the parent and child processes
+	char inbuf[MSGSIZE];
+	int p[2];
+
+	if (pipe(p) < 0) {
+		fprintf(stderr, "pipe failed\n");
+		exit(1);
+	}
+
+    // forks a child
+	int rc = fork();
+
+	if (rc < 0) {
+		printf("fork failed\n");
+		exit(1);
+	} else if (rc == 0) {
+		// the child should write three messages to the parent
+		write(p[1], msg1, MSGSIZE);
+		write(p[1], msg2, MSGSIZE);
+		write(p[1], msg3, MSGSIZE);
+	} else {
+		// the parent should print out the messages
+		for (int i = 0; i < 3; i++) {
+			read(p[0], inbuf, MSGSIZE);
+			printf("%s\n", inbuf);
+		}
+	}
+
+    
     
     return 0;
 }
