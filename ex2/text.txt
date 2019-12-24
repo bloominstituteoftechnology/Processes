@@ -1,0 +1,2 @@
+Parent and child open a file, yo!
+Child open a file, yo!

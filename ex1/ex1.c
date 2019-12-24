@@ -6,9 +6,45 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+
+const int MAX_COUNT = 100;
+
+void ChildProcess(void)
+{
+  int i;
+
+  for (i = 1; i <= MAX_COUNT; i++){
+    printf("   This line is from child, value = %d\n", i);
+    printf("   *** Child process is done ***\n");}
+  return;
+}
+
+void ParentProcess(void)
+{
+  int i;
+  for (i = 1; i <= MAX_COUNT; i++){
+    printf("This line is from parent, value = %d\n", i);
+    printf("*** Parent is done ***\n");}
+  return;
+}
+
 int main(void)
 {
-    // Your code here
+  // Your code here
+  int x = 100;
+  int rc = fork();
+  printf("value of x >> %d\n", x);
+  if(rc < 0){
+    fprintf(stderr, "fork failed\n");
+    exit(1);
+  } else if (rc == 0){
+    printf("hello, child here (pid: %d) \n", (int) getpid());
+    ChildProcess();
+  } else {
+    printf("hello, parent here (pid: %d) of child %d\n", (int) getpid(), rc);
+    ParentProcess();
+  }
 
-    return 0;
+  return 0;
 }
+

@@ -10,6 +10,15 @@
 int main(void)
 {
     // Your code here
-
+    int rc = fork();
+    if (rc < 0){
+      fprintf(stderr, "blahblah\n");
+      exit(1);
+    } else if (rc ==0){
+      printf("hello %d \n", (int) getpid());
+    } else {
+      int wc = waitpid(rc, NULL, 0);
+      printf("goodbye %d\n", (int) getpid(), rc);
+    }
     return 0;
 }

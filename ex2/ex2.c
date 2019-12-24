@@ -9,6 +9,24 @@
 int main(void)
 {
     // Your code here 
-    
+    FILE* fp;
+    fp = fopen("text.txt", "r+");
+    int rc = fork();
+
+    if(rc < 0){
+      fprintf(stderr, "fork failed\n");
+      exit(1);
+    } else if (rc == 0){
+      if(fp != NULL){
+        fputs("Child open a file, yo!\n", fp);
+        fclose(fp);
+      }
+    } else {
+      if(fp != NULL){
+        fputs("Parent and child open a file, yo!\n", fp);
+        fclose(fp);
+      }
+    }
+
     return 0;
 }
