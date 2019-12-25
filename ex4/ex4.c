@@ -11,6 +11,16 @@
 int main(void)
 {
     // Your code here    
-
+    int rc=fork();
+    if (rc<0) {   //fork failed, exit
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc==0) { //child
+        printf("This is child process pid %d\n", getpid());
+        execl("/bin/ls", "ls", (char *)0);
+    } else {
+        wait(NULL);
+        printf("This is parent process pid %d\n", getpid());
+    }
     return 0;
 }
