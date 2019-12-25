@@ -8,7 +8,16 @@
 
 int main(void)
 {
-    // Your code here
-
+    int x = 5;
+    printf("cool x = %d\n", x);
+    int child = fork();
+    if (fork() == 0){
+    x = 6;
+    printf("child wants x to = %d\n", x);
+    } else {
+    x = 7;
+    printf("parent wants x to = %d\n", x);
+    }
+    printf("so now x = %d\n\n", x);
     return 0;
 }

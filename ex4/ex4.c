@@ -10,7 +10,12 @@
 
 int main(void)
 {
-    // Your code here    
+    int heckinfork = fork();
+    if (heckinfork == 0)
+        execlp("/Users/Liz/Desktop/Lambda/Processes/ex3/ex3", NULL); 
+    else 
+        wait(NULL);
+        printf("wahay");
 
     return 0;
 }
