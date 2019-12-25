@@ -1,0 +1,2 @@
+The Parent String
+The child string

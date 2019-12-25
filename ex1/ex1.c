@@ -8,7 +8,19 @@
 
 int main(void)
 {
-    // Your code here
-
-    return 0;
+   int pi_d;
+   int x = 100;
+   pi_d = fork();
+   if(pi_d == 0){
+       printf("Child Process B:\npid :%d\nppid:%d\n", getpid(),getpid());
+   }
+   if(pi_d > 0){
+       x = fork();
+       if(x > 0){
+           printf("\nParent Process:\npid:%d\nnid :%d\n", getpid(),getpid());
+       }
+       else if(x == 0){
+           printf("Child Process A:\npid :%d\nppid :%d\n", getpid(),getpid());
+       }
+   }
 }
