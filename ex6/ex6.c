@@ -20,7 +20,20 @@ and `clock_gettime()` should work just fine.
 
 int main()
 {
-    // Your code here
-    
+    float avg;
+
+    struct timespec start, end;
+    long diff = 0;
+    for (int i = 0; i < number_iter; i++) {
+        clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &start);
+        write(fileno(stdout), NULL, 0);
+        clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end);
+
+        diff += BILLION * (end.tv_sec - start.tv_sec) + (end.tv_nsec - end.tv_nsec);
+    }
+
+    avg = (float) diff / (float) number_iter;
+    printf("average process CPU time = %f nanoseconds\n", avg);
+
     return 0;
 }
