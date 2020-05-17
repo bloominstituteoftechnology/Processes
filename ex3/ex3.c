@@ -10,6 +10,16 @@
 int main(void)
 {
     // Your code here
+    int rc = fork();
+
+    if (rc < 0) {
+        fprintf(stderr, "failing forking\n");
+    } else if (rc == 0) {
+        printf("hello\n");
+    } else {
+        int wc = waitpid(rc, NULL, 0);
+        printf("goodbye\n");
+    }
 
     return 0;
 }

@@ -1,0 +1,2 @@
+this is the text fileThis has been added from the parent process
+This has been added from the child process

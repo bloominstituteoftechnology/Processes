@@ -17,6 +17,15 @@ char* msg3 = "hello world #3";
 int main(void)
 {
     // Your code here
-    
+    int rc = fork();
+
+    if (rc < 0) {
+        fprintf(stderr, "fail fail fail\n");
+        exit(1);
+    } else if (rc == 0) {
+        // this is the child
+    } else {
+        // this is the parent
+    }
     return 0;
 }

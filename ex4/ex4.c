@@ -10,7 +10,16 @@
 
 int main(void)
 {
-    // Your code here    
+    // Your code here
+    int rc = fork();
+    if (rc < 0) {
+        fprintf(stderr, "forking fail\n");
+        exit(1);
+    } else if (rc == 0) {
+        // child
+    } else {
+        // parent
+    }
 
     return 0;
 }
