@@ -9,7 +9,14 @@
 
 int main(void)
 {
-    // Your code here
 
-    return 0;
+    pid_t pid;        // _t means type delcaration pid under the hood it is an int.
+    pid = fork(); // doesn't take paramters
+
+    if (pid == 0) {
+        printf("hello\n");
+    } else {
+        wait(NULL);     // to ensure that child runs first
+        printf("goodbye\n");
+    }
 }
