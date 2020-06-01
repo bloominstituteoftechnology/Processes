@@ -21,6 +21,19 @@ and `clock_gettime()` should work just fine.
 int main()
 {
     // Your code here
+    struct timespec start, end;
+    int count = 0;
+    int total = 0;
+    while (count < number_iter) {
+        clock_gettime(CLOCK_MONOTONIC , &start);
+        fprintf(stdout, "");
+        clock_gettime(CLOCK_MONOTONIC, &end);
+        total += BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+        count++;
+    }
+
+    printf("Average time to make an empty write to stdout: %d nanoseconds.\n", total/number_iter);
+
     
     return 0;
 }

@@ -9,7 +9,18 @@
 
 int main(void)
 {
-    // Your code here
+    printf("Hello, process! (pid: %d).\n", (int) getpid());
+    pid_t pid = fork();
+    if (pid < 0) {
+        printf("Forking failed!");
+    } else if (pid == 0) {
+        printf("Hello! (pid: %d).\n", (int) getpid());
+    } else {
+        int wc = waitpid(pid, NULL, 0);
+        printf("Goodbye! (pid: %d) (child: %d).\n", (int) getpid(), pid);
+    }
 
     return 0;
 }
+
+
