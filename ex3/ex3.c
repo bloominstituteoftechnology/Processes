@@ -10,6 +10,15 @@
 int main(void)
 {
     // Your code here
-
+    if(!fork()) {
+        //Child
+        printf("hello\n");
+    } else {
+        int stat_loc;
+        wait(&stat_loc);
+        printf("Child status: %d\n", WEXITSTATUS(stat_loc));
+        //Parent
+        printf("goodbye\n");
+    }
     return 0;
 }

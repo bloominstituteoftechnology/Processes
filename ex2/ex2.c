@@ -8,7 +8,28 @@
 
 int main(void)
 {
+    FILE *fp = fopen("text.txt", "w");
+    
+    if (fp == NULL) {
+        fprintf(stderr, "Failed to open file\n");
+        exit(1);
+    }
+    
     // Your code here 
+    pid_t rc = fork();
+    
+    if(rc == 0) {
+        fprintf(fp, "Child writing to open file\n");
+        fprintf(fp, "x = %d\n", x);
+    } else {
+        x = 500;
+        sleep(1);
+        fprintf(fp, "Parent writing to open file\n");
+        fprintf(fp, "x = %d\n", x);
+        waitpid(rc, NULL, 0);
+    }
+    
+    fclose(fp);
     
     return 0;
 }

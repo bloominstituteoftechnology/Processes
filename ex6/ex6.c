@@ -21,6 +21,20 @@ and `clock_gettime()` should work just fine.
 int main()
 {
     // Your code here
+    struct timespec start, end;
+    long long unsigned accumulator = 0;
     
+    for( int=0;i < number_iter; i++)
+    {
+        clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &start);
+        write(1, "", 0);
+        clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end);
+        int diff_sec = end.tv_sec - start.tc_sec;
+        long long unsigned diff_nsec = end.tv_nsec - start.tv_nsec;
+        accumulator += BILLION * diff_sec + diff__nsec);
+    }
+    long long unsigned average = accumulator / number_iter;
+    
+    printf("Average time: %llu ns\n", average);
     return 0;
 }
