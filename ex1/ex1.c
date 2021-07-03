@@ -9,6 +9,14 @@
 int main(void)
 {
     // Your code here
-
+    int something = 100;
+    int child = fork();
+    if(child == 0) {
+        something += 1;
+        printf("Child something is: %d\n", something);
+    } else {
+        something += 2;
+        printf("Parent something is: %d\n", something);
+    }
     return 0;
 }
