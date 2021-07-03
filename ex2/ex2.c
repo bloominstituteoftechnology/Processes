@@ -9,6 +9,14 @@
 int main(void)
 {
     // Your code here 
+
+    FILE * fp;
+    
+    fp = fopen ("text.txt", "w+");
+
+    fork();
+
+    fclose(fp)
     
     return 0;
 }

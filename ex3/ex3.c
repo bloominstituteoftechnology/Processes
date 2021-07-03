@@ -10,6 +10,14 @@
 int main(void)
 {
     // Your code here
+    pid_t pid;
+    pid = fork();
+
+    if (pid == 0){
+        printf("Hello");
+    } else {
+        printf("goodbye");
+    }
 
     return 0;
 }
