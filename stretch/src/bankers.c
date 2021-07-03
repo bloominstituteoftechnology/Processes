@@ -10,6 +10,8 @@
 
 // This is the file where we store the balance
 #define BALANCE_FILE "balance.txt"
+#define MAX_TOKENS 100
+#define BALANCE 0
 
 /**
  * Open the file containing the balance
@@ -88,7 +90,8 @@ int get_random_amount(void)
 {
 	// vvvvvvvvvvvvvvvvvv
 	// !!!! IMPLEMENT ME:
-
+	int r = rand() % 999;
+	return r;
 	// Return a random number between 0 and 999 inclusive using rand()
 
 	// ^^^^^^^^^^^^^^^^^^
@@ -100,7 +103,6 @@ int get_random_amount(void)
 int main(int argc, char **argv)
 {
 	// Parse the command line
-	
 	// vvvvvvvvvvvvvvvvvv
 	// !!!! IMPLEMENT ME:
 
@@ -116,18 +118,24 @@ int main(int argc, char **argv)
 	// message to stderr, and exit with status 1:
 	//
 	// "usage: bankers numprocesses\n"
-	
+	if(argc < 2) {
+		fprintf(stderr, "usage: bankers numprocesses\n");
+		exit(1);
+	}
 	// Store the number of processes in this variable:
 	// How many processes to fork at once
-	int num_processes = IMPLEMENT ME
+	int num_processes = atoi(argv[1]);
 
 	// Make sure the number of processes the user specified is more than
 	// 0 and print an error to stderr if not, then exit with status 2:
 	//
 	// "bankers: num processes must be greater than 0\n"
-
+	if(num_processes <= 0) {
+		fprintf(stderr, "bankers: num processes must be greater than 0\n");
+		exit(2);
+	}
 	// ^^^^^^^^^^^^^^^^^^
-
+	
 	// Start with $10K in the bank. Easy peasy.
 	int fd = open_balance_file(BALANCE_FILE);
 	write_balance(fd, 10000);
@@ -140,20 +148,31 @@ int main(int argc, char **argv)
 			// process ID. This makes sure all processes get different
 			// random numbers:
 			srand(getpid());
-
 			// Get a random amount of cash to withdraw. YOLO.
 			int amount = get_random_amount();
 
-			int balance;
+			int balance[100];
 
 			// vvvvvvvvvvvvvvvvvvvvvvvvv
 			// !!!! IMPLEMENT ME
 
 			// Open the balance file (feel free to call the helper
 			// functions, above).
-
+			int fd = open_balance_file(BALANCE_FILE);
 			// Read the current balance
+			read_balance(fd, balance);
 
+
+			if(*balance - amount < 0) {
+				printf("Only have $%d, can't withdraw $%d\n", *balance, amount);
+			} else {
+				
+				int newbal = *balance - amount;
+				write_balance(fd, newbal);
+				printf("Withdrew $%d, new balance $%d\n", amount, newbal);
+			}
+
+			close_balance_file(fd);
 			// Try to withdraw money
 			//
 			// Sample messages to print:

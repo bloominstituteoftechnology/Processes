@@ -16,6 +16,30 @@ char* msg3 = "hello world #3";
 
 int main(void)
 {
+    char inbuf[MSGSIZE];
+    int p[2];
+
+    if (pipe(p) < 0) {
+        fprintf(stderr, "pipe failed\n");
+        exit(1);
+    }
+
+    int test = fork();
+
+    if(test == 0) {
+        write(p[1], msg1, MSGSIZE);
+        write(p[1], msg2, MSGSIZE);
+        write(p[1], msg3, MSGSIZE);
+    } else {
+        for (int i = 0; i < 3; i++) {
+        // read 16 bytes of data from the read file descriptor 
+        read(p[0], inbuf, MSGSIZE);
+        printf("%s\n", inbuf);
+    }
+    }
+    
+
+
     // Your code here
     
     return 0;
