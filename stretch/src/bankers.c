@@ -62,7 +62,6 @@ void write_balance(int fd, int balance)
 void read_balance(int fd, int *balance)
 {
 	char buffer[1024];
-
 	// Seek to the beginning of the file, just in case we're not there
 	// already:
 	lseek(fd, 0, SEEK_SET);
@@ -79,6 +78,7 @@ void read_balance(int fd, int *balance)
 
 	// Convert buffer to integer and store in balance
 	*balance = atoi(buffer);
+
 }
 
 /**
@@ -92,6 +92,8 @@ int get_random_amount(void)
 	// Return a random number between 0 and 999 inclusive using rand()
 
 	// ^^^^^^^^^^^^^^^^^^
+  /* random int between 0 and 999 */
+  return rand() % 999;
 }
 
 /**
@@ -116,10 +118,15 @@ int main(int argc, char **argv)
 	// message to stderr, and exit with status 1:
 	//
 	// "usage: bankers numprocesses\n"
+  if(argc < 2)
+  {
+    fprintf( stderr, "usage: bankers numprocesses\n");
+    exit(1);
+  }
 	
 	// Store the number of processes in this variable:
 	// How many processes to fork at once
-	int num_processes = IMPLEMENT ME
+	int num_processes = atoi(argv[1]); //read from arg
 
 	// Make sure the number of processes the user specified is more than
 	// 0 and print an error to stderr if not, then exit with status 2:
@@ -127,6 +134,11 @@ int main(int argc, char **argv)
 	// "bankers: num processes must be greater than 0\n"
 
 	// ^^^^^^^^^^^^^^^^^^
+  if(num_processes <= 0)
+  {
+    fprintf( stderr, "bankers: num processes must be greater than 0\n");
+    exit(2);
+  }
 
 	// Start with $10K in the bank. Easy peasy.
 	int fd = open_balance_file(BALANCE_FILE);
@@ -143,7 +155,6 @@ int main(int argc, char **argv)
 
 			// Get a random amount of cash to withdraw. YOLO.
 			int amount = get_random_amount();
-
 			int balance;
 
 			// vvvvvvvvvvvvvvvvvvvvvvvvv
@@ -151,8 +162,13 @@ int main(int argc, char **argv)
 
 			// Open the balance file (feel free to call the helper
 			// functions, above).
-
+      fd = open_balance_file(BALANCE_FILE);
 			// Read the current balance
+
+      read_balance(fd,&balance);
+
+      printf("Actual Balance : $ %d\n",balance);
+      printf("Amount to withdraw : $ %d\n",amount);
 
 			// Try to withdraw money
 			//
@@ -161,8 +177,21 @@ int main(int argc, char **argv)
 			// "Withdrew $%d, new balance $%d\n"
 			// "Only have $%d, can't withdraw $%d\n"
 
+      int new_balance = balance-amount;
+      if(new_balance >= 0)
+      {
+        write_balance(fd, new_balance);
+        printf("Withdrew $%d, new balance $%d\n",amount,new_balance);
+      }
+      else
+      {
+        printf("Only have $%d, can't withdraw $%d\n",balance,amount);
+      }
+
 			// Close the balance file
 			//^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+      close_balance_file(fd);
 
 			// Child process exits
 			exit(0);
