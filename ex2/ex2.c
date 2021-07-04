@@ -9,6 +9,21 @@
 int main(void)
 {
     // Your code here 
-    
+    FILE *text_file;
+    text_file = fopen("text.txt", "r+");
+    int forked = fork();
+
+    if (forked < 0)
+    {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (forked == 0)
+    {
+        fprintf(text_file, "%s", "Look at me, I'm writing text into a file. I'm a child. What is going on?\n");
+    } else 
+    {
+        fprintf(text_file, "%s", "Look at me, I'm writing text into a file. I'm a parent. Why hello.\n");
+    }
+    fclose(text_file);
     return 0;
 }
