@@ -10,7 +10,21 @@
 
 int main(void)
 {
-    // Your code here    
-
+    // Your code here
+    int rc = fork();
+    if (rc < 0) {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {
+        char *myargs[3];
+        myargs[0] = strdup("/bin/ls");
+        myargs[1] = strdup("../");
+        myargs[2] = NULL;
+        execvp(myargs[0], myargs);
+        printf("This should not run");
+    } else {
+        int wc = waitpid(rc, NULL, 0);
+        printf(" ^List of the Project files^\n");
+    }
     return 0;
 }

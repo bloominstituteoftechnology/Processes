@@ -65,17 +65,28 @@ simulated bank account, that is. Don't get your hopes up.)
 
 1. **Short answer**: How can things go wrong if two processes attempt the
    above plan at the same time? Is there more than one way things can go
-   wrong?
+   wrong? -- The main problem would be that each process doesn't know what
+   the other is doing, they only know the starting balance. It could allow
+   the total amount taken to be more than the balance as long as each process
+   withdraws less than the starting balance. The reverse problem could also happen
+   where you want one process to add money and another to withdraw, but if you
+   don't add to the balance first you can't withdraw as much as you have.
 
 2. Study and understand the skeleton code in the `src/` directory.
 
-   **Short answer**: what do each of the arguments to `open()` mean?
+   **Short answer**: what do each of the arguments to `open()` mean? -- The 
+   first argument is the filename. The second argument takes flags; 'O_CREAT'
+   allows the file to be created if it doesn't exist, 'O_RDWR' allows the file
+   to be read and written to. The Last argument is the permissions given; '0644'
+   means that the owner can read and write to the file, while everyone else
+   can only read from it.
 
 3. Take the skeleton code in the `src/` directory and implement the
    pieces marked. Run it.
    
    **Short answer**: What happens? Do things go as planned and look
-   sensible? What do you speculate is happening?
+   sensible? What do you speculate is happening? -- Everything seems to be running
+   as it should. I haven't added flock() yet but the balance looks to be correct.
 
 4. Add calls to [`flock()`](https://linux.die.net/man/2/flock) to
    capture and release an exclusive lock on the file before reading and
