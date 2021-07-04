@@ -16,7 +16,31 @@ char* msg3 = "hello world #3";
 
 int main(void)
 {
-    // Your code here
-    
+    char myarray[MSGSIZE];
+    int p[2], pid, nbytes;
+
+    if (pipe(p) < 0)
+        exit(1);
+
+    if ((pid = fork()) == 0) {
+        printf("This is child... pid: %d \n", getpid());
+        printf("writing... \n");
+        write(p[1], msg1, MSGSIZE);
+        write(p[1], msg2, MSGSIZE);
+        write(p[1], msg3, MSGSIZE);
+    }
+    else {
+        wait(NULL);
+        close(p[1]);
+        printf("This is parent... pid: %d \n", getpid());
+        printf("reading... \n");
+        while ((nbytes = read(p[0], myarray, MSGSIZE)) > 0) {
+            printf("%s \n", myarray);
+        }
+        if (nbytes != 0) {
+            exit(2);
+        }
+        printf("Finished reading \n");
+    }
     return 0;
 }

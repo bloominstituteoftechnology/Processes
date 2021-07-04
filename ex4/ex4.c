@@ -9,8 +9,18 @@
 #include <sys/wait.h>
 
 int main(void)
-{
-    // Your code here    
-
+{ 
+    int pid = fork();
+    
+    if (pid == 0){
+        char *args[] = {"/bin/ls", NULL};
+        printf("This is child running /bin/ls.\n");
+        execvp("/bin/ls",args);
+    } else {
+        wait(NULL);
+        printf("This is parent running /bin/ls.\n");
+        char *args[] = {"/bin/ls", NULL};
+        execvp("/bin/ls",args);
+    }
     return 0;
 }
