@@ -21,6 +21,14 @@ and `clock_gettime()` should work just fine.
 int main()
 {
     // Your code here
-    
+    int timed = 0;
+    for(int i = 0; i < number_iter; i++){
+        struct timespec start, end;
+        clock_gettime(CLOCK_MONOTONIC, &start);
+        write(fileno(stdout), NULL, 0);
+        clock_gettime(CLOCK_MONOTONIC, &end);
+        timed += BILLION * (end.tv_sec - start.tv_sec) + end.tv_sec - start.tv_sec;
+    }
+    printf("%d\n", timed / number_iter);
     return 0;
 }

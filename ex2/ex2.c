@@ -9,6 +9,19 @@
 int main(void)
 {
     // Your code here 
-    
+    FILE * file;
+    file = fopen("text.txt", "r+");
+
+    if (fork() == 0){
+        fprintf(file, "%s", "child!");
+        printf("child: %d\n", fileno(file));
+    }else{
+        fprintf(file, "%s", "parent");
+        printf("parent %d\n", fileno(file));
+    }
+    fclose(file);
     return 0;
 }
+
+
+// A: Yes the child and the parent can access the file descriptor returned by fopen and they both get written in!
