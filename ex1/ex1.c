@@ -8,7 +8,19 @@
 
 int main(void)
 {
-    // Your code here
-
+    int x = 100;
+ 	int rc = fork();
+    if (rc < 0) {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {
+        printf("child variable is %d\n", x);
+        x++;
+        printf("now child variable is %d\n", x);
+    } else {
+        printf("parent variable is %d\n", x);
+        x--;
+        printf("now parent variable is %d\n", x);
+    }
     return 0;
 }
