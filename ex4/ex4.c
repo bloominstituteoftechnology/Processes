@@ -9,8 +9,20 @@
 #include <sys/wait.h>
 
 int main(void)
-{
-    // Your code here    
+{   
+    printf("parent process\n");
+    int rc = fork();
+    if (rc == 0) {
+        printf("child proces\n");
+        char *args[] = {"ls", "-l", NULL};
+        // execvp("ls", args);
+        //execv("/bin/ls", args);
+        //execlp("ls", "ls", "-l", (char *) NULL);
+        execl("/bin/ls", "-l", (char *) NULL);
+
+    } else {
+        int wc = waitpid(rc, NULL, 0);
+    }
 
     return 0;
 }
