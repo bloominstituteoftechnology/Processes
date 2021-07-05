@@ -9,6 +9,24 @@
 int main(void)
 {
     // Your code here
+    int x = 0;
+    printf("Intial = %d \n", x);
+    x = 100;
+    printf("Parent set = %d \n", x);
+
+    int child = fork();
+
+    if (child == 0){
+        printf("Pre Child set = %d \n", x);
+        x = 50;
+        printf("Post Child set = %d \n", x);
+    }
+    else{
+        x = 75;
+        printf("Parent post fork set = %d \n",x);
+    }
+
+    printf("Final X check = %d \n",x);
 
     return 0;
 }

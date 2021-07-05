@@ -11,6 +11,17 @@
 int main(void)
 {
     // Your code here    
+    int child = fork();
 
+    if (child == 0){
+        printf("PWD includes:\n");
+
+        execl("/bin/ls","ls",NULL);
+    }
+    else{
+                int wc = wait( NULL);
+
+        printf("Parent signing off\n");
+    }
     return 0;
 }

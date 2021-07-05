@@ -14,7 +14,7 @@ calling process from the operating system's perspective. We say _almost_ an exac
 to delineate the fact that while the new child process has the same instruction set 
 (i.e. code) as its parent process, the child process starts executing at the point right 
 after `fork()` is called in the parent process. 
-
+- for pr
 Let's look at a program that calls `fork()` to try to give an example of what this means:
 ```c
 // p1.c

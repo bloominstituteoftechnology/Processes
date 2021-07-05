@@ -10,6 +10,7 @@ While the linked site does say that `clock_gettime()` does not work on OSX, this
 turns out to only be the case for OSX versions < 10.12. Anything later than that 
 and `clock_gettime()` should work just fine. 
 */
+#define _POSIX_C_SOURCE 199309L
 
 #include <stdio.h>
 #include <unistd.h>
@@ -21,6 +22,21 @@ and `clock_gettime()` should work just fine.
 int main()
 {
     // Your code here
-    
+    struct timespec start, end;
+    __uint64_t count = 0;
+    __uint64_t av = 0;
+    __uint64_t diff;
+    printf("Running\n");
+    while( count != number_iter){
+        clock_gettime(CLOCK_MONOTONIC, &start);
+            fprintf( stdout, "" );
+        clock_gettime(CLOCK_MONOTONIC, &end);
+        
+        diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+        count++;
+        av = ((av * (count - 1)) + diff ) / count;
+            
+    }
+    printf("%lld \n", av);
     return 0;
 }
