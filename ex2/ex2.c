@@ -8,7 +8,18 @@
 
 int main(void)
 {
-    // Your code here 
+    FILE *fp;
+    fp = fopen("text.txt", "r+");
+    pid_t pid = fork();
+    if(pid == 0){
+        fprintf(fp, "Hello World from the child\n");
+        printf("Done writing to child\n");
+    }else{
+        fprintf(fp, "Hello World from the parent\n");
+        printf("Done writing to parent\n");
+    }
+    printf("closing file\n");
+    fclose(fp);
     
     return 0;
 }
