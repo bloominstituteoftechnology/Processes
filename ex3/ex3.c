@@ -9,7 +9,13 @@
 
 int main(void)
 {
-    // Your code here
+    int pid = fork();
+
+    if (pid != 0) {
+        printf("Hello from the Child\n");
+    } else {
+        printf("Goodbye from the Parent\n");
+    }
 
     return 0;
 }

@@ -8,7 +8,18 @@
 
 int main(void)
 {
-    // Your code here 
+    FILE *fp = fopen("text.txt", "r+");
+
+    int y = fork();
+    if (y == 0) {
+        fprintf(fp, "Child response %s %s\n", "Child", "Here");
+        printf("Child pid is %d\n", (int)getpid());
+    } else {
+        fprintf(fp, "Parent response %s %s\n", "Parent", "Here");
+        printf("Parent pid is %d\n", (int)getpid());
+    }
+
+    fclose(fp);
     
     return 0;
 }
