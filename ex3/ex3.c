@@ -10,6 +10,23 @@
 int main(void)
 {
     // Your code here
+    int f = fork();
+
+    if (f < 0) {
+
+        fprintf(stderr, "Forking failed.\n");
+        exit(1);
+
+    } else if (f == 0) {
+
+        printf("Hello, daddy!!!\n");
+        
+    } else {
+
+        int daddy = waitpid(f, NULL, 0);
+        printf("Hello and goodbye, kiddo!!!\n");
+
+    }
 
     return 0;
 }
