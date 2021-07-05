@@ -10,7 +10,23 @@
 
 int main(void)
 {
-    // Your code here    
+    printf("Parent (pid: %d)\n", (int) getpid());
+    int rc = fork();
 
+    if (rc < 0)
+    {
+      fprintf(stderr, "fork failed\n");
+      exit(1);
+    }
+    else if (rc == 0)
+    {
+      printf("Child (pid: %d)\n", (int) getpid());
+      char *args[] = {"ls", "-l", NULL};
+      execvp("ls", args);
+    }
+    else
+    {
+      int wc = waitpid(rc, NULL, 0);
+    }
     return 0;
 }

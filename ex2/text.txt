@@ -1,0 +1,2 @@
+A string for the parent to write!
+A string for the child to write!
