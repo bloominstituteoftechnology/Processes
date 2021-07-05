@@ -8,7 +8,18 @@
 
 int main(void)
 {
-    // Your code here 
+    
+    FILE * fp = fopen("text.txt", "r+");
+
+    int y = fork();
+
+     if (y == 0){
+        fprintf(fp,"Child says, %s %s\n", "Thank", "you.");
+    } else{
+        fprintf(fp, "Parent says, %s %s\n", "Your", "welcome.");
+    }
+
+    fclose(fp);
     
     return 0;
 }
