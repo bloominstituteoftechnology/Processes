@@ -18,9 +18,25 @@ and `clock_gettime()` should work just fine.
 #define number_iter 1000000
 #define BILLION 1000000000L
 
-int main()
+int main(void)
 {
     // Your code here
-    
+  struct timespec start, end;
+
+
+    long total;
+    for (int i = 0; i < number_iter; i++) {
+        clock_gettime(CLOCK_MONOTONIC, &start);
+
+        write(fileno(stdout), NULL, 0);
+        clock_gettime(CLOCK_MONOTONIC, &end);
+
+        total += BILLION * (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec);
+
+    }
+
+    double avg = total / (float) number_iter;
+
+    printf("Average time to run system call is:  %f ns.\n", avg);
     return 0;
 }
