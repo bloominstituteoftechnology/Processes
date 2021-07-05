@@ -8,7 +8,15 @@
 
 int main(void)
 {
-    // Your code here
-
+    int x = 227;
+    printf("Parent variable is %d.\n", x);
+    int rc =fork();
+    x = 27;
+    if (rc==0){
+    printf("Child variable is %d.\n", x);
+    }
+    else{ 
+        printf("Parent again: %d\n", x);
+    }
     return 0;
 }

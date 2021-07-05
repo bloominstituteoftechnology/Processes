@@ -9,8 +9,21 @@
 #include <sys/wait.h>
 
 int main(void)
-{
-    // Your code here    
+{   
+    if(fork() <0){
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    }
+    if (fork()== 0) {
+        char *args[] ={"./bin/ls", NULL};
+        execlp(args[0], NULL);
+        printf("exec ran (pid: %d)\n", getpid()); 
+        }
+    else
+    { 
+        wait(NULL); 
+        printf("Goodbye (pid: %d)\n", getpid()); 
+    } 
 
     return 0;
 }

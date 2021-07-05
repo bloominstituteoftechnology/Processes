@@ -86,12 +86,8 @@ void read_balance(int fd, int *balance)
  */
 int get_random_amount(void)
 {
-	// vvvvvvvvvvvvvvvvvv
-	// !!!! IMPLEMENT ME:
+	return rand() % 1000;
 
-	// Return a random number between 0 and 999 inclusive using rand()
-
-	// ^^^^^^^^^^^^^^^^^^
 }
 
 /**
@@ -101,6 +97,10 @@ int main(int argc, char **argv)
 {
 	// Parse the command line
 	
+	int count;
+	for (count=0; count<argc; count++){
+		puts(argv[count]);
+	}
 	// vvvvvvvvvvvvvvvvvv
 	// !!!! IMPLEMENT ME:
 
@@ -116,22 +116,32 @@ int main(int argc, char **argv)
 	// message to stderr, and exit with status 1:
 	//
 	// "usage: bankers numprocesses\n"
+
+	if(!argc){
+		fprintf(stderr, "usage: bankers numprocesses\n");
+		exit(1);
+	}
 	
 	// Store the number of processes in this variable:
 	// How many processes to fork at once
-	int num_processes = IMPLEMENT ME
+	int num_processes = count;
 
 	// Make sure the number of processes the user specified is more than
 	// 0 and print an error to stderr if not, then exit with status 2:
 	//
 	// "bankers: num processes must be greater than 0\n"
+	if(num_processes <= 0){
+		fprintf(stderr, "bankers: num processes must be greater than 0\n");
+		exit(1);
+	}
+
+
 
 	// ^^^^^^^^^^^^^^^^^^
 
 	// Start with $10K in the bank. Easy peasy.
 	int fd = open_balance_file(BALANCE_FILE);
-	write_balance(fd, 10000);
-	close_balance_file(fd);
+	flock(fd, LOCK_EX);
 
 	// Rabbits, rabbits, rabbits!
 	for (int i = 0; i < num_processes; i++) {
@@ -152,9 +162,21 @@ int main(int argc, char **argv)
 			// Open the balance file (feel free to call the helper
 			// functions, above).
 
-			// Read the current balance
+			int fd = open_balance_file(BALANCE_FILE);
 
+			// Read the current balance
+			read_balance(fd, &balance);
+	
 			// Try to withdraw money
+			if(amount > balance) {
+				printf("Only have $%d, can't withdraw $%d\n", balance, amount);
+			exit(1);
+			}
+			else{
+				int nb = balance - amount;
+				write_balance(fd, nb);
+				printf("Withdrew $%d, new balance $%d\n", amount, balance);
+			}
 			//
 			// Sample messages to print:
 			//
@@ -162,6 +184,8 @@ int main(int argc, char **argv)
 			// "Only have $%d, can't withdraw $%d\n"
 
 			// Close the balance file
+			flock(fd, LOCK_UN);
+			close_balance_file(fd);
 			//^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 			// Child process exits

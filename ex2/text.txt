@@ -1,0 +1,8 @@
+Text file is open
+Child has accessed file
+xt file isopen
+Child has accessedfile
+Text file is open
+Child has accessed file
+Text file is open
+Child has accessed file
