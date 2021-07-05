@@ -6,9 +6,41 @@
 #include <unistd.h>
 #include <stdlib.h>
 
+
+
+#define MAXCHAR 1000
+
 int main(void)
 {
     // Your code here 
+    int rc = fork();
+
+    FILE *fp;
+    char *fileName = "text.txt";
+    char str[MAXCHAR];
+
+    const char *txt = "Writing to file test";
+
+    fp = fopen(fileName, "ab");
     
+
+    if (rc < 0) {    // fork failed; exit
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {    // child process satisfies this branch
+        printf("hello, child here (pid: %d) \n", (int) getpid());
+    } else {
+        printf("hello, parent here (pid: %d) of child %d\n", (int) getpid(), rc);
+    }
+
+    if (fp == NULL) {
+        printf("Could not open file %s", fileName);
+        return 1;
+    }
+
+    fprintf(fp, "Some text: %s - written by pid - %d\n", txt, (int) getpid());
+    
+    fclose(fp);
     return 0;
+    
 }
