@@ -6,9 +6,15 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+
+
 int main(void)
 {
-    // Your code here
+    int y;
+    int *x = &y;
+    y = 100;
 
+    int rc = fork();
+    printf("hello(pid:%d) \n", rc);
     return 0;
 }

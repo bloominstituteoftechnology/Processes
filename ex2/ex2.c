@@ -8,7 +8,13 @@
 
 int main(void)
 {
-    // Your code here 
+    // Your code here
+  FILE *x;
+    x = fopen("text.txt","r");
     
+   int rc = fork();
+   
+  printf("%s \n", x);
+     fclose(x);
     return 0;
 }
