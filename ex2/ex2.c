@@ -9,6 +9,26 @@
 int main(void)
 {
     // Your code here 
-    
+    FILE *ifp;
+    ifp = fopen("text.txt", "w+");
+    int rc = fork();
+
+    if (rc < 0) 
+    {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    }
+    else if (rc == 0)
+    {
+        fprintf(ifp, "child\n");
+    }
+    else 
+    {
+        fprintf(ifp, "parent\n");
+    }
+
+    fclose(ifp);
+
+
     return 0;
 }
