@@ -11,6 +11,19 @@
 int main(void)
 {
     // Your code here    
+    int rc = fork();
+
+    if (rc < 0) {
+        fprintf(stderr, "Failure to fork\n");
+        exit(1);
+    } else if (rc == 0) {
+        printf("Forking child\n");
+        execl("/bin/ls", "ls", "-l", (char *)NULL);
+    } else {
+        waitpid(rc, NULL, 0);
+        printf("\nProcessing parent\n");
+        
+    }
 
     return 0;
 }
