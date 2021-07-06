@@ -9,7 +9,16 @@
 
 int main(void)
 {
-    // Your code here
+    pid_t cp = fork();
 
+    if (cp < 0) {
+        printf("Error: Failed to fork!\n");
+        exit(1);
+    } else if (cp == 0) {
+        printf("Child says... 'ello!\n");
+    } else {
+        waitpid(cp, NULL, 0);        
+        printf("Parent says... See ya!\n");
+    }
     return 0;
 }

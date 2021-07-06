@@ -8,7 +8,20 @@
 
 int main(void)
 {
-    // Your code here
+    int x = 333;
+    printf("Parent: pid: %d\n", (int) getpid());
+
+    int childProcess = fork();
+
+    if (childProcess == 0) {
+        printf("Child: pid: %d, x = %d\n", (int) getpid(), x);
+        x++;
+        printf("Child after x++, x = %d\n", x);
+    } else {
+        printf("Parent of %d, x = %d\n", childProcess, x);
+        x--;
+        printf("Parent after x--, x = %d\n", x);
+    }
 
     return 0;
 }

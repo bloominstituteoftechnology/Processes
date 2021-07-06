@@ -1,0 +1,4 @@
+Writing before fork... Parent pid: 5766
+Writing from Parent...pid: 5766
+Writing before fork... Parent pid: 5766
+Writing from Child...pid: 5767
