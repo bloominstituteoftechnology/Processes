@@ -11,16 +11,38 @@ turns out to only be the case for OSX versions < 10.12. Anything later than that
 and `clock_gettime()` should work just fine. 
 */
 
+
 #include <stdio.h>
 #include <unistd.h>
-#include <time.h>
+#include <time.h> // for clock_gettime
 
 #define number_iter 1000000
 #define BILLION 1000000000L
 
 int main()
 {
-    // Your code here
-    
+    // "bench marking" aka getting the run time of system calls...
+    // time a bunch of iterations and get the average time
+    struct timespec startTime, endTime;
+    long sum = 0;
+    double avg;
+
+    // number_iter for 1000000 times defined above
+    for (int i = 0; i < number_iter; i++) {
+        // logs start time
+        clock_gettime(CLOCK_MONOTONIC, &startTime);
+        // printing and empty string
+        printf("");
+        // logs end time
+        clock_gettime(CLOCK_MONOTONIC, &endTime);
+        // get the difference between the 2 times, and then convert to nanoseconds
+        long difference = BILLION * (endTime.tv_sec - startTime.tv_sec) + endTime.tv_nsec - startTime.tv_nsec;
+        // add diff to sum
+        sum += difference;
+    }
+    // figuring the avg
+    avg = sum / number_iter;
+    printf("Average time to make printf call is %f\n", avg);
+ 
     return 0;
 }
