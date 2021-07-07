@@ -7,10 +7,24 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <sys/wait.h>
+#include <string.h>
 
 int main(void)
 {
     // Your code here    
+    pid_t pid;
+    pid = fork();
+
+    if (pid < 0) {    // fork failed; exit
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (pid == 0) {    // child process satisfies this branch
+        execl("/bin/ls","ls", NULL);
+        printf("hello\n");
+    } else {
+        int wc = waitpid(pid, NULL, 0);    // `waitpid` 
+        printf("goodbye\n");
+    }
 
     return 0;
 }
