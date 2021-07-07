@@ -9,6 +9,19 @@
 int main(void)
 {
     // Your code here
+pid_t pid;
+int x;
+x = 12;
+printf("parent is %d value of x in the parent %d\n", pid, x);
 
+pid = fork();
+
+	if (pid == 0) {
+		printf("I'm the child! value of x = %d\n",x);
+	} else {
+		printf("Parent is about to wait!\n");
+		//wait(NULL);
+		printf("I'm the parent!\n");
+	}
     return 0;
 }
