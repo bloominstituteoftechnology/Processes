@@ -9,6 +9,30 @@
 int main(void)
 {
     // Your code here 
-    
-    return 0;
+    FILE * fp;
+    int c;
+  
+   fp = fopen("text.txt","r+");
+   int rc = fork();
+
+   if (rc < 0) {
+       fprintf(stderr, "fork Failed\n");
+       exit(1);
+   } else if(rc == 0) {
+       fprintf(fp, "%s %s %s %d\n", "We", "are", "in", 2018);
+   } else {
+       fprintf(fp, "%s %s %s %s %d\n", "Let's", "party", "like", "it's", 1999);
+   }
+
+ fp = fopen("text.txt", "r");
+   while(1) {
+      c = fgetc(fp);
+      if( feof(fp) ) { 
+         break ;
+      }
+      printf("%c", c);
+   }  
+   fclose(fp);
+
+   return(0);
 }
