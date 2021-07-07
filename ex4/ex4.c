@@ -8,9 +8,22 @@
 #include <stdlib.h>
 #include <sys/wait.h>
 
-int main(void)
+int main(int argc, char *argv[])
 {
-    // Your code here    
+    // Your code here
+
+    int rc = fork();
+
+    if (rc < 0)
+    {
+        fprintf(stderr,"fork failure\n");
+    }
+    else if (rc == 0)
+    {
+        execl("/bin/ls", "ls", "-l", NULL);
+    } else {
+        wait(NULL);
+    }
 
     return 0;
 }
