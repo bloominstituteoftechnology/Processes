@@ -16,7 +16,35 @@ char* msg3 = "hello world #3";
 
 int main(void)
 {
-    // Your code here
-    
-    return 0;
+  char inbuf[MSGSIZE];
+  int file[2];
+  int piper = pipe(file);
+  int child = fork();
+  if (piper < 0)
+  {
+    perror("pipe failed\n");
+    exit(1);
+  }
+  if (child < 0)
+  {
+    perror("fork failed\n");
+    exit(1);
+  }
+  if (child == 0)
+  {
+    printf("\nChild sending the following messages:\n");
+    write(file[1], msg1, MSGSIZE);
+    write(file[1], msg2, MSGSIZE);
+    write(file[1], msg3, MSGSIZE);
+  }
+  else
+  {
+    for (int i = 0; i < 3; i++)
+    {
+      read(file[0], inbuf, MSGSIZE);
+      printf("%s\n", inbuf);
+    }
+  }
+
+  return 0;
 }

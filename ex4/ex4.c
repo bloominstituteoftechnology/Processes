@@ -10,7 +10,18 @@
 
 int main(void)
 {
-    // Your code here    
-
-    return 0;
+  int child = fork();
+  if (child == 0)
+  {
+    char *myargs[3];
+    myargs[0] = strdup("/bin/ls");
+    myargs[1] = NULL;
+    myargs[2] = NULL;
+    execvp(myargs[0], myargs);
+  }
+  else
+  {
+    waitpid(child, NULL, 0);
+  }
+  return 0;
 }

@@ -8,7 +8,25 @@
 
 int main(void)
 {
-    // Your code here 
+    // Your code here
+    FILE *text1 = fopen("text.txt", "w");
+
+    char data[] = "A new string!";
+    char data2[] = "A second new string!";
+
     
-    return 0;
+
+    int child = fork();
+
+    if (child < 0) {
+      printf("process failed.");
+    }
+    else if (child == 0) {
+
+      fwrite(data2,1,sizeof(data2), text1);
+    } else {
+      fwrite(data, 1, sizeof(data), text1);
+    }
+fclose(text1);
+return 0;
 }
