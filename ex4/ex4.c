@@ -10,7 +10,20 @@
 
 int main(void)
 {
-    // Your code here    
+    int pid = fork();
+
+    if (pid < 0) {
+        printf("fork failed\n");
+        exit(1);
+    } else if (pid == 0) {
+        printf("I am inside child process\n");
+        // execl("./np", NULL);
+        execv("./np", NULL);
+        exit(0);
+    } else {
+        printf("I am inside parent process\n");
+        wait(NULL);
+    }
 
     return 0;
 }
