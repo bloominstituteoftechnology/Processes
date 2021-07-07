@@ -10,6 +10,24 @@
 int main(void)
 {
     // Your code here
+    int r = fork();
+
+    if (rc < 0) {    // fork failed; exit
+      printf(stderr, "fork failed\n");
+      exit(1);
+    
+    }
+
+    else if (r == 0) 
+    {
+        printf("hello from child!\n");
+    }
+
+    else 
+    {
+        wait(NULL);
+        printf("goodbye from parent!\n");
+    }
 
     return 0;
 }
