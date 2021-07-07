@@ -9,6 +9,19 @@
 int main(void)
 {
     // Your code here 
-    
+    FILE * fp;
+    fp = fopen("text.txt", "w+");
+    int rc = fork();
+    if (rc < 0) {    // fork failed; exit
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {
+        fprintf(fp, "%s %s %s %s", "We", "are", "in", "child\n"); 
+        fclose(fp);
+    } else {
+        int wc = waitpid(rc, NULL, 0);
+        fprintf(fp, "%s %s %s %s", "We", "are", "in", "parent\n"); 
+        fclose(fp);
+    }
     return 0;
 }
