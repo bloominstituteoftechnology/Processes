@@ -3,14 +3,27 @@
 // `execl()`, `execle()`, `execv()`, and others. Why do you think there 
 // are so many variants of the same basic call?
 
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <sys/wait.h>
+#include <stdio.h> // using printf() from library
+#include <unistd.h> // let's us run exec()
+#include <stdlib.h> // let's us run fork()
+#include <sys/wait.h> // let's us run wait()
 
 int main(void)
 {
-    // Your code here    
+    int forked = fork();
+
+    if (forked < 0) {    // fork failed; exit
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    }
+    else if (forked == 0) { //this is the child process
+        char *args[]={"/bin/ls","-a", NULL};
+        execvp(args[0],args);
+    }
+    else {
+        char *args[]={"/bin/ls","-lA", NULL};
+        execv(args[0],args);
+    }
 
     return 0;
 }
