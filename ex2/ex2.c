@@ -9,6 +9,23 @@
 int main(void)
 {
     // Your code here 
+    FILE * fp;
+    fp = fopen("text.txt", "w");
+    int rc = fork();
+
+    if (rc < 0 ){
+        printf("Didn't work");
+
+       
+    } else if (rc == 0){//Child
+        fputs("This is the child", fp);
+
+     
+    } else {//Parent
+        fputs("This is the parent", fp);
+    }
+    
+    fclose(fp);
     
     return 0;
 }
