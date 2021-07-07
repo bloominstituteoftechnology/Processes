@@ -8,7 +8,28 @@
 
 int main(void)
 {
-    // Your code here
+    int x = 1;
+    int rc = fork();
+    if (rc < 0)
+    {
+        printf("failure!");
+        exit(1);
+    }
+    else if (rc == 0)
+    {
+        printf("Child!\n");
+        printf("%d\n", x);
+        x = 5;
+        printf("%d\n", x);
+    }
+    else
+    {
+        int wc = waitpid(rc, NULL, 0);
+        printf("Parent!\n");
+        printf("%d\n", x);
+        x = 10;
+        printf("%d\n", x);
+    }
 
     return 0;
 }

@@ -10,7 +10,34 @@
 
 int main(void)
 {
-    // Your code here    
+    int p[2];
+    int rc;
+    char buf[4096];
 
+    if (pipe(p) < 0)
+    {
+        exit(1);
+    }
+
+    if ((rc = fork()) < 0) 
+    {
+        exit(1);
+    }
+    
+    if (rc == 0)
+    {
+        dup2(p[1], STDOUT_FILENO);
+        close(p[0]);
+        close(p[1]);
+        execl("/bin/ls", "ls");
+        exit(0);
+    }
+    else
+    {
+        waitpid(rc, NULL, 0);
+        close(p[1]);
+        read(p[0], buf, sizeof(buf));
+        printf("Output:\n%s\n", buf);
+    }
     return 0;
 }
