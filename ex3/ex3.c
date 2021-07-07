@@ -9,7 +9,18 @@
 
 int main(void)
 {
-    // Your code here
+    int rc = fork();
+
+    if (rc < 0) {
+        printf("Creation of child process was unsuccessful.");
+        return -1;
+    } else if (rc == 0) { // child process
+        printf("hello\n");
+    } else { // parent process
+        // wait for child
+        waitpid(rc, NULL, 0);
+        printf("goodbye\n");
+    }
 
     return 0;
 }

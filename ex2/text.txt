@@ -1,0 +1,2 @@
+Child is writing. Child's pid is 433.
+Parent is writing. Parent's pid is 432. Its child's pid was 433.

@@ -8,7 +8,20 @@
 
 int main(void)
 {
-    // Your code here
+    int x = 100;
+
+    int cid = fork();
+
+    if (cid < 0) {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (cid == 0) {
+        x = 2 * x;
+        printf("I am the child. My pid is %d, and the value of x is %d.\n", getpid(), x);
+    } else {
+        x = 3 * x;
+        printf("I am the parent. My pid is %d, my child's pid is %d, and the value of x is: %d.\n", getpid(), cid, x);
+    }
 
     return 0;
 }

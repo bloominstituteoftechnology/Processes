@@ -12,6 +12,7 @@ and `clock_gettime()` should work just fine.
 */
 
 #include <stdio.h>
+#include <stdint.h>	/* for uint64 definition */
 #include <unistd.h>
 #include <time.h>
 
@@ -20,7 +21,24 @@ and `clock_gettime()` should work just fine.
 
 int main()
 {
-    // Your code here
-    
+    uint64_t diff, sum;
+	struct timespec start, end;
+	int i;
+
+	for (int i = 0; i < number_iter; i++)
+    {
+        clock_gettime(CLOCK_MONOTONIC, &start);
+
+        write(1, NULL, 0);
+
+        clock_gettime(CLOCK_MONOTONIC, &end);
+
+        diff = BILLION * (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec);
+
+        sum += diff;
+    }
+
+	printf("Elapsed time = %llu nanoseconds\n", (long long unsigned int) sum / number_iter);
+
     return 0;
 }
