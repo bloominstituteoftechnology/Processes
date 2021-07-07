@@ -10,6 +10,20 @@
 int main(void)
 {
     // Your code here
+    int rc = fork();
+    // ------------------------------------------------ child process starts executing here
+    if (rc < 0) {    // fork failed; exit
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {    // child process satisfies this branch
+        printf("hello\n");
+    } else {
+        int wc = waitpid(rc, NULL, 0);
+        printf("goodbye\n");
+    }
 
     return 0;
 }
+
+
+//using waitpid made sure child process runs after parent
