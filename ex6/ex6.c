@@ -20,7 +20,30 @@ and `clock_gettime()` should work just fine.
 
 int main()
 {
-    // Your code here
-    
+    // reference type
+    struct timespec start, end;
+    long sum = 0;
+    long difference;
+    double avg;
+
+    for (int i = 0; i < number_iter; i++) {
+        // get start time from time library
+        clock_gettime(CLOCK_MONOTONIC, &start);
+
+        // write the file number 
+        write(fileno(stdout), NULL, 0);
+        // get end time from time library
+        clock_gettime(CLOCK_MONOTONIC, &end);
+        // use BILLION to calculate the time by adding tv sec and tv nsec
+        difference = BILLION * (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec);
+        // plus equal displays the difference
+        sum += difference;
+    }
+    // average equals sum divided by float number
+    avg = sum / (float)number_iter;
+
+    printf("Average time it  takes to make a system call is %f ns.\n", avg);
+
+    // program completion
     return 0;
 }

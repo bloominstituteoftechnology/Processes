@@ -10,7 +10,32 @@
 
 int main(void)
 {
-    // Your code here    
+    printf("Parent process here\n");
+    // system call to create new child process
+    int rc = fork();
 
+    // checking for if its less than
+    if (rc < 0) {
+        // printing error results
+        fprintf(stderr, "fork failed\n");
+        // exit status of failure
+        exit(1);
+    }
+    // checking for equal to
+    else if (rc == 0)
+    {
+        printf("Child process here\n");
+        // creating a pointer
+        char *args[] = {"ls", "-l", NULL};
+        // arrays of pointers to null-terminated strings that represent the argument list available to the new program. 
+        // first argument points to the filename being executed
+        execvp("ls", args);
+    }
+     else 
+     {
+        //  wait for process to end function
+        int wc = waitpid(rc, NULL, 0);
+    }
+    // program completion
     return 0;
 }
