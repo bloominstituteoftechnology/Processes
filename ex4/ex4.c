@@ -10,7 +10,15 @@
 
 int main(void)
 {
-    // Your code here    
-
+    int rc = fork();   
+    if (rc < 0) {
+        exit(1);
+    } else if () {
+        execvp(argv[1], argv);
+    } else {
+        int wc = waitpid(rc,NULL,0);
+        printf("End of parent process\n");
+    }
     return 0;
 }
+
