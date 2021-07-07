@@ -11,6 +11,30 @@
 int main(void)
 {
     // Your code here    
+	int rc = fork();
+    if (rc < 0) {    // fork failed; exit
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {  
+    // list dates and permissions with total number 
+    	 char *dates[] = {"ls", "-l", NULL};
+    	 // lists all files in current directory
+    	 char *lists[] = {"ls", "-1", NULL};
+    	 // displays current directory
+
+
+          // displays list of files in a folder
+          // execl("/bin/ls", "ls", "-1", NULL);
+          // will lost permission and dates
+    	 // execv("/bin/ls", dates);
+
+    	 // uses myprog as new process call
+        execl("./myprog.exe", "2", NULL);
+    } else {
+    	int wc = waitpid(rc, NULL, 0);    
+printf("%s\n", "Goodbye from parent");
+    }
+
 
     return 0;
 }
