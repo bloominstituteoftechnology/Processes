@@ -11,6 +11,14 @@
 int main(void)
 {
     // Your code here    
+    pid_t child = fork();
+
+    if(child == 0) {
+        int exec = execl("/bin/ls", "ls", "-l", NULL);
+    }
+    }else {
+       int exec = execle("/bin/ls", "ls", "-l", NULL);
+    }
 
     return 0;
 }
