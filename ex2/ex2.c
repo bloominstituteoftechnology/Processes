@@ -9,6 +9,22 @@
 int main(void)
 {
     // Your code here 
+    FILE * fp;
+    fp = fopen("text.txt", "r");
+    int c;
+    c = fgetc(fp);
+
+    int rc = fork();
+
+    if (rc < 0) {
+        fprintf(stderr, "failed fork");
+    }
+    else if (rc == 0) {
+        printf("%c", c);
+    }
+    else {
+        printf("%c", c);
+    }
     
     return 0;
 }
