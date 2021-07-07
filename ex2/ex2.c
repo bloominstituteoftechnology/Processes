@@ -5,10 +5,27 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <string.h>
 
 int main(void)
 {
-    // Your code here 
-    
-    return 0;
+    FILE *fp;
+    fp = fopen("text.txt", "w");
+
+    int rc = fork();
+    if(rc < 0)
+    {
+        fprintf(stderr, "fork failed\n");
+    }
+    else if(rc == 0)
+    {
+        printf("Child process here\n");
+        char *child_str = "This is a child string.\n";
+        fwrite(child_str, sizeof(child_str), strlen(child_str), fp);
+    } else
+    {
+        printf("Parent process here\n");
+        char *parent_str = "This is parent string!\n";
+        fwrite(parent_str, sizeof(parent_str), strlen(parent_str), fp);
+    }
 }
