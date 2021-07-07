@@ -20,7 +20,21 @@ and `clock_gettime()` should work just fine.
 
 int main()
 {
-    // Your code here
-    
+    int diff;
+    struct timespec start, end;
+    int list[1000000];
+    int total = 0;
+
+    for (int i=0; i<number_iter; i++) {
+        clock_gettime(CLOCK_MONOTONIC, &start);
+        write(1, "", 1);
+        clock_gettime(CLOCK_MONOTONIC, &end);
+        diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+        total += diff;
+        list[i] = diff;
+    }
+    int rv = total/1000000;
+    printf("%llu nanoseconds\n", (long long unsigned int) rv);
     return 0;
 }
+

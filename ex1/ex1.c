@@ -8,7 +8,17 @@
 
 int main(void)
 {
-    // Your code here
+    int x = 100;
 
+    int rv = fork();
+
+    if (rv == 0) {
+        x += 10;
+        printf("Child: %d\n", (int) x);
+    } else {
+        x += 20;
+        printf("Parent: %d\n", (int) x);
+    }
+    
     return 0;
 }

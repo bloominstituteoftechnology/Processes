@@ -10,7 +10,14 @@
 
 int main(void)
 {
-    // Your code here    
+    int rv = fork();
+    if (rv == 0) {
+        char *args[]={"/bin/ls",NULL};
+        execvp(args[0], args);
+    } else {
+        wait(NULL);
+        printf("Parent\n");
+    }
 
     return 0;
 }

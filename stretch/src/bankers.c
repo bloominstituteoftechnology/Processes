@@ -86,12 +86,7 @@ void read_balance(int fd, int *balance)
  */
 int get_random_amount(void)
 {
-	// vvvvvvvvvvvvvvvvvv
-	// !!!! IMPLEMENT ME:
-
-	// Return a random number between 0 and 999 inclusive using rand()
-
-	// ^^^^^^^^^^^^^^^^^^
+	return(rand() % 1000);
 }
 
 /**
@@ -116,16 +111,25 @@ int main(int argc, char **argv)
 	// message to stderr, and exit with status 1:
 	//
 	// "usage: bankers numprocesses\n"
+	if (argc == 1) {
+		printf("usage: bankers numprocesses\n");
+		exit(1);
+	}
 	
 	// Store the number of processes in this variable:
 	// How many processes to fork at once
-	int num_processes = IMPLEMENT ME
+	char num_processes = *argv[1];
+	printf("Processes: %c\n", num_processes);
 
 	// Make sure the number of processes the user specified is more than
 	// 0 and print an error to stderr if not, then exit with status 2:
 	//
 	// "bankers: num processes must be greater than 0\n"
 
+	if (num_processes == 48) {
+		fprintf(stderr, "bankers: num processes must be greater than 0\n");
+		exit(2);
+	}
 	// ^^^^^^^^^^^^^^^^^^
 
 	// Start with $10K in the bank. Easy peasy.
@@ -134,7 +138,7 @@ int main(int argc, char **argv)
 	close_balance_file(fd);
 
 	// Rabbits, rabbits, rabbits!
-	for (int i = 0; i < num_processes; i++) {
+	for (int i = 0; i < (num_processes-48); i++) {
 		if (fork() == 0) {
 			// "Seed" the random number generator with the current
 			// process ID. This makes sure all processes get different
@@ -151,19 +155,27 @@ int main(int argc, char **argv)
 
 			// Open the balance file (feel free to call the helper
 			// functions, above).
-
+			int fd = open_balance_file(BALANCE_FILE);
+			flock(fd, LOCK_EX);
 			// Read the current balance
-
+			read_balance(fd, &balance);
 			// Try to withdraw money
 			//
 			// Sample messages to print:
 			//
 			// "Withdrew $%d, new balance $%d\n"
 			// "Only have $%d, can't withdraw $%d\n"
-
+			if (balance >= amount) {
+				balance -= amount;
+				write_balance(fd, balance);
+				printf("Withdrew $%d, new balance $%d\n", amount, balance);
+			} else {
+				printf("Only have $%d, can't withdraw $%d\n", balance, amount);
+			}
 			// Close the balance file
 			//^^^^^^^^^^^^^^^^^^^^^^^^^^
-
+			flock(fd, LOCK_UN);
+			close(fd);
 			// Child process exits
 			exit(0);
 		}
