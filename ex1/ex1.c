@@ -9,6 +9,23 @@
 int main(void)
 {
     // Your code here
+    int x = 100;
+    int rc = fork();
+    if (rc < 0) { // fork failed; exit
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+
+    } else if (rc == 0) { // child process satisfies this branch
+        printf("hello, child , x = %d) \n", x);
+        x++;
+        printf("child again, x = %d\n",x)
+    
+    }else{
+        printf("hello, parent here, x = %d\n", x);
+        x--;
+        printf("parent again, x = %d\n",x)
+
+    }
 
     return 0;
 }

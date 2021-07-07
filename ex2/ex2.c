@@ -5,10 +5,29 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <string.h>
 
 int main(void)
 {
-    // Your code here 
-    
-    return 0;
+    // Your code here
+     int c;
+    FILE * fp;
+    fp = fopen("text.txt", "r");
+    int rc = fork();
+    if (rc < 0) {    // fork failed; exit
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+        } 
+    else if (rc == 0) {  
+        printf("child\n");  // child process satisfies this branch
+        char child_str[] = "This is child string!\n";
+        fwrite(child_str, 1, sizeof(child_str) - 1, fp);
+    } else {
+        printf("parent\n");
+        char parent_str[] = "This is parent string!\n";
+        fwrite(parent_str, 1, sizeof(parent_str) - 1, fp);
+    }
+    fclose(fp);
+ 
+  return 0;
 }
