@@ -3,14 +3,27 @@
 // `execl()`, `execle()`, `execv()`, and others. Why do you think there 
 // are so many variants of the same basic call?
 
+// They allow for including certain arguments  or determining the environment in which to execute the desired program
+
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <sys/wait.h>
+#include <string.h>
 
 int main(void)
 {
     // Your code here    
-
+    int child = fork();
+    if (child == 0) {
+        char *arg[2];
+        arg[0] = strdup("/bin/ls");
+        arg[1] = NULL;
+        execv(arg[0], arg);
+        execl("/bin/ls", "ls", NULL);
+    } else {
+        waitpid(child, NULL, 0);
+        printf("PArent running here\n");
+    }
     return 0;
 }

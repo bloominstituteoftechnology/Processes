@@ -21,6 +21,29 @@ and `clock_gettime()` should work just fine.
 int main()
 {
     // Your code here
-    
+    int nanosecs = 0;
+
+    for (int i = 0; i < number_iter; i++)
+    {
+        struct timespec start, end;
+
+        clock_gettime(CLOCK_MONOTONIC, &start);
+        write(fileno(stdout), NULL, 0);
+        clock_gettime(CLOCK_MONOTONIC, &end);
+
+        nanosecs += BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+    }
+    //get average
+    nanosecs /= number_iter;
+    printf("Average time is: %d nanoseconds\n", nanosecs);
     return 0;
 }
+
+
+// run with:
+
+// gcc -o ex6 ex6.c -lrt
+
+
+//returned: "Average time is: -1600 nanoseconds"
+// ^^ That response doesn't make sense to me
