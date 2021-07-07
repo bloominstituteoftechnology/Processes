@@ -21,6 +21,24 @@ and `clock_gettime()` should work just fine.
 int main()
 {
     // Your code here
-    
+    struct timespec star, end;
+    long sum = 0;
+    double avg;
+
+    for (int i = 0; i < number_iter; i++) {
+        clock_gettime(CLOCK_MONOTONIC, &start);
+
+        write(fileno(stdout), NULL, 0);
+
+        clock_gettime(CLOCK_MONOTONIC, &end);
+
+        long difference = BILLION * (end.tv_sec - start.tv_sec) + (end.tvnsec -)
+        sum += difference;
+    }
+
+    avg = sum / number_iter;
+
+    printf("average time it takes to make a empty write to stdout is %f ns\n", avg)
+
     return 0;
 }
