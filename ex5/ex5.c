@@ -17,6 +17,37 @@ char* msg3 = "hello world #3";
 int main(void)
 {
     // Your code here
+    printf("Hello\n");
+    char inbuf[MSGSIZE];
+    int p[2];
+
+    if(pipe(p) < 0) {
+        perror("piped failed\n");
+        exit(-1);
+    }
+
+
+    int rc = fork();
+    if(rc < 0) {
+        perror("Error Forking");
+    } else if( rc  == 0) {
+        // in child process
+        printf("Child writing....\n");
+        write(p[1], msg1, MSGSIZE);
+        write(p[1], msg2, MSGSIZE);
+        write(p[1], msg3, MSGSIZE);
+
+    } else {
+        // in parent process
+        int wc = waitpid(rc, NULL, 0);
+        printf("Parent reading..\n");
+        
+        for (int i = 0; i < 3; i ++) {
+            read(p[0], inbuf, MSGSIZE);
+            printf("%s \n", inbuf);
+        }
+
+    }
     
     return 0;
 }

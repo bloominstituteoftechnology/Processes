@@ -1,0 +1,2 @@
+Parent wrote this text
+Child wrote this text

@@ -10,6 +10,17 @@
 int main(void)
 {
     // Your code here
+    int rc = fork();
+    if(rc < 0) {
+        perror("Error forking\n");
+        exit(-1);
+    }
+    if(rc == 0) {
+        printf("Child say hello\n");
+    }  else {
+        int wc = waitpid(rc, NULL, 0);
+        printf("Parent say goodbye\n");  
+    }
 
     return 0;
 }
