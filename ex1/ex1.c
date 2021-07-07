@@ -8,7 +8,48 @@
 
 int main(void)
 {
-    // Your code here
+    printf("BEFORE FORK (pid: %d) \n", (int)getpid());
+    int x = 10;
+    int *xp = &x;
+
+    int f = fork();
+    if (f < 0)
+    {
+        printf("%s\n", "Fork faliled");
+        exit(1);
+    }
+    else if (f == 0)
+    {
+        // we are in the child branch
+        printf("Greetings from child (pid: %d)\n", f);
+        printf("Childs x: %i\n", x);
+        printf("Childs pointer to x: %p\n", xp);
+        printf("Childs pointer to x value: %i\n", *xp);
+        x = x + 5;
+        printf("%s\n", "Child adding 5 to x");
+        printf("Childs x: %i\n", x);
+        printf("Childs pointer to x: %p\n", xp);
+        printf("Childs pointer to x value: %i\n", *xp);
+        int *npx = &x;
+        printf("Childs NEW pointer to x: %p\n", npx);
+        printf("%s\n", "---END CHILD---\n\n");
+    }
+    else
+    {
+        // we are in the parent branch
+        printf("Greetings from parent (pid: %d)\n", f);
+        printf("Parents x: %i\n", x);
+        printf("Parents pointer to x: %p\n", xp);
+        printf("Parents pointer to x value: %i\n", *xp);
+        x = x + 5;
+        printf("%s\n", "Parent adding 5 to x");
+        printf("Parents x: %i\n", x);
+        printf("Parents pointer to x: %p\n", xp);
+        printf("Parents pointer to x value: %i\n", *xp);
+        int *npx = &x;
+        printf("Childs NEW pointer to x: %p\n", npx);
+        printf("%s\n", "---END PARENT---\n\n");
+    }
 
     return 0;
 }
