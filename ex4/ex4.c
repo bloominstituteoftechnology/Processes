@@ -10,7 +10,19 @@
 
 int main(void)
 {
-    // Your code here    
+    int rc = fork;
+
+    if (rc < 0) 
+    {
+        fprintf(stderr, "Fork failed!\n");
+        exit(1);
+    }
+    else 
+    {
+        //execl("/bin/ls", "ls", NULL);
+        char *args[] = {"ls", "-l", NULL};
+        execvp(args[0], args);
+    }
 
     return 0;
 }
