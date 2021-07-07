@@ -8,7 +8,22 @@
 
 int main(void)
 {
-    // Your code here
-
-    return 0;
+    int x = 100;
+    int rc = fork();
+    if (rc < 0) {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {
+        printf("child pid: %d\n", (int) getpid());
+        printf("the value of x in child is %d\n", x);
+        // value of x is still 100; it has the value that it had before forking.
+        x += 100;
+        printf("after adding 100 in child: %d\n", x);
+    } else {
+        printf("parent pid: %d, child pid: %d\n", (int) getpid(), rc);
+        printf("the value of x in parent is %d\n", x);
+        // value of x is 100
+        x += 100;
+        printf("after adding 100 in parent: %d\n", x);
+    }
 }

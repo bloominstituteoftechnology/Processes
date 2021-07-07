@@ -10,7 +10,19 @@
 
 int main(void)
 {
-    // Your code here    
-
+    int rc = fork();
+    if (rc < 0) {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {
+        char *args[] = {"./ex3/ex3", NULL};
+        execvp(args[0], args);
+        printf("this should not be seen");
+    } else {
+        int wc = waitpid(rc, NULL, 0);
+        char *args[] = {"./ex1/ex1", NULL};
+        execl(args[0], args[1]);
+        printf("this will also not be seen");
+    }
     return 0;
 }

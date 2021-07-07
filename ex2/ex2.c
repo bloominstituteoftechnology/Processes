@@ -8,7 +8,19 @@
 
 int main(void)
 {
-    // Your code here 
-    
+    FILE * fp;
+    fp = fopen("./ex2/text.txt", "w");
+    int rc = fork();
+    if (rc < 0) {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {
+        fprintf(fp, "child pid: %d\n", (int) getpid());
+    } else {
+        fprintf(fp, "parent pid: %d, child pid: %d\n", (int) getpid(), rc);
+    }
+    fclose(fp);
     return 0;
 }
+
+// Both the parent and child can access the file. They both write to it, without erasing what the other wrote.
