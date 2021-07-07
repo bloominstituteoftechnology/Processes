@@ -10,7 +10,42 @@
 
 int main(void)
 {
-    // Your code here    
+    int rv = fork();
+    char *myargs[] = {"/bin/ls",NULL};
+    // char *const envp[] = {NULL};
+
+    if(rv < 0)
+    {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    }
+    else if(rv == 0)
+    {
+        int rc = fork();
+
+        if(rc < 0)
+        {
+            fprintf(stderr, "fork failed\n");
+            exit(1);
+        }
+        else if(rc == 0)
+        {
+            printf("Child#2, pid: %d\n", getpid());
+            execl(myargs[0], myargs[0], (char *) NULL);
+        }
+        else
+        {
+            int wc = waitpid(rv, NULL, 0);
+            printf("Child#1 Parent#2, pid: %d\n", getpid());
+            execle(myargs[0], myargs[0], (char *) NULL, (char *) NULL);
+        }
+    }
+    else
+    {
+        int wc = waitpid(rv, NULL, 0);
+        printf("Parent#1, pid: %d\n", getpid());
+        execv(myargs[0], myargs); 
+    } 
 
     return 0;
 }
