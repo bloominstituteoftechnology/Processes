@@ -9,6 +9,22 @@
 int main(void)
 {
     // Your code here 
-    
+    FILE * pFile;
+    pFile = fopen ("text.txt", "w+");
+    int second = fork();
+
+    if(second < 0){
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    }
+    else if(second == 0) {
+        fputs("Yo child here.\n", pFile);
+    }
+    else {
+        fputs("Hello parent here.\n", pFile);
+    }
+
+    fclose(pFile);
+
     return 0;
 }
