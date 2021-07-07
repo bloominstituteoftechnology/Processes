@@ -9,6 +9,20 @@
 int main(void)
 {
     // Your code here 
+    FILE * test;
+    test = fopen("text.txt", "r");
+    fprintf(test, "%s %s %s %d", "Our", "file", "is \n", test);
+
+    int rc = fork();
+    if(rc < 0) {
+        //do nothing
+        exit(1);
+    } else if (rc == 0) {
+        printf("My value is \n", test);
+    }else {
+        prinf("As the parent my value is  \n", test);
+    }
+    fclose(test);
     
     return 0;
 }

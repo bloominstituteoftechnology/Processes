@@ -10,6 +10,19 @@
 int main(void)
 {
     // Your code here
+    fprint("goodbye \n");
+
+   int rc = fork();
+
+    if(fork < 0 ) {
+        //do nothing
+        exit(1);
+    } else if (rc == 0) {
+        printf("hello \n");
+    } else {
+        int wc = waitpid(rc, NULL, 0); // wait pid call added
+        printf("goodbye \n");
+    }
 
     return 0;
 }
