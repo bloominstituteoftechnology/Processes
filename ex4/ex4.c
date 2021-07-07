@@ -10,7 +10,23 @@
 
 int main(void)
 {
-    // Your code here    
+
+    int rc = fork();
+    if (rc < 0) {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {
+        printf("Child:\n");
+        // char *p[] = {"/bin/ls", NULL};
+        // execv("/bin/ls", p);
+
+        // execl("/bin/ls", "ls", (char *) NULL);
+
+        execle("/bin/ls", "ls", NULL);
+    } else {
+        int wc = waitpid(rc, NULL, 0);
+        printf("Parent:\n");
+    }
 
     return 0;
 }
