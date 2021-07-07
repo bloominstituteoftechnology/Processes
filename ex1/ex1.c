@@ -5,10 +5,32 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <sys/wait.h>
 
 int main(void)
 {
     // Your code here
+    int x= 100;
+    printf("hello, hello (pid:: %d)\n", (int) getpid());//getting the process id, pid
+    int rc= fork();
+    //error catch
+    if  (rc < 0){
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+
+    }else if (rc == 0){
+        printf("Child (pid:: %d) and x is: %d\n", (int) getpid(), x);
+        printf("child, x is: %d\n", x);
+        x++;
+        printf("child now, x is now: %d\n", x);
+
+    }else {
+        
+        printf("Parent of %d (pid: %d)and x is: %d\n", rc, (int) getpid(), x);
+        x--;
+        printf("here here parent, x is: %d\n", x);
+    }
 
     return 0;
 }
+
