@@ -10,6 +10,17 @@
 int main(void)
 {
     // Your code here
+    int rc = fork();
+
+    if (rc < 0) { // Fail -> exit
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+      } else if (rc == 0) { // Child process satisfying branch
+        printf("Hello\n");
+      } else { // Parent process
+        int wc = waitpid(rc, NULL, 0);
+        printf("Goodbye\n");
+    }
 
     return 0;
 }

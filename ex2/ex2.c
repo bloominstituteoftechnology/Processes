@@ -8,7 +8,34 @@
 
 int main(void)
 {
-    // Your code here 
+    // Your code here
+    FILE *fp;
+    fp = fopen("text.txt","r");
+
+    int c;
+    int rc = fork();
     
+    if (rc < 0) { // Fail
+      fprintf(stderr, "fork failed\n");
+      exit(1);
+    } else if (rc == 0) { // Child
+      printf("- Child -\n");
+      // Must reopen file for child fork
+      while(1) {
+        c = fgetc(fp);
+        if(feof(fp)) break;
+        printf("%c", c);
+      }
+    } else { // Parent
+      printf("- Parent -\n");
+      // Accesses file on the parent fork
+      while(1) {
+        c = fgetc(fp);
+        if(feof(fp)) break;
+        printf("%c", c);
+      }
+    }
+    puts("\n");
+
     return 0;
 }

@@ -9,6 +9,19 @@
 int main(void)
 {
     // Your code here
+    int x = 100;
+    int rc = fork();
+
+    if (rc < 0) { // Fail
+      fprintf(stderr, "fork failed\n");
+      exit(1);
+    } else if (rc == 0) { // Child
+      x -= 50;
+      printf("Child - X = %d\n", x);
+    } else { // Parent
+      x += 50;
+      printf("Parent - X = %d\n", x);
+    }
 
     return 0;
 }

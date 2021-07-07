@@ -11,6 +11,18 @@
 int main(void)
 {
     // Your code here    
+    int rc = fork();
 
+    if (rc < 0) { // Fail -> exit
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+      } else if (rc == 0) { // Child
+        printf("Child\n");
+        execl("ls", NULL);
+      } else { // Parent
+        int wc = waitpid(rc, NULL, 0);
+        printf("Parent\n");
+      }
+      
     return 0;
 }
