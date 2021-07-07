@@ -7,6 +7,8 @@
 #include <sys/file.h>
 #include <fcntl.h>
 #include <time.h>
+#include<string.h>
+
 
 // This is the file where we store the balance
 #define BALANCE_FILE "balance.txt"
@@ -14,11 +16,13 @@
 /**
  * Open the file containing the balance
  */
+//FILE *fp;
+
 int open_balance_file(char *filename)
 {
 	// This line returns an open "file descriptor" (a number, how Unix
 	// tracks open files) for both reading and writing. If the file does
-	// not exist, it is created with 0644 permissions.
+	// not exist, it is created with 0644 permissions.	
 	return open(filename, O_CREAT|O_RDWR, 0644);
 }
 
@@ -92,6 +96,7 @@ int get_random_amount(void)
 	// Return a random number between 0 and 999 inclusive using rand()
 
 	// ^^^^^^^^^^^^^^^^^^
+	return (rand() % (999 + 1 - 0) + 0);   //using rand() to generate a random number between 0 and 999 inclusive
 }
 
 /**
@@ -110,6 +115,18 @@ int main(int argc, char **argv)
 	// For example, to fork 12 processes:
 	//
 	//  ./bankers 12
+	int n;
+	n = argc-1;
+
+	//length = strlen(*argv);
+
+	if(n==0){   // if no argument is provided, throw error message 
+		fprintf(stderr,"Please enter number of processess\n" );
+		exit(1);
+	}
+
+	int num_processes = atoi(argv[1]);    //using atoi to convert argv[1] to integer from char
+	//printf("No of processes entered: %d \n", num_processes);	
 
 	// Check to make sure they've added one paramter to the command line
 	// with argc. If they didn't specify anything, print an error
@@ -119,7 +136,6 @@ int main(int argc, char **argv)
 	
 	// Store the number of processes in this variable:
 	// How many processes to fork at once
-	int num_processes = IMPLEMENT ME
 
 	// Make sure the number of processes the user specified is more than
 	// 0 and print an error to stderr if not, then exit with status 2:
@@ -151,19 +167,30 @@ int main(int argc, char **argv)
 
 			// Open the balance file (feel free to call the helper
 			// functions, above).
+			int fds = open_balance_file(BALANCE_FILE);
 
 			// Read the current balance
+			read_balance(fds, &balance);
 
 			// Try to withdraw money
-			//
+			
 			// Sample messages to print:
 			//
 			// "Withdrew $%d, new balance $%d\n"
 			// "Only have $%d, can't withdraw $%d\n"
+			if(amount > balance){
+                        	printf("Only have $%d, can't withdraw $%d\n", balance, amount);
+                        }
+
+			else{
+				int new_balance = (balance-amount);
+				write_balance(fds, new_balance);
+				printf("Withdrew $%d, new balance $%d\n", amount, new_balance);
+			}
 
 			// Close the balance file
 			//^^^^^^^^^^^^^^^^^^^^^^^^^^
-
+			close_balance_file(fds);
 			// Child process exits
 			exit(0);
 		}
