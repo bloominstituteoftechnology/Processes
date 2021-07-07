@@ -10,6 +10,14 @@
 int main(void)
 {
     // Your code here
-
+    int rv = fork();
+    wait(0);
+    if(rv < 0){
+        printf("fork failed");
+    }else if(rv == 0){
+        printf("hello\n");
+        exit(1);
+    }
+    printf("goodbye\n");
     return 0;
 }
