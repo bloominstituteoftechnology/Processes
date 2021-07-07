@@ -90,6 +90,7 @@ int get_random_amount(void)
 	// !!!! IMPLEMENT ME:
 
 	// Return a random number between 0 and 999 inclusive using rand()
+    return rand() % 1000;
 
 	// ^^^^^^^^^^^^^^^^^^
 }
@@ -114,17 +115,25 @@ int main(int argc, char **argv)
 	// Check to make sure they've added one paramter to the command line
 	// with argc. If they didn't specify anything, print an error
 	// message to stderr, and exit with status 1:
-	//
-	// "usage: bankers numprocesses\n"
+	
+    if (argc < 2)
+    {
+        fprintf(stderr, "usage: bankers numprocesses\n");
+        exit(1);
+    }
 	
 	// Store the number of processes in this variable:
 	// How many processes to fork at once
-	int num_processes = IMPLEMENT ME
+	int num_processes = atoi(argv[1]);
 
 	// Make sure the number of processes the user specified is more than
 	// 0 and print an error to stderr if not, then exit with status 2:
-	//
-	// "bankers: num processes must be greater than 0\n"
+	
+    if (num_processes < 1)
+    {
+        fprintf(stderr, "bankers: num processes must be greater than 0\n");
+        exit(2);
+    }
 
 	// ^^^^^^^^^^^^^^^^^^
 
@@ -151,17 +160,30 @@ int main(int argc, char **argv)
 
 			// Open the balance file (feel free to call the helper
 			// functions, above).
+            int balance_file = open_balance_file(BALANCE_FILE);
 
+            flock(balance_file, LOCK_EX);
 			// Read the current balance
+            read_balance(balance_file, &balance);
 
 			// Try to withdraw money
-			//
-			// Sample messages to print:
-			//
-			// "Withdrew $%d, new balance $%d\n"
-			// "Only have $%d, can't withdraw $%d\n"
+			
+            if (balance >= amount)
+            {
+                int new_balance = balance - amount;
+                write_balance(balance_file, new_balance);
+                flock(balance_file, LOCK_UN);
+                printf("Withdrew $%d, new balance $%d (pid: %d)\n", amount, new_balance, (int) getpid());
+            }
+            else
+            {
+                flock(balance_file, LOCK_EX);
+                printf("Only have $%d, can't withdraw $%d (pid: %d)\n", balance, amount, (int) getpid());
+            }
 
 			// Close the balance file
+            close_balance_file(balance_file);
+            
 			//^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 			// Child process exits
