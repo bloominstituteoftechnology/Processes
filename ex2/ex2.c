@@ -9,6 +9,20 @@
 int main(void)
 {
     // Your code here 
+    FILE * fp;
+    // Creates an empty file for both reading and writing.
+	fp = fopen ("text.txt", "w+");
+	int y = fork();
+
+	if (y == 0){
+		
+		fprintf(fp, "%s %s %s %d", "We", "are", "in", 2019);
+	} else{
+		// Parent should write first
+		fprintf(fp, "%s %s %s %d", "We", "are", "in", 2020);
+	}
+
+	fclose(fp);
     
     return 0;
 }

@@ -8,7 +8,18 @@
 
 int main(void)
 {
-    // Your code here
+    
+    int x = 100;
+    int y = fork();
+
+    //if y = 0 then I'm in the child process
+    if (y == 0){
+            //changes to x in the child has a different value then changes made in the parent
+        printf("Child is x = %d\n", ++x);
+       //if y is positive, most likely the pid of the value, then print the parent value
+    } else{
+        printf("Parent is x = %d\n", --x);
+    }
 
     return 0;
 }
