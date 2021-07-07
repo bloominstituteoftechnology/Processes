@@ -1,0 +1,2 @@
+Hello from parent.
+Hello from child.

@@ -5,10 +5,28 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <sys/wait.h>
 
 int main(void)
 {
-    // Your code here 
-    
+    FILE *fp;
+    fp = fopen("./text.txt", "w");
+
+    int rc = fork();
+
+    if (rc < 0) { 
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {
+        fputs("Hello from child.\n", fp);
+    } else {
+        fputs("Hello from parent.\n", fp);
+    } 
+        
+    fclose(fp);
+
     return 0;
 }
+
+// if fopen() first, open file persists for both parent and child
+// if fork() first, one file overwrites the other
