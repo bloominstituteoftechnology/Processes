@@ -67,15 +67,23 @@ simulated bank account, that is. Don't get your hopes up.)
    above plan at the same time? Is there more than one way things can go
    wrong?
 
+   * If two processes ask for 10 dollars and the balance says there's 10 dollars, there will be a problem because both will proceed to access the 10 dollars since 10 <= current balance. Unfortunately, we will end up with -10 dollars in the account, which is a problem.   
+
 2. Study and understand the skeleton code in the `src/` directory.
 
    **Short answer**: what do each of the arguments to `open()` mean?
+
+   * The first argument is the path of the file.
+   * The second argument determines the flags that sets what can or cannot be done with the file once opened. 
+   * The third argument is file permissions generally set on the file itself. This third argument is only relevant if the `O_CREAT` or `O_TEMP` flag is specified in the second argument.
 
 3. Take the skeleton code in the `src/` directory and implement the
    pieces marked. Run it.
    
    **Short answer**: What happens? Do things go as planned and look
    sensible? What do you speculate is happening?
+
+   A cursory superficial look suggests that there are no problems, but upon closer inspection, there was evidence that there was a "double-dip". That is, a withdrawal was made at an outdated state. This usually erases the effect of the correct withdrawal, and subsequent withdrawals proceed from the incorrect state.
 
 4. Add calls to [`flock()`](https://linux.die.net/man/2/flock) to
    capture and release an exclusive lock on the file before reading and

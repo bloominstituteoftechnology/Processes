@@ -15,23 +15,38 @@ and `clock_gettime()` should work just fine.
 #include <unistd.h>
 #include <time.h>
 #include <stdint.h>
+#include <string.h>
 
-#define number_iter 1000000
+#define number_iter 10
 #define BILLION 1000000000L
 
 int main()
 {
     // Your code here
-    uint64_t sum_diff;
+    long sum_diff;
     struct timespec start, end;
+    char *myargs[3];
+    myargs[0] = strdup("./bankers");
+    myargs[1] = strdup("40");
+    myargs[2] = NULL;
 
     for (long i = 1; i <= number_iter; i++) {
         clock_gettime(CLOCK_MONOTONIC, &start);
-        write(1, NULL, 0);
+        execvp(myargs[0], myargs);
         clock_gettime(CLOCK_MONOTONIC, &end);
         sum_diff += BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
     }
-    
-    printf("Elasped time %llu\n", ((long long unsigned int) sum_diff) / number_iter);
+    printf("Elasped time %f\n", (float) (sum_diff / number_iter));
+
+    sum_diff = 0;
+    myargs[0] = strdup("./bankers1");
+
+    for (long j = 1; j <= number_iter; j++) {
+        clock_gettime(CLOCK_MONOTONIC, &start);
+        execvp(myargs[0], myargs);
+        clock_gettime(CLOCK_MONOTONIC, &end);
+        sum_diff += BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+    }
+    printf("Elasped time %f\n", (float) (sum_diff / number_iter));
     return 0;
 }

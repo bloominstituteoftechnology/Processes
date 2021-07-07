@@ -183,7 +183,7 @@ int main(int argc, char **argv)
 			// Close the balance file
 			//^^^^^^^^^^^^^^^^^^^^^^^^^^
 			close_balance_file(fw);
-			
+			flock(fw, LOCK_UN);
 			// Child process exits
 			exit(0);
 		}
