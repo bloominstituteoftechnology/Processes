@@ -9,6 +9,23 @@
 int main(void)
 {
     // Your code here
+    printf("First pid: %d\n", (int) getpid());
+    int rc = fork();
+    int x = 100;
 
+    if( rc < 0) {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    }
+    else if(rc == 0) {
+        printf("Child pid: %d and x: %d \n", (int)getpid(), x);
+        x++;
+        printf("Child pid: %d and x after increment: %d \n", (int)getpid(), x);
+    }
+    else {
+        printf("Parent pid: %d of child %d and x: %d\n", (int) getpid(), rc, x);
+        x--;
+        printf("Parent pid: %d of child %d and x after decrement: %d\n", (int) getpid(), rc, x);
+    }
     return 0;
 }
