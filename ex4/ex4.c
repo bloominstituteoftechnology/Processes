@@ -10,7 +10,18 @@
 
 int main(void)
 {
-    // Your code here    
+    // Your code here
+    pid_t pid;
+    pid = fork();    
+    if (pid < 0) {
+        printf("Error %u\n", getpid());
+    } else if (pid == 0) {
+        printf("Child, pid = %u\n", getpid());
+        char *args[] = {"/bin/ls", NULL};
+        execv(args[0], args);
+    } else {
+        printf("Parent, pid = %u\n", getpid());
+    }
 
     return 0;
 }
