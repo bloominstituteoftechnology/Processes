@@ -1,0 +1,1 @@
+parent process (pid: 0) writing -597030448
