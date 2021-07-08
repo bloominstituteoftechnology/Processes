@@ -10,7 +10,25 @@
 
 int main(void)
 {
-    // Your code here    
+    // Your code here 
+    int child = fork();
+
+    if (child < 0)
+    {
+        printf("Unable to fork\n");
+        exit(1);
+    }
+    else if (child == 0)
+    {
+        printf("Child fork\n");
+        execl("/bin/ls", "ls", "-la", NULL);
+        printf("Child completed\n");
+    }
+    else
+    {
+        int wait = waitpid(child, NULL, 0);
+        printf("Parent\n");
+    }
 
     return 0;
 }

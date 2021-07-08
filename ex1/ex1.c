@@ -9,6 +9,23 @@
 int main(void)
 {
     // Your code here
+    int testValue = 1337;
+
+    int child = fork();
+
+    if (child < 0) 
+    {
+        printf("Unable to fork a child\n");
+        exit(1);
+    } else if (child == 0)
+    {
+        testValue = 1001;
+        printf("Inside the child, the value of testValue is: %d\n", testValue);
+    } else
+    {
+        int wait = waitpid(child, NULL, 0);
+        printf("Inside the parent, the value of testValue is: %d\n", testValue);
+    }
 
     return 0;
 }

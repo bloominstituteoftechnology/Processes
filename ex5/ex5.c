@@ -17,6 +17,30 @@ char* msg3 = "hello world #3";
 int main(void)
 {
     // Your code here
+    int fds[2];
+    char buffer[128];
+
+    pipe(fds);
+
+    int child = fork();
+        //write from child, read from parent
+    if (child < 0)
+    {
+        printf("Error forking\n");
+        exit(1);
+    }
+    else if (child == 0)
+    {
+        //write
+        write(fds[1], "Hello there!", 14);
+    }
+    else
+    {
+        //in parent, read
+        wait(NULL);
+        read(fds[0], buffer, 128);
+        printf("Read from pipe: %s\n", buffer);
+    }
     
     return 0;
 }
