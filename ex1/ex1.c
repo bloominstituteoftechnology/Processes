@@ -6,9 +6,22 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int main(void)
+int main(int argc, char *argv[])
 {
     // Your code here
+    int x = 10;
+    int rc = fork();
+    if(rc < 0 {
+
+        fprintf(stderr, "fork fail\n");
+        exit(1);
+    }) else if (rc == 0) {
+        x = 5;
+        printf("child value %d\n", x);
+    } else {
+        x = 1;
+        printf("child value %d\n", x);
+    }
 
     return 0;
 }
