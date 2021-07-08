@@ -10,7 +10,30 @@
 
 int main(void)
 {
-    // Your code here    
+    printf("parent process here\n");
+    int rc = fork();
+//forking a copy
+    if(rc < 0){
+        fprintf(stderr, "fork failed\n");//fprint means it going into file
+        exit(1);
+        //error message
+    }  else if (rc == 0){
+        printf("Child process here\n");
+//child process
+//include <unistd.h> int execvp(const char *path, char *const argv[]); Like all of the exec functions, execvp replaces the calling process image with a new process image. This has the effect of running a new program with the process ID of the calling process.
+      //https://linux.die.net/man/3/execv
+      
+      
+        //exel("/bin/ls"), "ls", "-l" (char*) NULL);
+        // char * args[] = {"ls", "-1", NULL};
+        //execv("/bin/ls" args);
+        //execlp("ls", "ls", "-1" (char *) NULL);
+
+        char *args[] = {"ls", "-1",  NULL};
+        execvp("ls", args);
+    } else {
+        int wc = waitpid(rc, NULL, 0);
+    } 
 
     return 0;
 }
