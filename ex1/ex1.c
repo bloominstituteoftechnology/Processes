@@ -9,6 +9,23 @@
 int main(void)
 {
     // Your code here
+    int x = 100;
+    int rc = fork();
 
+    if (rc < 0)
+    {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    }
+    else if (rc == 0)
+    {
+        // x = 20;
+        printf("Child x:%d \n", x);
+    }
+    else
+    {
+        x = 200;
+        printf("Parent x:%d \n", x);
+    }
     return 0;
 }
