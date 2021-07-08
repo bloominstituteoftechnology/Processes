@@ -90,7 +90,7 @@ int get_random_amount(void)
 	// !!!! IMPLEMENT ME:
 
 	// Return a random number between 0 and 999 inclusive using rand()
-
+	return rand()%1000;
 	// ^^^^^^^^^^^^^^^^^^
 }
 
@@ -103,6 +103,10 @@ int main(int argc, char **argv)
 	
 	// vvvvvvvvvvvvvvvvvv
 	// !!!! IMPLEMENT ME:
+	if (argc != 2) {
+		fprintf(stderr, "usage: bankers [num_processes]\n");
+		return 1;
+	}
 
 	// We expect the user to add the number of simulataneous processes
 	// after the command name on the command line.
@@ -119,7 +123,7 @@ int main(int argc, char **argv)
 	
 	// Store the number of processes in this variable:
 	// How many processes to fork at once
-	int num_processes = IMPLEMENT ME
+	int num_processes = atoi(argv[1]);
 
 	// Make sure the number of processes the user specified is more than
 	// 0 and print an error to stderr if not, then exit with status 2:
@@ -127,6 +131,10 @@ int main(int argc, char **argv)
 	// "bankers: num processes must be greater than 0\n"
 
 	// ^^^^^^^^^^^^^^^^^^
+	if (num_processes < 1) {
+		fprintf(stderr, "bankers: num_proc must be greater than 0");
+		return 2;
+	}
 
 	// Start with $10K in the bank. Easy peasy.
 	int fd = open_balance_file(BALANCE_FILE);
@@ -148,18 +156,32 @@ int main(int argc, char **argv)
 
 			// vvvvvvvvvvvvvvvvvvvvvvvvv
 			// !!!! IMPLEMENT ME
+			int fd = open_balance_file(BALANCE_FILE);
+
+			// get a lock on the file
+			flock(fd, LOCK_EX);
 
 			// Open the balance file (feel free to call the helper
 			// functions, above).
 
 			// Read the current balance
+			read_balance(fd, &balance);
 
 			// Try to withdraw money
+			if(balance >= amount) {
+				balance -= amount;
+				write_balance(fd, balance);
+				printf("Withdrew $%d, new balance $%d\n", amount, balance);
+			} else {
+				printf("Only have $%d, can't withdraw $%d\n", balance, amount);
+			}
 			//
 			// Sample messages to print:
 			//
 			// "Withdrew $%d, new balance $%d\n"
 			// "Only have $%d, can't withdraw $%d\n"
+
+			flock(fd, LOCK_UN);
 
 			// Close the balance file
 			//^^^^^^^^^^^^^^^^^^^^^^^^^^

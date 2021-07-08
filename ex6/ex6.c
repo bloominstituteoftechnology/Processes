@@ -20,7 +20,45 @@ and `clock_gettime()` should work just fine.
 
 int main()
 {
-    // Your code here
+
+    //uint64_t diff;
+	struct timespec start, end;
+	//int i;
+    long sum = 0;
+    double avg;
+
+    for (int i = 0; i < number_iter; i++) {
+        clock_gettime(CLOCK_MONOTONIC, &start);
+        write(fileno(stdout), NULL, 0);
+        clock_gettime(CLOCK_MONOTONIC, &end);
+
+        long diff = BILLION * (end.tv_sec -  start.tv_sec) + end.tv_nsec - start.tv_nsec;
+        sum += diff;
+    }
+
+    avg = sum / (float)number_iter;
+
+    printf("Average time to make empty sys call %f nanosecs.\n", avg);
+
+
+
+    // clock_gettime(CLOCK_MONOTONIC, &start);	/* mark start time */
+	// write(STDOUT_FILENO, NULL, sizeof(NULL)); // 19000 nanoseconds	
+    // // sleep(1); /* do stuff * 1000341000 nanoseconds */
+	// clock_gettime(CLOCK_MONOTONIC, &end);	/* mark the end time */
+
+    // diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+	// printf("elapsed monotonic time = %llu nanoseconds\n", (long long unsigned int) diff);
+
+
+
+    // clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &start);	/* mark start time */
+    // write(STDOUT_FILENO, NULL, sizeof(NULL));  // 4000 nanoseconds
+    // // sleep(1); /* do stuff * 39000 nanoseconds */ 
+	// clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end);
+
+    // diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+	// printf("elapsed process CPU time = %llu nanoseconds\n", (long long unsigned int) diff);
     
     return 0;
 }
