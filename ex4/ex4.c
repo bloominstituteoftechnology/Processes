@@ -10,7 +10,13 @@
 
 int main(void)
 {
-    // Your code here    
+    // Your code here 
+    int pid = fork();
+    if(pid == 0){
+    execl("/bin/ls", "execl in child"  ,NULL);
+    } else {
+        execl("/bin/ls", "execl in parent"  ,NULL);
+    }
 
     return 0;
 }
