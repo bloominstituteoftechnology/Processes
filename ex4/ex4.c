@@ -10,7 +10,24 @@
 
 int main(void)
 {
-    // Your code here    
+    int returnVal;
+    char *myargs[3];
+    int rc = fork();
+
+    if(rc < 0){
+        printf("fork failed\n");
+        exit(1);
+    }else if (rc == 0){
+        returnVal = execl("/bin/ls", "ls", (char*)0);
+        printf("Executable return value in child: %d\n", returnVal);
+    }else{
+        myargs[0] = "/bin/lc";
+        myargs[1] = NULL;
+        
+        returnVal = execvp(myargs[0], myargs);
+        printf("Executable return value in parent: %d\n", returnVal);
+        
+    }
 
     return 0;
 }

@@ -8,7 +8,20 @@
 
 int main(void)
 {
-    // Your code here
+    int x = 5;
+
+    int rc = fork();
+
+    if(rc < 0){
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    }else if (rc == 0){
+        fprintf(stdout, "x in child: %d\n", x);
+    }else{
+        x = 100;
+        fprintf(stdout, "x in parent: %d\n", x);
+    }
+
 
     return 0;
 }

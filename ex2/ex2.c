@@ -8,7 +8,32 @@
 
 int main(void)
 {
-    // Your code here 
+    FILE *fp;
+    char file[] = "text.txt";
+
+    fp = fopen(file, "w+");
+
+    int descriptor = fileno(fp);
+
+    printf("File descriptor: %d\n", descriptor);
+
+    int rc = fork();
+
+    if(rc < 0){
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    }else if (rc == 0){
+       printf("File descriptor in child: %d\n", descriptor);
+       printf("PID: %d\n", (int) getpid());
+       fprintf(fp, "hello, child here \n(pid: %d) \n", (int) getpid());
+    }else{
+       printf("File descriptor in parent: %d\n", descriptor);
+       printf("PID: %d\n", (int) getpid());
+       fprintf(fp, "hello, Parent here \n(pid: %d) \n", (int) getpid());
+    }
+
+    fclose(fp);
     
+
     return 0;
 }

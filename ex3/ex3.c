@@ -9,7 +9,24 @@
 
 int main(void)
 {
-    // Your code here
+    char hello[] = "hello";
+    char goodbye[] = "goodbye";
+    int status = 1;
+
+    int rc = fork();
+
+    if(rc < 0){
+        printf("fork failed\n");
+        exit(1);
+    }else if (rc == 0){
+        printf("%s ", hello);
+    }else{
+        waitpid(rc, &status, 0);
+        printf("%s\n", goodbye);
+        printf("status: %d\n", status);
+        
+    }
+
 
     return 0;
 }
