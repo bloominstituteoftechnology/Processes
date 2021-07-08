@@ -15,12 +15,29 @@ and `clock_gettime()` should work just fine.
 #include <unistd.h>
 #include <time.h>
 
+
 #define number_iter 1000000
 #define BILLION 1000000000L
 
 int main()
 {
     // Your code here
+    struct timespec start, end;
+    int count = 0, total = 0;
+    float averageTime; 
+
+
+    while (count < number_iter) { //number_iter 1000000
+    
+        clock_gettime(CLOCK_MONOTONIC, &start); //which will be 0 at starting
+        printf(" "); //make a system call an empty write to stdout
+        clock_gettime(CLOCK_MONOTONIC, &end);
+        total += BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+        count++;
+    }
+
+    averageTime = total/number_iter;
+    printf("\nAverage time to write an empty write to stdout: %f nanoseconds" , averageTime); 
     
     return 0;
 }

@@ -10,7 +10,19 @@
 
 int main(void)
 {
-    // Your code here    
+    // Your code here
+    printf("Parent process.... %d", (int)getpid()); 
+    char *args[] = {"ls", "-m", NULL}; 
+    int s = fork();
+
+    if(s > 0) {
+        printf("Parent process.... %d", (int)getpid());
+        waitpid(s, NULL, 0);
+
+    } else if(s == 0) {
+        printf("child process.... %d", s);
+        execvp(args[0], args);
+    } 
 
     return 0;
 }
