@@ -9,6 +9,35 @@
 int main(void)
 {
     // Your code here
+    //main process has access to (x=100)
+    //set variable rc equal to our fork
+    int x = 100;
+    int rc = fork();
 
+    printf("generate pid (pid: %d)\n", (int)getpid());
+//there is no fork if < 0
+    if (rc < 0)
+    {
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    }
+    //child process
+    else if (rc == 0)
+    {
+        printf("child (pid: %d) and x is: %d\n", (int)getpid(), x);
+        //change in the variable(child)
+        x++;
+        printf("child, x is now: %d\n", x);
+    }
+    //parent process
+    else
+    {
+        //change in the variable(parent)
+        printf("parent of %d (pid: %d) of x: %d\n",rc, (int)getpid(), x);
+        x = x - 2;
+        printf("parent now: %d\n", x);
+        }
+
+    
     return 0;
 }

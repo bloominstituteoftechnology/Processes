@@ -21,6 +21,24 @@ and `clock_gettime()` should work just fine.
 int main()
 {
     // Your code here
-    
+    //setting my variables
+    struct timespec start, stop;
+    float total; //changing between float and long...types make no diff.
+    float average; //slight change when changing from float to double
+
+    for (int i = 0; i < number_iter; i++){
+    //setting start time
+        clock_gettime(CLOCK_MONOTONIC, &start);
+    //writing to standard output
+        write(fileno(stdout), NULL, 0);
+    //clock stops
+        clock_gettime(CLOCK_MONOTONIC, &stop);
+    //time calulation in nanoseconds
+        total += BILLION * (stop.tv_sec - start.tv_sec) + (stop.tv_nsec - start.tv_nsec);
+    }
+
+    average = total / (float)number_iter;
+
+    printf("The average time it takes to make a system call on this mac is %f nanoseconds.\n", average);
     return 0;
 }
