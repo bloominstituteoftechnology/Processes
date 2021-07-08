@@ -9,7 +9,16 @@
 
 int main(void)
 {
-    // Your code here
+	printf("hello world (pid: %d)\n", (int)getpid());
 
+	pid_t pid = fork();
+
+	if (pid == 0) {
+		printf("Hello from Child, and my pid is %d!\n", getpid());
+	}
+	else {
+		int wc = waitpid(pid, NULL, 0);
+		printf("Hello from Parent, and my pid is %d!\n", getpid());
+	}
     return 0;
 }
